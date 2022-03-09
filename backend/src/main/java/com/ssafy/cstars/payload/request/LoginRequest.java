@@ -3,7 +3,7 @@ package com.ssafy.cstars.payload.request;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-	@NotBlank
+	//@NotBlank
 	private String email;
 
 	@NotBlank
