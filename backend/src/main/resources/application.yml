@@ -1,0 +1,40 @@
+#it will be set build date by gradle. if this value is @build.date@, front-end is development mode
+build:
+  date: @build.date@
+
+server:
+  port: 8080
+  address: localhost
+  servlet:
+    contextPath: /
+    encoding: # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly.
+      charset: UTF-8
+      enabled: true # Enable http encoding support.
+      force: true # Force the encoding to the configured charset on HTTP requests and responses.
+
+spring:
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true #paging ?? ?? Pageable ?????? ??
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ssafy_blockchain_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    username: root
+    password: 1234
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    properties:
+      hibernate:
+        show_sql: true # cmd?? ?? sql? ?? ???? ?
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+springfox:
+  documentation:
+    swagger:
+      use-model-v3=false: false

@@ -16,6 +16,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    google()
 }
 
 dependencies {
@@ -23,17 +24,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // -------------------swagger 설정관련---------------------
-    implementation("com.google.guava:guava:29.0-jre")
-    annotationProcessor("com.google.guava:guava:29.0-jre")
-    implementation("io.springfox:springfox-swagger2:3.0.0")
-    implementation("io.springfox:springfox-swagger-ui:3.0.0")
-    // -------------------------------------------------------
+    // ------------------- swagger 설정관련 ----------------------
+    implementation("com.google.guava:guava")
+    annotationProcessor("com.google.guava:guava")
+    implementation("io.springfox:springfox-swagger2")
+    implementation("io.springfox:springfox-swagger-ui")
+    // ---------------------------------------------------------
+
+    // ------------------- querydsl 설정관련 ---------------------
+    implementation("com.querydsl:querydsl-jpa")
+    implementation("com.querydsl:querydsl-apt")
+    // ---------------------------------------------------------
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
