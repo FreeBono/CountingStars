@@ -28,7 +28,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL57Dialect
     properties:
       hibernate:
-        show_sql: true # cmd?? ?? sql? ?? ???? ?
+        show_sql: true # cmd??  sql? ?? ???? ?
 
   mvc:
     pathmatch:
