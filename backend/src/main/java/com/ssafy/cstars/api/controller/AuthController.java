@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
   @Autowired
   AuthenticationManager authenticationManager;
@@ -63,7 +63,6 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     System.out.println(loginRequest.getEmail()+ "    " + loginRequest.getPassword());
-    System.out.println("!!");
     Authentication authentication = authenticationManager
         .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -94,7 +93,7 @@ public class AuthController {
 
     // Create new user's account
     User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-        encoder.encode(signUpRequest.getPassword()));
+        encoder.encode(signUpRequest.getPassword()), signUpRequest.getTel(), signUpRequest.getAddress(), signUpRequest.getGrade());
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
@@ -110,14 +109,8 @@ public class AuthController {
           Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
               .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
           roles.add(adminRole);
-
           break;
-        case "mod":
-          Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(modRole);
 
-          break;
         default:
           Role userRole = roleRepository.findByName(ERole.ROLE_USER)
               .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -140,7 +133,7 @@ public class AuthController {
         .map(refreshTokenService::verifyExpiration)
         .map(RefreshToken::getUser)
         .map(user -> {
-          String token = jwtUtils.generateTokenFromUsername(user.getEmail());
+          String token = jwtUtils.generateTokenFromEmail(user.getEmail());
           return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
         })
         .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,

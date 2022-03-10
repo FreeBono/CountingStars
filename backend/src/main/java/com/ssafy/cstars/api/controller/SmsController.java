@@ -33,7 +33,4 @@ public class SmsController {
 
         return new ResponseEntity<Integer>(code, HttpStatus.CREATED);
     } 
-
-    // @PostMapping("/phone")
-    // public String phonetest(String country, )
 }
