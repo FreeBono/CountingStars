@@ -26,8 +26,8 @@ public class Notice extends BaseEntity {
     @JoinColumn(name="admin_id")
     Admin admin;
 
-    public void modify(String title, String description) {
+    public void modify(String title, String content) {
         this.title = title;
-        this.content = description;
+        this.content = content;
     }
 }

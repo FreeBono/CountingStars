@@ -1,17 +1,3 @@
-#build:
-#    date: '@build.date@'
-#
-#management:
-#    health:
-#        db:
-#            enabled: true
-#        default:
-#            enabled: true
-#        diskspace:
-#            enabled: true
-#    servlet:
-#        context-path: /manage
-
 server:
     address: localhost
     compression:
@@ -60,7 +46,7 @@ spring:
             matching-strategy: ant_path_matcher # springboot 2.6 version swagger 3.0.0 version error
 
 
-#springfox:
-#    documentation:
-#        swagger:
-#            use-model-v3: false
+springfox:
+    documentation:
+        swagger:
+            use-model-v3: false
