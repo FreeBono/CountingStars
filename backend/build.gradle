@@ -24,12 +24,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    implementation("com.google.guava:guava")
-    annotationProcessor("com.google.guava:guava")
+    implementation("com.google.guava:guava:29.0-jre")
+    annotationProcessor("com.google.guava:guava:29.0-jre")
 
-    implementation('commons-io:commons-io')
-    implementation("org.apache.commons:commons-collections4")
-    implementation("org.apache.commons:commons-lang3")
+    implementation('commons-io:commons-io:2.6')
+    implementation("org.apache.commons:commons-collections4:4.4")
+    implementation("org.apache.commons:commons-lang3:3.9")
 
     // ------------------- swagger 설정관련 ----------------------
     implementation("io.springfox:springfox-swagger2:3.0.0")
@@ -49,6 +49,9 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+//    testImplementation("org.junit.vintage:junit-vintage-engine") {
+//        exclude group: "org.hamcrest", module: "hamcrest-core"
+//    }
 }
 
 tasks.named('test') {

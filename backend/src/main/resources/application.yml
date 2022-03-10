@@ -1,40 +1,66 @@
-#it will be set build date by gradle. if this value is @build.date@, front-end is development mode
-build:
-  date: @build.date@
+#build:
+#    date: '@build.date@'
+#
+#management:
+#    health:
+#        db:
+#            enabled: true
+#        default:
+#            enabled: true
+#        diskspace:
+#            enabled: true
+#    servlet:
+#        context-path: /manage
 
 server:
-  port: 8080
-  address: localhost
-  servlet:
-    contextPath: /
-    encoding: # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly.
-      charset: UTF-8
-      enabled: true # Enable http encoding support.
-      force: true # Force the encoding to the configured charset on HTTP requests and responses.
+    address: localhost
+    compression:
+        enabled: true
+        mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    port: 8080
+    servlet:
+        contextPath: /
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+#spa:
+#    default-file: /dist/index.html
 
 spring:
-  data:
-    web:
-      pageable:
-        one-indexed-parameters: true #paging ?? ?? Pageable ?????? ??
+    data:
+        web:
+            pageable:
+                one-indexed-parameters: true
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ssafy_blockchain_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+        hikari:
+            username: root
+            password: 1234
+    devtools:
+        livereload:
+            enabled: true
+    jpa:
+        hibernate:
+            ddl-auto: update
+            naming:
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL57Dialect
+                show_sql: true
+                format_sql: true
+                ddl-auto: update
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ssafy_blockchain_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
-    username: root
-    password: 1234
+    mvc:
+        throw-exception-if-no-handler-found: true
+        pathmatch:
+            matching-strategy: ant_path_matcher # springboot 2.6 version swagger 3.0.0 version error
 
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL57Dialect
-    properties:
-      hibernate:
-        show_sql: true # cmd??  sql? ?? ???? ?
 
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
-springfox:
-  documentation:
-    swagger:
-      use-model-v3=false: false
+#springfox:
+#    documentation:
+#        swagger:
+#            use-model-v3: false
