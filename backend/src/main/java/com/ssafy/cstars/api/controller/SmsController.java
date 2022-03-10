@@ -8,8 +8,10 @@ import java.security.NoSuchAlgorithmException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssafy.cstars.api.request.Request;
 import com.ssafy.cstars.api.response.SmsResponse;
-import com.ssafy.cstars.service.SmsService;
+import com.ssafy.cstars.service.SendSMSTwilio;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +23,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SmsController {
 
-    private final SmsService smsService;
+    private final SendSMSTwilio twilio;
 
-    @PostMapping("/user/sms")
-    public ResponseEntity<SmsResponse> test(@RequestBody Request request) throws NoSuchAlgorithmException, URISyntaxException, UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
-        SmsResponse data = smsService.sendSms(request.getRecipientPhoneNumber(), request.getContent());
-        return ResponseEntity.ok().body(data);
-    }
+    @PostMapping("/api/v1/auth/signup/phone")
+    public ResponseEntity<Integer> phonetest(@RequestBody Request request){
+
+        int code = twilio.sendSMS(request.getCountry(), request.getPhoneNum());
+        System.out.println(code);
+
+        return new ResponseEntity<Integer>(code, HttpStatus.CREATED);
+    } 
+
+    // @PostMapping("/phone")
+    // public String phonetest(String country, )
 }

@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Request {
-    private String recipientPhoneNumber;
-    private String title;
-    private String content;
-
+    private String country;
+    private String phoneNum;
 }
