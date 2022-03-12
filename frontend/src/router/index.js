@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from "../views/Login.vue"
 import Signup from "../views/Signup.vue"
+import Notification from "../views/accounts/Notification.vue"
+import SimpleSignup from "../views/accounts/SimpleSignup.vue"
+import AdditionInfo from "../views/accounts/AdditionInfo.vue"
+import Mainpage from "../views/Mainpage.vue"
+
 const routes = [
   {
     path: '/',
@@ -25,7 +30,27 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component : Signup
-  }
+  },
+  {
+    path: '/notification',
+    name: 'Notification',
+    component : Notification
+  },
+  {
+    path: '/simplesignup',
+    name: 'SimpleSignup',
+    component : SimpleSignup
+  },
+  {
+    path: '/additioninfo',
+    name: 'AdditionInfo',
+    component : AdditionInfo
+  },
+  {
+    path: '/main',
+    name: 'Mainpage',
+    component : Mainpage
+  },
 ]
 
 const router = createRouter({

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.cstars.exception.TokenRefreshException;
-import com.ssafy.cstars.models.RefreshToken;
-import com.ssafy.cstars.repository.RefreshTokenRepository;
-import com.ssafy.cstars.repository.UserRepository;
+import com.ssafy.cstars.domain.entity.RefreshToken;
+import com.ssafy.cstars.domain.repository.RefreshTokenRepository;
+import com.ssafy.cstars.domain.repository.UserRepository;
 
 @Service
 public class RefreshTokenService {

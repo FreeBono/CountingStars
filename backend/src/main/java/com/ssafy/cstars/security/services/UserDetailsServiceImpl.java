@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.cstars.models.User;
-import com.ssafy.cstars.repository.UserRepository;
+import com.ssafy.cstars.domain.entity.User;
+import com.ssafy.cstars.domain.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

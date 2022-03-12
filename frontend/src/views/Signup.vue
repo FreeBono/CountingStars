@@ -1,11 +1,6 @@
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
+  
+  <div>
       <Form @submit="handleRegister" :validation-schema="schema">
         <div v-if="!successful">
           <div class="form-group">
@@ -44,7 +39,7 @@
         {{ message }}
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>

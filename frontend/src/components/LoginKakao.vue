@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div  class="btn_type2 btn_kakao">
+    
     <img
         class="kakao_btn"
-        src="@/assets/kakao_login_medium_narrow.png"
+        src="@/assets/kakaoimage.png"
         @click="loginWithKakao"
+
     />
   </div>
 </template>
@@ -96,5 +98,35 @@ export default {
 
 .kakao_btn {
     cursor: pointer;
+    border: none;
+    background: no-repeat center left 10px;
+    background-size: 40px;
+    display: block;
+    width: 100%;
+    font-size: 1.125rem;
+    line-height: 54px;
+    letter-spacing: -0.5px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    height:54px;
+
+}
+
+.btn_type2 .btn_kakao {
+    border: none;
+    background: no-repeat center left 10px;
+    background-size: 40px;
+    cursor: pointer;
+}
+
+.btn_type2 {
+    display: block;
+    width: 100%;
+    font-size: 1.125rem;
+    line-height: 54px;
+    letter-spacing: -0.5px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 20px;
 }
 </style>
