@@ -211,6 +211,22 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'MaruBuri-Regular';
+  /* font-family: 'Galmuri9'; */
+  /* font-family: 'SUIT-Regular'; */
+  /* font-family: 'MinSans-Regular'; */
+  /* font-family: 'Chosunilbo_myungjo'; */
+  /* font-family: 'ChosunKm'; */
+  /* font-family: 'ChosunSm'; */
+  /* font-family: "휴먼고딕", "human gothic"; */
+  /* font-family: 'NanumMyeongjo'; */
+  /* font-family: 'NanumBarunGothicLight'; */
+  /* font-family: 'NanumBarunGothicYetHangul'; */
+  /* font-family: 'Spoqa Han Sans Neo', 'Malgun Gothic', sans-serif; */
+  /* font-family: 'Hahmlet', serif; */
+}
+
 
 .about {
   padding-left: 50px;
