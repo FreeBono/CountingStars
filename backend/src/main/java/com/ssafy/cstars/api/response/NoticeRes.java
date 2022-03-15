@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @ApiModel("NoticeResponse")
 public class NoticeRes {
-    @ApiModelProperty(name = "Notice id")
+    @ApiModelProperty(name = "Notice id", notes = "Unique identifier of the Contact.",
+            example = "1", required = true, position = 0)
     Long noticeId;
     @ApiModelProperty(name = "Notice title")
     String title;

@@ -13,6 +13,6 @@ import java.util.Optional;
  */
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
-    Page<Notice> findAll(Pageable pageable);
+    //Page<Notice> findAll(Pageable pageable);
     Optional<Notice> findById(Long id);
 }

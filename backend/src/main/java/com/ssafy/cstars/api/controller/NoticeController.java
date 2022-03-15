@@ -1,5 +1,6 @@
 package com.ssafy.cstars.api.controller;
 
+import ch.qos.logback.core.CoreConstants;
 import com.ssafy.cstars.api.request.NoticeDeleteReq;
 import com.ssafy.cstars.api.request.NoticePostReq;
 import com.ssafy.cstars.api.request.NoticePutReq;
@@ -71,7 +72,6 @@ public class NoticeController {
             @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
     })
     public ResponseEntity<BaseResponseBody> createNotice(@RequestBody @ApiParam(value = "공지사항 정보", required = true) NoticePostReq noticeInfo) {
-
         int statusCode = noticeService.createNotice(noticeInfo);
 
         return createResponseEntityToStatusCode(statusCode);
