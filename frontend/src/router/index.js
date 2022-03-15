@@ -6,6 +6,10 @@ import Notification from "../views/accounts/Notification.vue"
 import SimpleSignup from "../views/accounts/SimpleSignup.vue"
 import AdditionInfo from "../views/accounts/AdditionInfo.vue"
 import Mainpage from "../views/Mainpage.vue"
+import MainNotice from '@/views/notice/MainNotice.vue'
+import NoticeForm from '@/components/notice/NoticeForm.vue'
+import NoticeDetail from '@/components/notice/NoticeDetail.vue'
+
 
 const routes = [
   {
@@ -50,6 +54,21 @@ const routes = [
     path: '/main',
     name: 'Mainpage',
     component : Mainpage
+  },
+  {
+    path: '/notice',
+    name: 'MainNotice',
+    component: MainNotice
+  },
+  {
+    path: '/noticeform',
+    name: 'NoticeForm',
+    component: NoticeForm
+  },
+  {
+    path: '/noticedetail',
+    name: 'NoticeDetail',
+    component: NoticeDetail
   },
 ]
 
