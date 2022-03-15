@@ -50,8 +50,7 @@ public class BrandController {
     @ApiOperation(value = "브랜드 등록", notes = "<strong>브랜드</strong> 등록한다")
     @ApiResponses({
             @ApiResponse(code =200 , message = "SUCCESS", response = BrandRes.class),
-            @ApiResponse(code =400 , message = "CLIENT ERROR", response = BrandRes.class),
-            @ApiResponse(code =404 , message = "NOT FOUND", response = BrandRes.class),
+            @ApiResponse(code =401, message = "ACCESS DENIED", response = BaseResponseBody.class),
             @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
     })
     public ResponseEntity<BaseResponseBody> createBrand(@RequestBody @ApiParam(value = "브랜드 등록", required = true) BrandPostReq brandInfo){
