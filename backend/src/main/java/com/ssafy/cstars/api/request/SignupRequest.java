@@ -20,7 +20,6 @@ import lombok.ToString;
 @ToString
 @Builder
 public class SignupRequest extends BaseEntity{
-    @NotBlank
     @Size(min = 3, max = 20)
     private String username;
  
@@ -29,7 +28,7 @@ public class SignupRequest extends BaseEntity{
     @Email
     private String email;
     
-    private Set<String> role;
+    private Set<String> roles;
     
     @NotBlank
     @Size(min = 6, max = 60)
@@ -38,13 +37,20 @@ public class SignupRequest extends BaseEntity{
     @Size(max = 11)
     private String tel;
 
+    private String name;
+
     private double eth;
 
     private String address;
 
     private String grade;
 
-  
+    private String store;
+
+    private String role;
+
+    private String wallet;
+
     // public String getUsername() {
     //     return username;
     // }

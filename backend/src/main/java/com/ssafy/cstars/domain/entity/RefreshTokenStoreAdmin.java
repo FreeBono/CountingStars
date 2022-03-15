@@ -7,17 +7,17 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity(name = "refreshtoken")
+@Entity(name = "refreshtokenstoreadmin")
 @Data
 @AllArgsConstructor
-public class RefreshToken {
+public class RefreshTokenStoreAdmin {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
   @OneToOne
   @JoinColumn(name = "email", referencedColumnName = "email")
-  private User user;
+  private StoreAdmin storeAdmin;
 
   @Column(nullable = false, unique = true)
   private String token;
@@ -25,7 +25,7 @@ public class RefreshToken {
   @Column(nullable = false)
   private Instant expiryDate;
 
-  public RefreshToken() {
+  public RefreshTokenStoreAdmin() {
   }
 
 }
