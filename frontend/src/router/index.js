@@ -6,13 +6,18 @@ import Notification from "../views/accounts/Notification.vue"
 import SimpleSignup from "../views/accounts/SimpleSignup.vue"
 import AdditionInfo from "../views/accounts/AdditionInfo.vue"
 import Mainpage from "../views/Mainpage.vue"
-
+// import Test from "../components/test/Test.vue"
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
   },
+  // {
+  //   path: '/test',
+  //   name: 'Test',
+  //   component: Test
+  // },
   {
     path: '/about',
     name: 'about',

@@ -3,6 +3,7 @@ import TokenService from "./token.service";
 
 class AuthService {
   login({ email, password }) {
+    console.log('3로그인 서비스 실행')
     return api
       .post("/auth/signin", {
         email,
@@ -15,7 +16,10 @@ class AuthService {
         }
 
         return response.data;
-      });
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   logout() {

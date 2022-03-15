@@ -6,6 +6,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import setupInterceptors from './services/setupInterceptors';
+import BootstrapVue3 from 'bootstrap-vue-3'
 
 setupInterceptors(store);
 
@@ -13,6 +14,7 @@ createApp(App)
   .use(router)
   .use(store)
   .component(VueCountdown.name, VueCountdown)
+  .use(BootstrapVue3)
   .mount("#app");
 
 

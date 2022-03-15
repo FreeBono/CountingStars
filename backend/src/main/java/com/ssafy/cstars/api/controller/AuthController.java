@@ -77,13 +77,14 @@ public class AuthController {
         .collect(Collectors.toList());
 
     RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-
+    System.out.println("teeeeeeeest");
     return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
         userDetails.getUsername(), userDetails.getEmail(), roles));
   }
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    System.out.println("제발");
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
     }
