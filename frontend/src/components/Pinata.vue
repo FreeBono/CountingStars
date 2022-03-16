@@ -11,7 +11,7 @@
       <div class="row mb-3">
         <label for="dateOfManufacture" class="col-sm-2 col-form-label">제조날짜</label>
         <div class="col-sm-10">
-          <input type="date" class="form-control" id="dateOfManufacture" v-model="state.serialNumber">
+          <input type="date" class="form-control" id="dateOfManufacture" v-model="state.dateOfManufacture">
         </div>
       </div>
       <div class="row mb-3">
@@ -23,7 +23,7 @@
       <div class="row mb-3">
         <label for="countryOfManufacture" class="col-sm-2 col-form-label">제조국가</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="countryOfManufacture" v-model="state.serialNumber">
+          <input type="text" class="form-control" id="countryOfManufacture" v-model="state.countryOfManufacture">
         </div>
       </div>
       <!-- productClassification
@@ -65,7 +65,7 @@
       <div class="row mb-3">
         <label for="material" class="col-sm-2 col-form-label">소재</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="material" v-model="material">
+          <input type="text" class="form-control" id="material" v-model="state.material">
         </div>
       </div>
       <div class="row mb-3">
@@ -99,8 +99,8 @@
 </template>
 
 <script>
-// import pinata from '../services/pinata'
-// import pinataJson from '../services/pinataJson'
+import pinata from '../services/pinataApiFile'
+import pinataJson from '../services/pinataApiJson'
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
@@ -124,31 +124,32 @@ export default {
     const changeImgFile = async function (event) {
       if( event.target.files && event.target.files.length > 0 ) {
         state.value.nftImgFile = event.target.files[0];
-        state.value.nftImg = URL.createObjectURL(nftImgFile); // 파일 경로로 바꿔서 추가
-        //await pinata(file);
+        state.value.nftImg = URL.createObjectURL(state.value.nftImgFile); // 파일 경로로 바꿔서 추가
       }
     }
 
     const transferJSON = async function (url) {
       const data = {
-        serialNumber: this.serialNumber,
-        dateOfManufacture: state.dateOfManufacture,
-        brandName: brandName,
-        countryOfManufacture: countryOfManufacture,
-        productClassification: productClassification,
-        detailProductClassification: detailProductClassification,
-        material: material,
-        productColor: productColor,
-        productPrice: productPrice,
-        nftImgURI: url,
+        name: "Luxury",
+        description: "It contains a warranty for luxury goods.",
+        serialNumber: state.value.serialNumber,
+        dateOfManufacture: state.value.dateOfManufacture,
+        brandName: state.value.brandName,
+        countryOfManufacture: state.value.countryOfManufacture,
+        productClassification: state.value.productClassification,
+        detailProductClassification: state.value.detailProductClassification,
+        material: state.value.material,
+        productColor: state.value.productColor,
+        productPrice: state.value.productPrice,
+        image: url,
       }
 
-      console.log(data);
+      const response = await pinata(state.value.nftImgFile);
 
-      //await pinataJson(data);
+      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash;
+
+      await pinataJson(data);
     }
-
-
 
     return {
       onMounted, state,
