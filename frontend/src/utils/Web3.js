@@ -1,22 +1,22 @@
 var Web3 = require('web3');
 
 // var Personal = require('web3-eth-personal');
-var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
 // var personal = new Personal(Personal.givenProvider || 'ws://http://localhost:7545');
 
 // web3.eth.net.isListening().then(console.log);
-web3.eth.getAccounts().then(console.log);
+web3.eth.getAccounts().then('계정들확인 : ',console.log);
 // Asynchronous web3.eth.getBalance(address, function(err, result) { balance = result });
 // console.log(balance)
-sender = web3.eth.accounts.privateKeyToAccount('0x' + "267bf9eaaf8d3629fe4715d9d6d2ebc24f79fdbbaf99cd5c83c6a905d2043f05");
-console.log(sender)
-web3.eth.getBalance("0x2cC680435B3F94aAcc99fE4cE8645B745254d792").then(console.log);
+sender = web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e");
+console.log('sender확인 : ',sender)
+web3.eth.getBalance("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").then('잔고확인 : ',console.log);
 
 console.log(web3.eth.accounts.wallet);
 web3.eth.accounts.wallet.add(sender);
 web3.eth.defaultAccount = sender.address;
 senderAddress = web3.eth.defaultAccount;
-let contract = new web3.eth.Contract([
+let contract = new web3.eth.Contract( [
     {
       "inputs": [],
       "stateMutability": "nonpayable",
@@ -360,26 +360,6 @@ let contract = new web3.eth.Contract([
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
-      ],
-      "name": "tokenURI",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "from",
           "type": "address"
@@ -416,6 +396,31 @@ let contract = new web3.eth.Contract([
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
           "internalType": "string",
           "name": "tokenURI",
           "type": "string"
@@ -432,10 +437,29 @@ let contract = new web3.eth.Contract([
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ], "0xa4222BCdD3268fAB84DF3655034834C90f2122ac")
+  ], "0xc7a21620f076CeE598d8746561E46D01007b75f2")
 
-console.log(contract)
-contract.methods.mintNFT('google.com').send({from: "0x2cC680435B3F94aAcc99fE4cE8645B745254d792",gas:6721975 }).then(console.log)
+console.log('contract 확인 : ',contract)
+contract.methods.mintNFT("0x67Ec0790223db78A170C2C5B5eC564a746D0514c",'ipfs://QmXXzcrBXRS4A3PNLdWACCkWbR9WbRHSpEMy999dTfVjTr').send({from: "0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:6721975 }).then('nft발행 확인 : ',console.log)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 쓰레기
+
+
+
 // web3.eth.getBalance(address, function(err, result) { balance = result });
 // balance = web3.toDecimal(balance);
 

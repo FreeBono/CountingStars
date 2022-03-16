@@ -1,4 +1,4 @@
-// SPDX-LICENSE-Identifier: MIT
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.12;
 
@@ -12,15 +12,22 @@ contract MyNFTs is ERC721URIStorage, Ownable {
     Counters.Counter private _tokenIds;
 
     constructor() public ERC721("MyNFTs", "MNFT") {}
+    mapping(uint => string) tokenURIs;
 
-    function mintNFT(string memory tokenURI)
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        return tokenURIs[tokenId];
+    }
+
+    
+
+    function mintNFT(address to, string memory tokenURI)
         public onlyOwner
         returns (uint256)
     {
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
-        _mint(msg.sender, newItemId);
+        _mint(to, newItemId);
         _setTokenURI(newItemId, tokenURI);
 
         return newItemId;

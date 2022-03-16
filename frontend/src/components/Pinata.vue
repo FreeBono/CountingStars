@@ -123,9 +123,12 @@ export default {
 
     const changeImgFile = async function (event) {
       if( event.target.files && event.target.files.length > 0 ) {
+        
         state.value.nftImgFile = event.target.files[0];
-        state.value.nftImg = URL.createObjectURL(nftImgFile); // 파일 경로로 바꿔서 추가
+
+        state.value.nftImg = URL.createObjectURL(state.value.nftImgFile); // 파일 경로로 바꿔서 추가
         //await pinata(file);
+        console.log(state.value.nftImg)
       }
     }
 
