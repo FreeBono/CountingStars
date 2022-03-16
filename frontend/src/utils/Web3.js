@@ -5,12 +5,12 @@
 // // var personal = new Personal(Personal.givenProvider || 'ws://http://localhost:7545');
 
 // // web3.eth.net.isListening().then(console.log);
-// web3.eth.getAccounts().then('계정들확인 : ',console.log);
+// // web3.eth.getAccounts().then('계정들확인 : ',console.log);
 // // Asynchronous web3.eth.getBalance(address, function(err, result) { balance = result });
 // // console.log(balance)
 // sender = web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e");
 // console.log('sender확인 : ',sender)
-// web3.eth.getBalance("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").then('잔고확인 : ',console.log);
+// // web3.eth.getBalance("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").then('잔고확인 : ',console.log);
 
 // console.log(web3.eth.accounts.wallet);
 // web3.eth.accounts.wallet.add(sender);
@@ -445,7 +445,7 @@
 
 
 
-
+// 이 위까지 살리면 실행됨
 
 
 

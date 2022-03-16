@@ -1,16 +1,22 @@
-import Web3 from 'web3'
+// import Web3 from 'web3'
 
-export default function publishToken() {
-
+export default function publishToken(publisher) {
+var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
-web3.eth.getAccounts().then('계정들확인 : ',console.log);
-sender = web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e");
+console.log('왜안되니?')
+// web3.eth.getAccounts().then('계정들확인 : ',console.log);
+var sender = web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e");
+console.log('sender확인 : ',web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e"));
 console.log('sender확인 : ',sender)
 web3.eth.getBalance("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").then('잔고확인 : ',console.log);
-console.log(web3.eth.accounts.wallet);
+
 web3.eth.accounts.wallet.add(sender);
-web3.eth.defaultAccount = sender.address;
-senderAddress = web3.eth.defaultAccount;
+console.log(web3.eth.accounts.wallet);
+// web3.eth.defaultAccount = sender.address;
+// senderAddress = web3.eth.defaultAccount;
+
+web3.eth.getBlock("latest").then(res => {console.log(res)})
+// console.log("gasLimit: " + block);
 let contract = new web3.eth.Contract( [
     {
       "inputs": [],
@@ -435,6 +441,7 @@ let contract = new web3.eth.Contract( [
   ], "0xc7a21620f076CeE598d8746561E46D01007b75f2")
 
 console.log('contract 확인 : ',contract)
-contract.methods.mintNFT("0x67Ec0790223db78A170C2C5B5eC564a746D0514c",'ipfs://QmXXzcrBXRS4A3PNLdWACCkWbR9WbRHSpEMy999dTfVjTr').send({from: "0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:6721975 }).then('nft발행 확인 : ',console.log)
+console.log(`ipfs://${publisher}`)
+contract.methods.mintNFT("0x67Ec0790223db78A170C2C5B5eC564a746D0514c",`ipfs://${publisher}`).send({from: "0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:6000000 }).then('nft발행 확인 : ',console.log)
 
 }

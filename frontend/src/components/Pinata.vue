@@ -103,12 +103,14 @@ import pinata from '../services/pinataApiFile'
 import pinataJson from '../services/pinataApiJson'
 import { ref } from 'vue';
 import { onMounted } from 'vue';
-import Web3 from 'web3'
+import publishToken from '../utils/web3test'
+// import Web3 from 'web3'
 
 
 export default {
   name : 'Pinata',
   setup() {
+    // var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
     const state = ref({
       serialNumber: 'AAA11111',
       dateOfManufacture: new Date('2022-03-16'),
@@ -149,10 +151,12 @@ export default {
 
       const response = await pinata(state.value.nftImgFile);
 
-      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash;
+      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
 
-      await pinataJson(data);
-      
+      const jsonResponse = await pinataJson(data);
+
+      console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
+      publishToken(jsonResponse.data.IpfsHash)
     }
 
     return {
