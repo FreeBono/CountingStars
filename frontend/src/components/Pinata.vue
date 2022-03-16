@@ -146,9 +146,11 @@ export default {
 
       const response = await pinata(state.value.nftImgFile);
 
-      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash;
+      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
 
-      await pinataJson(data);
+      const jsonResponse = await pinataJson(data);
+
+      console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
     }
 
     return {
