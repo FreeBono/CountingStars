@@ -1,19 +1,12 @@
 package com.ssafy.cstars.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 공지사항 모델 정의.

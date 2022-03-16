@@ -23,13 +23,13 @@ spring:
         url: jdbc:mysql://localhost:3306/ssafy_blockchain_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
         hikari:
             username: root
-            password: 1234
+            password: 123478
     devtools:
         livereload:
             enabled: true
     jpa:
         hibernate:
-            ddl-auto: update
+#            ddl-auto: update
             naming:
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
@@ -38,7 +38,7 @@ spring:
                 dialect: org.hibernate.dialect.MySQL57Dialect
                 show_sql: true
                 format_sql: true
-                ddl-auto: update
+                #ddl-auto: update
 
     mvc:
         throw-exception-if-no-handler-found: true
@@ -50,3 +50,15 @@ springfox:
     documentation:
         swagger:
             use-model-v3: false
+
+sms:
+    serviceId: ncp:sms:kr:281954218605:cstars
+    accessKey: xghjE6ZT97P2xCmJqkwX
+    secretKey: 75622b8c6cb3421887d3b6a1fa779773
+
+# App Properties
+bezkoder:
+    app:
+        jwtSecret: bezKoderSecretKey
+        jwtExpirationMs: 3600000
+        jwtRefreshExpirationMs: 86400000

@@ -6,8 +6,8 @@ import com.ssafy.cstars.api.request.NoticePutReq;
 import com.ssafy.cstars.api.response.BaseResponseBody;
 import com.ssafy.cstars.api.response.NoticeListRes;
 import com.ssafy.cstars.api.response.NoticeRes;
-import com.ssafy.cstars.domain.entity.Notice;
 import com.ssafy.cstars.service.NoticeService;
+import com.ssafy.cstars.domain.entity.Notice;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -71,7 +71,6 @@ public class NoticeController {
             @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
     })
     public ResponseEntity<BaseResponseBody> createNotice(@RequestBody @ApiParam(value = "공지사항 정보", required = true) NoticePostReq noticeInfo) {
-
         int statusCode = noticeService.createNotice(noticeInfo);
 
         return createResponseEntityToStatusCode(statusCode);
