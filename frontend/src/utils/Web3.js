@@ -14,8 +14,8 @@
 
 // console.log(web3.eth.accounts.wallet);
 // web3.eth.accounts.wallet.add(sender);
-// web3.eth.defaultAccount = sender.address;
-// senderAddress = web3.eth.defaultAccount;
+// // web3.eth.defaultAccount = sender.address;
+// // senderAddress = web3.eth.defaultAccount;
 // let contract = new web3.eth.Contract( [
 //     {
 //       "inputs": [],
@@ -440,7 +440,7 @@
 //   ], "0xc7a21620f076CeE598d8746561E46D01007b75f2")
 
 // console.log('contract 확인 : ',contract)
-// contract.methods.mintNFT("0x67Ec0790223db78A170C2C5B5eC564a746D0514c",'ipfs://QmXXzcrBXRS4A3PNLdWACCkWbR9WbRHSpEMy999dTfVjTr').send({from: "0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:6721975 }).then('nft발행 확인 : ',console.log)
+// contract.methods.mintNFT("0x67Ec0790223db78A170C2C5B5eC564a746D0514c",'ipfs://QmXXzcrBXRS4A3PNLdWACCkWbR9WbRHSpEMy999dTfVjTr').send({from: "0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:600000 }).then('nft발행 확인 : ',console.log)
 
 
 
