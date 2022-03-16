@@ -3,6 +3,8 @@ package com.ssafy.cstars.security.jwt;
 import java.security.SignatureException;
 import java.util.Date;
 
+import com.ssafy.cstars.security.services.BrandAdminDetailsImpl;
+import com.ssafy.cstars.security.services.StoreAdminDetailsImpl;
 import com.ssafy.cstars.security.services.UserDetailsImpl;
 
 import org.slf4j.Logger;
@@ -27,16 +29,24 @@ public class JwtUtils {
   private int jwtExpirationMs;
 
   public String generateJwtToken(UserDetailsImpl userPrincipal) {
-    return generateTokenFromUsername(userPrincipal.getEmail());
+    return generateTokenFromEmail(userPrincipal.getEmail());
   }
 
-  public String generateTokenFromUsername(String email) {
+  public String generateJwtTokenStoreAdmin(StoreAdminDetailsImpl storeAdminPrincipal){
+    return generateTokenFromEmail(storeAdminPrincipal.getEmail());
+  }
+
+  public String generateJwtTokenBrandAdmin(BrandAdminDetailsImpl brandAdminPrincipal){
+    return generateTokenFromEmail(brandAdminPrincipal.getEmail());
+  }
+
+  public String generateTokenFromEmail(String email) {
     return Jwts.builder().setSubject(email).setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret)
         .compact();
   }
 
-  public String getUserNameFromJwtToken(String token) {
+  public String getEmailFromJwtToken(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
   }
 

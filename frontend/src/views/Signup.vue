@@ -86,7 +86,7 @@ export default {
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+
     }
   },
   methods: {

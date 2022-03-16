@@ -78,6 +78,7 @@
         <LoginKakao/>
       </div> -->
     </div>
+    <Block/>
   </body>
 
 </template>
@@ -86,9 +87,11 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import LoginKakao from "../components/LoginKakao.vue"
+import Block from "@/components/Block.vue"
 export default {
   name: "Login",
   components: {
+    Block,
     Form,
     Field,
     ErrorMessage,
@@ -117,7 +120,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+
     }
   },
   methods: {
@@ -127,7 +130,7 @@ export default {
       console.log(this.data)
       this.$store.dispatch("auth/login", this.data).then(
         () => {
-          this.$router.push("/profile");
+  
         },
         (error) => {
           this.loading = false;

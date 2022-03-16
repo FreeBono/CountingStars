@@ -62,16 +62,17 @@ export default {
                 .then(res => {
                   console.log(res)
                   const b = response.id
-                  vm.$store.dispatch("auth/login", {username:b,password:b})
-                  vm.$router.push("/profile");
+                  vm.$store.dispatch("auth/login", {email:b,password:b})
+                  vm.$router.push("/");
                 })
                 .catch(err => {
                   console.log(err)
-                  console.log(response.id)
+                  
                   const b = response.id
                   // async 해보기
-                  vm.$store.dispatch("auth/login", {username:b,password:b})
-                  vm.$router.push("/");
+                  vm.$store.dispatch("auth/login", {email:response.kakao_account.email,password:b})
+                  console.log('ewf' ,b,b)
+                  vm.$router.push("/main");
 
                 })
               },

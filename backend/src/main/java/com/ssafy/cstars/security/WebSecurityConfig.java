@@ -1,5 +1,11 @@
 package com.ssafy.cstars.security;
 
+import com.ssafy.cstars.security.jwt.AuthEntryPointJwt;
+import com.ssafy.cstars.security.jwt.AuthTokenFilter;
+import com.ssafy.cstars.security.services.BrandAdminDetailsServiceImpl;
+import com.ssafy.cstars.security.services.StoreAdminDetailsServiceImpl;
+import com.ssafy.cstars.security.services.UserDetailsServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,10 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.ssafy.cstars.security.jwt.AuthEntryPointJwt;
-import com.ssafy.cstars.security.jwt.AuthTokenFilter;
-import com.ssafy.cstars.security.services.UserDetailsServiceImpl;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -27,6 +29,12 @@ import com.ssafy.cstars.security.services.UserDetailsServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
+
+	@Autowired
+	StoreAdminDetailsServiceImpl storeAdminDetailsService;
+
+	@Autowired
+	BrandAdminDetailsServiceImpl brandAdminDetailsService;
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
@@ -39,6 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(storeAdminDetailsService).passwordEncoder(passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(brandAdminDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -59,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
+			.antMatchers("/**").permitAll()
 			.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

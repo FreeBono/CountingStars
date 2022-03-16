@@ -16,14 +16,15 @@ export default {
     const store = useStore()
     const router = useRouter()
     onMounted(() => {
+  
       EventBus.on("logout", () => {
       logOut()
       })
     })
 
-    onUnmounted(() => {
-      EventBus.remove("logout");
-    });
+    // onUnmounted(() => {
+    //   EventBus.remove("logout");
+    // });
 
     const logOut = () => {
       console.log('로그아웃')
@@ -43,7 +44,7 @@ export default {
       }
       console.log('out')
       store.dispatch('auth/logout');
-      router.push('/login');
+      
     }
 
 

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- Navbar -->
+    <Navbar />
     <!-- 최상위 gif -->
     <img src="@/assets/MAINGIF.gif" alt="" style="width:100%; height: 100vh;">
 
@@ -20,7 +22,14 @@
         </div>
       </div>
     </div>
+    <!-- <LoginModal/> -->
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Launch demo modal
+    </button> -->
 
+    <!-- Modal -->
+    
     <!-- EXPERIENCE -->
     <p style="margin-top:80px; margin-right:40px; margin-bottom : 50px;" align="right">EXPERIENCE</p>
     <p style="margin-bottom:40px;">서비스를 통한 긍정적인 명품시장에 기여</p>
@@ -175,13 +184,13 @@
 
     <!-- footer -->
     <hr style="height:2px; margin-top:180px;">
-    <center style="margin-top:40px;">
+    <!-- <center style="margin-top:40px;">
       <div style="height :60px; width : 200px">
         <img src="@/assets/cslogo.png" alt="" style="height:100%; width:60px;">
         <span style="margin-left:10px;">Counting Stars</span>
       </div>
       <div style="margin-top:20px;">2022 Counting Stars. All rights reserved | SSAFY</div>
-    </center>
+    </center> -->
 
 
   </div>
@@ -190,6 +199,9 @@
 <script>
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import Navbar from "../components/Navbar.vue"
+import LoginModal from "../components/accounts/LoginModal.vue"
+import getWeb3 from '../utils/Web3.js'
 
 export default {
   name : "Mainpage",
@@ -198,11 +210,13 @@ export default {
     Slide,
     Pagination,
     Navigation,
+    Navbar,
+    LoginModal,
   },
   setup() {
-
-
-
+    // getWeb3
+    // Test.tt()
+    
     return {
 
     }
@@ -252,5 +266,17 @@ export default {
   background-color: #333333;
   height : 100vh;
   color:white;
+}
+
+.modal-body {
+  border-radius: 4rem;
+  background: linear-gradient(135deg, #00c3ff, #eeef1c);
+  background: linear-gradient(135deg, #fc00ff, #00dbde);
+  background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
+  background-image: linear-gradient(150deg, #5a00ff 0%, #ff1ff7 100%, #ff1ff7 100%);
+}
+
+.modal-content{
+  border-radius: 4rem;
 }
 </style>

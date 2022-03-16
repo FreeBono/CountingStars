@@ -19,12 +19,19 @@ import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
 
 
+import Pinata from "../components/Pinata.vue"
+// import Test from "../components/test/Test.vue"
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
   },
+  // {
+  //   path: '/test',
+  //   name: 'Test',
+  //   component: Test
+  // },
   {
     path: '/about',
     name: 'about',
@@ -117,6 +124,11 @@ const routes = [
     path: '/nfttransfer',
     name: 'NftTransfer',
     component: NftTransfer
+  },
+  {
+    path: '/pinata',
+    name: 'Pinata',
+    component : Pinata
   },
 ]
 

@@ -13,6 +13,8 @@ import com.ssafy.cstars.domain.entity.User;
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
   Optional<RefreshToken> findByToken(String token);
 
+  Boolean existsByToken(String token);
+
   @Modifying
   int deleteByUser(User user);
 }
