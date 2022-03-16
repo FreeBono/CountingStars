@@ -10,7 +10,7 @@
                     <a class="nav-link" href="#" id="container5">Blog</a> <a class="nav-link" href="#" id="container6">Conact</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.auth.status.loggedIn">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
-                   
+                  
                 </div>
                     
             </div>

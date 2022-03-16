@@ -127,7 +127,7 @@
     <!-- carousel -->
     <!-- <div class="row-vh d-flex flex-row" style="width:650px; height: 175px; background-color:#f4f4f4;">
       <div style="height:175px; width:15%; line-height:175px;" >
-       <img src="@/assets/icon.png" alt="" style="height:50%; width:70%;">
+        <img src="@/assets/icon.png" alt="" style="height:50%; width:70%;">
       </div>
         <div style="width:70%; padding-top:30px;" align="left">
           <div>
@@ -144,13 +144,13 @@
     <h1 style="margin-top: 120px; margin-bottom: 80px;">
       전체 가치체인을 통해 고객의 신뢰와 경험을 향상시킨다.
     </h1>
-   
+  
     <Carousel :items-to-show="2.5" :wrap-around="true">
     <Slide v-for="slide in 10" :key="slide">
       <div class="carousel__item">
         <div class="row-vh d-flex flex-row" style="width:650px; height: 175px; background-color:#f4f4f4;">
       <div style="height:175px; width:15%; line-height:175px;" >
-       <img src="@/assets/icon.png" alt="" style="height:50%; width:70%;">
+        <img src="@/assets/icon.png" alt="" style="height:50%; width:70%;">
       </div>
         <div style="width:70%; padding-top:30px;" align="left">
           <div>

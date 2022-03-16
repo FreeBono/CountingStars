@@ -5,6 +5,7 @@
 .nav-link {
   text-align: left;
   font-size: 17px;
+  /* color: black; */
   /* margin-left: 5px; */
   margin-bottom: 15px;
 }
@@ -24,10 +25,12 @@
 
 .main-content {
   position: relative;
+  background-color: #f5f6fc;
 }
 
 .nav-link-text {
-  color: white;
+  /* color: white; */
+  color: black;
   font-size: 24px;
   margin-left: 40px;
   font-family: 'MinSans-Regular';

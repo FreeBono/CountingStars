@@ -87,7 +87,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
 

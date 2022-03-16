@@ -119,7 +119,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import "@/assets/style/notice/noticeSide.css"
 import "@/assets/style/notice/noticeTable.css"
 
