@@ -6,6 +6,7 @@ import com.ssafy.cstars.api.request.NoticePutReq;
 import com.ssafy.cstars.domain.entity.Admin;
 import com.ssafy.cstars.domain.entity.Notice;
 import com.ssafy.cstars.domain.repository.NoticeRepository;
+import com.ssafy.cstars.domain.repository.NoticeRepositorySupport;
 import com.ssafy.cstars.service.AdminService;
 import com.ssafy.cstars.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,12 @@ public class NoticeServiceImpl implements NoticeService {
     @Autowired
     NoticeRepository noticeRepository;
 
+    @Autowired
+    NoticeRepositorySupport noticeRepositorySupport;
+
     @Override
     public Page<Notice> getNoticeList(Pageable pageable) {
-        Page<Notice> notices = noticeRepository.findAll(pageable);
+        Page<Notice> notices = noticeRepositorySupport.findAll(pageable);
 
         if(notices.isEmpty()) return null;
 
@@ -51,6 +55,8 @@ public class NoticeServiceImpl implements NoticeService {
                 .title(noticeInfo.getTitle())
                 .content(noticeInfo.getContent())
                 .build();
+
+        System.out.println(notice);
 
         if(notice == null) return 500;
 

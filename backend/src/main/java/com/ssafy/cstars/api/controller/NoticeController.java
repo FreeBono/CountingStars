@@ -71,7 +71,6 @@ public class NoticeController {
             @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
     })
     public ResponseEntity<BaseResponseBody> createNotice(@RequestBody @ApiParam(value = "공지사항 정보", required = true) NoticePostReq noticeInfo) {
-
         int statusCode = noticeService.createNotice(noticeInfo);
 
         return createResponseEntityToStatusCode(statusCode);
