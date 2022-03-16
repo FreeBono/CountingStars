@@ -9,6 +9,13 @@ import Mainpage from "../views/Mainpage.vue"
 import MainNotice from '@/views/notice/MainNotice.vue'
 import NoticeForm from '@/components/notice/NoticeForm.vue'
 import NoticeDetail from '@/components/notice/NoticeDetail.vue'
+import AdminPage from '@/views/admin/AdminPage.vue'
+import PartnerManagement from '@/views/admin/PartnerManagement.vue'
+import NftCreate from '@/views/admin/NftCreate.vue'
+import MyNftDetail from '@/views/nft/MyNftDetail.vue'
+import MyNft from '@/views/nft/MyNft.vue'
+import NftSearch from '@/views/nft/NftSearch.vue'
+import NftTransfer from '@/views/nft/NftTransfer.vue'
 
 
 const routes = [
@@ -69,6 +76,41 @@ const routes = [
     path: '/noticedetail',
     name: 'NoticeDetail',
     component: NoticeDetail
+  },
+  {
+    path: '/admin',
+    name: 'AdminPage',
+    component: AdminPage
+  },
+  {
+    path: '/partner',
+    name: 'PartnerManagement',
+    component: PartnerManagement
+  },
+  {
+    path: '/nftcreate',
+    name: 'NftCreate',
+    component: NftCreate
+  },
+  {
+    path: '/mynftdetail',
+    name: 'MyNftDetail',
+    component: MyNftDetail
+  },
+  {
+    path: '/mynft',
+    name: 'MyNft',
+    component: MyNft
+  },
+  {
+    path: '/nftsearch',
+    name: 'NftSearch',
+    component: NftSearch
+  },
+  {
+    path: '/nfttransfer',
+    name: 'NftTransfer',
+    component: NftTransfer
   },
 ]
 

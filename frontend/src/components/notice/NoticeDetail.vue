@@ -1,6 +1,7 @@
 <template>
   <h1>공지사항 상세보기</h1>
     <div class="wrapper">
+      <!-- 사이드바 부분 -->
     <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
       <div class="scrollbar-inner">
       <div class="navbar-inner">
@@ -21,24 +22,24 @@
             </div>
           </li>
           <li to="/notice" class="nav-item">
-            <a class="sidebar-menu-item nav-link">
+            <a href="/notice" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">공지사항<b class="caret"></b></span>
             </a>
           </li>
 
           <!-- ADMIN일 경우만 보이게 -->
           <li to="/admin" class="nav-item">
-            <a class="sidebar-menu-item nav-link">
+            <a href="/admin" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">ADMIN<b class="caret"></b></span>
             </a>
           </li>
           <li to="/partnerManagement" class="nav-item">
-            <a class="sidebar-menu-item nav-link">
+            <a href="/partner" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">거래처 관리<b class="caret"></b></span>
             </a>
           </li>
           <li to="/nftMake" class="nav-item">
-            <a class="sidebar-menu-item nav-link">
+            <a href="/nftcreate" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">NFT 발급<b class="caret"></b></span>
             </a>
           </li>

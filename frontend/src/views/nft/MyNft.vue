@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <!-- 사이드 시작 -->
+    <div class="wrapper">
+      <!-- 사이드바 부분 -->
     <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
       <div class="scrollbar-inner">
       <div class="navbar-inner">
@@ -42,31 +43,57 @@
               <span class="nav-link-text">NFT 발급<b class="caret"></b></span>
             </a>
           </li>
+          <!-- ADMIN일 경우만 보이게 -->
+
         </ul>
         </div>
       </div>
     </div>
     <!-- 새로운 사이드 끝 -->
-    
+
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <p class="head_title">공지사항 등록</p>
+        <p class="head_title">My NFT</p>
       </div>
-      <div class="content_outside_box">
-        <div class="content_box">
-          <div class="container">
-            <p>여기에 스마트 에디터 불러오기</p>
-            <!-- <textarea name="editor1" id="editor1" cols="30" rows="10"></textarea> -->
-            <div id="smarteditor">
-              <textarea class="form-control" id="floatingTextarea2"></textarea>
+
+      <!-- 카드 부분 -->
+      <div>
+        <div class="content_outside_box">
+          <div class="mt--6 container">
+            <div class="row">
+              <div class="col col-lg-4">
+                <!-- 카드 -->
+                <div class="card" @click="goNoticeMain" style="background-color: #9950F4; width: 20rem;">
+                  <img class="card=img-top" src="icon.png" alt="공지사항">
+                  <div class="card-body">
+                    <h4 class="card-title h2 bm-0">NFT</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4">
+                <div class="card" @click="goPartenrManagement" style="background-color: #526EFF; width: 20rem;">
+                  <img class="card=img-top" src="icon.png" alt="거래처">
+                  <div class="card-body">
+                    <h4 class="card-title h2 bm-0">NFT</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4">
+                <div class="card" @click="goNftCreate" style="background-color: #FC5E5E; width: 20rem;">
+                  <img class="card=img-top" src="icon.png" alt="nft발급">
+                  <div class="card-body">
+                    <h4 class="card-title h2 bm-0">NFT</h4>
+                  </div>
+                </div>
+              </div>
+
+              </div>
             </div>
           </div>
-          <div class="createBtn_position2">
-            <button type="button" class="btn createBtn" @click="goNoticeDetail" style="width: 70px">등록</button>
-            <button type="button" class="btn cancleBtn mx-2" @click="goNoticeMain" style="width: 70px">취소</button>
-          </div>
         </div>
+      </div>
+      <!-- 카드 끝-->
 
         <!-- 블록 이미지 부분 테두리 따기 -->
           <div class="box_img">
@@ -74,43 +101,17 @@
             <img class="mx-5" src="icon.png" alt="블록 상자2" style="width: 300px;">
           </div>
         <!-- 블록 이미지 끝 -->
-
-      </div>
-    </div>
     <!-- 내용 들어갈 곳 끝 -->
+    </div>
   </div>
 </template>
 
 <script>
 import "@/assets/style/notice/noticeSide.css"
-import "@/assets/style/notice/noticeTable.css"
-import "@/assets/style/notice/noticeForm.css"
-
-
 import { useRouter } from 'vue-router'
 
-
 export default {
-  name: 'NoticeForm',
-  setup() {
-    const router = useRouter()
-
-    // 디테일로 가기
-    function goNoticeDetail() {
-      router.push({name: 'NoticeDetail'})
-    }
-
-    function goNoticeMain() {
-      router.push({name: 'MainNotice'})
-    }
-
-    // 글 저장하는 함수 생성(저장하고 디테일로 보내기)
-    return {
-      goNoticeDetail,
-      goNoticeMain,
-      // smartEditor
-    }
-  }
+  name: 'MyNft',
 }
 </script>
 
@@ -139,5 +140,57 @@ export default {
   transform: translateX(0);
   left: 0;
   border-width: 0 1px 0 0;
+}
+
+.row {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #525f7f;
+  text-align: left;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col {
+  display: flex;
+  justify-content: center;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.card {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: white;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-clip: border-box;
+  border-radius: .375rem;
+  margin-bottom: 30px;
+  box-shadow: 3px 3px 10px 1px #adabab;
+  border: none;
+}
+
+/* 카드 누르면 작아지게? 테두리 뜨게? 아무튼 효과 주기 */
+.card:hover {
+  cursor: pointer;
+}
+
+.content_outside_box {
+  bottom: 100px;
+}
+
+.container {
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  /* flex-wrap: wrap; */
 }
 </style>

@@ -1,12 +1,13 @@
 <template>
-  <h1>공지사항 페이지 네브바 자리</h1>
+  <!-- <h2>My NFT 상세보기</h2> -->
   <div class="wrapper">
-    <!-- 사이드 시작 -->
+    <div class="wrapper">
+      <!-- 사이드바 부분 -->
     <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
       <div class="scrollbar-inner">
       <div class="navbar-inner">
         <ul class="navbar-nav">
-          <li to="/mynft" class="nav-item">
+          <li to="/" class="nav-item">
             <a href="/mynft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
               <span class="nav-link-text">MY NFT<b class="caret"></b></span>
             </a>
@@ -48,108 +49,69 @@
       </div>
     </div>
     <!-- 새로운 사이드 끝 -->
-    
+
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <p class="head_title">공지사항</p>
+        <p class="head_title">MY NFT</p>
       </div>
       <div class="content_outside_box">
         <div class="content_box">
           <div class="container">
-            <!-- 테이블 -->
-            <div class="notice_board">
-              <div class="notice_board_head">
-                <p class="mt-3">
-                  Total
-                  <em>몇 개</em>
-                </p>
-              </div>
-              <table>
-                <colgroup>
-                  <col width="56px">
-                  <col width="102px">
-                  <col width="*">
-                  <col width="158px">
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>유형</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>번호</td>
-                    <td>유형</td>
-                    <td>제목 : for문 돌려서 채우기</td>
-                    <td>작성일</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="nft_img">
+              <img src="icon.png" alt="nft이미지" style="width: 250px;">
             </div>
-              <!-- 테이블 끝 -->
+            <div>
+              <p>nft 내용 불러오기</p>
+            </div>
           </div>
-          <div class="createBtn_position">
-            <button type="button" class="btn createBtn" @click="goNoticeForm" >글생성</button>
+
+          <!-- 관리자만 버튼 보이게 -->
+          <div class="createBtn_position2">
+            <button type="button" class="btn createBtn" @click="sendNft" style="width: 100px">소유권이전</button>
+            <button type="button" class="btn backBtn mx-2" @click="goMyNft" style="width: 60px">목록</button>
           </div>
         </div>
-        <!-- 페이지네이션 -->
-        <nav aria-label="Page navigation">
-          <div class="pagination_outside">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </div>
-        </nav>
-        <!-- 페이지네이션 끝 -->
-        
+
         <!-- 블록 이미지 부분 테두리 따기 -->
           <div class="box_img">
             <img class="mx-5" src="icon.png" alt="블록 상자" style="width: 300px;">
             <img class="mx-5" src="icon.png" alt="블록 상자2" style="width: 300px;">
           </div>
         <!-- 블록 이미지 끝 -->
+
       </div>
     </div>
     <!-- 내용 들어갈 곳 끝 -->
+    </div>
   </div>
 </template>
 
 <script>
 import "@/assets/style/notice/noticeSide.css"
-import "@/assets/style/notice/noticeTable.css"
 import { useRouter } from 'vue-router'
 
-
 export default {
-  name: 'MainNotice',
+  name: 'MyNftDetail',
   setup() {
     const router = useRouter()
 
-    // 공지사항 글 생성
-    function goNoticeForm() {
-      router.push({name: 'NoticeForm'})
+    function goMyNft() {
+      router.push({name: 'MyNft'})
     }
-    return {
-      goNoticeForm
+    function sendNft() {
+      router.push({name: 'NftTransfer'})
     }
-  },
-  methods: {
     
+    return {
+      goMyNft,
+      sendNft,
+    }
   }
-  
 }
 </script>
 
 <style scoped>
-
 .sidenav {
   text-align: left;
   box-sizing: border-box;
@@ -174,5 +136,14 @@ export default {
   transform: translateX(0);
   left: 0;
   border-width: 0 1px 0 0;
+}
+
+.nft_img {
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: center; */
+  top: 150px;
+  position: relative;
+  left: 100px;
 }
 </style>
