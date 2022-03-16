@@ -1,0 +1,64 @@
+server:
+    address: localhost
+    compression:
+        enabled: true
+        mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    port: 8080
+    servlet:
+        contextPath: /
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+#spa:
+#    default-file: /dist/index.html
+
+spring:
+    data:
+        web:
+            pageable:
+                one-indexed-parameters: true
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ssafy_blockchain_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+        hikari:
+            username: root
+            password: 123478
+    devtools:
+        livereload:
+            enabled: true
+    jpa:
+        hibernate:
+            ddl-auto: update
+            naming:
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL57Dialect
+                show_sql: true
+                format_sql: true
+                ddl-auto: update
+
+    mvc:
+        throw-exception-if-no-handler-found: true
+        pathmatch:
+            matching-strategy: ant_path_matcher # springboot 2.6 version swagger 3.0.0 version error
+
+
+springfox:
+    documentation:
+        swagger:
+            use-model-v3: false
+
+sms:
+    serviceId: ncp:sms:kr:281954218605:cstars
+    accessKey: xghjE6ZT97P2xCmJqkwX
+    secretKey: 75622b8c6cb3421887d3b6a1fa779773
+
+# App Properties
+bezkoder:
+    app:
+        jwtSecret: bezKoderSecretKey
+        jwtExpirationMs: 3600000
+        jwtRefreshExpirationMs: 86400000

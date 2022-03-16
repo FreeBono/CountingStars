@@ -26,8 +26,16 @@
 //     @JoinColumn(name="admin_id")
 //     Admin admin;
 
+<<<<<<< HEAD
 //     public void modify(String title, String description) {
 //         this.title = title;
 //         this.content = description;
 //     }
 // }
+=======
+    public void modify(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+}
+>>>>>>> c3bd5782aff9db060de09726a88d1c68373f3f55
