@@ -7,15 +7,15 @@
       <div class="navbar-inner">
         <ul class="navbar-nav">
           <li to="/" class="nav-item">
-            <a href="/myNft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
+            <a href="/mynft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
               <span class="nav-link-text">MY NFT<b class="caret"></b></span>
             </a>
             <div>
               <ul class="nav nav-sm flex-column">
-                <a href="/nftSearch" class="nav-link">
+                <a href="/nftwalletsearch" class="nav-link">
                   <span class="nav-link-text">NFT 조회</span>
                 </a>
-                <a href="/nftTransfer" class="nav-link">
+                <a href="/nfttransfer" class="nav-link">
                   <span class="nav-link-text">NFT 이전</span>
                 </a>
               </ul>
@@ -33,12 +33,12 @@
               <span class="nav-link-text">ADMIN<b class="caret"></b></span>
             </a>
           </li>
-          <li to="/partnerManagement" class="nav-item">
+          <li to="/partner" class="nav-item">
             <a href="/partner" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">거래처 관리<b class="caret"></b></span>
             </a>
           </li>
-          <li to="/nftMake" class="nav-item">
+          <li to="/nftcreate" class="nav-item">
             <a href="/nftcreate" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">NFT 발급<b class="caret"></b></span>
             </a>
@@ -58,13 +58,15 @@
       </div>
 
       <!-- 카드 부분 -->
+      <!-- for문 돌려서 카드 6개 띄우고 누르면 상세보기로 -->
+      <!-- 페이지네이션 추가 -->
       <div>
         <div class="content_outside_box">
           <div class="mt--6 container">
             <div class="row">
               <div class="col col-lg-4">
                 <!-- 카드 -->
-                <div class="card" @click="goNoticeMain" style="background-color: #9950F4; width: 20rem;">
+                <div class="card" @click="goMyNftDeatil" style="background-color: #9950F4; width: 20rem;">
                   <img class="card=img-top" src="icon.png" alt="공지사항">
                   <div class="card-body">
                     <h4 class="card-title h2 bm-0">NFT</h4>
@@ -112,6 +114,16 @@ import { useRouter } from 'vue-router'
 
 export default {
   name: 'MyNft',
+  setup() {
+    const router = useRouter()
+
+    function goMyNftDeatil() {
+      router.push({name: 'MyNftDetail'})
+    }
+    return {
+      goMyNftDeatil,
+    }
+  }
 }
 </script>
 

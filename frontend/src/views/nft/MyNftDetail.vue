@@ -13,7 +13,7 @@
             </a>
             <div>
               <ul class="nav nav-sm flex-column">
-                <a href="/nftsearch" class="nav-link">
+                <a href="/nftwallettransfer" class="nav-link">
                   <span class="nav-link-text">NFT 조회</span>
                 </a>
                 <a href="/nfttransfer" class="nav-link">

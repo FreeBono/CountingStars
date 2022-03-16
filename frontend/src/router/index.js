@@ -14,7 +14,8 @@ import PartnerManagement from '@/views/admin/PartnerManagement.vue'
 import NftCreate from '@/views/admin/NftCreate.vue'
 import MyNftDetail from '@/views/nft/MyNftDetail.vue'
 import MyNft from '@/views/nft/MyNft.vue'
-import NftSearch from '@/views/nft/NftSearch.vue'
+import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
+import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
 
 
@@ -103,9 +104,14 @@ const routes = [
     component: MyNft
   },
   {
-    path: '/nftsearch',
-    name: 'NftSearch',
-    component: NftSearch
+    path: '/nftwalletsearch',
+    name: 'NftWalletSearch',
+    component: NftWalletSearch
+  },
+  {
+    path: '/nftnumbersearch',
+    name: 'NftNumberSearch',
+    component: NftNumberSearch
   },
   {
     path: '/nfttransfer',

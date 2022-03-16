@@ -6,15 +6,15 @@
       <div class="navbar-inner">
         <ul class="navbar-nav">
           <li to="/" class="nav-item">
-            <a href="/myNft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
+            <a href="/mynft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
               <span class="nav-link-text">MY NFT<b class="caret"></b></span>
             </a>
             <div>
               <ul class="nav nav-sm flex-column">
-                <a href="/nftSearch" class="nav-link">
+                <a href="/nftwallettransfer" class="nav-link">
                   <span class="nav-link-text">NFT 조회</span>
                 </a>
-                <a href="/nftTransfer" class="nav-link">
+                <a href="/nfttransfer" class="nav-link">
                   <span class="nav-link-text">NFT 이전</span>
                 </a>
               </ul>
@@ -32,12 +32,12 @@
               <span class="nav-link-text">ADMIN<b class="caret"></b></span>
             </a>
           </li>
-          <li to="/partnerManagement" class="nav-item">
+          <li to="/partner" class="nav-item">
             <a href="/partner" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">거래처 관리<b class="caret"></b></span>
             </a>
           </li>
-          <li to="/nftMake" class="nav-item">
+          <li to="/nftcreate" class="nav-item">
             <a href="/nftcreate" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">NFT 발급<b class="caret"></b></span>
             </a>
