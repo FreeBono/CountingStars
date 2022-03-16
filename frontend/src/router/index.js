@@ -6,6 +6,7 @@ import Notification from "../views/accounts/Notification.vue"
 import SimpleSignup from "../views/accounts/SimpleSignup.vue"
 import AdditionInfo from "../views/accounts/AdditionInfo.vue"
 import Mainpage from "../views/Mainpage.vue"
+import Pinata from "../components/Pinata.vue"
 // import Test from "../components/test/Test.vue"
 const routes = [
   {
@@ -55,6 +56,11 @@ const routes = [
     path: '/main',
     name: 'Mainpage',
     component : Mainpage
+  },
+  {
+    path: '/pinata',
+    name: 'Pinata',
+    component : Pinata
   },
 ]
 
