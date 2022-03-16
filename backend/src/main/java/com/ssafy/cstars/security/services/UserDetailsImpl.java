@@ -5,13 +5,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.cstars.domain.entity.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ssafy.cstars.domain.entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -21,17 +28,29 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String email;
 
+	private String tel;
+
+	private double eth;
+
+	private String address;
+	
+	private String role;
+
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
+	public UserDetailsImpl(Long id, String username, String email, String password, String tel, double eth, String address, String role,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.tel = tel;
+		this.eth = eth;
+		this.address = address;
+		this.role = role;
 		this.authorities = authorities;
 	}
 
@@ -42,9 +61,13 @@ public class UserDetailsImpl implements UserDetails {
 
 		return new UserDetailsImpl(
 				user.getId(), 
-				user.getUsername(), 
+				user.getUsername(),
 				user.getEmail(),
-				user.getPassword(), 
+				user.getPassword(),
+				user.getTel(),
+				user.getEth(),
+				user.getAddress(),
+				user.getRole(), 
 				authorities);
 	}
 

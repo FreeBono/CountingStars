@@ -33,10 +33,12 @@
               <!-- <div class="d-sm-flex align-items-sm-center justify-content-sm-between" style="padding-left:0px">
                 <div class="d-flex align-items-center input-field mb-4 w-75" style="margin-right:10px;" > <span class="fas fa-lock p-2"></span> <input type="text" placeholder="phone" required class="form-control" > <button class="btn" onclick="showPassword()"> <span class="fas fa-eye-slash"></span> </button> </div>
                 <button class="w-25" style="height:50px;margin-bottom:25px; padding-left:0px;">인증</button>
-
+              
               </div> -->
+              <input type="text" v-model="signupData.roles">
               <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
               <div class="mb-3"> <span class="text-light-white">Do have your own ID?</span> <a @click="goSignup">Login</a> </div>
+              
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
           <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div>
@@ -68,10 +70,11 @@ export default {
         username : '',
         password : '',  
         passwordConfirmation : '',
+        roles : '',
     }) 
     const message = ''
     
-
+    
 
 
 
@@ -106,7 +109,16 @@ export default {
     }
 
     const signup = () => {
+        if (signupData.value.roles === '') {
+            signupData.value.roles = ["ROLE_USER"]
+        } else if (signupData.value.roles === '1a2b3c4d') {
+            signupData.value.roles = ["ROLE_STORE_ADMIN"]
+        } else if (signupData.value.roles === '1a2b3c') {
+            signupData.value.roles = ["ROLE_BRAND_ADMIN"]
+        } 
         console.log(signupData.value)
+        console.log(signupData.value.roles)
+        console.log(typeof(signupData.value.roles))
         store.dispatch("auth/register", signupData.value)
         console.log('휴휴')
     }

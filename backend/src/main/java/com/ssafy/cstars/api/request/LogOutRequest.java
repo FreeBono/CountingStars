@@ -1,9 +1,10 @@
 package com.ssafy.cstars.api.request;
 
 public class LogOutRequest {
-  private Long userId;
+  private String email;
 
-  public Long getUserId() {
-    return this.userId;
+
+  public String getEmail(){
+    return this.email;
   }
 }

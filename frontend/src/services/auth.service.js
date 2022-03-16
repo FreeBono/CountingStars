@@ -26,11 +26,12 @@ class AuthService {
     TokenService.removeUser();
   }
 
-  register({ username, email, password }) {
+  register({ username, email, password,roles, }) {
     return api.post("/auth/signup", {
       username,
       email,
-      password
+      password,
+      roles,
     });
   }
 }

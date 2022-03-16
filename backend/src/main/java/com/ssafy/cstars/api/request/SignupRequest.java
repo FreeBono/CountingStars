@@ -3,9 +3,23 @@ package com.ssafy.cstars.api.request;
 import java.util.Set;
 
 import javax.validation.constraints.*;
- 
-public class SignupRequest {
-    @NotBlank
+
+import com.ssafy.cstars.domain.entity.BaseEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+public class SignupRequest extends BaseEntity{
     @Size(min = 3, max = 20)
     private String username;
  
@@ -14,41 +28,58 @@ public class SignupRequest {
     @Email
     private String email;
     
-    private Set<String> role;
+    private Set<String> roles;
     
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(min = 6, max = 60)
     private String password;
-  
-    public String getUsername() {
-        return username;
-    }
+
+    @Size(max = 11)
+    private String tel;
+
+    private String name;
+
+    private double eth;
+
+    private String address;
+
+    private String grade;
+
+    private String store;
+
+    private String role;
+
+    private String wallet;
+
+    // public String getUsername() {
+    //     return username;
+    // }
  
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    // public void setUsername(String username) {
+    //     this.username = username;
+    // }
  
-    public String getEmail() {
-        return email;
-    }
+    // public String getEmail() {
+    //     return email;
+    // }
  
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    // public void setEmail(String email) {
+    //     this.email = email;
+    // }
  
-    public String getPassword() {
-        return password;
-    }
+    // public String getPassword() {
+    //     return password;
+    // }
  
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    // public void setPassword(String password) {
+    //     this.password = password;
+    // }
     
-    public Set<String> getRole() {
-      return this.role;
-    }
+    // public Set<String> getRole() {
+    //   return this.role;
+    // }
     
-    public void setRole(Set<String> role) {
-      this.role = role;
-    }
+    // public void setRole(Set<String> role) {
+    //   this.role = role;
+    // }
 }
