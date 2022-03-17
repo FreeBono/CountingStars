@@ -15,4 +15,6 @@ import java.util.Optional;
 public interface AdminRepository extends JpaRepository<Admin, Long> {
     Page<Admin> findAll(Pageable pageable);
     Optional<Admin> findById(Long id);
+    Optional<Admin> findByEmail(String email);
+    Boolean existsByEmail(String email);
 }

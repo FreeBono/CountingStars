@@ -23,6 +23,7 @@ import com.ssafy.cstars.domain.entity.RefreshTokenStoreAdmin;
 import com.ssafy.cstars.domain.entity.Role;
 import com.ssafy.cstars.domain.entity.StoreAdmin;
 import com.ssafy.cstars.domain.entity.User;
+import com.ssafy.cstars.domain.repository.AdminRepository;
 import com.ssafy.cstars.domain.repository.BrandAdminRepository;
 import com.ssafy.cstars.domain.repository.RefreshTokenBrandAdminRepository;
 import com.ssafy.cstars.domain.repository.RefreshTokenRepository;
@@ -67,6 +68,9 @@ public class AuthController {
   BrandAdminRepository brandAdminRepository;
 
   @Autowired
+  AdminRepository adminRepository;
+
+  @Autowired
   RoleRepository roleRepository;
 
   @Autowired
@@ -90,12 +94,24 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     System.out.println(loginRequest.getEmail()+ "    " + loginRequest.getPassword());
-    Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-    System.out.println("check authentic");
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    
+
+
+    Authentication authentication = null;
     JwtResponse jwtResponse = null;
+    if(adminRepository.existsByEmail(loginRequest.getEmail())){
+      System.out.println("check!!");
+      jwtResponse = new JwtResponse(loginRequest.getEmail(), "ROLE_SITE_ADMIN");
+      System.out.println(jwtResponse);
+    }else{
+      authentication = authenticationManager
+      .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+      System.out.println("check authentic");
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+
+    
+
     if(userRepository.existsByEmail(loginRequest.getEmail())){
 
       UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -136,6 +152,11 @@ public class AuthController {
       jwtResponse = new JwtResponse(jwt, refreshToken.getToken(), brandDetails.getId(), brandDetails.getName(), brandDetails.getWallet(), brandDetails.getRole(), roles);
 
     }
+//    else if(userRepository.existsByEmail(loginRequest.getEmail())){
+//      System.out.println("check!!");
+//      jwtResponse = new JwtResponse(loginRequest.getEmail(), "ROLE_SITE_ADMIN");
+//      System.out.println(jwtResponse);
+//    }
 
     return ResponseEntity.ok(jwtResponse);
   }

@@ -12,4 +12,5 @@ import javax.persistence.Entity;
 public class Admin extends BaseEntity {
     String email; //  게시글 제목
     String password; // 게시글 내용
+    String role;
 }
