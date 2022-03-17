@@ -4,6 +4,7 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <router-view/>
+  
 </template>
 
 <script>
@@ -11,7 +12,15 @@ import EventBus from "/common/EventBus"
 import {onMounted, onUnmounted} from 'vue'
 import {useStore} from 'vuex'
 import {useRouter} from 'vue-router'
+// import { SidebarMenu } from 'vue-sidebar-menu'
+// import sidebar2 from '@/components/sidebar2.vue'
+
+
 export default {
+  components: {
+    // sidebar2,
+    // SidebarMenu,
+  },
   setup() {
     const store = useStore()
     const router = useRouter()

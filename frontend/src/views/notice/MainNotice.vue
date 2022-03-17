@@ -1,8 +1,9 @@
 <template>
   <!-- <h1>공지사항 페이지 네브바 자리</h1> -->
+  <sidebar/>
   <div class="wrapper">
     <!-- 사이드 시작 -->
-    <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
+    <!-- <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
       <div class="scrollbar-inner">
       <div class="navbar-inner">
         <ul class="navbar-nav">
@@ -25,10 +26,10 @@
             <a href="/notice" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">공지사항<b class="caret"></b></span>
             </a>
-          </li>
+          </li> -->
 
           <!-- ADMIN일 경우만 보이게 -->
-          <li to="/admin" class="nav-item">
+          <!-- <li to="/admin" class="nav-item">
             <a href="/admin" class="sidebar-menu-item nav-link">
               <span class="nav-link-text">ADMIN<b class="caret"></b></span>
             </a>
@@ -46,7 +47,7 @@
         </ul>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- 새로운 사이드 끝 -->
     
     <!-- 내용 들어갈 곳 -->
@@ -123,10 +124,16 @@
 </template>
 
 <script>
+// import Sidebar2 from '@/components/sidebar2.vue'
 import { useRouter } from 'vue-router'
+import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'MainNotice',
+  components: {
+    // Sidebar2
+    Sidebar,
+  },
   setup() {
     const router = useRouter()
 
