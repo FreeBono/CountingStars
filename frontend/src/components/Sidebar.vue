@@ -1,8 +1,12 @@
 <template>
   <body>
     <nav class="main-menu">
+      <div class="logo-img-tag" @click="goMainPage">
+        <img class="fa-2x" src="cslogo.png" alt="로고부분" style="width:30px;">
+        <p class="logo-title">Counting Stars</p>
+      </div>
       <ul>
-        <li>
+        <li >
           <a href="/main">
             <i class="fa fa-home fa-2x"></i>
             <span class="nav-text">
@@ -20,7 +24,7 @@
           </li>
           <li class="has-subnav">
             <a href="/nftwalletsearch">
-              <i class="fa fa-list fa-2x"></i>
+              <i class="fa fa-search fa-2x"></i>
               <span class="nav-text">
                 NFT 조회
               </span>
@@ -28,7 +32,7 @@
           </li>
           <li class="has-subnav">
             <a href="/nfttransfer">
-              <i class="fa fa-folder-open fa-2x"></i>
+              <i class="fa fa-people-arrows fa-2x"></i>
               <span class="nav-text">
                 NFT 이전
               </span>
@@ -36,11 +40,11 @@
           </li>
           <li>
             <a href="/notice">
-              <i class="fa fa-bar-chart-o fa-2x"></i>
+              <i class="fa fa-bullhorn fa-2x"></i>
               <span class="nav-text">
                 공지사항
               </span>
-          </a>
+            </a>
           </li>
           <li>
             <a href="/admin">
@@ -52,7 +56,7 @@
           </li>
           <li>
             <a href="/partner">
-              <i class="fa fa-table fa-2x"></i>
+              <i class="fa fa-handshake fa-2x"></i>
               <span class="nav-text">
                 거래처 관리
               </span>
@@ -60,7 +64,8 @@
           </li>
           <li>
             <a href="nftcreate">
-              <i class="fa fa-map-marker fa-2x"></i>
+              <i class="fa fas fa-cubes fa-2x"></i>
+              <!-- <i class="fa fas fa-cube fa-2x"></i> -->
               <span class="nav-text">
                 NFT 발급
               </span>
@@ -72,12 +77,55 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
 export default {
   name: 'Sidebar',
+  setup() {
+    const router = useRouter()
+
+    function goMainPage() {
+      router.push({name: 'Mainpage'})
+    }
+
+    return{
+      goMainPage
+    }
+  }
 }
 </script>
 
 <style scoped>
+.logo-img-tag {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-spacing :0;
+  /* 원래 흐린 회식 #999 */
+  color:rgb(85, 84, 84);
+  font-family: arial;
+  font-size: 18px;
+  -webkit-transform: translateZ(0) scale(1,1);
+  -webkit-transition: all .1s linear;
+  transition: all .1s linear;
+  height: 36px;
+  bottom: 10px;
+  right: 8px;
+}
+
+.logo-img-tag:hover {
+  cursor: pointer;
+}
+
+.logo-title {
+  font-size: 20px;
+  position: relative;
+  display: block;
+  width: 200px;
+  text-align: right;
+  bottom: 32px;
+  font-weight: 800;
+  color: #28b9b0d6;
+}
 
 .fa-2x {
   font-size: 2em;
@@ -91,7 +139,6 @@ export default {
   text-align: center;
   vertical-align: middle;
   font-size:20px;
-  /* right: 20px; */
 }
 
 
@@ -100,6 +147,7 @@ export default {
   overflow:visible;
 }
 
+/* 오른쪽에 글자 튀어나오는 부분 */
 .main-menu {
   background:#ffffff;
   border-right:1px solid #e5e5e5;
@@ -108,7 +156,8 @@ export default {
   bottom:0;
   height:100%;
   left:0;
-  width: 60px;
+  width: 70px;
+  /* hidden 으로 바꿔주기 */
   overflow: hidden;
   -webkit-transition:width .05s linear;
   transition:width .05s linear;
@@ -120,10 +169,14 @@ export default {
   margin: 7px 0;
 }
 
+/* 내용물 부분 크기 조절, 위치 조정 여기서 */
 .main-menu li {
   position: relative;
-  display: block;
-  width: 200px;
+  display: flex;
+  width: 230px;
+  right: 20px;
+  margin-top: 15px;
+  /* justify-content: center; */
 }
 
 .main-menu li>a {
@@ -131,9 +184,10 @@ export default {
   display:table;
   border-collapse:collapse;
   border-spacing:0;
-  color:#999;
+  /* 원래 흐린 회식 #999 */
+  color:rgb(85, 84, 84);
   font-family: arial;
-  font-size: 14px;
+  font-size: 18px;
   text-decoration:none;
   -webkit-transform:translateZ(0) scale(1,1);
   -webkit-transition:all .1s linear;

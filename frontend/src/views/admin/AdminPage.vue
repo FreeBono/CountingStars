@@ -1,55 +1,7 @@
 <template>
   <!-- <h2>관리자 페이지</h2> -->
+    <sidebar/>
   <div class="wrapper">
-    <div class="wrapper">
-      <!-- 사이드바 부분 -->
-    <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
-      <div class="scrollbar-inner">
-      <div class="navbar-inner">
-        <ul class="navbar-nav">
-          <li to="/" class="nav-item">
-            <a href="/mynft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
-              <span class="nav-link-text">MY NFT<b class="caret"></b></span>
-            </a>
-            <div>
-              <ul class="nav nav-sm flex-column">
-                <a href="/nftwallettransfer" class="nav-link">
-                  <span class="nav-link-text">NFT 조회</span>
-                </a>
-                <a href="/nfttransfer" class="nav-link">
-                  <span class="nav-link-text">NFT 이전</span>
-                </a>
-              </ul>
-            </div>
-          </li>
-          <li to="/notice" class="nav-item">
-            <a href="/notice" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">공지사항<b class="caret"></b></span>
-            </a>
-          </li>
-
-          <!-- ADMIN일 경우만 보이게 -->
-          <li to="/admin" class="nav-item">
-            <a href="/admin" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">ADMIN<b class="caret"></b></span>
-            </a>
-          </li>
-          <li to="/partner" class="nav-item">
-            <a href="/partner" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">거래처 관리<b class="caret"></b></span>
-            </a>
-          </li>
-          <li to="/nftcreate" class="nav-item">
-            <a href="/nftcreate" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">NFT 발급<b class="caret"></b></span>
-            </a>
-          </li>
-        </ul>
-        </div>
-      </div>
-    </div>
-    <!-- 새로운 사이드 끝 -->
-
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
@@ -121,15 +73,19 @@
       <!-- </div> -->
       <!-- </div> -->
     <!-- 내용 들어갈 곳 끝 -->
-    </div>
   </div>
 </template>
 
 <script scoped>
+import Sidebar from '@/components/Sidebar.vue'
+import '@/assets/style/notice/noticeSide.css'
 import { useRouter } from 'vue-router'
 
 export default {
   name : 'AdminPage',
+  components: {
+    Sidebar,
+  },
   setup() {
     const router = useRouter()
 
@@ -231,124 +187,5 @@ export default {
   justify-content: center;
   /* flex-wrap: wrap; */
 }
-
-/* 사이드 부분 */
-* {
-  font-family: 'MinSans-Regular';
-}
-
-.nav-link {
-  text-align: left;
-  font-size: 17px;
-  /* color: black; */
-  /* margin-left: 5px; */
-  margin-bottom: 15px;
-}
-
-.nav-link:hover {
-  background-color: #ffd700;
-}
-
-.header {
-  display: flex;
-  position: relative;
-  background-color: #ffd700;
-  height: 380px;
-  left: 150px;
-  padding-bottom: 72px;
-}
-
-.main-content {
-  position: relative;
-  background-color: #f5f6fc;
-}
-
-.nav-link-text {
-  /* color: white; */
-  color: black;
-  font-size: 24px;
-  margin-left: 40px;
-  font-family: 'MinSans-Regular';
-}
-
-.nav-link-text:hover {
-  color: black;
-  cursor: pointer;
-}
-
-.head_title {
-  font-size: 36px;
-  margin: auto;
-}
-
-.content_outside_box {
-  position: relative;
-  bottom: 130px;
-  left: 150px;
-}
-
-.content_box {
-  width: 50%;
-  height: 600px;
-  background-color: white;
-  margin: auto;
-  border: 1px;
-  border-radius: 10px;
-  box-shadow: 3px 3px 10px 1px #d8d7d7;
-}
-
-.pagination_outside {
-  display: flex;
-  position: relative;
-  bottom: 130px;
-  /* left: 150px; */
-}
-
-.pagination {
-  margin: auto;
-}
-
-.createBtn_position {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 20px;
-  margin-top: 10px;
-}
-
-.createBtn {
-  background-color: #ffd700 !important;
-}
-
-.createBtn:hover {
-background-color: #fae779 !important;
-}
-
-.deleteBtn {
-  background-color: #FC5E5E !important;
-}
-
-.deleteBtn:hover {
-background-color: #fa8e8e !important;
-}
-
-.backBtn {
-  background-color: #333333 !important;
-  color: white !important;
-}
-
-.backBtn:hover {
-background-color: #727171 !important;
-}
-
-.box_img {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  opacity: 0.5;
-  bottom: 100px;
-  z-index: -1;
-  /* left: 150px; */
-}
-
 
 </style>
