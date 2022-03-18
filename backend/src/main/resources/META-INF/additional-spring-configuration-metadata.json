@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "springfox.documentation.swagger.use-model-v3",
+      "type": "java.lang.String",
+      "description": "Description for springfox.documentation.swagger.use-model-v3."
+  }
+] }
