@@ -6,3 +6,4 @@ public enum ERole {
   ROLE_BRAND_ADMIN,
   ROLE_SITE_ADMIN
 }
+

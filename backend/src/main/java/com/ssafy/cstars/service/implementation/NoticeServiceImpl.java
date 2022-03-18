@@ -51,10 +51,10 @@ public class NoticeServiceImpl implements NoticeService {
             return 401;
 
         Notice notice = Notice.builder()
-                .admin(admin)
-                .title(noticeInfo.getTitle())
-                .content(noticeInfo.getContent())
-                .build();
+            .admin(admin)
+            .title(noticeInfo.getTitle())
+            .content(noticeInfo.getContent())
+            .build();
 
         System.out.println(notice);
 
