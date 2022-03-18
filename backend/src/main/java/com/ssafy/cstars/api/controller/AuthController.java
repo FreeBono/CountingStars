@@ -152,12 +152,6 @@ public class AuthController {
       jwtResponse = new JwtResponse(jwt, refreshToken.getToken(), brandDetails.getId(), brandDetails.getName(), brandDetails.getWallet(), brandDetails.getRole(), roles);
 
     }
-//    else if(userRepository.existsByEmail(loginRequest.getEmail())){
-//      System.out.println("check!!");
-//      jwtResponse = new JwtResponse(loginRequest.getEmail(), "ROLE_SITE_ADMIN");
-//      System.out.println(jwtResponse);
-//    }
-
     return ResponseEntity.ok(jwtResponse);
   }
 
