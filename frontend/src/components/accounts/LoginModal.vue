@@ -35,7 +35,7 @@
                 <button class="w-25" style="height:50px;margin-bottom:25px; padding-left:0px;">인증</button>
               
               </div> -->
-              <input type="text" v-model="signupData.roles">
+              <!-- <input type="text" v-model="signupData.roles"> -->
               <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
               <div class="mb-3"> <span class="text-light-white">Do have your own ID?</span> <a @click="goSignup">Login</a> </div>
               

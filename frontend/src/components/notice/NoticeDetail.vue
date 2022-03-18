@@ -309,13 +309,15 @@ span {
 }
 
 .nav-link:hover {
-  background-color: #ffd700;
+  background-color: #3adacf
+;
 }
 
 .header {
   display: flex;
   position: relative;
-  background-color: #ffd700;
+  background-color: #3adacf
+;
   height: 380px;
   left: 150px;
   padding-bottom: 72px;
@@ -379,7 +381,8 @@ span {
 }
 
 .createBtn {
-  background-color: #ffd700 !important;
+  background-color: #3adacf
+ !important;
 }
 
 .createBtn:hover {

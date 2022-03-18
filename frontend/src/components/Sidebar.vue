@@ -2,12 +2,12 @@
   <body>
     <nav class="main-menu">
       <div class="logo-img-tag" @click="goMainPage">
-        <img class="fa-2x" src="cslogo.png" alt="로고부분" style="width:30px;">
+        <img class="fa-2x" src="@/assets/cslogo.png" alt="로고부분" style="width:30px;">
         <p class="logo-title">Counting Stars</p>
       </div>
       <ul>
         <li >
-          <a href="/main">
+          <a href="/">
             <i class="fa fa-home fa-2x"></i>
             <span class="nav-text">
               MainPage

@@ -1,14 +1,14 @@
 <template>
   <div class="container-fluid" id="container1">
     <nav class="navbar navbar-expand-lg navbar-light mb-5">
-        <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8">Easy Loan</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar-bar">
                 <div class="navbar-nav ms-auto">
                     
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
                     <a class="nav-link" href="#" id="container3">About</a> <a class="nav-link" href="#" id="container4">Services</a>
                     <a class="nav-link" href="#" id="container5">Blog</a> <a class="nav-link" href="#" id="container6">Conact</a>
-                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6">Conact</a>
+                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6">Contact</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.auth.status.loggedIn">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
                   

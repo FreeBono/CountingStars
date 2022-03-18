@@ -11,7 +11,7 @@
         <div class="content_box">
           <div class="container">
             <div class="nft_img">
-              <img src="icon.png" alt="nft이미지" style="width: 250px;">
+              <img src="@/assets/icon.png" alt="nft이미지" style="width: 250px;">
             </div>
             <div>
               <p>nft 내용 불러오기</p>
