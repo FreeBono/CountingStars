@@ -65,6 +65,11 @@ public class JwtResponse {
 		this.roles = roles;
 
 	}
+	// admin
+	public JwtResponse(String email, String role){
+		this.email = email;
+		this.role = role;
+	}
 
 // 	public String getAccessToken() {
 // 		return token;
