@@ -1,0 +1,108 @@
+<template>
+  <!-- <h2>My NFT 상세보기</h2> -->
+  <sidebar/>
+  <div class="wrapper">
+    <!-- 내용 들어갈 곳 -->
+    <div class="main-content">
+      <div class="header">
+        <p class="head_title">NFT 이전</p>
+      </div>
+      <div class="content_outside_box">
+        <div class="content_box">
+          <div class="container">
+            <div class="nft_img">
+              <img src="@/assets/icon.png" alt="nft이미지" style="width: 250px;">
+            </div>
+            <div>
+              <p>nft 내용? 지갑 주소? 불러오기</p>
+            </div>
+          </div>
+
+          <!-- 관리자만 버튼 보이게 -->
+          <div class="createBtn_position2">
+            <button type="button" class="btn createBtn" @click="sendNft" style="width: 100px">전송</button>
+            <button type="button" class="btn deleteBtn mx-2" @click="goMyNftDetail" style="width: 60px">취소</button>
+          </div>
+        </div>
+
+        <!-- 블록 이미지 부분 테두리 따기 -->
+          <div class="box_img">
+            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
+            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
+          </div>
+        <!-- 블록 이미지 끝 -->
+
+      </div>
+    </div>
+    <!-- 내용 들어갈 곳 끝 -->
+  </div>
+</template>
+
+<script scoped>
+import Sidebar from '@/components/Sidebar.vue'
+import "@/assets/style/notice/noticeSide.css"
+import { useRouter } from 'vue-router'
+
+export default {
+  name: 'NftTransfer',
+  components: {
+    Sidebar,
+  },
+  setup() {
+    const router = useRouter()
+
+    function sendNft() {
+      // router.push({name: 'NftTransfer'})
+      // 모달? 알럿? 띄우기
+      alert('전송 되었습니다.')
+      // 전송되면 내 목록에서 삭제 되야 함
+    }
+
+    function goMyNftDetail() {
+      router.push({name: 'MyNftDetail'})
+    }
+    
+    return {
+      goMyNftDetail,
+      sendNft,
+    }
+  }
+}
+</script>
+
+<style scoped>
+.sidenav {
+  text-align: left;
+  box-sizing: border-box;
+  padding: 1rem 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding-top: 0;
+  border-style: solid;
+  z-index: 1000;
+  transition: all .15s ease;
+  background-color: #333333!important;
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 250px!important;
+  transform: translateX(0);
+  left: 0;
+  border-width: 0 1px 0 0;
+}
+
+.nft_img {
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: center; */
+  top: 150px;
+  position: relative;
+  left: 100px;
+}
+</style>

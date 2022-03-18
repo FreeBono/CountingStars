@@ -1,198 +1,140 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Signup from "@/views/Signup.vue";
-import Home from "@/views/Home.vue";
-import Login from "@/views/Login.vue";
-import store from "@/store";
-import Shop from "@/views/Shop.vue";
-import MyPage from "@/views/MyPage.vue";
-import Item from "@/views/Item.vue";
-import Explorer from "@/views/Explorer.vue";
-import Escrow from "@/views/Escrow.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import Login from "../views/Login.vue"
+import Signup from "../views/Signup.vue"
+import Notification from "../views/accounts/Notification.vue"
+import SimpleSignup from "../views/accounts/SimpleSignup.vue"
+import AdditionInfo from "../views/accounts/AdditionInfo.vue"
+import Mainpage from "../views/Mainpage.vue"
+import MainNotice from '@/views/notice/MainNotice.vue'
+import NoticeForm from '@/components/notice/NoticeForm.vue'
+import NoticeDetail from '@/components/notice/NoticeDetail.vue'
+import AdminPage from '@/views/admin/AdminPage.vue'
+import PartnerManagement from '@/views/admin/PartnerManagement.vue'
+import NftCreate from '@/views/admin/NftCreate.vue'
+import MyNftDetail from '@/views/nft/MyNftDetail.vue'
+import MyNft from '@/views/nft/MyNft.vue'
+import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
+import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
+import NftTransfer from '@/views/nft/NftTransfer.vue'
 
-Vue.use(VueRouter);
 
-/**
- * 아래의 router를 변경하여 구현할 수 있습니다.
- */
+import Pinata from "../components/Pinata.vue"
+// import Test from "../components/test/Test.vue"
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: HomeView
+  // },
+  // {
+  //   path: '/test',
+  //   name: 'Test',
+  //   component: Test
+  // },
   {
-    path: "/",
-    name: "home",
-    component: Home,
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    name: "login",
-    path: "/login",
-    component: Login,
+    path: '/login',
+    name: 'Login',
+    component : Login
   },
   {
-    path: "/register",
-    name: "signup",
-    component: Signup,
+    path: '/signup',
+    name: 'Signup',
+    component : Signup
   },
   {
-    path: "/logout",
-    name: "logout",
-    beforeEnter(to, from, next) {
-      store.commit("logout");
-      alert("로그아웃 되었습니다.");
-      next("/");
-    },
+    path: '/notification',
+    name: 'Notification',
+    component : Notification
   },
   {
-    name: "shop",
-    path: "/shop",
-    component: Shop,
-    children: [
-      {
-        path: "",
-        component: () => import("@/components/shop/All.vue"),
-      },
-      {
-        path: "digital",
-        component: () => import("@/components/shop/Digital.vue"),
-      },
-      {
-        path: "child",
-        component: () => import("@/components/shop/Child.vue"),
-      },
-      {
-        path: "hobby",
-        component: () => import("@/components/shop/Hobby.vue"),
-      },
-    ],
-    redirect: () => {
-      return "/shop";
-    },
+    path: '/simplesignup',
+    name: 'SimpleSignup',
+    component : SimpleSignup
   },
   {
-    name: "mypage",
-    path: "/mypage",
-    component: MyPage,
-    children: [
-      {
-        name: "mypage.wallet.create",
-        path: "wallet_create",
-        component: () => import("../components/mypage/WalletCreate.vue"),
-      },
-      {
-        name: "mypage.wallet.info",
-        path: "wallet_info",
-        component: () => import("../components/mypage/WalletInfo.vue"),
-      },
-      {
-        name: "mypage.items",
-        path: "/mypage/items",
-        component: () => import("../components/mypage/MyItems.vue"),
-      },
-      {
-        name: "mypage.password",
-        path: "/mypage/password",
-        component: () => import("../components/mypage/Password.vue"),
-      },
-    ],
-    redirect: () => {
-      return "/mypage/items";
-    },
+    path: '/additioninfo',
+    name: 'AdditionInfo',
+    component : AdditionInfo
   },
   {
-    name: "item",
-    path: "/item",
-    component: Item,
-    children: [
-      {
-        name: "item.create",
-        path: "create",
-        component: () => import("../components/item/ItemCreate.vue"),
-      },
-      {
-        name: "item.detail",
-        path: "detail/:id",
-        component: () => import("../components/item/ItemDetail.vue"),
-      },
-      {
-        name: "item.purchase",
-        path: "purchase/:id",
-        component: () => import("../components/item/ItemPurchase.vue"),
-      },
-    ],
+    path: '/',
+    name: 'Mainpage',
+    component : Mainpage
   },
   {
-    name: "escrow",
-    path: "/escrow",
-    component: Escrow,
-    children: [
-      {
-        name: "escrow.purchase.detail",
-        path: "purchase/detail",
-        component: () => import("@/components/escrow/PurchaseTxDetail.vue"),
-      },
-      {
-        name: "escrow.sale.detail",
-        path: "sale/detail",
-        component: () => import("@/components/escrow/SaleTxDetail.vue"),
-      },
-      {
-        name: "escrow.history",
-        path: "history/:id",
-        component: () => import("@/components/escrow/EscrowHistory.vue")
-      }
-    ],
+    path: '/notice',
+    name: 'MainNotice',
+    component: MainNotice
   },
   {
-    name: "explorer",
-    path: "/explorer",
-    component: Explorer,
-    children: [
-      {
-        name: "explorer.dashboard",
-        path: "dashboard",
-        component: () => import("../components/explorer/Dashboard.vue"),
-      },
-      {
-        name: "explorer.block",
-        path: "blocks",
-        component: () => import("../components/explorer/BlockListView.vue"),
-      },
-      {
-        name: "explorer.block.detail",
-        path: "block/:blockNumber",
-        component: () => import("../components/explorer/BlockDetail.vue"),
-      },
-      {
-        name: "explorer.tx",
-        path: "txes",
-        component: () => import("../components/explorer/TxListView.vue"),
-      },
-      {
-        name: "explorer.tx.detail",
-        path: "tx/:hash",
-        component: () => import("../components/explorer/TxDetail.vue"),
-      },
-    ],
+    path: '/noticeform',
+    name: 'NoticeForm',
+    component: NoticeForm
   },
-];
+  {
+    path: '/noticedetail',
+    name: 'NoticeDetail',
+    component: NoticeDetail
+  },
+  {
+    path: '/admin',
+    name: 'AdminPage',
+    component: AdminPage
+  },
+  {
+    path: '/partner',
+    name: 'PartnerManagement',
+    component: PartnerManagement
+  },
+  {
+    path: '/nftcreate',
+    name: 'NftCreate',
+    component: NftCreate
+  },
+  {
+    path: '/mynftdetail',
+    name: 'MyNftDetail',
+    component: MyNftDetail
+  },
+  {
+    path: '/mynft',
+    name: 'MyNft',
+    component: MyNft
+  },
+  {
+    path: '/nftwalletsearch',
+    name: 'NftWalletSearch',
+    component: NftWalletSearch
+  },
+  {
+    path: '/nftnumbersearch',
+    name: 'NftNumberSearch',
+    component: NftNumberSearch
+  },
+  {
+    path: '/nfttransfer',
+    name: 'NftTransfer',
+    component: NftTransfer
+  },
+  {
+    path: '/pinata',
+    name: 'Pinata',
+    component : Pinata
+  },
+]
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes,
-});
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
 
-router.beforeEach((to, from, next) => {
-  let isSigned = store.state.isSigned;
-  let isAvailableToGuest =
-    ["/", "/login", "/register"].includes(to.path) ||
-    to.path.startsWith("/explorer");
-
-  // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
-  if (!isSigned && !isAvailableToGuest) {
-    alert("로그인을 하신 뒤에 사용이 가능합니다.");
-    next("/login");
-  } else {
-    next();
-  }
-});
-
-export default router;
+export default router

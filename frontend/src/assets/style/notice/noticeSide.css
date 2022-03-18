@@ -1,0 +1,120 @@
+* {
+  font-family: 'MinSans-Regular';
+}
+
+.nav-link {
+  text-align: left;
+  font-size: 17px;
+  /* color: black; */
+  /* margin-left: 5px; */
+  margin-bottom: 15px;
+}
+
+.nav-link:hover {
+  background-color: #3adacf
+;
+}
+
+.header {
+  display: flex;
+  position: relative;
+  background-color: #3adacf
+;
+  height: 380px;
+  left: 150px;
+  padding-bottom: 72px;
+}
+
+.main-content {
+  position: relative;
+  background-color: #f5f6fc;
+}
+
+.nav-link-text {
+  /* color: white; */
+  color: black;
+  font-size: 24px;
+  margin-left: 40px;
+  font-family: 'MinSans-Regular';
+}
+
+.nav-link-text:hover {
+  color: black;
+  cursor: pointer;
+}
+
+.head_title {
+  font-size: 36px;
+  margin: auto;
+}
+
+.content_outside_box {
+  position: relative;
+  bottom: 130px;
+  left: 150px;
+}
+
+.content_box {
+  width: 50%;
+  height: 600px;
+  background-color: white;
+  margin: auto;
+  border: 1px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px 1px #d8d7d7;
+}
+
+.pagination_outside {
+  display: flex;
+  position: relative;
+  bottom: 130px;
+  /* left: 150px; */
+}
+
+.pagination {
+  margin: auto;
+}
+
+.createBtn_position {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.createBtn {
+  background-color: #3adacf
+ !important;
+}
+
+.createBtn:hover {
+background-color: #fae779 !important;
+}
+
+.deleteBtn {
+  background-color: #FC5E5E !important;
+}
+
+.deleteBtn:hover {
+background-color: #fa8e8e !important;
+}
+
+.backBtn {
+  background-color: #333333 !important;
+  color: white !important;
+}
+
+.backBtn:hover {
+background-color: #727171 !important;
+}
+
+.box_img {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  opacity: 0.5;
+  bottom: 100px;
+  z-index: -1;
+  /* left: 150px; */
+}
+

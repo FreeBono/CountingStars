@@ -1,5 +1,9 @@
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
 module.exports = {
-  devServer: {
-    host: 'localhost',
-  },
-};
+  lintOnSave: false,
+  configureWebpack: {
+    plugins: [new NodePolyfillPlugin()]
+  }
+  
+}
