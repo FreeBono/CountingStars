@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <button @click="TransferToken()">ㅇㅇㅇ</button>
     <h1>Pinata API test</h1>
     <div>
       <div class="row mb-3">
@@ -103,13 +104,15 @@ import pinata from '../services/pinataApiFile'
 import pinataJson from '../services/pinataApiJson'
 import { ref } from 'vue';
 import { onMounted } from 'vue';
-import publishToken from '../utils/web3test'
+import publishToken from '../utils/PublishNFT'
+import TransferToken from '../utils/TransferNFT'
 // import Web3 from 'web3'
 
 
 export default {
   name : 'Pinata',
   setup() {
+    
     // var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
     const state = ref({
       serialNumber: 'AAA11111',
@@ -161,7 +164,8 @@ export default {
 
     return {
       onMounted, state,
-      changeImgFile, transferJSON
+      changeImgFile, transferJSON,
+      TransferToken,
     }
   },
   props: {

@@ -9,11 +9,11 @@ import Mainpage from "../views/Mainpage.vue"
 import Pinata from "../components/Pinata.vue"
 // import Test from "../components/test/Test.vue"
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: HomeView
+  // },
   // {
   //   path: '/test',
   //   name: 'Test',
@@ -53,7 +53,7 @@ const routes = [
     component : AdditionInfo
   },
   {
-    path: '/main',
+    path: '/',
     name: 'Mainpage',
     component : Mainpage
   },

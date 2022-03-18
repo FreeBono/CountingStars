@@ -295,10 +295,10 @@ export default {
 
 .modal-body {
   border-radius: 4rem;
-  background: linear-gradient(135deg, #00c3ff, #eeef1c);
-  background: linear-gradient(135deg, #fc00ff, #00dbde);
-  background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
-  background-image: linear-gradient(150deg, #5a00ff 0%, #ff1ff7 100%, #ff1ff7 100%);
+  background: linear-gradient(87deg,#2dce89,#2dcecc)!important;
+  background: linear-gradient(87deg,#2dce89,#2dcecc)!important;
+  background-image: linear-gradient(87deg,#2dce89,#2dcecc)!important;
+  background-image: linear-gradient(87deg,#2dce89,#2dcecc)!important;
 }
 
 .modal-content{

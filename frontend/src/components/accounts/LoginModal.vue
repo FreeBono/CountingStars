@@ -17,7 +17,7 @@
           <div class="text-center py-3 connections"> 
               
               <a target="_blank" class="px-2" @click="kakaologin()"> 
-                <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="">
+                <!-- <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> -->
               </a> 
               <LoginKakao/>
           </div>
@@ -41,7 +41,7 @@
               
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
-          <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div>
+          <!-- <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div> -->
       </div>
   </div>
   
@@ -156,10 +156,10 @@ export default {
  }
 
  body {
-      background: linear-gradient(135deg, #00c3ff, #eeef1c);
-      background: linear-gradient(135deg, #fc00ff, #00dbde);
-      background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
-      background-image: linear-gradient(150deg, #5a00ff 0%, #ff1ff7 100%, #ff1ff7 100%);
+      background: linear-gradient(87deg,#2dce89,#2dcecc)!important;
+      background: linear-gradient(87deg,#2dce89,#2dcecc)!important;
+      background-image: linear-gradient(87deg,#2dce89,#2dcecc)!important;
+      background-image: linear-gradient(87deg,#2dce89,#2dcecc)!important;
       padding: 0rem;
      /* min-height: 93vh */
  }

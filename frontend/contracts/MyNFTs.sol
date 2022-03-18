@@ -32,4 +32,14 @@ contract MyNFTs is ERC721URIStorage, Ownable {
 
         return newItemId;
     }
+//      function safeTransferFrom(
+//     address from,
+//     address to,
+//     uint256 tokenId,
+//     bytes memory _data
+//      ) public virtual override {
+//     // require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
+//     _safeTransfer(from, to, tokenId, _data);
+//  }
+    
 }
