@@ -168,6 +168,7 @@ public class AuthController {
       signUpRequest.setRole((String)iter.next());
     }
     System.out.println(strRoles);
+    System.out.println(signUpRequest);
     Set<Role> roles = new HashSet<>();
     strRoles.forEach(role ->{
       switch(role){
