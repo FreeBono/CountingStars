@@ -1,0 +1,103 @@
+package com.ssafy.cstars.security.jwt;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ssafy.cstars.domain.repository.BrandAdminRepository;
+import com.ssafy.cstars.domain.repository.StoreAdminRepository;
+import com.ssafy.cstars.domain.repository.UserRepository;
+import com.ssafy.cstars.security.services.BrandAdminDetailsServiceImpl;
+import com.ssafy.cstars.security.services.StoreAdminDetailsServiceImpl;
+import com.ssafy.cstars.security.services.UserDetailsServiceImpl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+public class AuthTokenFilter extends OncePerRequestFilter {
+
+  @Autowired
+  UserRepository userRepository;
+
+  @Autowired
+  StoreAdminRepository storeAdminRepository;
+
+  @Autowired
+  BrandAdminRepository brandAdminRepository;
+
+  @Autowired
+  private JwtUtils jwtUtils;
+
+  @Autowired
+  private UserDetailsServiceImpl userDetailsService;
+
+  @Autowired
+  private StoreAdminDetailsServiceImpl storeAdminDetailsService;
+
+  @Autowired
+  private BrandAdminDetailsServiceImpl brandAdminDetailsService;
+
+  private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
+    try {
+      String jwt = parseJwt(request);
+      if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+        String email = jwtUtils.getEmailFromJwtToken(jwt);
+        // 이메일을 기반으로 users, brand_admin, store_admin 을 모두 검색해 해당 이메일이 어디건지 찾기?
+        if(userRepository.existsByEmail(email)){
+
+          UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+          System.out.println("check user authentic");
+          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        }else if(storeAdminRepository.existsByEmail(email)){
+
+          UserDetails storeAdminDetails = storeAdminDetailsService.loadUserByUsername(email);
+          System.out.println("check store authentic");
+          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(storeAdminDetails, null, storeAdminDetails.getAuthorities());
+          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        }else if(brandAdminRepository.existsByEmail(email)){
+
+          UserDetails brandAdminDetails = brandAdminDetailsService.loadUserByUsername(email);
+          System.out.println("check brand authentic");
+          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(brandAdminDetails, null, brandAdminDetails.getAuthorities());
+          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        }
+        
+      }
+    } catch (Exception e) {
+      logger.error("Cannot set user authentication: {}", e.getMessage());
+    }
+
+    filterChain.doFilter(request, response);
+  }
+
+  private String parseJwt(HttpServletRequest request) {
+    String headerAuth = request.getHeader("Authorization");
+
+    if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+      return headerAuth.substring(7, headerAuth.length());
+    }
+
+    return null;
+  }
+}
