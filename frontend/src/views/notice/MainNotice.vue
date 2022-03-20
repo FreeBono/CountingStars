@@ -1,10 +1,9 @@
 <template>
   <!-- <h1>공지사항 페이지 네브바 자리</h1> -->
-  <sidebar/>
   <div class="wrapper">
-    
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
+      <sidebar/>
       <div class="header">
         <p class="head_title" >공지사항</p>
       </div>
@@ -34,12 +33,12 @@
                     <th>작성일</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="my-table" :items="noticeItems.value" :per-page="perPage" :current-page="currentPage" v-for="(noticeitem, idx) in noticeItems" :key="idx">
                   <tr>
-                    <td>번호</td>
-                    <td>유형</td>
-                    <td>제목 : for문 돌려서 채우기</td>
-                    <td>작성일</td>
+                    <td>{{ noticeitem.noticeId }}</td>
+                    <td>공지</td>
+                    <td>{{ noticeitem.title }}</td>
+                    <td>{{ makeDate(noticeitem.date) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -51,17 +50,14 @@
           </div>
         </div>
         <!-- 페이지네이션 -->
-        <nav aria-label="Page navigation">
-          <div class="pagination_outside">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </div>
-        </nav>
+        <b-pagination
+          @click="pageClick"
+          v-model="currentPage"
+          :total-rows="rowws"
+          :per-page="perPage"
+          aria-controls="my-table"
+          align="center"
+        ></b-pagination>
         <!-- 페이지네이션 끝 -->
         
         <!-- 블록 이미지 부분 테두리 따기 -->
@@ -71,14 +67,21 @@
           </div>
         <!-- 블록 이미지 끝 -->
       </div>
+      <!-- <button @click="getNotice">이거</button> -->
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
 </template>
 
 <script>
+import '@/assets/style/notice/noticeSide.css'
+import '@/assets/style/notice/noticeTable.css'
+
+import api from "@/services/api.js"
+import { onMounted, ref } from 'vue';
 import Sidebar from '@/components/Sidebar.vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios';
 
 export default {
   name: 'MainNotice',
@@ -87,278 +90,95 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const myapi = ref(api)
+    const noticeItems = ref(null)
+    const currentPage = ref(null)
+    const rowws = ref(null)
+    const perPage = ref(null)
 
-    // 공지사항 글 생성
+    // 공지사항 하나씩 불러오기
+    myapi.value.get('/notice')
+    .then((res) => {
+      console.log(res)
+      noticeItems.value = res.data.content
+      console.log(noticeItems.value, 'List')
+
+      currentPage.value = res.data.pageable['pageNumber']
+      console.log(currentPage.value, 'currentPage 확인')
+
+      rowws.value = res.data.totalElements
+      console.log(rowws.value, 'rowws 전체 개수')
+
+      perPage.value = res.data.pageable['pageSize']
+      console.log(perPage.value, 'perP 확인')
+
+    })
+
+    const pageClick = () => {
+      console.log(currentPage.value, 'currentPage 바뀌는지 확인')
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/v1/notice?page=${currentPage.value}&size=10`
+      })
+      .then((res) => {
+        console.log(res,'ffff페이지확인')
+        noticeItems.value = res.data.content
+      })
+    }
+
+    // 공지사항 글 생성 폼으로 보내기
     function goNoticeForm() {
       router.push({name: 'NoticeForm'})
     }
+
+    // 등록일 슬라이싱
+    const makeDate = (datetime) => {
+      const old = ''+datetime
+      return old.substring(0, 10)
+    }
+
+    onMounted(() => {
+      // paginate()
+      // pageClick()
+    })
+
     return {
-      goNoticeForm
+      goNoticeForm,
+      noticeItems,
+      currentPage,
+      perPage,
+      rowws,
+      makeDate,
+      pageClick,
+      api,
+      myapi,
+      // nextPage,
     }
   },
-  methods: {
-    
-  }
   
+  methods: {
+    },
+  computed: {
+    rows() {
+      return this.rowws
+    }
+  },
+  watch : {
+    // noticeItems : {
+    //   handler() {
+        
+    //     console.log('작동하나')
+    //   },
+    //   deep : true
+    // },
+    // currentPage(neww) { 
+    //   this.currentPage(10, neww - 1)
+    //   console.log('여기도')
+    // }
+  }
 }
 </script>
 
 <style scoped>
-
-.sidenav {
-  text-align: left;
-  box-sizing: border-box;
-  padding: 1rem 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  padding-top: 0;
-  border-style: solid;
-  z-index: 1000;
-  transition: all .15s ease;
-  background-color: #ffffff !important;
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  max-width: 250px!important;
-  transform: translateX(0);
-  left: 0;
-  border-width: 0 1px 0 0;
-}
-
-* {
-  font-family: 'MinSans-Regular';
-}
-
-.nav-link {
-  text-align: left;
-  font-size: 17px;
-  /* color: black; */
-  /* margin-left: 5px; */
-  margin-bottom: 15px;
-}
-
-.nav-link:hover {
-  background-color: #3adacf
-;
-}
-
-.header {
-  display: flex;
-  position: relative;
-  background-color: #3adacf
-;
-  height: 380px;
-  left: 150px;
-  padding-bottom: 72px;
-}
-
-.main-content {
-  position: relative;
-  background-color: #f5f6fc;
-}
-
-.nav-link-text {
-  /* color: white; */
-  color: black;
-  font-size: 24px;
-  margin-left: 40px;
-  font-family: 'MinSans-Regular';
-}
-
-.nav-link-text:hover {
-  color: black;
-  cursor: pointer;
-}
-
-.head_title {
-  font-size: 36px;
-  margin: auto;
-}
-
-.content_outside_box {
-  position: relative;
-  bottom: 130px;
-  left: 150px;
-}
-
-.content_box {
-  width: 50%;
-  height: 600px;
-  background-color: white;
-  margin: auto;
-  border: 1px;
-  border-radius: 10px;
-  box-shadow: 3px 3px 10px 1px #d8d7d7;
-}
-
-.pagination_outside {
-  display: flex;
-  position: relative;
-  bottom: 130px;
-  /* left: 150px; */
-}
-
-.pagination {
-  margin: auto;
-}
-
-.createBtn_position {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 20px;
-  margin-top: 10px;
-}
-
-.createBtn {
-  background-color: #3adacf
- !important;
-}
-
-.createBtn:hover {
-background-color: #fae779 !important;
-}
-
-.deleteBtn {
-  background-color: #FC5E5E !important;
-}
-
-.deleteBtn:hover {
-background-color: #fa8e8e !important;
-}
-
-.backBtn {
-  background-color: #333333 !important;
-  color: white !important;
-}
-
-.backBtn:hover {
-background-color: #727171 !important;
-}
-
-.box_img {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  opacity: 0.5;
-  bottom: 100px;
-  z-index: -1;
-  /* left: 150px; */
-}
-
-
-/* 테이블 부분 */
-table {
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  border-spacing: 0;
-  width: 100%;
-  border-collapse: collapse;
-  border-top: 1px solid #d8d7d7;
-}
-
-.notice_board {
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  width: 90%;
-  position: relative;
-  margin: auto;
-}
-
-.notice_board_head {
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
-  margin-bottom: 8px;
-}
-
-p {
-  font-size: 0.875rem;
-}
-
-em {
-  font-size: 0.875rem;
-  margin-left: 3px;
-}
-
-colgroup {
-  border-spacing: 0;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-col {
-  width: 56px;
-  font-size: 16px;
-}
-
-thead {
-  font-size: 16px;
-  box-sizing: border-box;
-  vertical-align: baseline;
-}
-
-tr {
-  font-size: 16px;
-  box-sizing: border-box;
-  vertical-align: baseline;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-th {
-  border-spacing: 0;
-  box-sizing: border-box;
-  font-size: 0.875rem;
-  height: 50px;
-  vertical-align: middle;
-  border-bottom: 1px solid #E2E2E2;
-}
-
-tbody {
-  /* display: flex; */
-  /* justify-content: space-evenly; */
-  font-size: 16px;
-  border-spacing: 0;
-  box-sizing: border-box;
-  vertical-align: baseline;
-}
-
-td {  
-  margin: 0;
-  padding: 0;
-  border: 0;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* align-items: center; */
-  /* justify-content: space-evenly; */
-  height: 50px;
-  box-sizing: border-box;
-  border-spacing: 0;
-  vertical-align: middle;
-  text-align: center;
-  font-size: 0.875rem;
-  border-bottom: 1px solid #E2E2E2;
-}
 
 </style>

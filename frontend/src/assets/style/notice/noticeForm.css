@@ -1,14 +1,10 @@
-.smarteditor {
-  display: flex;
-}
-
 .form-control {
   position: relative;
   margin: auto;
   width: 90% !important;
   height: 300px;
   border: none !important;
-  background-color: #f0f0f0 !important;
+  background-color: #e6f5f4 !important;
   top: 100px;
 }
 
