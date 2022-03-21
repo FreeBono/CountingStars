@@ -15,19 +15,25 @@
 
             <div class="col">
               <div class="card shadow">
-                <div class="card-header border-0">
+                <div class="card-header border-0 my-2">
                   <h3 class="mb-0">Notice</h3>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
-                        <th scope="col">No.</th>
+                        <!-- <th scope="col">No.</th>
                         <th scope="col">유형</th>
                         <th scope="col">제목</th>
-                        <th scope="col">Users</th>
+                        <th scope="col">Admin</th>
                         <th scope="col">작성일</th>
-                        <th scope="col"></th>
+                        <th scope="col"></th> -->
+                        <th style="width: 120px;">No.</th>
+                        <th style="width: 50px;">유형</th>
+                        <th style="width: 250px;">제목</th>
+                        <th style="width: 150px;">Admin</th>
+                        <th style="width: 150px">작성일</th>
+                        <!-- <th scope="col"></th> -->
                       </tr>
                     </thead>
                     <tbody id="my-table" :items="noticeItems.value" :per-page="perPage" :current-page="currentPage" v-for="(noticeitem, idx) in noticeItems" :key="idx">
@@ -35,10 +41,10 @@
 
                         <th scope="row">
                           <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="@/assets/cslogo.png">
-                            </a>
-                            <div class="media-body">
+                            <div class="media-body" style="text-align: center;">
+                              <!-- <span class="badge badge-dot mr-4">
+                                <i style="background-color: #3adacf;"></i>
+                              </span> -->
                               <span class="mb-0 text-sm">{{ noticeitem.noticeId }}</span>
                             </div>
                           </div>
@@ -48,12 +54,10 @@
                           공지
                         </td>
                         <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-info"></i>
-                          </span>
-                          <span class="mb-0 text-sm">{{ noticeitem.title }}</span>
+                          <span class="mb-0 text-sm notice-title">{{ noticeitem.title }}</span>
                         </td>
                         <td>
+                          
                           <div class="avatar-group">
                             <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
                               <img alt="Image placeholder" src="@/assets/광.jpg" class="rounded-circle">
@@ -70,7 +74,7 @@
                           </div>
                         </td>
                         <td>
-                          <div class="d-flex align-items-center">
+                          <div>
                             <span class="mr-2">{{ makeDate(noticeitem.date) }}</span>
                           </div>
                         </td>
@@ -86,17 +90,17 @@
                     :total-rows="rowws"
                     :per-page="perPage"
                     aria-controls="my-table"
-                    align="center"
+                    align="end"
                   ></b-pagination>
                 </div>
                 <!-- 페이지네이션 끝 -->
               </div>
+          <div class="createBtn_position">
+            <button type="button" class="btn createBtn" @click="goNoticeForm" >글생성</button>
+          </div>
             </div>
           <!-- 템플릿 테이블 끝 -->
   
-          </div>
-          <div class="createBtn_position">
-            <button type="button" class="btn createBtn" @click="goNoticeForm" >글생성</button>
           </div>
         </div>
         <!-- 페이지네이션 -->
@@ -116,8 +120,6 @@
 </template>
 
 <script>
-import '@/assets/style/notice/noticeSide.css'
-// import '@/assets/style/notice/noticeTable.css'
 import '@/assets/style/notice/table.css'
 
 import api from "@/services/api.js"
@@ -223,5 +225,55 @@ export default {
 </script>
 
 <style scoped>
+.content_outside_box {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #e9ecef;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: auto;
+  margin-top: -4.5rem!important;
+  padding-left: 30px!important;
+  padding-right: 30px!important;
+}
+
+.notice-title {
+  width: 250px; 
+  text-overflow: ellipsis; 
+  overflow: hidden; 
+  white-space: nowrap;
+  position: relative;
+}
+
+.container-fluid {
+  position: relative;
+  right: 4px
+}
+
+* {
+  font-family: 'MaruBuri-Regular';
+}
+
+/* 크기 클 때 */
+/* .head_title {
+  color: white;
+  display: flex;
+  margin-left: 80px;
+  margin-top: 30px;
+} */
+
+/* 크기 작을 때 */
+.head_title {
+  color: white;
+  display: flex;
+  margin-left: 300px;
+  margin-top: 30px;
+}
+
+td {
+  text-align: center;
+}
 
 </style>
