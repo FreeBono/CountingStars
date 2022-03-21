@@ -8,66 +8,108 @@
         <p class="head_title" >공지사항</p>
       </div>
       <div class="content_outside_box">
-        <div class="content_box">
-          <div class="container">
-            <!-- 테이블 -->
-            <div class="notice_board">
-              <div class="notice_board_head">
-                <p class="mt-3">
-                  Total
-                  <em>몇 개</em>
-                </p>
+        <!-- <div class="content_box"> -->
+          <div class="container mt-7">
+
+            <!-- 템플릿 테이블 시작 -->
+
+            <div class="col">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <h3 class="mb-0">Notice</h3>
+                </div>
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">유형</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">Users</th>
+                        <th scope="col">작성일</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="my-table" :items="noticeItems.value" :per-page="perPage" :current-page="currentPage" v-for="(noticeitem, idx) in noticeItems" :key="idx">
+                      <tr>
+
+                        <th scope="row">
+                          <div class="media align-items-center">
+                            <a href="#" class="avatar rounded-circle mr-3">
+                              <img alt="Image placeholder" src="@/assets/cslogo.png">
+                            </a>
+                            <div class="media-body">
+                              <span class="mb-0 text-sm">{{ noticeitem.noticeId }}</span>
+                            </div>
+                          </div>
+                        </th>
+
+                        <td>
+                          공지
+                        </td>
+                        <td>
+                          <span class="badge badge-dot mr-4">
+                            <i class="bg-info"></i>
+                          </span>
+                          <span class="mb-0 text-sm">{{ noticeitem.title }}</span>
+                        </td>
+                        <td>
+                          <div class="avatar-group">
+                            <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
+                              <img alt="Image placeholder" src="@/assets/광.jpg" class="rounded-circle">
+                            </a>
+                            <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
+                              <img alt="Image placeholder" src="@/assets/동.jpg" class="rounded-circle">
+                            </a>
+                            <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
+                              <img alt="Image placeholder" src="@/assets/현.jpg" class="rounded-circle">
+                            </a>
+                            <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+                              <img alt="Image placeholder" src="@/assets/호.jpg" class="rounded-circle">
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <span class="mr-2">{{ makeDate(noticeitem.date) }}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- 페이지 네이션 -->
+                <div class="card-footer py-4">
+                  <b-pagination
+                    @click="pageClick"
+                    v-model="currentPage"
+                    :total-rows="rowws"
+                    :per-page="perPage"
+                    aria-controls="my-table"
+                    align="center"
+                  ></b-pagination>
+                </div>
+                <!-- 페이지네이션 끝 -->
               </div>
-              <table>
-                <colgroup>
-                  <col width="56px">
-                  <col width="102px">
-                  <col width="*">
-                  <col width="158px">
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>유형</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                  </tr>
-                </thead>
-                <tbody id="my-table" :items="noticeItems.value" :per-page="perPage" :current-page="currentPage" v-for="(noticeitem, idx) in noticeItems" :key="idx">
-                  <tr>
-                    <td>{{ noticeitem.noticeId }}</td>
-                    <td>공지</td>
-                    <td>{{ noticeitem.title }}</td>
-                    <td>{{ makeDate(noticeitem.date) }}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
-              <!-- 테이블 끝 -->
+          <!-- 템플릿 테이블 끝 -->
+  
           </div>
           <div class="createBtn_position">
             <button type="button" class="btn createBtn" @click="goNoticeForm" >글생성</button>
           </div>
         </div>
         <!-- 페이지네이션 -->
-        <b-pagination
+        <!-- <b-pagination
           @click="pageClick"
           v-model="currentPage"
           :total-rows="rowws"
           :per-page="perPage"
           aria-controls="my-table"
           align="center"
-        ></b-pagination>
+        ></b-pagination> -->
         <!-- 페이지네이션 끝 -->
-        
-        <!-- 블록 이미지 부분 테두리 따기 -->
-          <div class="box_img">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
-          </div>
-        <!-- 블록 이미지 끝 -->
-      </div>
-      <!-- <button @click="getNotice">이거</button> -->
+      <!-- </div> -->
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
@@ -75,7 +117,8 @@
 
 <script>
 import '@/assets/style/notice/noticeSide.css'
-import '@/assets/style/notice/noticeTable.css'
+// import '@/assets/style/notice/noticeTable.css'
+import '@/assets/style/notice/table.css'
 
 import api from "@/services/api.js"
 import { onMounted, ref } from 'vue';
