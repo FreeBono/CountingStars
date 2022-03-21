@@ -1,6 +1,6 @@
-// import Web3 from 'web3'
+import axios from 'axios'
 
-export default function TransferToken() {
+export default async function SearchToken() {
   var Web3 = require('web3');
   var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
   console.log('왜안되니?')
@@ -19,18 +19,7 @@ export default function TransferToken() {
   // console.log("gasLimit: " + block);
   let contract = new web3.eth.Contract( [
     {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "name_",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "symbol_",
-          "type": "string"
-        }
-      ],
+      "inputs": [],
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
@@ -90,6 +79,25 @@ export default function TransferToken() {
         {
           "indexed": true,
           "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
           "name": "from",
           "type": "address"
         },
@@ -112,22 +120,20 @@ export default function TransferToken() {
     {
       "inputs": [
         {
-          "internalType": "bytes4",
-          "name": "interfaceId",
-          "type": "bytes4"
-        }
-      ],
-      "name": "supportsInterface",
-      "outputs": [
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
         {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
         }
       ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "inputs": [
@@ -157,92 +163,6 @@ export default function TransferToken() {
           "type": "uint256"
         }
       ],
-      "name": "ownerOf",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "name",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "symbol",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
-      ],
-      "name": "tokenURI",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
-      ],
-      "name": "approve",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
-      ],
       "name": "getApproved",
       "outputs": [
         {
@@ -254,24 +174,6 @@ export default function TransferToken() {
       "stateMutability": "view",
       "type": "function",
       "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "operator",
-          "type": "address"
-        },
-        {
-          "internalType": "bool",
-          "name": "approved",
-          "type": "bool"
-        }
-      ],
-      "name": "setApprovalForAll",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     },
     {
       "inputs": [
@@ -299,24 +201,56 @@ export default function TransferToken() {
       "constant": true
     },
     {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "to",
-          "type": "address"
-        },
         {
           "internalType": "uint256",
           "name": "tokenId",
           "type": "uint256"
         }
       ],
-      "name": "transferFrom",
+      "name": "ownerOf",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -371,12 +305,163 @@ export default function TransferToken() {
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "approved",
+          "type": "bool"
+        }
+      ],
+      "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "tokenURI",
+          "type": "string"
+        }
+      ],
+      "name": "mintNFT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ], "0xc7a21620f076CeE598d8746561E46D01007b75f2")
   
   console.log('contract 확인 : ',contract)
   // console.log("ipfs://QmVHcbX4KFHGfdkWbaFNT6x66LKrHaKCdR1THD42pbMWc5")
   // contract.methods.balanceOf("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").send({from:"0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:600000,})
-  contract.methods.transferFrom("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad","0x67Ec0790223db78A170C2C5B5eC564a746D0514c",8).send({from: sender.address,gas:600000, }).then('nft발행 확인 : ',console.log)
+
+  const abc = await contract.methods.balanceOf("0x67Ec0790223db78A170C2C5B5eC564a746D0514c",).call({from: sender.address,gas:600000, })
+  const a = await contract.methods.ownerOf(11,).call({from: sender.address,gas:600000, })
+  console.log(abc)
+  console.log(a)
+
   
+  contract.getPastEvents('Transfer', {
+      filter: {
+          _from: '0x67Ec0790223db78A170C2C5B5eC564a746D0514c'
+      },
+      fromBlock: 0
+  }).then((events) => {
+      for (let event of events) {
+          console.log(event);
+      }
+  });
+
+  const tokena = await contract.methods.tokenURI(19).call({from: "0x67Ec0790223db78A170C2C5B5eC564a746D0514c",gas:600000, });
+  console.log(tokena)
+
   }

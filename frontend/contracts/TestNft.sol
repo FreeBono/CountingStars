@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract MyNFTs is ERC721URIStorage, Ownable {
+contract TestNft is ERC721URIStorage, Ownable {
     event test(address from, uint balance);
     mapping(address => uint256) private _balances;
     using Counters for Counters.Counter;
@@ -17,6 +17,7 @@ contract MyNFTs is ERC721URIStorage, Ownable {
     mapping(uint => string) tokenURIs;
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        string memory tokenURI = tokenURIs[tokenId];
         return tokenURIs[tokenId];
     }
 
