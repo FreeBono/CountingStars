@@ -110,7 +110,7 @@ import { onMounted } from 'vue';
 import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
 import SearchToken from '../utils/SearchNFT'
-import qwe from '../utils/tt'
+import qwe from '../utils/LookupNFT'
 // import Web3 from 'web3'
 
 

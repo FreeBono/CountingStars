@@ -1,22 +1,15 @@
 // import Web3 from 'web3'
+import {useStore} from 'vuex'
 
 export default async function qwe() {
+  const store = useStore()
   var Web3 = require('web3');
   var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/1b71a03449674cfe98b98c4915a7cbc7'));
-  console.log('왜안되니?')
-  // web3.eth.getAccounts().then('계정들확인 : ',console.log);
   var sender = web3.eth.accounts.privateKeyToAccount('0x' + "62db5bf76a08ce902c087a504290008e9512dff0aef136d4d167a0a70b23d1a8");
-  console.log('sender확인 : ',web3.eth.accounts.privateKeyToAccount('0x' + "62db5bf76a08ce902c087a504290008e9512dff0aef136d4d167a0a70b23d1a8"));
   console.log('sender확인 : ',sender)
-  web3.eth.getBalance("0xA4F883c083450f9D06B2bc5BaA31eEFB7d689D09").then('잔고확인 : ',console.log);
-  
   web3.eth.accounts.wallet.add(sender);
   console.log(web3.eth.accounts.wallet);
-  // web3.eth.defaultAccount = sender.address;
-  // senderAddress = web3.eth.defaultAccount;
-  
-  web3.eth.getBlock("latest").then(res => {console.log(res)})
-  // console.log("gasLimit: " + block);
+
   let contract = new web3.eth.Contract( [
     {
       "inputs": [],
@@ -500,16 +493,14 @@ export default async function qwe() {
   ], "0xc57Fdd9b62B985861440782d6eD0B9c5a1F9f81f")
   
   console.log('contract 확인 : ',contract)
-  // console.log(`ipfs://${publisher}`)
-  // contract.methods.mintNFT("0x331da0e1f9546b880905c6417706d6601c51e2D0",`ipfs://${publisher}`).send({from: "0xA4F883c083450f9D06B2bc5BaA31eEFB7d689D09",gas:600000 }).then('nft발행 확인 : ',console.log)
-  
+
   const balance = await contract.methods.balanceOf("0x331da0e1f9546b880905c6417706d6601c51e2D0").call({from: "0x331da0e1f9546b880905c6417706d6601c51e2D0",gas:600000, });
   console.log(balance);
   
   const objects = [];
   const tokens = [];
   const tokenIdList = [];
-
+  const result = [];
   for (let i = 1; i < parseInt(balance)+1; i++) {
     tokenIdList.push(i);
   }
@@ -524,5 +515,8 @@ export default async function qwe() {
       console.log("objects.push");
       objects.push(await contract.methods.tokenURI(tokenIdList[i]).call());
       console.log("objects[i] = " + objects[i]);
+      result.push(objects[i])
   }
+  
+  store.dispatch('nftValues',result)
   }

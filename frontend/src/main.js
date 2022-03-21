@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import setupInterceptors from './services/setupInterceptors';
 import BootstrapVue3 from 'bootstrap-vue-3'
-
+import VueNextSelect from 'vue-next-select'
 
 setupInterceptors(store);
 
@@ -16,6 +16,7 @@ createApp(App)
   .use(store)
   .component(VueCountdown.name, VueCountdown)
   .use(BootstrapVue3)
+  .component('vue-select', VueNextSelect)
   .mount("#app")
 
 // window.Kakao.init('eb6b89b350284c15c748ea3d3855f6c5');
