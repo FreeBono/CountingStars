@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script scoped>
+<script>
 import Sidebar from '@/components/Sidebar.vue'
 import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'

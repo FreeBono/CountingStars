@@ -172,7 +172,7 @@ export default {
 /* 내용물 부분 크기 조절, 위치 조정 여기서 */
 .main-menu li {
   position: relative;
-  display: flex;
+  display: flex !important;
   width: 230px;
   right: 20px;
   margin-top: 15px;
@@ -197,17 +197,17 @@ export default {
 
 .main-menu .nav-icon {
   position:relative;
-  display:table-cell;
+  display:table-cell !important;
   width:60px;
   height:36px;
-  text-align:center;
+  text-align:center !important;
   vertical-align:middle;
   font-size:18px;
 }
 
 .main-menu .nav-text {
   position:relative;
-  display:table-cell;
+  display:table-cell !important;
   vertical-align:middle;
   width: 190px;
 }
