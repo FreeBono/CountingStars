@@ -16,6 +16,6 @@ createApp(App)
   .use(store)
   .component(VueCountdown.name, VueCountdown)
   .use(BootstrapVue3)
-  .mount("#app");
+  .mount("#app")
 
 // window.Kakao.init('eb6b89b350284c15c748ea3d3855f6c5');
