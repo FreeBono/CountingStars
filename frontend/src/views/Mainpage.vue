@@ -1,7 +1,9 @@
 <template>
+
   <div>
     <!-- Navbar -->
     <Navbar />
+    
     <!-- 최상위 gif -->
     <img src="@/assets/MAINGIF.gif" alt="" style="width:100%; height: 100vh;">
 
@@ -201,7 +203,11 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import Navbar from "../components/Navbar.vue"
 import LoginModal from "../components/accounts/LoginModal.vue"
-import getWeb3 from '../utils/Web3.js'
+
+
+
+
+
 
 export default {
   name : "Mainpage",
@@ -214,11 +220,11 @@ export default {
     LoginModal,
   },
   setup() {
-    // getWeb3
-    // Test.tt()
+  
+  
     
     return {
-
+      
     }
   }
 }
