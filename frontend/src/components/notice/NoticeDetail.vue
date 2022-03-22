@@ -25,28 +25,53 @@
                 </colgroup>
                 <tbody>
                   <tr >
-                    <th style="text-align: left;">Title</th>
-                    <th class="pd-0">
-                      <em>[공지]</em>
-                      <span>{{noticeContents.title}}</span>
+                    <th class="" style="text-align: center;">Title</th>
+                    <th class="pd-0" style="text-align: left;">
+                      <em v-if="editBtn === false">[공지]</em>
+                      <b-form-input 
+                        v-if="editBtn === true" 
+                        type="text" 
+                        maxlength="30" 
+                        style="height: 35px; text-align: left; width:400px;"
+                        v-model="noticeContents.title"
+                        >
+                      </b-form-input>
+                      <span class="mx-1" v-else>{{noticeContents.title}}</span>
                     </th>
                   </tr>
                   <tr>
                   </tr>
                 </tbody>
               </table>
-              <p class="content-tag" style="white-space: wrap;">{{ noticeContents.content }}</p>
+              <b-form-textarea 
+              v-if="editBtn === true"
+              id="textarea-rows"
+              rows="8" 
+              v-model="noticeContents.content" 
+              class="form-control"
+              >
+              </b-form-textarea>
+              <p v-else class="content-tag mt-3 mx-3" style="white-space: wrap; text-align: left;">{{ noticeContents.content }}</p>
             </div>
               <!-- 테이블 끝 -->
           </div>
 
           <!-- 관리자만 버튼 보이게 -->
-          <!-- <div v-if=""> -->
+          <!-- 수정 버튼 누르기 전 -->
+          <div v-show="editBtn === false">
             <div class="createBtn_position2">
-              <button type="button" class="btn createBtn " @click="updateNotice" style="width: 60px">수정</button>
+              <button type="button" class="btn createBtn " @click="editNotice" style="width: 60px">수정</button>
               <button type="button" class="btn deleteBtn" @click="deleteNotice" style="width: 60px">삭제</button>
               <button type="button" class="btn backBtn " @click="goNoticeMain" style="width: 60px">목록</button>
-            <!-- </div> -->
+            </div>
+          </div>
+          <!-- 수정 버튼 누른 후 (저장) -->
+          <div v-show="editBtn === true">
+            <div class="createBtn_position2">
+              <button v-if="editBtn === true" type="button" class="btn createBtn " @click="updateNotice" style="width: 60px">수정</button>
+              <button type="button" class="btn deleteBtn" @click="editCancel" style="width: 60px">취소</button>
+              <button type="button" class="btn backBtn " @click="goNoticeMain" style="width: 60px">목록</button>
+            </div>
           </div>
         </div>
       </div>
@@ -84,27 +109,27 @@ export default {
       content: null,
       date: null,
     })
-    // const noticeInfo = {
-    //     noticeId: store.state.noticeNo,
-    //     adminId: 1,
-    //   }
+    const editBtn = ref(false)
 
+    
     // 메인으로 보내기
     function goNoticeMain() {
       router.push({name: 'MainNotice'})
     }
 
     // 디테일 번호 가져와서 내용 불러오기
-    myapi.value.get(`/notice/${noticeNo}`)
-    .then((res) => {
-      console.log(res.data)
-      noticeContents.value.noticeId = res.data.noticeId
-      noticeContents.value.content = res.data.content
-      noticeContents.value.title = res.data.title
-      noticeContents.value.date = res.data.date
-      console.log(noticeContents.value.noticeId,'확인')
-    })
+    const getNotice = () => {
+      myapi.value.get(`/notice/${noticeNo}`)
+      .then((res) => {
+        noticeContents.value.noticeId = res.data.noticeId
+        noticeContents.value.content = res.data.content
+        noticeContents.value.title = res.data.title
+        noticeContents.value.date = res.data.date
+        console.log(noticeContents.value.noticeId, '번호 계속 뜨는지 확인')
+      })
+    }
 
+    // 공지 삭제
     const deleteNotice = () => {
       const noticeInfo = {
         noticeId: store.state.noticeNo,
@@ -119,34 +144,59 @@ export default {
         console.log(noticeInfo.noticeId, '삭제 된 데이터 확인', noticeInfo.adminId)
         router.push({name: 'MainNotice'})
       })
-      // console.log(deleteNotice(),' 작동 함?')
     }
 
-    // 게시글 삭제
-    // deleteBoardForm() {
-    //   http({
-    //     method: 'delete',
-    //     url: `/board/remove/${this.board_no}`,
-    //     headers: this.getToken()
-    //   })
-    //   .then(() => {
-    //     this.$router.push({name: 'MainBoard'})
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
-    // }
+    // 수정 버튼 눌렀을 때 변경
+    const editNotice = () => {
+      editBtn.value = true
+      console.log(editBtn.value, '수정 버튼 변화')
+    }
 
-  onMounted({
-    noticeNo,
-  })
+    // 수정 취소
+    const editCancel = () => {
+      editBtn.value = false
+      getNotice()
+    }
+
+    // 공지 수정
+    const updateNotice = () => {
+      const updateInfo = {
+        adminId: 1,
+        content: noticeContents.value.content,
+        title: noticeContents.value.title,
+        noticeId: store.state.noticeNo,
+      }
+      axios({
+        method: 'put',
+        url: 'http://localhost:8080/api/v1/notice',
+        data: {
+              noticeId: updateInfo.noticeId, 
+              adminId: updateInfo.adminId, 
+              content: updateInfo.content,
+              title: updateInfo.title
+              }
+      })
+      .then(() => {
+        console.log(updateInfo.content, '수정 확인', updateInfo.title)
+        editBtn.value = false
+        console.log(editBtn.value, '수정 저장 버튼')
+      })
+    }
+
+    onMounted(() => {
+      getNotice()
+    })
 
     return {
       noticeNo,
       goNoticeMain,
       noticeContents,
       deleteNotice,
-      // noticeInfo,
+      updateNotice,
+      editBtn,
+      editNotice,
+      editCancel,
+      getNotice,
     }
   },
 }
@@ -156,8 +206,8 @@ export default {
 .content-tag {
   height: 200px;
   display: flex;
-  justify-content: center;
-  align-content: center;
+  justify-content: flex-start;
+  /* align-content: center; */
   flex-wrap: wrap;
   border-bottom: 1px solid #d8d7d7;
 }

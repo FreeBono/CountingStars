@@ -1,7 +1,11 @@
 import { createStore } from 'vuex'
 import { auth } from "./auth.module";
+import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
+  plugins: [
+    createPersistedState({ storage: window.sessionStorage })
+  ],
   state: {
     noticeNo: null,
   },
@@ -10,14 +14,11 @@ export default createStore({
   mutations: {
     GET_NOTICE_NO(state, noticeNumber){
       state.noticeNo = noticeNumber
-      console.log(noticeNumber, '번호 왔? 뮤테')
-      console.log(state.noticeNo, '번호 왔? 뮤테22')
     },
   },
   actions: {
     getNoticeNo({commit}, noticeNumber) {
       commit('GET_NOTICE_NO', noticeNumber)
-      console.log(noticeNumber, '번호 왔? 액션')
     },
   },
   modules: {

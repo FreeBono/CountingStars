@@ -178,6 +178,7 @@ export default {
       return old.substring(0, 10)
     }
 
+    // 디테일 페이지로 가기
     const goNoticeDetail = (noticeIdx) => {
       console.log(noticeIdx, '인덱스확인')
       store.dispatch("getNoticeNo", noticeIdx);
