@@ -14,7 +14,7 @@
 import api from "../services/api"
 export default {
     name: "LoginKakao",
-   
+  
     methods: {
         loginWithKakao() {
           const vm = this

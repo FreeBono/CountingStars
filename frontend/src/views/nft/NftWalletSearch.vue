@@ -1,81 +1,86 @@
 <template>
-  <!-- <h2>거래처 관리 페이지</h2> -->
+  
   <sidebar/>
   <div class="wrapper">
-    <!-- 내용 들어갈 곳 -->
+   
     <div class="main-content">
       <div class="header">
-        <p class="head_title">NFT 조회(지갑)</p>
+        <p class="head_title">NFT 조회</p>
       </div>
-      <div class="content_outside_box">
-        <div class="btnContainer">
-          <button type="button" class="btn numberSearchBtn" @click="goNumberSearch">일련번호로 조회</button>
-        </div>
-
-        <!-- 지갑 검색 부분 -->
-        
+      
         <div class="searchBarTag mt-3">
-          <!-- <input class="search_input" type="text"> -->
-          <input class="form-control" type="text">
-          <button type="button" class="btn backBtn">지갑 조회</button>
-        </div>
-
-        <div class="content_box mt-5">
-          <div class="container">
-            <!-- 테이블 -->
-            <div class="notice_board">
-              <div class="notice_board_head">
-                <p class="mt-3"></p>
-              </div>
-              <table>
-                <colgroup>
-                  <col width="56px">
-                  <col width="*">
-                  <col width="158px">
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>브랜드</th>
-                    <th>NFT 발행일</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>번호</td>
-                    <td>제목 : for문 돌려서 채우기</td>
-                    <td>날짜</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="container ">
+            <div class="row" style="width:100%;">
+         
+                
+                <div class="input-group mb-3" style="width:75%;">
+                  <select style="height:45px; border:0px; width:6rem;">
+                    <option>지갑 주소</option>
+                    <option>아이디</option>
+                  </select>
+                    
+               
+                  <input type="text" class="form-control input-text" style="" placeholder="Search products...." aria-label="Recipient's username" aria-describedby="basic-addon2" v-model="walletAddress">
+                  <div class="input-group-append"> <button class="btn btn-outline-warning btn-lg" type="button" style="z-index:5;"><i class="fa fa-search" @click="searchWallet"></i></button> </div>
+                </div>
+           
             </div>
-              <!-- 테이블 끝 -->
-          </div>
+            <div class="row" v-if="nfts.length ===0">weew</div>
+            <div class="row"  v-else>
+          
+              <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
+                <div class="card col-3" style="padding:0px; ">
+                  <figure class="card__thumb" style="margin:0px; height:450px;">
+                    <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                    <figcaption class="card__caption" style="left:27%;">
+                      <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                      <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                      <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" >Detail</span>
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
 
-        </div>
-        <!-- 페이지네이션 -->
-        <nav aria-label="Page navigation">
-          <div class="pagination_outside">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
+
+            </div>
           </div>
-        </nav>
-        <!-- 페이지네이션 끝 -->
-        
-        <!-- 블록 이미지 부분 테두리 따기 -->
-        <div class="box_img">
-          <img class="mx-5" src="icon.png" alt="블록 상자" style="width: 300px;">
-          <img class="mx-5" src="icon.png" alt="블록 상자2" style="width: 300px;">
         </div>
-        <!-- 블록 이미지 끝 -->
+    
+
+
+
+
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">NFT를 이전할 지갑 주소를 입력해주세요.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+     
+				<div>
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
+						<label for="name" class="form__label">Account</label>
+					</div>
+				</div>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="sendToken">transfer</button>
       </div>
     </div>
-      <!-- 내용 들어갈 곳 끝 -->
+  </div>
+</div> -->
+
+
+
+
+
+    </div>
+    <!-- 내용 들어갈 곳 끝 -->
   </div>
 </template>
 
@@ -84,6 +89,10 @@ import Sidebar from '@/components/Sidebar.vue'
 import "@/assets/style/notice/noticeSide.css"
 import "@/assets/style/notice/noticeTable.css"
 import { useRouter } from 'vue-router'
+import searchNFTs from '@/utils/WalletSearch'
+import {ref, onBeforeUpdate, onUpdated} from 'vue'
+import {useStore} from 'vuex'
+
 
 export default {
   name: 'NftWalletSearch',
@@ -91,20 +100,49 @@ export default {
     Sidebar,
   },
   setup() {
+    // const values = ref([])
+    const store = useStore()
     const router = useRouter()
-
+    // const datas = 'ipfs://QmVHcbX4KFHGfdkWbaFNT6x66LKrHaKCdR1THD42pbMWc5'.substring(7)
+    // console.log(datas)
+    const walletAddress = ref('')
+    const nfts = ref([])
+    
+    
+    
     function goNumberSearch() {
       router.push({name: 'NftNumberSearch'})
     }
+    
+    const searchWallet = () => {
+      console.log('실행')
+      searchNFTs(walletAddress.value)
+      setTimeout(()=> {
+      nfts.value.push(...store.state.searchednft)
+      store.state.searchednft = []
+      },3000)
+      
+  
+    }
+
+    
+    
+    
+ 
 
     return {
       goNumberSearch,
+      searchWallet,
+      walletAddress,
+      nfts,
+   
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .sidenav {
   text-align: left;
   box-sizing: border-box;
@@ -131,59 +169,265 @@ export default {
   border-width: 0 1px 0 0;
 }
 
-table {
-  /* position: relative; */
-  border-top: none;
-}
-
-thead {
-  /* display: flex; */
-  /* margin-top: ; */
-  border-bottom: 1px solid #333333;
-}
-
-.deleteBtn {
-  background-color: #333333 !important;
-  color: white !important;
-}
-
-.backBtn:hover {
-background-color: #727171 !important;
-}
-
-.btnContainer {
-  position: relative;
-  bottom: 20px;
-}
-
-
-.form-control {
-  position: relative;
-  margin-left: 0 !important;
-  width: 30% !important;
-  height: 45px;
-  border: none !important;
-  background-color: white !important;
-  top: 0 !important;
-}
-
-.searchBarTag{
+.nft_img {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
+  /* align-items: center; */
+  top: 150px;
+  position: relative;
+  left: 100px;
 }
 
-.backBtn {
-  height: 45px;
+
+
+
+
+$desktop: 1024px;
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: $desktop) {
+      @content;
+		}
+	}
 }
 
-.numberSearchBtn {
-  background-color: #333333;
-  color: white !important;
-  
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
 }
 
-.numberSearchBtn:hover {
-  background-color: #727171;
+
+
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+	margin: 20px 0 80px;
 }
+
+.card {
+	width: 300px;
+	margin: 10px;
+	background-color: white;
+	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+
+	&:hover {
+		.card__caption {
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.card__image {
+			transform: translateY(-10px);
+		}
+
+		.card__thumb {
+			&::after {
+				top: 0;
+			}
+		}
+
+		.card__snippet {
+			margin: 20px 0;
+		}
+	}
+
+	&__thumb {
+		position: relative;
+		max-height: 400px;
+		overflow: hidden;
+		
+		@include breakpoint(desktop) {
+			max-height: 500px;
+		}
+
+		&::after {
+			position: absolute;
+			top: 0;
+			display: block;
+			content: '';
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(0deg, rgba(0, 0, 0, .5) 40%, rgba(255, 255 ,255 , 0) 100%);
+			transition: .3s;
+			
+			@include breakpoint(desktop) {
+				top: calc(100% - 140px);
+			}
+		}
+	}
+	
+	&__image {
+		transition: .5s ease-in-out;
+	}
+	
+	&__caption {
+		position: absolute;
+		top: 50%;
+		z-index: 1;
+		padding: 0 20px;
+		color: white;
+		transform: translateY(-50%);
+		text-align: center;
+		transition: .3s;
+
+		@include breakpoint(desktop) {
+			top: calc(100% - 110px);
+			transform: unset;
+		}
+	}
+
+	&__title {
+		display: -webkit-box;
+		max-height: 85px;
+    overflow: hidden;
+		font-family: 'Playfair Display', serif;
+		font-size: 23px;
+		line-height: 28px;
+		text-shadow: 0px 1px 5px black;
+		text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
+
+	&__snippet {
+		display: -webkit-box;
+		max-height: 150px;
+		margin: 20px 0;
+		overflow: hidden;
+		font-family: 'Roboto', sans-serif;
+		font-size: 16px;
+		line-height: 20px;
+		text-overflow: ellipsis;
+		transition: .5s ease-in-out;
+    -webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		
+		@include breakpoint(desktop) {
+			margin: 60px 0;
+		}
+	}
+
+	&__button {
+		display: inline-block;
+		padding: 10px 20px;
+		color: white;
+		border: 1px solid white;
+		font-family: 'Roboto', sans-serif;
+		font-size: 12px;
+		text-transform: uppercase;
+		text-decoration: none;
+		transition: .3s;
+
+		&:hover {
+			color: black;
+			background-color: white;
+		}
+	}
+}
+
+.disclaimer {
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	z-index: 2;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 20px 10px;
+	background-color: white;
+	transform: translateX(-50%);
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	text-align: center;
+	
+	&__link {
+		color: #755D87;
+		text-decoration: none;
+	}
+}
+
+
+
+
+
+
+
+$primary: #11998e;
+$secondary: #38ef7d;
+$white: #fff;
+$gray: #9b9b9b;
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 90%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: black;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 10px;
+  }
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+
+.form__field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $primary;
+    font-weight:700;    
+  }
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, $primary,$secondary);
+  border-image-slice: 1;
+}
+/* reset input */
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
+}
+/* demo */
+
+
+
+
+
+
 </style>

@@ -11,17 +11,15 @@
 }
 
 .nav-link:hover {
-  background-color: #3adacf
-;
+  background-color: #3adacf;
 }
 
 .header {
   display: flex;
   position: relative;
-  background-color: #3adacf
-;
+  background-color: #3adacf;
   height: 380px;
-  left: 150px;
+  left: 7px;
   padding-bottom: 72px;
 }
 
@@ -88,7 +86,7 @@
 }
 
 .createBtn:hover {
-background-color: #fae779 !important;
+background-color: #28b9b0d6 !important;
 }
 
 .deleteBtn {
