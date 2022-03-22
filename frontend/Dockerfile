@@ -1,6 +1,6 @@
 # frontend/Dockerfile
 
-# 개발에 사용한 버전에 맞춰서 버전 값을 수정해주세요.
+# 개발에 사용한 버전에 맞춰서 버전 값을 수정해주세요...
 FROM node:14 as build-stage
 WORKDIR /app
 COPY package*.json ./
