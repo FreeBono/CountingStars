@@ -58,6 +58,7 @@ export default {
     const getAccount = async function () {
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       console.log(accounts)
+      
 
     }
 

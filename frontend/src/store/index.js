@@ -4,7 +4,8 @@ import createPersistedState from "vuex-persistedstate";
 export default createStore({
   plugins: [createPersistedState()],
   state: {
-   nftValues : []
+   nftValues : [],
+   searchednft : [],
   },
   getters: {
   },
@@ -13,10 +14,17 @@ export default createStore({
       console.log(data)
       state.nftValues = data
     },
+    SEARCH_WALLET(state,data) {
+      console.log(data)
+      state.searchednft = data
+    },
   },
   actions: {
     nftValues({commit},data) {
       commit("NFT_VALUES",data)
+    },
+    searchWallet({commit},data) {
+      commit("SEARCH_WALLET",data)
     }
   },
   modules: {

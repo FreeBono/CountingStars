@@ -1,15 +1,17 @@
 // import Web3 from 'web3'
+import axios from 'axios'
+import store from '@/store';
 
-export default async function TransferToken(receiveAccount, tokenId) {
-  var Web3 = require('web3');
-  var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/1b71a03449674cfe98b98c4915a7cbc7'));
+
+export default async function searchNFTs(targetAccount) {
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
   const sendAccount = accounts[0]
-  var sender = web3.eth.accounts.privateKeyToAccount('0x'+"3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e")
-  console.log('sender 확인 : ',sender)
-  web3.eth.accounts.wallet.add(sender);
-  
-  console.log(web3.eth.accounts.wallet);
+
+  var Web3 = require('web3');
+  // var web3 = new Web3(window.ethereum)
+  var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/1b71a03449674cfe98b98c4915a7cbc7'));
+  console.log(sendAccount)
+
   let contract = new web3.eth.Contract( [
     {
       "inputs": [],
@@ -493,9 +495,60 @@ export default async function TransferToken(receiveAccount, tokenId) {
   ], "0xc57Fdd9b62B985861440782d6eD0B9c5a1F9f81f")
   
   console.log('contract 확인 : ',contract)
-  console.log(sendAccount)
-  console.log(receiveAccount)
-  console.log(parseInt(tokenId))
-  contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: sender.address,gas:600000, })
+
+  const balance = await contract.methods.balanceOf(targetAccount).call();
+  console.log(balance);
   
+  const objects = [];
+  const tokens = [];
+  const tokenIdList = [];
+  const result = [];
+  for (let i = 1; i < parseInt(balance)+1; i++) {
+    tokenIdList.push(i);
   }
+  
+  // console.log(tokenIdList);
+  
+  for (var i = 0; i < balance; i++) {
+      tokens.push(await contract.methods.tokenOfOwnerByIndex(targetAccount, i).call());
+  }
+  
+  // console.log(tokens)
+  await tokens.forEach( element => {
+     contract.methods.tokenURI(element).call().then(res => {
+      axios({
+        method : 'get',
+        url : 'https://gateway.pinata.cloud/ipfs/'+res.substring(7)
+        })
+        .then(res => {
+          const myData = res.data
+          myData['tokenId'] = element
+          objects.push(myData)
+          console.log(myData)
+    
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+      
+    });
+  })
+  // for(var i = 0; i < tokens.length; i++){
+  //     // console.log("objects.push");
+  //     objects.push(await contract.methods.tokenURI(tokenIdList[i]).call());
+  //     // console.log("objects[i] = " + objects[i]);
+  //     result.push(objects[i])
+  // }
+
+  // console.log(result)
+
+  // return objects
+  
+
+    setTimeout(()=> {
+      store.dispatch('searchWallet',objects)
+    },1000)
+    
+
+}
