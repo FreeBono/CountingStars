@@ -4,24 +4,28 @@
     <div class="main-content">
     <sidebar/>
       <div class="header">
-        <p class="head_title">공지사항 등록</p>
+        <p class="head_title">거래처 등록</p>
       </div>
       <div class="content_outside_box">
         <div class="content_box">
           <div class="container">
             <div>
-              <b-form-input class="input_tag" type="text" v-model="noticeInfo.title" placeholder=" 제목" maxlength="30"></b-form-input>
+              <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
             </div>
-            <b-form-textarea 
-              id="textarea-rows"
-              rows="8" 
-              v-model="noticeInfo.content" 
-              class="form-control" >
-            </b-form-textarea>
+            <div>
+              <b-form-input class="input_tag mt-2" type="text"  placeholder=" 이미지" maxlength="30"></b-form-input>
+            </div>
+            <div>
+              <b-form-input class="input_tag my-2" type="text"  placeholder=" 계약만료일자(계약일?)" maxlength="30"></b-form-input>
+            </div>
+            <div>
+              <b-form-input class="input_tag" type="text"  placeholder=" 지갑주소" maxlength="30"></b-form-input>
+            </div>
+
           </div>
           <div class="createBtn_position2">
-            <button type="button" class="btn createBtn" @click="createNotice" style="width: 70px;">등록</button>
-            <button type="button" class="btn cancleBtn mx-2" @click="goNoticeMain" style="width: 70px">취소</button>
+            <button type="button" class="btn createBtn" @click="createBrand" style="width: 70px;">등록</button>
+            <button type="button" class="btn cancleBtn mx-2" @click="goPatnerMain" style="width: 70px">취소</button>
           </div>
         </div>
       </div>
@@ -33,7 +37,6 @@
 <script>
 import '@/assets/style/notice/noticeSide.css'
 import '@/assets/style/notice/noticeTable.css'
-// import '@/assets/style/notice/noticeForm.css'
 
 import Sidebar from '@/components/Sidebar.vue'
 
@@ -41,41 +44,40 @@ import api from "@/services/api.js"
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
 
+
 export default {
-  name: 'NoticeForm',
+  name: 'PartnerCreate',
   components: {
     Sidebar,
-
   },
   setup() {
     const router = useRouter()
-    const noticeInfo = ref({
-      adminId: 1,
-      content: '',
-      title: '',
+    const brandInfo = ref({
+      name: null,
     })
 
-    function goNoticeMain() {
-      router.push({name: 'MainNotice'})
+    // 거래처관리 페이지로 가기
+    function goPatnerMain() {
+      router.push({name: 'PartnerManagement'})
     }
 
-    const createNotice = () => {
-      console.log(noticeInfo.value)
-      api.post('/notice', noticeInfo.value)
+    // 거래처 등록
+    const createBrand = () => {
+      console.log(brandInfo.value, '브랜드 확인')
+      api.post('/brand', brandInfo.value)
       .then((res) => {
         console.log(res)
-        // 해당 번호의 디테일로 가기
-        router.push({name: 'MainNotice'})
-        // router.push({name: 'NoticeDetail'})
+        // 거래처 메인으로 가기
+        router.push({name: 'PartnerManagement'})
       })
     }
-
+      
     return {
-      goNoticeMain,
-      noticeInfo,
-      createNotice,
+      goPatnerMain,
+      brandInfo,
+      createBrand,
     }
-  },
+  }
 }
 </script>
 
@@ -118,4 +120,11 @@ export default {
 background-color: #fa8e8e !important;
 }
 
+/* 페이지 이름 */
+.head_title {
+  color: white;
+  display: flex;
+  margin-left: 300px;
+  margin-top: 30px;
+}
 </style>

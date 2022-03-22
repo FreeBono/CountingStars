@@ -6,6 +6,7 @@ export default createStore({
   state: {
    nftValues : [],
    searchednft : [],
+   noticeNo: null,
   },
   getters: {
   },
@@ -18,6 +19,9 @@ export default createStore({
       console.log(data)
       state.searchednft = data
     },
+    GET_NOTICE_NO(state, noticeNumber){
+      state.noticeNo = noticeNumber
+    },
   },
   actions: {
     nftValues({commit},data) {
@@ -25,7 +29,11 @@ export default createStore({
     },
     searchWallet({commit},data) {
       commit("SEARCH_WALLET",data)
-    }
+    },
+    getNoticeNo({commit}, noticeNumber) {
+      commit('GET_NOTICE_NO', noticeNumber)
+    },
+
   },
   modules: {
     auth
