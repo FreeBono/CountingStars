@@ -11,7 +11,7 @@ services:
       - "443:443" 
     # [인증서 파일 저장 경로]:/var/www/html
     volumes:
-      - /home/ubuntu/docker-volume/ssl:/var/www/html
+      - /home/ubuntu/docker-volume:/var/www/html
     container_name: "frontend"
   
   backend:
@@ -24,5 +24,5 @@ services:
       # [인증서 파일 저장 경로]:/root
 
     volumes:
-      - /home/ubuntu/docker-volume/ssl:/root
+      - /home/ubuntu/docker-volume:/root
     container_name: "backend"
