@@ -17,7 +17,7 @@
               <div class="col col-lg-4">
                 <!-- 카드 -->
                 <div class="card" @click="goMyNftDeatil" style="background-color: #9950F4; width: 20rem;">
-                  <img class="card=img-top" src="icon.png" alt="공지사항">
+                  <img class="card=img-top" src="@/assets/icon.png" alt="공지사항">
                   <div class="card-body">
                     <h4 class="card-title h2 bm-0">NFT</h4>
                   </div>
@@ -25,7 +25,7 @@
               </div>
               <div class="col col-lg-4">
                 <div class="card" @click="goPartenrManagement" style="background-color: #526EFF; width: 20rem;">
-                  <img class="card=img-top" src="icon.png" alt="거래처">
+                  <img class="card=img-top" src="@/assets/icon.png" alt="거래처">
                   <div class="card-body">
                     <h4 class="card-title h2 bm-0">NFT</h4>
                   </div>
@@ -33,7 +33,7 @@
               </div>
               <div class="col col-lg-4">
                 <div class="card" @click="goNftCreate" style="background-color: #FC5E5E; width: 20rem;">
-                  <img class="card=img-top" src="icon.png" alt="nft발급">
+                  <img class="card=img-top" src="@/assets/icon.png" alt="nft발급">
                   <div class="card-body">
                     <h4 class="card-title h2 bm-0">NFT</h4>
                   </div>
@@ -49,8 +49,8 @@
 
         <!-- 블록 이미지 부분 테두리 따기 -->
           <div class="box_img">
-            <img class="mx-5" src="icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="icon.png" alt="블록 상자2" style="width: 300px;">
+            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
+            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
           </div>
         <!-- 블록 이미지 끝 -->
     <!-- 내용 들어갈 곳 끝 -->

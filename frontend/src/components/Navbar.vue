@@ -7,8 +7,7 @@
                     
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
                     <a class="nav-link" href="#" id="container3">About</a> <a class="nav-link" href="#" id="container4">Services</a>
-                    <a class="nav-link" href="#" id="container5">Blog</a> <a class="nav-link" href="#" id="container6">Conact</a>
-                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6">Contact</a>
+                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">Contact</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.auth.status.loggedIn">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
                   
@@ -51,6 +50,17 @@ export default {
   },
   setup() {
     const store = useStore()
+
+    //메타마스크 연결
+    if (typeof window.ethereum !== 'undefined') {
+      console.log('MetaMask is installed!');
+    }
+    const getAccount = async function () {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      console.log(accounts)
+      
+
+    }
 
 
     window.onscroll = function() {
@@ -128,7 +138,7 @@ export default {
       store,
       logOut,
       loginValue,
- 
+      getAccount,
     }
   }
 }

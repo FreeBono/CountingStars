@@ -81,7 +81,7 @@ const routes = [
     component: NoticeForm
   },
   {
-    path: '/noticedetail',
+    path: '/noticedetail/:noticeNo',
     name: 'NoticeDetail',
     component: NoticeDetail
   },

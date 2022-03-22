@@ -11,7 +11,7 @@
         <div class="content_box">
           <div class="container">
             <div class="nft_img">
-              <img src="icon.png" alt="nft이미지" style="width: 250px;">
+              <img src="@/assets/icon.png" alt="nft이미지" style="width: 250px;">
             </div>
             <div>
               <p>nft 내용 불러오기</p>
@@ -27,8 +27,8 @@
 
         <!-- 블록 이미지 부분 테두리 따기 -->
           <div class="box_img">
-            <img class="mx-5" src="icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="icon.png" alt="블록 상자2" style="width: 300px;">
+            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
+            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
           </div>
         <!-- 블록 이미지 끝 -->
 

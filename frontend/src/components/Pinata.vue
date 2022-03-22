@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <button @click="TransferToken()">ㅇㅇㅇ</button>
+    <button @click="SearchToken()">에고고</button>
+    <button @click="qwe()">테스트</button>
+    
     <h1>Pinata API test</h1>
     <div>
       <div class="row mb-3">
@@ -106,6 +109,8 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
+import SearchToken from '../utils/SearchNFT'
+import qwe from '../utils/LookupNFT'
 // import Web3 from 'web3'
 
 
@@ -166,6 +171,8 @@ export default {
       onMounted, state,
       changeImgFile, transferJSON,
       TransferToken,
+      SearchToken,
+      qwe,
     }
   },
   props: {
