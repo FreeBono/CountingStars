@@ -22,22 +22,23 @@
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">유형</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">Admin</th>
-                        <th scope="col">작성일</th>
-                        <th scope="col"></th>
+                        <th style="width: 10%;">No.</th>
+                        <th style="width: 10%;">유형</th>
+                        <th style="width: 15%;">제목</th>
+                        <th style="width: 10%;">Admin</th>
+                        <th style="width: 10%;">작성일</th>
+                        <th style="width: 10%;"></th>
                       </tr>
                     </thead>
-                    <tbody id="my-table" 
-                    :items="noticeItems.value" 
-                    :per-page="perPage" 
-                    :current-page="currentPage" 
-                    v-for="(noticeitem, idx) in noticeItems" 
-                    :key="idx"
-                    @click="goNoticeDetail(noticeitem.noticeId)"
-                    >
+                    <tbody 
+                      id="my-table" 
+                      :items="noticeItems.value" 
+                      :per-page="perPage" 
+                      :current-page="currentPage" 
+                      v-for="(noticeitem, idx) in noticeItems" 
+                      :key="idx"
+                      @click="goNoticeDetail(noticeitem.noticeId)"
+                      >
                       <tr>
                         <th scope="row">
                           <div class="media align-items-center">
@@ -109,7 +110,7 @@
 </template>
 
 <script>
-import '@/assets/style/notice/table.css'
+// import '@/assets/style/notice/table.css'
 
 import api from "@/services/api.js"
 import { ref } from 'vue';
@@ -125,13 +126,13 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const store = useStore();
     const myapi = ref(api)
     const noticeItems = ref(null)
     const currentPage = ref(null)
     const rowws = ref(null)
     const perPage = ref(null)
     const noticeId = ref(null)
-    const store = useStore();
 
     // 공지사항 하나씩 불러오기
     myapi.value.get('/notice')
@@ -148,10 +149,6 @@ export default {
 
       perPage.value = res.data.pageable['pageSize']
       console.log(perPage.value, 'perP 확인')
-
-      // noticeId.value = res.data.content[0]['noticeId']
-      // console.log(noticeId.value, '번호 확인')
-
     })
 
     // 버튼 누르면 페이지 변경
@@ -367,7 +364,7 @@ img {
 }
 
 table {
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 
 .table>:not(:first-child) {
@@ -1233,7 +1230,7 @@ h3 {
   }
 
   .table {
-    border-collapse: collapse !important;
+    border-collapse: separate !important;
   }
 
 .table td,
