@@ -12,6 +12,7 @@
     "@ckeditor/ckeditor5-build-classic": "^33.0.0",
     "@ckeditor/ckeditor5-vue": "^2.0.1",
     "@openzeppelin/contracts": "^4.5.0",
+    "@popperjs/core": "^2.11.4",
     "@truffle/hdwallet-provider": "^2.0.4",
     "assert": "^2.0.0",
     "axios": "^0.26.1",
