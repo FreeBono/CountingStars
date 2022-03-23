@@ -7,7 +7,8 @@ server:
     ssl: 
     enabled: true
     key-store-type: PKCS12
-    key-store: classpath: /root/key.p12
+    key-store: 
+        classpath: /root/key.p12
     key-store-password: cs124578
     # servlet:
     #     contextPath: /
