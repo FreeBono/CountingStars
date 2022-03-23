@@ -1,17 +1,17 @@
 version: '3.2'
 
 services: 
-  db:
-    image: mysql
-    container_name: database
-    environment:
-      - MYSQL_DATABASE=counting_stars
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_ROOT_PASSWORD=cs124578
-    ports:
-      - 3306:3306
-    networks:
-      - counting_star
+  # db:
+  #   image: mysql
+  #   container_name: database
+  #   environment:
+  #     - MYSQL_DATABASE=counting_stars
+  #     - MYSQL_ROOT_HOST=%
+  #     - MYSQL_ROOT_PASSWORD=cs124578
+  #   ports:
+  #     - 3306:3306
+  #   networks:
+  #     - counting_star
 
   frontend:
     image: frontend-vue
