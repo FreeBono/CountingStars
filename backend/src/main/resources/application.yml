@@ -3,7 +3,7 @@ server:
     compression:
         enabled: true
         mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
-    port: 8080
+    port: 8443
     servlet:
         contextPath: /
         encoding:
