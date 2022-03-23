@@ -25,8 +25,8 @@ services:
     volumes:
       - /home/ubuntu/docker-volume:/var/www/html
     container_name: "frontend"
-    networks:
-      - counting_star
+    # networks:
+    #   - counting_star
   
   backend:
     image: backend-spring
@@ -41,6 +41,3 @@ services:
     container_name: "backend"
     networks:
       - counting_star
-
-networks:
-  counting_star:
