@@ -98,7 +98,7 @@
       </div>
         </div>
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
-        <!-- <button @click="transferJSONToBack" class="btn btn-primary">IpfsBackTest</button> -->
+        <button @click="transferJSONToBack" class="btn btn-primary">IpfsBackTest</button>
     </div>
   </div>
 </template>
@@ -106,15 +106,16 @@
 <script>
 import pinata from '../services/pinataApiFile'
 import pinataJson from '../services/pinataApiJson'
+// import ipfs from '../services/ipfs'
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
 import SearchToken from '../utils/SearchNFT'
 import qwe from '../utils/LookupNFT'
-// import ipfs from '../services/ipfs'
 // import Web3 from 'web3'
 
+import * as IPFS from 'ipfs-core'
 
 export default {
   name : 'Pinata',
@@ -182,26 +183,30 @@ export default {
         material: state.value.material,
         productColor: state.value.productColor,
         productPrice: state.value.productPrice,
-        image: url,
+        image: state.value.nftImgFile,
       }
 
-      const response = await ipfs(state.value.nftImgFile);
+      const ipfs = await IPFS.create({repo: 'ok' + Math.random()})
+      const { cid } = await ipfs.add(data.image);
+      data.image = "ipfs://" + cid;
+      console.log(cid);
 
-      data.image = "ipfs://" + response.data.IpfsHash;
+      console.log(data.image);
+      console.log(data);
+      const jsonData = JSON.stringify(data); // 문자열로 바꾸기
 
-      const jsonResponse = await ipfs(data);
+      const cid2 = await ipfs.add(jsonData);
+      console.log(cid2.path)
 
-      console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
-      publishToken(jsonResponse.data.IpfsHash)
+      // publishToken(jsonResponse.data.IpfsHash)
     }
 
     return {
       onMounted, state,
-      changeImgFile, transferJSON,
-      TransferToken,
+      changeImgFile, transferJSON, transferJSONToBack,
+      TransferToken, 
       SearchToken,
       qwe,
-      // transferJSONToBack,
     }
   },
   props: {
