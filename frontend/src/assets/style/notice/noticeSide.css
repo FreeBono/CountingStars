@@ -53,10 +53,10 @@
 }
 
 .content_box {
-  width: 50%;
-  height: 600px;
+  width: 45%;
+  min-height: 600px;
   background-color: white;
-  margin: auto;
+  margin-left: 100px;
   border: 1px;
   border-radius: 10px;
   box-shadow: 3px 3px 10px 1px #d8d7d7;

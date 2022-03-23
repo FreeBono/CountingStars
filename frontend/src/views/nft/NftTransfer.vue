@@ -1,29 +1,131 @@
 <template>
   <!-- <h2>My NFT 상세보기</h2> -->
   <sidebar/>
+  
+  
   <div class="wrapper">
+
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
+
       <div class="header">
-        <p class="head_title">NFT 이전</p>
-      </div>
-      
-        <div class="searchBarTag mt-3">
-          <div class="container justify-content-center">
-            
-            <div class="row" >
-          
-              <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                <div class="card col-3" style="padding:0px; ">
-                  <figure class="card__thumb" style="margin:0px; height:450px;">
-                    <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                    <figcaption class="card__caption" style="left:27%;">
-                      <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
-                      <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                      <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
-                    </figcaption>
-                  </figure>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> NFT Transfer</div>
+        <div class="row-vh d-flex" style="margin-left:80px; width:90vw; margin-top:100px;">
+          <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; margin-top:15px;">  
+                    <div>TOTAL NFTS</div>
+                    <div align="left">{{nfts.length}}</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fas fa-handshake fa-2x"></i>
+                  </div>    
                 </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden; ">
+                  <div class="media-body" style="float:left; margin-top:15px;">  
+                    <div>TOTAL TRANSFER</div>
+                    <div align="left">{{nfts.length}}</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fas fa-handshake fa-2x" style="color:gold;"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; margin-top:15px;">  
+                    <div>TOTAL WORTH</div>
+                    <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fas fa-handshake fa-2x"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; margin-top:15px;">  
+                    <div>HIGHEST PRICE</div>
+                    <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fas fa-handshake fa-2x"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+        <div>
+        
+        </div>
+      </div>
+        <!-- <div class="testbox" style=">
+          <div class="container">
+            <div class="row">
+              <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
+                    <div class="card col-3" style="padding:0px; width:175px;">
+                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                        <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                        <figcaption class="card__caption" style="left:5%;">
+                          <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div> -->
+        
+  
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px;">
+          <div  class="container-fluid">
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
+                    <div class="card col-3" style="padding:0px; width:175px;">
+                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                        <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                        <figcaption class="card__caption" style="left:5%;">
+                          <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:900px; width:800px">
+          <div  class="container-fluid">
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div align="left" >Highest Value</div>
+                  <hr style="margin-top:15px 0;">
+                  <div></div>
               </div>
             </div>
           </div>
@@ -103,7 +205,9 @@ export default {
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
     }
-    // LookupNFTs()
+    if (store.state.nftValues.length === 0) {
+      LookupNFTs()
+    }
     nfts.value = store.state.nftValues
 
 
@@ -117,6 +221,17 @@ export default {
 			// console.log(tokenNum.value)
 			TransferToken(receiveAccount.value ,tokenNum.value)
 		}
+    
+    // console.log(nfts)
+    
+
+    const worth = computed(() => {
+      return store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}).reduce(function(a,b) { return a+b;},0)
+    })
+
+    const highestPrice = computed(() => {
+      return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
+      })
 
     return {
       goMyNftDetail,
@@ -127,6 +242,8 @@ export default {
 			sendToken,
 			tokenNum,
       tokenChangeNum,
+      worth,
+      highestPrice
     }
   }
 }

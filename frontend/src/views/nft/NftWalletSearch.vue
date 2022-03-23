@@ -1,51 +1,48 @@
 <template>
   
-  <sidebar/>
+  <sidebar style=""/>
   <div class="wrapper">
-   
+
+  
+
     <div class="main-content">
       <div class="header">
-        <p class="head_title">NFT 조회</p>
+        <div class="head_title" style="font-size:16px;">
+          <div class="input-group mb-3" style="width:500px; ">
+            <select style="height:45px; border:0; width:6rem;">
+              <option>지갑 주소</option>
+              <option>아이디</option>
+            </select>
+              
+          
+            <input type="text" class="form-control input-text" style="height:45px; border:0px;" placeholder="Search products...." aria-label="Recipient's username" aria-describedby="basic-addon2" v-model="walletAddress">
+            <div class="input-group-append"> <button class="btn btn-outline-warning btn-lg" type="button" style="height:45px; z-index:5; border-radius:0px;"><i class="fa fa-search" @click="searchWallet"></i></button> </div>
+          </div>
+        </div>
       </div>
       
-        <div class="searchBarTag mt-3">
-          <div class="container ">
-            <div class="row" style="width:100%;">
-         
-                
-                <div class="input-group mb-3" style="width:75%;">
-                  <select style="height:45px; border:0px; width:6rem;">
-                    <option>지갑 주소</option>
-                    <option>아이디</option>
-                  </select>
-                    
-               
-                  <input type="text" class="form-control input-text" style="" placeholder="Search products...." aria-label="Recipient's username" aria-describedby="basic-addon2" v-model="walletAddress">
-                  <div class="input-group-append"> <button class="btn btn-outline-warning btn-lg" type="button" style="z-index:5;"><i class="fa fa-search" @click="searchWallet"></i></button> </div>
-                </div>
-           
-            </div>
-            <div class="row" v-if="nfts.length ===0">weew</div>
-            <div class="row"  v-else>
-          
-              <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                <div class="card col-3" style="padding:0px; ">
-                  <figure class="card__thumb" style="margin:0px; height:450px;">
-                    <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                    <figcaption class="card__caption" style="left:27%;">
-                      <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
-                      <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                      <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" >Detail</span>
-                    </figcaption>
-                  </figure>
-                </div>
-              </div>
 
-
+      <div class="content_box row-vh d-flex flex-row" style="position:absolute; top:280px; left:8%; width:75%;">
+        <div  class="container-fluid">
+          <div class="searchBarTag mt-3">
+            <!-- <div class="container justify-content-center"> -->
+              <div class="row" >
+                <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
+                  <div class="card col-3" style="padding:0px; width:200px;">
+                    <figure class="card__thumb" style="margin:0px; height:250px;">
+                      <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                      <figcaption class="card__caption" style="left:5%;">
+                        <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                        <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                        <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
+                      </figcaption>
+                    </figure>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
-    
+      </div>
 
 
 
@@ -92,12 +89,24 @@ import { useRouter } from 'vue-router'
 import searchNFTs from '@/utils/WalletSearch'
 import {ref, onBeforeUpdate, onUpdated} from 'vue'
 import {useStore} from 'vuex'
+import { Carousel, Pagination, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
+import { useCookies } from "vue3-cookies";
 
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 
 export default {
   name: 'NftWalletSearch',
   components: {
     Sidebar,
+    Carousel,
+    Slide,
+    Pagination,
+    VueperSlides,
+    VueperSlide,
+  
+
   },
   setup() {
     // const values = ref([])
@@ -107,13 +116,14 @@ export default {
     // console.log(datas)
     const walletAddress = ref('')
     const nfts = ref([])
+
+    //cookies
+
     
+
     
-    
-    function goNumberSearch() {
-      router.push({name: 'NftNumberSearch'})
-    }
-    
+
+    //자겁조회실행
     const searchWallet = () => {
       console.log('실행')
       searchNFTs(walletAddress.value)
@@ -124,20 +134,19 @@ export default {
       
   
     }
-
-    
-    
-    
- 
+  
 
     return {
-      goNumberSearch,
+
       searchWallet,
       walletAddress,
       nfts,
+
+
    
     }
-  }
+  },
+
 }
 </script>
 
@@ -427,7 +436,39 @@ $gray: #9b9b9b;
 
 
 
+.carousel__slide > .carousel__item {
+  transform: scale(1);
+  opacity: 0.5;
+  transition: 0.5s;
+}
+.carousel__slide--visible > .carousel__item {
+  opacity: 1;
+  transform: rotateY(0);
+}
+.carousel__slide--next > .carousel__item {
+  transform: scale(0.6) translate(-10px);
+  opacity: 0.8;
+}
+.carousel__slide--prev > .carousel__item {
+  transform: scale(0.6) translate(10px);
+  opacity: 0.8;
+}
+.carousel__slide--active > .carousel__item {
+  transform: scale(1.02);
+  
+}
 
 
 
+
+// .wrapper > .vueperslides--rtl .vueperslides__arrows--outside .vueperslides__arrow--prev, .vueperslides__arrows--outside .vueperslides__arrow--next {
+//     left: auto;
+//     right: 0em; 
+//     color:red;
+// }
+
+
+// button {
+//   right : 0px;
+// }
 </style>

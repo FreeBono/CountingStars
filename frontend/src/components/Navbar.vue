@@ -56,6 +56,7 @@ export default {
       console.log('MetaMask is installed!');
     }
     const getAccount = async function () {
+      store.dispatch("nftValues",[])
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       console.log(accounts)
       
