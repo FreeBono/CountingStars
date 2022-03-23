@@ -98,6 +98,7 @@
       </div>
         </div>
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
+        <!-- <button @click="transferJSONToBack" class="btn btn-primary">IpfsBackTest</button> -->
     </div>
   </div>
 </template>
@@ -111,6 +112,7 @@ import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
 import SearchToken from '../utils/SearchNFT'
 import qwe from '../utils/LookupNFT'
+// import ipfs from '../services/ipfs'
 // import Web3 from 'web3'
 
 
@@ -167,12 +169,39 @@ export default {
       publishToken(jsonResponse.data.IpfsHash)
     }
 
+    const transferJSONToBack = async function () {
+      const data = {
+        name: "Luxury",
+        description: "It contains a warranty for luxury goods.",
+        serialNumber: state.value.serialNumber,
+        dateOfManufacture: state.value.dateOfManufacture,
+        brandName: state.value.brandName,
+        countryOfManufacture: state.value.countryOfManufacture,
+        productClassification: state.value.productClassification,
+        detailProductClassification: state.value.detailProductClassification,
+        material: state.value.material,
+        productColor: state.value.productColor,
+        productPrice: state.value.productPrice,
+        image: url,
+      }
+
+      const response = await ipfs(state.value.nftImgFile);
+
+      data.image = "ipfs://" + response.data.IpfsHash;
+
+      const jsonResponse = await ipfs(data);
+
+      console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
+      publishToken(jsonResponse.data.IpfsHash)
+    }
+
     return {
       onMounted, state,
       changeImgFile, transferJSON,
       TransferToken,
       SearchToken,
       qwe,
+      // transferJSONToBack,
     }
   },
   props: {
