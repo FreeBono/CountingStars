@@ -8,7 +8,6 @@ services:
       - MYSQL_DATABASE=counting_stars
       - MYSQL_ROOT_HOST=%
       - MYSQL_ROOT_PASSWORD=cs124578
-    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     ports:
       - 3306:3306
     volumes:
