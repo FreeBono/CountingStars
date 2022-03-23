@@ -118,14 +118,26 @@
           </div>
         </div>
 
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:900px; width:800px">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:900px; width:800px; min-height:300px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
-                  <div align="left" >Highest Value</div>
-                  <hr style="margin-top:15px 0;">
-                  <div></div>
+                  <div align="left" >메인 지갑 설정</div>
+                  <!-- <hr style="margin:15px 0;"> -->
+                  <!-- <div>현재 지갑 주소 </div> -->
+                  <div class="form__group field" style="margin-left:40px; margin-top:30px;">
+                    <input type="input" class="form__field" placeholder="Name" name="address" v-model="walletAddress" required />
+                    <label for="name" class="form__label" style="font-size:18px;">WALLET ADDRESS</label>
+                  </div>
+                  <div class="form__group field" style="margin-left:40px;">
+                    <input type="input" class="form__field" placeholder="Name" name="privatekey" v-model="privatekey" required />
+                    <label for="name" class="form__label" style="font-size:18px;">WALLET PRIVIATEKEY</label>
+                  </div>
+                  
+              </div>
+              <div align="right" style="margin-right:25px;">
+                <button style="width:80px; margin-top:25px; background-color:#3adacf; border:0px; border-radius:5px; height:40px;" @click="sendWalletInfo">확인</button>
               </div>
             </div>
           </div>
@@ -178,7 +190,7 @@ import {ref, computed } from 'vue'
 // import axios from 'axios'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
-
+import checkAccount from '@/utils/CheckMainWallet.js'
 
 
 
@@ -233,6 +245,21 @@ export default {
       return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
       })
 
+    // 메인 지갑 설정
+    const walletAddress = ref('')
+    const privatekey = ref('')
+
+    const sendWalletInfo = () => {
+      checkAccount(walletAddress.value, privatekey.value).then(res => {
+        if (res.address == walletAddress.value) {
+          alert('main 설정완료')
+        } else {
+          alert('올바른 값을 입력해주세요')
+        }
+        })
+      // console.log(abc)
+    }
+
     return {
       goMyNftDetail,
       sendNft,
@@ -243,7 +270,11 @@ export default {
 			tokenNum,
       tokenChangeNum,
       worth,
-      highestPrice
+      highestPrice,
+      checkAccount,
+      walletAddress,
+      privatekey,
+      sendWalletInfo
     }
   }
 }
@@ -532,5 +563,8 @@ $gray: #9b9b9b;
 }
 /* demo */
 
+
+
+//input
 
 </style>
