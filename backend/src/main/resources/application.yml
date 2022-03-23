@@ -3,7 +3,7 @@ server:
     # compression:
     #     enabled: true
     #     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
-    port: 8443
+    
     ssl: 
     enabled: true
     key-store-type: PKCS12
@@ -16,6 +16,7 @@ server:
     #         charset: UTF-8
     #         enabled: true
     #         force: true
+    port: 8443
 #spa:
 #    default-file: /dist/index.html
 
