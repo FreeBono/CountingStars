@@ -39,5 +39,5 @@ services:
     volumes:
       - /home/ubuntu/docker-volume:/root
     container_name: "backend"
-    networks:
-      - counting_star
+    # networks:
+    #   - counting_star
