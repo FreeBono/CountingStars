@@ -40,7 +40,7 @@
 <script>
 import {computed ,onMounted, } from 'vue'
 import {useStore} from 'vuex'
-
+import {useRouter} from 'vue-router'
 import LoginModal from './accounts/LoginModal.vue'
 
 export default {
@@ -50,6 +50,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     //메타마스크 연결
     if (typeof window.ethereum !== 'undefined') {
@@ -108,6 +109,7 @@ export default {
     const loginValue = (val) => {
       console.log(val)
       store.dispatch("auth/login", val)
+
 
     }
 

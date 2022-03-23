@@ -10,7 +10,7 @@
                   <div class="d-flex align-items-center"> <label class="option"> <span class="text-light-white">Remember Me</span> <input type="checkbox" checked> <span class="checkmark"></span> </label> </div>
                   <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div>
               </div>
-              <div class="my-3"> <button class="btn btn-primary" @click="login()">Login</button> </div>
+              <div class="my-3"> <span class="btn btn-primary" @click="login()">Login</span> </div>
               <div class="mb-3"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">or connect with</span> </div>
@@ -53,7 +53,7 @@
 import {ref} from 'vue'
 import {useStore} from 'vuex'
 import LoginKakao from '../LoginKakao.vue'
-
+import {useRouter} from 'vue-router'
 export default {
   emits : ['login-value'],
   name : "LoginModal",
@@ -61,6 +61,7 @@ export default {
       LoginKakao,
   },
   setup(props,{emit}) {
+    const router = useRouter()
     const store = useStore()
     const loginData = ref({
         email : '',
@@ -104,8 +105,13 @@ export default {
     const login = () => {
         console.log('1로그인 메소드 실행')
         console.log(loginData.value)
+       
         emit('login-value',loginData.value)
         // store.dispatch("auth/login", loginData)
+        // console.log('??')
+        
+    
+        
     }
     const kakaologin = () => {
         emit('kakao-login')
