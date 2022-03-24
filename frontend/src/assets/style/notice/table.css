@@ -92,7 +92,7 @@ img {
 }
 
 table {
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 
 .table>:not(:first-child) {
@@ -1014,7 +1014,7 @@ h3 {
   }
 
   .table {
-      border-collapse: collapse !important;
+      border-collapse: separate !important;
   }
 
 .table td,

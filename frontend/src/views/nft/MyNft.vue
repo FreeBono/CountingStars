@@ -7,7 +7,6 @@
 
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
-
       <div class="header">
         <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> My NFTs</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
@@ -321,7 +320,7 @@ export default {
   padding: 1rem 1rem;
   flex-wrap: wrap;
   align-items: center;
-  -webkit-box-pack: justify;
+  -searchBarTagbkit-box-pack: justify;
   justify-content: space-between;
   padding-top: 0;
   border-style: solid;

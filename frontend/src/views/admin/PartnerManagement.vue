@@ -11,21 +11,23 @@
         <!-- <div class="content_box"> -->
           <div class="container-fluid mt-7">
             <!-- 템플릿 테이블 시작 -->
-
             <div class="col">
               <div class="card shadow">
-                <div class="card-header border-0 my-2">
-                  <h3 class="mb-0">Notice</h3>
+                <div class="card-header border-0 my-2 d-flex" style="justify-content: space-between; align-content: center;">
+                  <h3 class="mb-0 d-flex" style="align-items: center;">Notice</h3>
+                  <div >
+                    <button type="button" class="btn createBtn" @click="createPartner">거래처 등록</button>
+                  </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
                         <th style="width: 10%;">이미지</th>
-                        <th style="width: 20%;">브랜드명</th>
-                        <th style="width: 15%;">Admin</th>
-                        <th style="width: 15%;">계약일?(만료일?)</th>
-                        <th style="width: 10%;">관리</th>
+                        <th style="width: 15%;">브랜드명</th>
+                        <th style="width: 5%;">Admin</th>
+                        <th style="width: 5%;">계약일?(만료일?)</th>
+                        <th style="width: 5%;">관리</th>
                       </tr>
                     </thead>
                     <tbody 
@@ -43,7 +45,7 @@
                               <!-- <span class="badge badge-dot mr-4">
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
-                              <span class="mb-0 text-sm">이미지</span>
+                              <span class="mb-0 text-sm">로고 이미지</span>
                             </div>
                           </div>
                         </th>
@@ -73,32 +75,32 @@
                           </div>
                         </td>
                         <td>
-                          <b-button type="button" class="btn deleteBtn" @click="deletePartner">계약해지</b-button>
+                          <b-button type="button" class="btn deleteBtn2" @click="deletePartner(branditem.brandId)">계약해지</b-button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
+              <!-- 페이지네이션 -->
+              <div class="card-footer py-4">
+                <b-pagination
+                  @click="pageClick"
+                  v-model="currentPage"
+                  :total-rows="rowws"
+                  :per-page="perPage"
+                  aria-controls="my-table"
+                  align="end"
+                ></b-pagination>
               </div>
+              <!-- 페이지네이션 끝 -->
+            </div>
             <!-- </div> -->
+            <div class="createBtn_position">
+            <!-- <button type="button" class="btn createBtn" @click="goNoticeForm" >글생성</button> -->
           </div>
-          <div class="createBtn_position">
-            <!-- 거래처 등록할 때는 input으로 바로? 아니면 폼 생성?-->
-            <button type="button" class="btn createBtn" @click="createPartner">등록</button>
           </div>
+        
         </div>
-        <!-- 페이지네이션 -->
-        <!-- <div class="card-footer py-4">
-          <b-pagination
-            @click="pageClick"
-            v-model="currentPage"
-            :total-rows="rowws"
-            :per-page="perPage"
-            aria-controls="my-table"
-            align="end"
-          ></b-pagination>
-        </div> -->
-        <!-- 페이지네이션 끝 -->
       </div>
     </div>
       <!-- 내용 들어갈 곳 끝 -->
@@ -106,14 +108,14 @@
 </template>
 
 <script>
-import "@/assets/style/notice/noticeSide.css"
 import "@/assets/style/notice/noticeTable.css"
+import "@/assets/style/notice/table.css"
 
 import Sidebar from '@/components/Sidebar.vue'
 
 import { useRouter } from 'vue-router'
 import api from "@/services/api.js"
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios'
 
 export default {
@@ -128,35 +130,37 @@ export default {
     const rowws = ref(null)
     const perPage = ref(null)
     const noticeId = ref(null)
-    const brandId = ref(null)
 
     function createPartner() {
       router.push({name: 'PartnerCreate'})
     }
 
     // 브랜드 조회 & 페이지네이션
-    api.get('/brand')
-    .then((res) => {
-      console.log(res)
-      brandItems.value = res.data.content
-      console.log(brandItems.value, '브랜드 목록 확인')
+    const getBrand = () => {
+      api.get('/brand')
+      .then((res) => {
+        console.log(res)
+        brandItems.value = res.data.content
+        console.log(brandItems.value, '브랜드 목록 확인')
+  
+        currentPage.value = res.data.pageable['pageNumber']
+        console.log(currentPage.value, 'currentPage 확인')
+  
+        rowws.value = res.data.totalElements
+        console.log(rowws.value, 'rowws 전체 개수')
 
-      currentPage.value = res.data.pageable['pageNumber']
-      console.log(currentPage.value, 'currentPage 확인')
-
-      rowws.value = res.data.totalElements
-      console.log(rowws.value, 'rowws 전체 개수')
-
-      perPage.value = res.data.pageable['pageSize']
-      console.log(perPage.value, 'perP 확인')
-    })
+  
+        perPage.value = res.data.pageable['pageSize']
+        console.log(perPage.value, 'perP 확인')
+      })
+    }
 
     // 버튼 누르면 페이지 변경
     const pageClick = () => {
       console.log(currentPage.value, 'currentPage 바뀌는지 확인')
       axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/notice?page=${currentPage.value}&size=10`
+        url: `http://localhost:8080/api/v1/brand?page=${currentPage.value}&size=10`
       })
       .then((res) => {
         console.log(res,'👍페이지확인')
@@ -165,11 +169,26 @@ export default {
     }
 
     // 브랜드 삭제
-    const deletePartner = () => {
-      brandId.value = 
-      console.log(brandId.value, '번호 확인')
-      api.delete('/brand', brandId.value)
+    const deletePartner = (brandNum) => {
+      const brandInfo = {
+        brandId: brandNum
+      }
+      console.log(brandInfo.brandId, '번호 확인')
+      axios({
+        method: 'delete',
+        url: 'http://localhost:8080/api/v1/brand',
+        data: {brandId: brandInfo.brandId}
+      })
+      .then(() => {
+        console.log(brandInfo.brandId,'브랜드 삭제 확인')
+        getBrand()
+      })
     }
+
+    onMounted(() => {
+      getBrand()
+      brandItems
+    })
 
     return {
       createPartner,
@@ -180,13 +199,14 @@ export default {
       noticeId,
       pageClick,
       deletePartner,
-      brandId,
+      getBrand
     }
   }
 }
 </script>
 
 <style scoped>
+
 table {
   /* position: relative; */
   border-top: none;
@@ -199,9 +219,20 @@ thead {
   border-bottom: 1px solid #333333;
 }
 
-.deleteBtn {
-  background-color: #333333 !important;
-  color: white !important;
+.deleteBtn2 {
+  font-size: 0.8rem !important;
+  border: none !important;
+  height: 30px;
+  width: 65px;
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+.deleteBtn2:hover {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #3adacf ;
+  color: white ;
 }
 
 .backBtn:hover {
@@ -260,6 +291,96 @@ background-color: #727171 !important;
 
 #my-table:hover {
   cursor: pointer;
+  transition: all 0.2s ease 0s;
+  box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+  background-color: rgb(251, 253, 255);
+}
+
+/* noticeSide css */
+* {
+  font-family: 'MinSans-Regular';
+}
+
+.nav-link {
+  text-align: left;
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+.nav-link:hover {
+  background-color: #3adacf;
+}
+
+.header {
+  display: flex;
+  position: relative;
+  background-color: #3adacf;
+  height: 380px;
+  left: 7px;
+  padding-bottom: 72px;
+}
+
+.main-content {
+  position: relative;
+  background-color: #f5f6fc;
+  /* top: 50px; */
+  /* height: 100%; */
+}
+
+.nav-link-text {
+  /* color: white; */
+  color: black;
+  font-size: 24px;
+  margin-left: 40px;
+  font-family: 'MinSans-Regular';
+}
+
+.nav-link-text:hover {
+  color: black;
+  cursor: pointer;
+}
+
+.content_outside_box {
+  position: relative;
+  bottom: 200px;
+  left: 40px;
+}
+
+.content_box {
+  width: 50%;
+  height: 600px;
+  background-color: white;
+  margin: auto;
+  border: 1px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px 1px #d8d7d7;
+}
+
+.pagination_outside {
+  display: flex;
+  position: relative;
+  bottom: 130px;
+  /* left: 150px; */
+}
+
+.pagination {
+  margin: auto;
+}
+
+.createBtn {
+  background-color: #fff !important;
+  height: 40px;
+  color: #333333;
+  border-color: transparent;
+  border: 1px solid transparent !important;
+  box-shadow: 1px 1px 2px 2px #ececf0;
+  right: 30%;
+  /* background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%); */
+}
+
+.createBtn:hover {
+  background-color: #32CCBC !important;
+  color: white;
 }
 
 
@@ -268,6 +389,10 @@ background-color: #727171 !important;
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+* {
+  font-family: 'SUIT-Regular';
 }
 
 @-ms-viewport {
@@ -283,7 +408,6 @@ section {
 }
 
 body {
-  font-family: Open Sans, sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -357,7 +481,7 @@ img {
 }
 
 table {
-  border-collapse: separate;
+  border-collapse: collapse;
 }
 
 .table>:not(:first-child) {
@@ -1436,6 +1560,7 @@ a.btn-icon-only {
 
 .main-content {
   position: relative;
+  /* height: 100%; */
 }
 
 .dropdown {
