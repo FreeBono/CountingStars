@@ -10,8 +10,6 @@ import com.ssafy.cstars.domain.entity.BrandAdmin;
 
 @Repository
 public interface BrandAdminRepository extends JpaRepository<BrandAdmin, Long> {
-//    Optional<BrandAdmin> findByName(String name);
-
     Optional<BrandAdmin> findByEmail(String email);
 
     Boolean existsByName(String name);

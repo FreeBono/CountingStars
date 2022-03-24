@@ -21,11 +21,9 @@ public class BrandPostReq {
     Date endDate;
 
     @ApiModelProperty(name = "브랜드 지갑 주소")
-    String wallet;
+    String address;
 
     @ApiModelProperty(name = "브랜드 이미지 URl")
     String imageUrl;
-
-
 
 }
