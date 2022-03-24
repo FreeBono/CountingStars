@@ -8,10 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BrandService {
 
-    Page<Brand> GetBrandList(Pageable pageable);
+    List<BrandRes>  GetBrandList();
     Brand getBrand(Long brandId);
     int createBrand(BrandPostReq BrandInfo);
     int deleteBrand(BrandDeleteReq BrandInfo);

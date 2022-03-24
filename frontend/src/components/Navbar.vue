@@ -40,8 +40,10 @@
 <script>
 import {computed ,onMounted, } from 'vue'
 import {useStore} from 'vuex'
-
+import {useRouter} from 'vue-router'
 import LoginModal from './accounts/LoginModal.vue'
+import LookupNFTs from '@/utils/LookupNFT.js'
+
 
 export default {
   name : "Navbar",
@@ -50,14 +52,17 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     //메타마스크 연결
     if (typeof window.ethereum !== 'undefined') {
       console.log('MetaMask is installed!');
     }
     const getAccount = async function () {
+      store.dispatch("nftValues",[])
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       console.log(accounts)
+      LookupNFTs()
       
 
     }
@@ -107,6 +112,7 @@ export default {
     const loginValue = (val) => {
       console.log(val)
       store.dispatch("auth/login", val)
+
 
     }
 
