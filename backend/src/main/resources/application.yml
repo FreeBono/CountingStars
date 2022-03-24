@@ -20,10 +20,10 @@ spring:
                 one-indexed-parameters: true
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://j6e204.p.ssafy.io:3306/counting_stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+        url: jdbc:mysql://localhost:3306/stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
         hikari:
-            username: countingstars
-            password: cs124578
+            username: root
+            password: root
     devtools:
         livereload:
             enabled: true

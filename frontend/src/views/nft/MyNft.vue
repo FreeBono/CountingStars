@@ -26,13 +26,14 @@
               </div>
             </div> 
           </div>
-          <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
+          <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px; text-align:left;">
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div>MAIN WALLET ADDRESS</div>
-                    <div align="left">{{nfts.length}}</div>
+                    <div style="txt-align:left;">MAIN WALLET ADDRESS</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" >{{myWallet.substring(0,8) + '...' + myWallet.substring(34,42)}}</div>
+                    <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fas fa-handshake fa-2x" style="color:gold;"></i>
@@ -183,6 +184,7 @@
 </template>
 
 <script>
+import api from "@/services/api.js"
 import Sidebar from '@/components/Sidebar.vue'
 import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
@@ -247,19 +249,47 @@ export default {
       })
 
     // 메인 지갑 설정
+    const myWallet = store.state.auth.user.address
     const walletAddress = ref('')
     const privatekey = ref('')
 
     const sendWalletInfo = () => {
       checkAccount(walletAddress.value, privatekey.value).then(res => {
         if (res.address == walletAddress.value) {
-          alert('main 설정완료')
+          
+          console.log(store.state.auth.user.id, walletAddress.value)
+          api.put("/user", {
+             userId : store.state.auth.user.id, wallet : walletAddress.value 
+          })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+
+          alert('main 지갑 설정완료')
         } else {
           alert('올바른 값을 입력해주세요')
         }
         })
       // console.log(abc)
     }
+
+    // 메인지갑 복사
+    function copyToClickBoard(){
+      var content = document.getElementById('copytext').innerHTML;
+
+      navigator.clipboard.writeText(content)
+          .then(() => {
+          console.log("Text copied to clipboard...")
+      })
+          .catch(err => {
+          console.log('Something went wrong', err);
+      })
+  
+      }
 
     return {
       goMyNftDetail,
@@ -275,7 +305,10 @@ export default {
       checkAccount,
       walletAddress,
       privatekey,
-      sendWalletInfo
+      sendWalletInfo,
+      myWallet,
+      copyToClickBoard,
+
     }
   }
 }
