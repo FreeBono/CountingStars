@@ -30,6 +30,7 @@
               <div class="d-flex align-items-center input-field my-3 mb-4" > <span class="far fa-user p-2"></span> <input type="text" placeholder="username" required class="form-control" v-model="signupData.username"> </div>
               <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" v-model="signupData.password"><span class="fas fa-eye-slash"></span></div>
               <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="PasswordConfirmation" required class="form-control" v-model="signupData.passwordConfirmation"><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="text" placeholder="Admin Code" required class="form-control" v-model="signupData.roles"><span class="fas fa-eye-slash"></span></div>
               <!-- <div class="d-sm-flex align-items-sm-center justify-content-sm-between" style="padding-left:0px">
                 <div class="d-flex align-items-center input-field mb-4 w-75" style="margin-right:10px;" > <span class="fas fa-lock p-2"></span> <input type="text" placeholder="phone" required class="form-control" > <button class="btn" onclick="showPassword()"> <span class="fas fa-eye-slash"></span> </button> </div>
                 <button class="w-25" style="height:50px;margin-bottom:25px; padding-left:0px;">인증</button>
@@ -37,7 +38,7 @@
               </div> -->
               <!-- <input type="text" v-model="signupData.roles"> -->
               <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
-              <div class="mb-3"> <span class="text-light-white">Do have your own ID?</span> <a @click="goSignup">Login</a> </div>
+              <div class="mb-3"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
               
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
@@ -66,11 +67,13 @@ export default {
         password : '',
     })
     const signupData = ref({
+        name : '',
         email : '',
         username : '',
         password : '',  
         passwordConfirmation : '',
         roles : '',
+        
     }) 
     const message = ''
     
@@ -111,16 +114,32 @@ export default {
     const signup = () => {
         if (signupData.value.roles === '') {
             signupData.value.roles = ["ROLE_USER"]
-        } else if (signupData.value.roles === '1a2b3c4d') {
+        } else if (signupData.value.roles === 'store') {
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
-        } else if (signupData.value.roles === '1a2b3c') {
+        } else if (signupData.value.roles === 'brand1') {
+            signupData.value.name = 'cartier'
+            signupData.value.roles = ["ROLE_BRAND_ADMIN"]
+        } else if (signupData.value.roles === 'brand2') {
+            signupData.value.name = 'gucci'
+            signupData.value.roles = ["ROLE_BRAND_ADMIN"]
+        } else if (signupData.value.roles === 'brand3') {
+            signupData.value.name = 'versace'
+            signupData.value.roles = ["ROLE_BRAND_ADMIN"]
+        } else if (signupData.value.roles === 'brand4') {
+            signupData.value.name = 'louis vuitton'
+            signupData.value.roles = ["ROLE_BRAND_ADMIN"]
+        } else if (signupData.value.roles === 'brand5') {
+            signupData.value.name = 'prada'
+            signupData.value.roles = ["ROLE_BRAND_ADMIN"]
+        } else if (signupData.value.roles === 'brand6') {
+            signupData.value.name = 'fendi'
             signupData.value.roles = ["ROLE_BRAND_ADMIN"]
         } 
         console.log(signupData.value)
-        console.log(signupData.value.roles)
-        console.log(typeof(signupData.value.roles))
+        console.log(signupData.value.name)
+        // console.log(typeof(signupData.value.roles))
         store.dispatch("auth/register", signupData.value)
-        console.log('휴휴')
+        // console.log('휴휴')
     }
 
     

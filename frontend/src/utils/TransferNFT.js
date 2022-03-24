@@ -5,8 +5,8 @@ export default function TransferToken() {
   var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
   console.log('왜안되니?')
   // web3.eth.getAccounts().then('계정들확인 : ',console.log);
-  var sender = web3.eth.accounts.privateKeyToAccount('0x' + "c2290d428ca65931efc2ed08f35f0cfa0fd1a5e700873ff620d5924c49631139");
-  console.log('sender확인 : ',web3.eth.accounts.privateKeyToAccount('0x' + "c2290d428ca65931efc2ed08f35f0cfa0fd1a5e700873ff620d5924c49631139"));
+  var sender = web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e");
+  console.log('sender확인 : ',web3.eth.accounts.privateKeyToAccount('0x' + "3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e"));
   console.log('sender확인 : ',sender)
   // web3.eth.getBalance("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").then('잔고확인 : ',console.log);
   
@@ -372,10 +372,11 @@ export default function TransferToken() {
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ], "0x22Cf72D75Bab630323B3ea8595fBd63Bdc24ea73")
+  ], "0xc7a21620f076CeE598d8746561E46D01007b75f2")
   
   console.log('contract 확인 : ',contract)
   // console.log("ipfs://QmVHcbX4KFHGfdkWbaFNT6x66LKrHaKCdR1THD42pbMWc5")
-  contract.methods.safeTransferFrom("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad","0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",7).send({from: "0x9D47b264BaB01af18c409FF48fF3e1b090e56979",gas:600000 }).then('nft발행 확인 : ',console.log)
+  // contract.methods.balanceOf("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad").send({from:"0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad",gas:600000,})
+  contract.methods.transferFrom("0xbDE82EE0713a93dE7e91C0b194382B64C58a9Aad","0x67Ec0790223db78A170C2C5B5eC564a746D0514c",8).send({from: sender.address,gas:600000, }).then('nft발행 확인 : ',console.log)
   
   }

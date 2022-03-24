@@ -1,15 +1,22 @@
 server:
-    address: localhost
-    compression:
-        enabled: true
-        mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
-    port: 8080
-    servlet:
-        contextPath: /
-        encoding:
-            charset: UTF-8
-            enabled: true
-            force: true
+    # address: j6e204.p.ssafy.io
+    # compression:
+    #     enabled: true
+    #     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    
+    ssl: 
+    enabled: true
+    key-store-type: PKCS12
+    key-store: 
+        classpath: /root/key.p12
+    key-store-password: cs124578
+    # servlet:
+    #     contextPath: /
+    #     encoding:
+    #         charset: UTF-8
+    #         enabled: true
+    #         force: true
+    port: 8443
 #spa:
 #    default-file: /dist/index.html
 
@@ -20,7 +27,7 @@ spring:
                 one-indexed-parameters: true
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://j6e204.p.ssafy.io:3306/counting_stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+        url: jdbc:mysql://j6e204.p.ssafy.io:3306/counting_stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&useSSL=false
         hikari:
             username: countingstars
             password: cs124578
@@ -29,14 +36,18 @@ spring:
             enabled: true
     jpa:
         hibernate:
-#            ddl-auto: update
+<<<<<<< HEAD
+            # ddl-auto: update
+=======
+            ddl-auto: update
+>>>>>>> 7c3f59d889c827d6d167bfd558cd3ad6b66d9018
             naming:
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL57Dialect
-                show_sql: true
+                show_sql: false
                 format_sql: true
                 #ddl-auto: update
 
@@ -65,3 +76,6 @@ bezkoder:
 
 
 spring.main.allow-bean-definition-overriding: true
+
+##TEWST##
+#3.38.212.17
