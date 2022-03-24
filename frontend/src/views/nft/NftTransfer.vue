@@ -172,6 +172,7 @@
 </template>
 
 <script>
+import api from '@/services/api.js'
 import Sidebar from '@/components/Sidebar.vue'
 import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
@@ -221,6 +222,9 @@ export default {
 
 		const sendToken = () => {
 			// console.log(tokenNum.value)
+      // api.post("/userTransaction",{
+        
+      // })
 			TransferToken(receiveAccount.value ,tokenNum.value)
       LookupNFTs()
 		}

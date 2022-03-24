@@ -166,11 +166,14 @@ export default {
 
     const histories = JSON.parse(localStorage.getItem(store.state.auth.user.email))
     const historiesUnique = []
-    histories.forEach(e => {
+    if (histories != [] && histories != null) {
+      // console.log(histories)
+      histories.forEach(e => {
       if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <7) {
         console.log(e.searchHistory)
         historiesUnique.push(e.searchHistory)
     }})
+    }
 
 
 
