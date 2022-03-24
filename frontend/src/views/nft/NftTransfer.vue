@@ -2,7 +2,7 @@
   <!-- <h2>My NFT 상세보기</h2> -->
   <sidebar/>
   
-  
+  <div class="test">
   <div class="wrapper">
 
     <!-- 내용 들어갈 곳 -->
@@ -10,7 +10,7 @@
 
       <div class="header">
         <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> NFT Transfer</div>
-        <div class="row-vh d-flex" style="margin-left:80px; width:90vw; margin-top:100px;">
+        <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
               <div class="card-body">
@@ -35,7 +35,7 @@
                     <div align="left">{{nfts.length}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x" style="color:gold;"></i>
+                    <i class="fas fa-handshake fa-2x"   ></i>
                   </div>    
                 </div>
               </div>
@@ -96,19 +96,19 @@
         </div> -->
         
   
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px;">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:175px;">
+                    <div class="card col-3" style="padding:0px; width:85%;">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
                       </figure>
                     </div>
@@ -118,7 +118,7 @@
           </div>
         </div>
 
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:900px; width:800px">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
@@ -166,6 +166,8 @@
 
     </div>
     <!-- 내용 들어갈 곳 끝 -->
+  </div>
+
   </div>
 </template>
 
@@ -220,6 +222,7 @@ export default {
 		const sendToken = () => {
 			// console.log(tokenNum.value)
 			TransferToken(receiveAccount.value ,tokenNum.value)
+      LookupNFTs()
 		}
     
     // console.log(nfts)
@@ -530,7 +533,15 @@ $gray: #9b9b9b;
 .form__field{
   &:required,&:invalid { box-shadow:none; }
 }
-/* demo */
+/* 비반응형 설정 */
 
+.wrapper {
+  width:100%;
+  min-width: 1600px;
+}
 
+.test {
+  width:100vw;
+  
+}
 </style>

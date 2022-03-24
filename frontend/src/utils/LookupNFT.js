@@ -523,6 +523,7 @@ export default async function LookupNFTs() {
         .then(res => {
           const myData = res.data
           myData['tokenId'] = element
+          myData['stats'] = 0
           objects.push(myData)
           console.log(myData)
     
@@ -547,7 +548,7 @@ export default async function LookupNFTs() {
 
     setTimeout(()=> {
       store.dispatch('nftValues',objects)
-    },3000)
+    },1000)
     
 
 }
