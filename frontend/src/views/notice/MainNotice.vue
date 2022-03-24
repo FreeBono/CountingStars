@@ -22,12 +22,12 @@
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
-                        <th style="width: 10%;">No.</th>
-                        <th style="width: 10%;">유형</th>
+                        <th style="width: 5%;">No.</th>
+                        <th style="width: 5%;">유형</th>
                         <th style="width: 15%;">제목</th>
                         <th style="width: 10%;">Admin</th>
-                        <th style="width: 10%;">작성일</th>
-                        <th style="width: 10%;"></th>
+                        <th style="width: 5%;">작성일</th>
+                        <!-- <th style="width: 10%;">    </th> -->
                       </tr>
                     </thead>
                     <tbody 
@@ -267,6 +267,9 @@ export default {
 
 #my-table:hover {
   cursor: pointer;
+  transition: all 0.2s ease 0s;
+  box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+  background-color: rgb(251, 253, 255);
 }
 
 
@@ -364,7 +367,7 @@ img {
 }
 
 table {
-  border-collapse: separate;
+  border-collapse: collapse;
 }
 
 .table>:not(:first-child) {

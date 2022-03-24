@@ -60,10 +60,6 @@
           </div><!-- // End #container -->
         </div>
 
-        <!-- 블록 이미지 부분 테두리 따기 -->
-      
-        <!-- 블록 이미지 끝 -->
-
       </div>
     </div>
     <!-- 내용 들어갈 곳 끝 -->
@@ -101,7 +97,7 @@ export default {
     })
 
     const imageData = (event) => {
-     
+    
       state.value.nftImg = event.nftImg
       state.value.nftImgFile = event.nftImgFile
     }

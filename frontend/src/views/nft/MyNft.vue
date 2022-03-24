@@ -1,14 +1,15 @@
 <template>
-  <sidebar/>
   <div class="wrapper">
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
+    <sidebar/>
       <div class="header">
         <p class="head_title">My NFT</p>
       </div>
 
       <!-- 카드 부분 -->
       <!-- for문 돌려서 카드 6개 띄우고 누르면 상세보기로 -->
+      
       <!-- 페이지네이션 추가 -->
       <div>
         <div class="content_outside_box">
@@ -47,12 +48,6 @@
       </div>
       <!-- 카드 끝-->
 
-        <!-- 블록 이미지 부분 테두리 따기 -->
-          <div class="box_img">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
-          </div>
-        <!-- 블록 이미지 끝 -->
     <!-- 내용 들어갈 곳 끝 -->
   </div>
 </template>
@@ -87,7 +82,7 @@ export default {
   padding: 1rem 1rem;
   flex-wrap: wrap;
   align-items: center;
-  -webkit-box-pack: justify;
+  -searchBarTagbkit-box-pack: justify;
   justify-content: space-between;
   padding-top: 0;
   border-style: solid;

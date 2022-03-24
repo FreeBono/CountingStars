@@ -4,9 +4,9 @@ import createPersistedState from "vuex-persistedstate";
 export default createStore({
   plugins: [createPersistedState()],
   state: {
-   nftValues : [],
-   searchednft : [],
-   noticeNo: null,
+  nftValues : [],
+  searchednft : [],
+  noticeNo: null,
   },
   getters: {
   },

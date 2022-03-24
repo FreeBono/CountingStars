@@ -7,38 +7,35 @@
         <p class="head_title">거래처 등록</p>
       </div>
       <div class="content_outside_box">
-        <div class="content_box">
+        <div class="content_box ">
           <div class="container">
-            <div>
+          <div style="width:40%; align-items:center; margin-top:8rem;">
+            <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData"/>
+          </div>
+            <div class="form-tag" style="width:60%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
+              <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.endDate" placeholder=" 계약만료일자(계약일?)" maxlength="30"></b-form-input>
+              <b-form-input class="input_tag" type="text" v-model="brandInfo.address" placeholder=" 지갑주소" maxlength="30"></b-form-input>
             </div>
-            <div>
-              <b-form-input class="input_tag mt-2" type="text"  placeholder=" 이미지" maxlength="30"></b-form-input>
-            </div>
-            <div>
-              <b-form-input class="input_tag my-2" type="text"  placeholder=" 계약만료일자(계약일?)" maxlength="30"></b-form-input>
-            </div>
-            <div>
-              <b-form-input class="input_tag" type="text"  placeholder=" 지갑주소" maxlength="30"></b-form-input>
-            </div>
-
           </div>
-          <div class="createBtn_position2">
-            <button type="button" class="btn createBtn" @click="createBrand" style="width: 70px;">등록</button>
-            <button type="button" class="btn cancleBtn mx-2" @click="goPatnerMain" style="width: 70px">취소</button>
-          </div>
+            <!-- 버튼 부분 -->
+          <!-- <div class="container2"> -->
+            <div class="createBtn_position2" style="justify-content: flex-end;">
+              <button type="button" class="btn createBtn" @click="createBrand" style="width: 70px;">등록</button>
+              <button type="button" class="btn cancleBtn" @click="goPatnerMain" style="width: 70px">취소</button>
+            </div>
+          <!-- </div> -->
+            <!-- 버튼 끝 -->
         </div>
+        <!-- 내용 들어갈 곳 끝 -->
       </div>
     </div>
-    <!-- 내용 들어갈 곳 끝 -->
   </div>
 </template>
 
 <script>
-import '@/assets/style/notice/noticeSide.css'
-import '@/assets/style/notice/noticeTable.css'
-
 import Sidebar from '@/components/Sidebar.vue'
+import FileUpload from "@/components/common/FileUpload.vue"
 
 import api from "@/services/api.js"
 import { useRouter } from 'vue-router'
@@ -49,12 +46,43 @@ export default {
   name: 'PartnerCreate',
   components: {
     Sidebar,
+    FileUpload,
   },
   setup() {
     const router = useRouter()
     const brandInfo = ref({
       name: null,
+      endDate : null,
+      address : null,
+      imageUrl : null,
     })
+
+    const brandImg = ref(null)
+    const brandImgFile = ref(null)
+
+    // 이미지 등록
+    const imageData = (event) => {
+    
+      brandImg.value = event.nftImg
+      brandImgFile.value = event.nftImgFile
+    }
+
+    // json으로 변환
+    const transferJSON = async function (url) {
+      const data = {
+        image: url,
+        brandName: brandInfo.value.name
+      }
+
+      // const response = await pinata(state.value.nftImgFile);
+      
+      // data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
+
+      // const jsonResponse = await pinataJson(data);
+
+      // console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
+      // publishToken(jsonResponse.data.IpfsHash)
+    }
 
     // 거래처관리 페이지로 가기
     function goPatnerMain() {
@@ -76,6 +104,10 @@ export default {
       goPatnerMain,
       brandInfo,
       createBrand,
+      imageData,
+      brandImg,
+      brandImgFile,
+      transferJSON,
     }
   }
 }
@@ -107,9 +139,8 @@ export default {
   position: relative;
   display: flex;
   justify-content: flex-end;
-  margin-right: 50px;
-  margin-top: 10px;
-  top: 110px;
+  top: 2.5rem;
+  right: 2.5rem;
 }
 
 .cancleBtn {
@@ -127,4 +158,20 @@ background-color: #fa8e8e !important;
   margin-left: 300px;
   margin-top: 30px;
 }
+
+.container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  /* flex-wrap: wrap-reverse; */
+  position: relative;
+  height: 80%;
+  /* margin: auto; */
+}
+
+.form-tag {
+  position: relative;
+  margin: auto;
+}
+
 </style>
