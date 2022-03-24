@@ -38,7 +38,7 @@ public class UserTransactionServiceImpl implements UserTransactionService {
 
         UserTransaction userTransaction = UserTransaction.builder()
             .user(user)
-            .TCount(userTransactionReq.getCount())
+            .count(userTransactionReq.getCount())
             .build();
 
         if(userTransaction == null) return 500;

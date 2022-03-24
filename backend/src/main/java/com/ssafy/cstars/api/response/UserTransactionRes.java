@@ -19,14 +19,14 @@ public class UserTransactionRes {
     LocalDateTime date;
 
     @ApiModelProperty(name = "transaction count")
-    Integer TCount;
+    Integer count;
 
 
     public static UserTransactionRes of(UserTransaction trans) {
         UserTransactionRes res = new UserTransactionRes();
 
         res.setDate(trans.getRegisterDate());
-        res.setTCount(trans.getTCount());
+        res.setCount(trans.getCount());
         return res;
 
     }
