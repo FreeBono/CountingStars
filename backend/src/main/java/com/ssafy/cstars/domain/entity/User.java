@@ -66,4 +66,8 @@ public class User {
 		this.address = address;
 		this.role = role;
 	}
+
+	public void modify(String address) {
+		this.address = address;
+	}
 }
