@@ -97,24 +97,36 @@
         </div> -->
         
   
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px;">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
-                  <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:85%;">
+                  <div align="left" >NFT 목록</div>
+                  <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
+                    <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
                         <figcaption class="card__caption" style="left:5%;">
-                          <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                          <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;" >Detail</span>
                         </figcaption>
                       </figure>
                     </div>
+                    <div class="card col-3" style="padding:0px; width:85%;" v-else>
+                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                        <img src="@/assets/cslogo.png" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
+                        <figcaption class="card__caption" style="left:5%;">
+                          <h2 class="card__title" v-if="nft.name" style="color:white;">이전 중인 NFT입니다.</h2>
+                          <!-- <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p> -->
+                          <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span> -->
+                        </figcaption>
+                      </figure>
+                    </div>
                   </div>
-              </div>
+                </div>
+                
             </div>
           </div>
         </div>
@@ -614,4 +626,22 @@ $gray: #9b9b9b;
   width:100vw;
   
 }
+
+//스크롤
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+   display: none; 
+} 
+
+/*특정 부분 스크롤바 없애기*/ 
+.content_box { 
+  -ms-overflow-style: none; 
+}
+
+.content_box::-webkit-scrollbar{ display:none; }
+
+
 </style>
