@@ -1,11 +1,9 @@
 package com.ssafy.cstars.api.controller;
 
-import com.ssafy.cstars.api.request.UserReq;
 import com.ssafy.cstars.api.request.UserTransactionPostReq;
 import com.ssafy.cstars.api.response.BaseResponseBody;
 import com.ssafy.cstars.api.response.BrandRes;
 import com.ssafy.cstars.api.response.UserTransactionRes;
-import com.ssafy.cstars.domain.entity.User;
 import com.ssafy.cstars.service.UserTransactionService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +30,30 @@ public class UserTransactionController {
             @ApiResponse(code =404 , message = "NOT FOUND", response = BrandRes.class),
             @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
     })
-    public ResponseEntity<List<UserTransactionRes>> getUserTransaction(@RequestBody @ApiParam(value = "user 거래 조회", required = true) UserReq user){
+    public ResponseEntity<List<UserTransactionRes>> getUserTransaction(@RequestParam(value = "userId", required = false) @ApiParam(value = "user 거래 조회", required = true) Long userId){
 
 
-        List<UserTransactionRes> list = userTransactionService.getUserTransactionList(user);
+        List<UserTransactionRes> list = userTransactionService.getUserTransactionList(userId);
 
 
-    if(list != null){
-        return ResponseEntity.status(200).body(list);
-    }else{
-        return ResponseEntity.status(500).body(null);
+        if(list != null){
+            return ResponseEntity.status(200).body(list);
+        }else{
+            return ResponseEntity.status(500).body(null);
+        }
     }
-    }
+//    public ResponseEntity<List<UserTransactionRes>> getUserTransaction(@RequestBody @ApiParam(value = "user 거래 조회", required = true) UserReq user){
+//
+//
+//        List<UserTransactionRes> list = userTransactionService.getUserTransactionList(user);
+//
+//
+//    if(list != null){
+//        return ResponseEntity.status(200).body(list);
+//    }else{
+//        return ResponseEntity.status(500).body(null);
+//    }
+//    }
 
     @PostMapping()
     @ApiOperation(value = "NFT 거래 등록", notes = "날짜 별 <strong>NFT거래</strong> 등록합니다. ")
