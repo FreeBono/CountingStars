@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class UserTransactionRes {
 
     @ApiModelProperty(name = "transaction date")
-    LocalDateTime TransactionDate;
+    LocalDateTime date;
 
     @ApiModelProperty(name = "transaction count")
     Integer TCount;
@@ -25,7 +25,7 @@ public class UserTransactionRes {
     public static UserTransactionRes of(UserTransaction trans) {
         UserTransactionRes res = new UserTransactionRes();
 
-        res.setTransactionDate(trans.getRegisterDate());
+        res.setDate(trans.getRegisterDate());
         res.setTCount(trans.getTCount());
         return res;
 

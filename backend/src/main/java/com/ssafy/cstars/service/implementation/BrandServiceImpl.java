@@ -55,7 +55,7 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = Brand.builder()
                 .name(brandInfo.getName())
                 .endDate(brandInfo.getEndDate())
-                .wallet(brandInfo.getWallet())
+                .address(brandInfo.getAddress())
                 .imageUrl(brandInfo.getImageUrl())
                 .build();
 
