@@ -1,6 +1,5 @@
 package com.ssafy.cstars.service.implementation;
 
-import com.ssafy.cstars.api.request.UserReq;
 import com.ssafy.cstars.api.request.UserTransactionPostReq;
 import com.ssafy.cstars.api.response.UserTransactionRes;
 import com.ssafy.cstars.domain.entity.User;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service("UserTransactionService")
 public class UserTransactionServiceImpl implements UserTransactionService {
@@ -50,9 +48,9 @@ public class UserTransactionServiceImpl implements UserTransactionService {
 
 
     @Override
-    public List<UserTransactionRes> getUserTransactionList(UserReq user) {
+    public List<UserTransactionRes> getUserTransactionList(Long userId) {
 
-        List<UserTransaction> byUser = userTransactionRepository.findByUserId(user.getUserId());
+        List<UserTransaction> byUser = userTransactionRepository.findByUserId(userId);
 
         List<UserTransactionRes> res = new ArrayList<>();
 
