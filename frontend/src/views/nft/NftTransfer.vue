@@ -185,13 +185,14 @@ import TransferToken from '@/utils/TransferNFT.js'
 
 
 
-
 export default {
   name: 'NftTransfer',
   components: {
     Sidebar,
   },
   setup() {
+    
+
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -221,10 +222,16 @@ export default {
 		}
 
 		const sendToken = () => {
-			// console.log(tokenNum.value)
-      // api.post("/userTransaction",{
-        
-      // })
+			console.log(tokenNum.value)
+      api.post("/userTransaction",{
+        userId : store.state.auth.user.id, count : 1
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
 			TransferToken(receiveAccount.value ,tokenNum.value)
       LookupNFTs()
 		}
@@ -240,6 +247,14 @@ export default {
       return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
       })
 
+    api.get('/userTransaction',{params: {userId: store.state.auth.user.id}})
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
     return {
       goMyNftDetail,
       sendNft,
@@ -250,7 +265,8 @@ export default {
 			tokenNum,
       tokenChangeNum,
       worth,
-      highestPrice
+      highestPrice,
+      // getTransferInfo,
     }
   }
 }

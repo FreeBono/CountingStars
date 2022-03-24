@@ -38,7 +38,7 @@ spring:
                 dialect: org.hibernate.dialect.MySQL57Dialect
                 show_sql: false
                 format_sql: true
-                #ddl-auto: update
+                ddl-auto: update
 
     mvc:
         throw-exception-if-no-handler-found: true
