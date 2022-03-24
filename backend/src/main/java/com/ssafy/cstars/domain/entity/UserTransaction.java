@@ -17,7 +17,7 @@ public class UserTransaction extends BaseEntity {
     @JoinColumn(name="user_id")
     User user;
 
-    @Column(name = "t_count")
-    Integer TCount;
+    @Column(name = "count")
+    Integer count;
 
 }
