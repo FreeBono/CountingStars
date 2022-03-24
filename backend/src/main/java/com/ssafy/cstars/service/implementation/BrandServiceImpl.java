@@ -10,8 +10,6 @@ import com.ssafy.cstars.domain.repository.BradnRepository;
 import com.ssafy.cstars.domain.repository.BrandAdminRepository;
 import com.ssafy.cstars.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
