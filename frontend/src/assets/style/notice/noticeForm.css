@@ -1,0 +1,26 @@
+#form-control {
+  position: relative;
+  margin: auto;
+  width: 90% !important;
+  height: 300px;
+  border: none !important;
+  background-color: #e6f5f4 !important;
+  top: 100px;
+}
+
+.createBtn_position2 {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+  margin-top: 10px;
+  top: 110px;
+}
+
+.cancleBtn {
+  background-color: #FC5E5E !important;
+}
+
+.cancleBtn:hover {
+background-color: #fa8e8e !important;
+}

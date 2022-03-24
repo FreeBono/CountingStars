@@ -98,15 +98,14 @@
       </div>
         </div>
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
-        <button @click="transferJSONToBack" class="btn btn-primary">IpfsBackTest</button>
     </div>
   </div>
+  <canvas id="myChart" width="400" height="400"></canvas>
 </template>
 
 <script>
 import pinata from '../services/pinataApiFile'
 import pinataJson from '../services/pinataApiJson'
-// import ipfs from '../services/ipfs'
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import publishToken from '../utils/PublishNFT'
@@ -115,7 +114,6 @@ import SearchToken from '../utils/SearchNFT'
 import qwe from '../utils/LookupNFT'
 // import Web3 from 'web3'
 
-import * as IPFS from 'ipfs-core'
 
 export default {
   name : 'Pinata',
@@ -170,43 +168,20 @@ export default {
       publishToken(jsonResponse.data.IpfsHash)
     }
 
-    const transferJSONToBack = async function () {
-      const data = {
-        name: "Luxury",
-        description: "It contains a warranty for luxury goods.",
-        serialNumber: state.value.serialNumber,
-        dateOfManufacture: state.value.dateOfManufacture,
-        brandName: state.value.brandName,
-        countryOfManufacture: state.value.countryOfManufacture,
-        productClassification: state.value.productClassification,
-        detailProductClassification: state.value.detailProductClassification,
-        material: state.value.material,
-        productColor: state.value.productColor,
-        productPrice: state.value.productPrice,
-        image: state.value.nftImgFile,
-      }
 
-      const ipfs = await IPFS.create({repo: 'ok' + Math.random()})
-      const { cid } = await ipfs.add(data.image);
-      data.image = "ipfs://" + cid;
-      console.log(cid);
 
-      console.log(data.image);
-      console.log(data);
-      const jsonData = JSON.stringify(data); // 문자열로 바꾸기
 
-      const cid2 = await ipfs.add(jsonData);
-      console.log(cid2.path)
+    //테스트
+    
 
-      // publishToken(jsonResponse.data.IpfsHash)
-    }
 
     return {
       onMounted, state,
-      changeImgFile, transferJSON, transferJSONToBack,
-      TransferToken, 
+      changeImgFile, transferJSON,
+      TransferToken,
       SearchToken,
       qwe,
+  
     }
   },
   props: {

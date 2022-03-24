@@ -4,19 +4,19 @@ server:
     #     enabled: true
     #     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
     
-    ssl: 
-    enabled: true
-    key-store-type: PKCS12
-    key-store: 
-        classpath: /root/key.p12
-    key-store-password: cs124578
+#    ssl:
+#    enabled: true
+#    key-store-type: PKCS12
+#    key-store:
+#        classpath: /root/key.p12
+#    key-store-password: cs124578
     # servlet:
     #     contextPath: /
     #     encoding:
     #         charset: UTF-8
     #         enabled: true
     #         force: true
-    port: 8443
+    port: 8080
 #spa:
 #    default-file: /dist/index.html
 
@@ -36,11 +36,7 @@ spring:
             enabled: true
     jpa:
         hibernate:
-<<<<<<< HEAD
-            # ddl-auto: update
-=======
             ddl-auto: update
->>>>>>> 7c3f59d889c827d6d167bfd558cd3ad6b66d9018
             naming:
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
@@ -49,7 +45,7 @@ spring:
                 dialect: org.hibernate.dialect.MySQL57Dialect
                 show_sql: false
                 format_sql: true
-                #ddl-auto: update
+                ddl-auto: update
 
     mvc:
         throw-exception-if-no-handler-found: true

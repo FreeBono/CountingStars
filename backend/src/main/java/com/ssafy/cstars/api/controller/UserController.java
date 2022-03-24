@@ -31,7 +31,7 @@ public class UserController {
     })
     public ResponseEntity<BaseResponseBody> modifyUser(@RequestBody @ApiParam(value = "유저 번호", required = true) UserPutReq userInfo) {
         int statusCode = userService.modifyUser(userInfo);
-
+        System.out.println(userInfo);
         return createResponseEntityToStatusCode(statusCode);
     }
 

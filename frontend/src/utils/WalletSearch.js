@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '@/store';
 
 
-export default async function LookupNFTs() {
+export default async function searchNFTs(targetAccount) {
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
   const sendAccount = accounts[0]
 
@@ -496,7 +496,7 @@ export default async function LookupNFTs() {
   
   console.log('contract 확인 : ',contract)
 
-  const balance = await contract.methods.balanceOf(sendAccount).call();
+  const balance = await contract.methods.balanceOf(targetAccount).call();
   console.log(balance);
   
   const objects = [];
@@ -510,7 +510,7 @@ export default async function LookupNFTs() {
   // console.log(tokenIdList);
   
   for (var i = 0; i < balance; i++) {
-      tokens.push(await contract.methods.tokenOfOwnerByIndex(sendAccount, i).call());
+      tokens.push(await contract.methods.tokenOfOwnerByIndex(targetAccount, i).call());
   }
   
   // console.log(tokens)
@@ -523,7 +523,6 @@ export default async function LookupNFTs() {
         .then(res => {
           const myData = res.data
           myData['tokenId'] = element
-          myData['stats'] = 0
           objects.push(myData)
           console.log(myData)
     
@@ -544,10 +543,11 @@ export default async function LookupNFTs() {
 
   // console.log(result)
 
+  // return objects
   
 
     setTimeout(()=> {
-      store.dispatch('nftValues',objects)
+      store.dispatch('searchWallet',objects)
     },1000)
     
 

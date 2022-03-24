@@ -8,7 +8,7 @@
       <ul>
         <li >
           <a href="/">
-            <i class="fa fa-home fa-2x"></i>
+            <i class="fa fa-home fa-2x" style="color: #5e72e4;"></i>
             <span class="nav-text">
               MainPage
             </span>
@@ -16,7 +16,7 @@
         </li>
           <li class="has-subnav">
             <a href="/mynft">
-              <i class="fa fa-wallet fa-2x"></i>
+              <i class="fa fa-wallet fa-2x" style="color: #9d6510;"></i>
               <span class="nav-text">
                 My NFT
               </span>
@@ -24,7 +24,7 @@
           </li>
           <li class="has-subnav">
             <a href="/nftwalletsearch">
-              <i class="fa fa-search fa-2x"></i>
+              <i class="fa fa-search fa-2x" style="color: #fb6340;"></i>
               <span class="nav-text">
                 NFT 조회
               </span>
@@ -32,7 +32,7 @@
           </li>
           <li class="has-subnav">
             <a href="/nfttransfer">
-              <i class="fa fa-people-arrows fa-2x"></i>
+              <i class="fa fa-people-arrows fa-2x" style="color: #2dce89;"></i>
               <span class="nav-text">
                 NFT 이전
               </span>
@@ -40,7 +40,7 @@
           </li>
           <li>
             <a href="/notice">
-              <i class="fa fa-bullhorn fa-2x"></i>
+              <i class="fa fa-bullhorn fa-2x" style="color: #f5365c;"></i>
               <span class="nav-text">
                 공지사항
               </span>
@@ -48,7 +48,7 @@
           </li>
           <li>
             <a href="/admin">
-              <i class="fa fa-font fa-2x"></i>
+              <i class="fa fa-font fa-2x" style="color: #11cdef;"></i>
               <span class="nav-text">
                 ADMIN
               </span>
@@ -56,7 +56,7 @@
           </li>
           <li>
             <a href="/partner">
-              <i class="fa fa-handshake fa-2x"></i>
+              <i class="fa fa-handshake fa-2x" style="color: #6b6d72;"></i>
               <span class="nav-text">
                 거래처 관리
               </span>
@@ -64,7 +64,7 @@
           </li>
           <li>
             <a href="nftcreate">
-              <i class="fa fas fa-cubes fa-2x"></i>
+              <i class="fa fas fa-cubes fa-2x" style="color: #ffd700;"></i>
               <!-- <i class="fa fas fa-cube fa-2x"></i> -->
               <span class="nav-text">
                 NFT 발급
@@ -172,7 +172,7 @@ export default {
 /* 내용물 부분 크기 조절, 위치 조정 여기서 */
 .main-menu li {
   position: relative;
-  display: flex;
+  display: flex !important;
   width: 230px;
   right: 20px;
   margin-top: 15px;
@@ -197,17 +197,17 @@ export default {
 
 .main-menu .nav-icon {
   position:relative;
-  display:table-cell;
+  display:table-cell !important;
   width:60px;
   height:36px;
-  text-align:center;
+  text-align:center !important;
   vertical-align:middle;
   font-size:18px;
 }
 
 .main-menu .nav-text {
   position:relative;
-  display:table-cell;
+  display:table-cell !important;
   vertical-align:middle;
   width: 190px;
 }
@@ -241,7 +241,7 @@ nav ul,nav li {
 
 .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
   color:#ffffff;
-  background-color:#28b9b0d6;
+  background-color:#3adacf;
 }
 /* .main-menu li > a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
   color:#ffffff;

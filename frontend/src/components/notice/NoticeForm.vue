@@ -10,7 +10,7 @@
         <div class="content_box">
           <div class="container">
             <div>
-              <b-form-input class="input_tag" type="text" v-model="noticeInfo.title" placeholder=" 제목"></b-form-input>
+              <b-form-input class="input_tag" type="text" v-model="noticeInfo.title" placeholder=" 제목" maxlength="30"></b-form-input>
             </div>
             <b-form-textarea 
               id="textarea-rows"
@@ -33,7 +33,7 @@
 <script>
 import '@/assets/style/notice/noticeSide.css'
 import '@/assets/style/notice/noticeTable.css'
-import '@/assets/style/notice/noticeForm.css'
+// import '@/assets/style/notice/noticeForm.css'
 
 import Sidebar from '@/components/Sidebar.vue'
 
@@ -62,8 +62,11 @@ export default {
     const createNotice = () => {
       console.log(noticeInfo.value)
       api.post('/notice', noticeInfo.value)
-      .then(() => {
-        router.push({name: 'NoticeDetail'})
+      .then((res) => {
+        console.log(res)
+        // 해당 번호의 디테일로 가기
+        router.push({name: 'MainNotice'})
+        // router.push({name: 'NoticeDetail'})
       })
     }
 
@@ -80,9 +83,39 @@ export default {
 .input_tag {
   position: relative;
   top: 50px;
-  width: 88%;
+  width: 90%;
   height: 40px;
+  background-color: #e6f5f4 !important;
+  border: none !important;
+  left: 5%;
 }
 
+/* noticeform css */
+#textarea-rows {
+  position: relative;
+  margin: auto;
+  width: 90% !important;
+  height: 300px;
+  border: none !important;
+  background-color: #e6f5f4 !important;
+  top: 100px;
+}
+
+.createBtn_position2 {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+  margin-top: 10px;
+  top: 110px;
+}
+
+.cancleBtn {
+  background-color: #FC5E5E !important;
+}
+
+.cancleBtn:hover {
+background-color: #fa8e8e !important;
+}
 
 </style>
