@@ -20,25 +20,25 @@ spring:
                 one-indexed-parameters: true
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://j6e204.p.ssafy.io:3306/counting_stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+        url: jdbc:mysql://localhost:3306/stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
         hikari:
-            username: countingstars
-            password: cs124578
+            username: root
+            password: root
     devtools:
         livereload:
             enabled: true
     jpa:
         hibernate:
-#            ddl-auto: update
+            ddl-auto: update
             naming:
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL57Dialect
-                show_sql: true
+                show_sql: false
                 format_sql: true
-                #ddl-auto: update
+                ddl-auto: update
 
     mvc:
         throw-exception-if-no-handler-found: true

@@ -1,51 +1,58 @@
 <template>
   
-  <sidebar/>
+  <sidebar style=""/>
   <div class="wrapper">
-   
+
+  
+
     <div class="main-content">
       <div class="header">
-        <p class="head_title">NFT 조회</p>
+        <div class="head_title" style="font-size:16px;">
+          <div class="input-group mb-3" style="width:500px; ">
+            <select style="height:45px; border:0; width:6rem;">
+              <option>지갑 주소</option>
+              <option>아이디</option>
+            </select>
+              
+          
+            <input type="text" class="form-control input-text" style="height:45px; border:0px;" placeholder="Search products...." aria-label="Recipient's username" aria-describedby="basic-addon2" v-model="walletAddress">
+            <div class="input-group-append"> <button class="btn btn-outline-warning btn-lg" type="button" style="height:45px; z-index:5; border-radius:0px;"><i class="fa fa-search" @click="searchWallet"></i></button> </div>
+          </div>
+        </div>
       </div>
       
-        <div class="searchBarTag mt-3">
-          <div class="container ">
-            <div class="row" style="width:100%;">
-         
+
+      
+      <div class="content_box row-vh d-flex flex-row" style="position:absolute; top:280px; left:8%; width:75%; overflow:hidden;">
+        <div  class="container-fluid">
+          <div class="row">
+            <div class="searchBarTag mt-3">
+              <div v-for="(item,idx) in historiesUnique" :key="idx"  >
+                <span class="tag tag-ionic tag-lg" style="margin:0px 10px; white-space: nowrap;" >
                 
-                <div class="input-group mb-3" style="width:75%;">
-                  <select style="height:45px; border:0px; width:6rem;">
-                    <option>지갑 주소</option>
-                    <option>아이디</option>
-                  </select>
-                    
-               
-                  <input type="text" class="form-control input-text" style="" placeholder="Search products...." aria-label="Recipient's username" aria-describedby="basic-addon2" v-model="walletAddress">
-                  <div class="input-group-append"> <button class="btn btn-outline-warning btn-lg" type="button" style="z-index:5;"><i class="fa fa-search" @click="searchWallet"></i></button> </div>
-                </div>
-           
-            </div>
-            <div class="row" v-if="nfts.length ===0">weew</div>
-            <div class="row"  v-else>
-          
-              <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                <div class="card col-3" style="padding:0px; ">
-                  <figure class="card__thumb" style="margin:0px; height:450px;">
-                    <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                    <figcaption class="card__caption" style="left:27%;">
-                      <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
-                      <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                      <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" >Detail</span>
-                    </figcaption>
-                  </figure>
-                </div>
+                  <span @click="historySearch(idx)"><i class="fa fa-search" style="margin-right:10px;"></i>{{convertedHistories(item)}}</span>
+                </span>
               </div>
-
-
+          </div>
+            
+            <!-- <div class="container justify-content-center"> -->
+              <div class="row" >
+                <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
+                  <div class="card col-3" style="padding:0px; width:200px;">
+                    <figure class="card__thumb" style="margin:0px; height:250px;">
+                      <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                      <figcaption class="card__caption" style="left:5%;">
+                        <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                        <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                        <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
+                      </figcaption>
+                    </figure>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
-    
+      </div>
 
 
 
@@ -90,14 +97,26 @@ import "@/assets/style/notice/noticeSide.css"
 import "@/assets/style/notice/noticeTable.css"
 import { useRouter } from 'vue-router'
 import searchNFTs from '@/utils/WalletSearch'
-import {ref, onBeforeUpdate, onUpdated} from 'vue'
+import {ref, computed} from 'vue'
 import {useStore} from 'vuex'
+import { Carousel, Pagination, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
+import { useCookies } from "vue3-cookies";
 
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 
 export default {
   name: 'NftWalletSearch',
   components: {
     Sidebar,
+    Carousel,
+    Slide,
+    Pagination,
+    VueperSlides,
+    VueperSlide,
+  
+
   },
   setup() {
     // const values = ref([])
@@ -107,16 +126,20 @@ export default {
     // console.log(datas)
     const walletAddress = ref('')
     const nfts = ref([])
+
+    //cookies
+
     
+
     
-    
-    function goNumberSearch() {
-      router.push({name: 'NftNumberSearch'})
-    }
-    
+
+    //자겁조회실행
     const searchWallet = () => {
+      nfts.value = []
       console.log('실행')
+      // localStorage.setItem(  , JSON.stringify({a: 1, b: 2}))
       searchNFTs(walletAddress.value)
+      addEntry()
       setTimeout(()=> {
       nfts.value.push(...store.state.searchednft)
       store.state.searchednft = []
@@ -124,20 +147,71 @@ export default {
       
   
     }
+  
+    function addEntry() {
+      // Parse any JSON previously stored in allEntries
+      var existingEntries = JSON.parse(localStorage.getItem(store.state.auth.user.email));
+      // console.log(existingEntries)
+      if(existingEntries == null) existingEntries = [];
+      var value = {
+          "searchHistory": walletAddress.value,
+      };
+      // console.log(value)
+      localStorage.setItem("value", JSON.stringify(value));
+      // Save allEntries back to local storage
+      existingEntries.push(value);
+      localStorage.setItem(store.state.auth.user.email, JSON.stringify(existingEntries));
+      // console.log(localStorage.getItem(store.state.auth.user.email).searchHistory)
+    };
 
-    
-    
-    
- 
+    const histories = JSON.parse(localStorage.getItem(store.state.auth.user.email))
+    const historiesUnique = []
+    if (histories != [] && histories != null) {
+      // console.log(histories)
+      histories.forEach(e => {
+      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <7) {
+        console.log(e.searchHistory)
+        historiesUnique.push(e.searchHistory)
+    }})
+    }
+
+
+
+    console.log(histories)
+    console.log(historiesUnique)
+    const convertedHistories = (x) => {
+      
+      return x.substring(0,8) + '...' + x.substring(34,42)
+    }
+
+    const historySearch = (x) => {
+      nfts.value = []
+      walletAddress.value = histories[x].searchHistory
+      addEntry()
+      searchNFTs(walletAddress.value)
+      setTimeout(()=> {
+        nfts.value.push(...store.state.searchednft)
+        store.state.searchednft = []
+      },3000)
+      
+    } 
 
     return {
-      goNumberSearch,
+
       searchWallet,
       walletAddress,
       nfts,
+      addEntry,
+      histories,
+      convertedHistories,
+      historySearch,
+      historiesUnique
+
+
    
     }
-  }
+  },
+
 }
 </script>
 
@@ -427,7 +501,78 @@ $gray: #9b9b9b;
 
 
 
+.carousel__slide > .carousel__item {
+  transform: scale(1);
+  opacity: 0.5;
+  transition: 0.5s;
+}
+.carousel__slide--visible > .carousel__item {
+  opacity: 1;
+  transform: rotateY(0);
+}
+.carousel__slide--next > .carousel__item {
+  transform: scale(0.6) translate(-10px);
+  opacity: 0.8;
+}
+.carousel__slide--prev > .carousel__item {
+  transform: scale(0.6) translate(10px);
+  opacity: 0.8;
+}
+.carousel__slide--active > .carousel__item {
+  transform: scale(1.02);
+  
+}
 
 
+
+// 태그
+:root {
+    --red:#ff3860;--red-dark:#ff1443;--red-light:#ff5c7c;--blue:#498afb;--blue-dark:#2674fa;--blue-light:#6ca0fc;--orange:#fa8142;--orange-dark:#f96a1f;--orange-light:#fb9865;--green:#09c372;--green-dark:#07a15e;--green-light:#0be586;--purple:#9166cc;--purple-dark:#7d4bc3;--purple-light:#a481d5;--yellow:#ffdd57;--yellow-dark:#ffd633;--yellow-light:#ffe47a;--pink:#ff4088;--pink-dark:#ff1c72;--pink-light:#ff649e;--gray0:#f8f8f8;--gray1:#dbe1e8;--gray2:#b2becd;--gray3:#6c7983;--gray4:#454e56;--gray5:#2a2e35;--gray6:#12181b;--nav-width:4em;--font-body:"sofia-pro",sans-serif;--font-head:"sofia-pro",sans-serif;--font-code:"attribute-mono",monospace;--font-size:20px;--max-width-bp:768px;--orange-pink:linear-gradient(to bottom right,var(--orange-light),var(--orange-dark) 85%);--green-grad:linear-gradient(to bottom right,var(--green-light),var(--green-dark) 85%);--background:var(--gray6);--text-color:var(--gray2);--h-color:#fff;--nav-shadow:4px 0 10px -3px #010101;--card-shadow:0 4px 8px rgba(0,0,0,0.38);--toc-shadow:rgba(0,0,0,0.7) 0px 10px 20px 0px;--nav-bg:var(--gray5);--tag-bg:var(--gray4);--code-bg:#22262f;--card-bg:var(--gray5);--overlay-bg:rgba(0,0,0,0.9);--h-border:2px dashed var(--nav-bg);--nav-border:2px dashed var(--text-color);--card-radius:0.25em;transition: all .3s ease
+}
+
+.tag-ionic {
+    background: #fff;
+    color: #4a8afc
+}
+
+.tag {
+    display: inline-block;
+    border-radius: 3px;
+    padding: .2em .5em .3em;
+    border-radius: 2px;
+    background: var(--tag-bg);
+    color: var(--text-color);
+    font-weight: 600;
+    margin: .25em .1em;
+    float:left;
+}
+
+h1.tag {
+    margin-left: 0;
+    margin-right: 0
+}
+
+.tag-sm {
+    font-size: .7em;
+    display: inline-block;
+    letter-spacing: .15ch;
+    font-weight: 400
+}
+
+.tag-lg {
+    font-size: 1.2em;
+    border-radius: 4px
+}
+
+.tag-bg {
+    background: var(--background)
+}
+
+.tag-ionic {
+    background: #fff;
+    color: #4a8afc;
+    border: 1px solid #4a8afc;
+    font-size : 14px;
+}
 
 </style>

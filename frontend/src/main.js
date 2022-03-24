@@ -8,8 +8,19 @@ import VueCountdown from '@chenfengyuan/vue-countdown';
 import setupInterceptors from './services/setupInterceptors';
 import BootstrapVue3 from 'bootstrap-vue-3'
 import VueNextSelect from 'vue-next-select'
-
+import { globalCookiesConfig } from "vue3-cookies";
 setupInterceptors(store);
+
+
+
+globalCookiesConfig({
+  expireTimes: "3d",
+  path: "/",
+  domain: "",
+  secure: true,
+  sameSite: "None",
+});
+
 
 createApp(App)
   .use(router)
@@ -17,6 +28,7 @@ createApp(App)
   .component(VueCountdown.name, VueCountdown)
   .use(BootstrapVue3)
   .component('vue-select', VueNextSelect)
+  // .use(VueCookies)
   .mount("#app")
 
 // window.Kakao.init('eb6b89b350284c15c748ea3d3855f6c5');
