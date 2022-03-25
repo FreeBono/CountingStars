@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * ipfs 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -35,16 +37,17 @@ public class IpfsController {
                                                           @RequestPart(value = "image")  @ApiParam(value = "IPFS 이미지", required = true) MultipartFile imageFile) throws IOException, ClassNotFoundException {
 
         System.out.println("테스트 잘 넘어오나???");
+        System.out.println(getServerIp());
         System.out.println(ipfsInfo);
 
-        IPFS ipfs = new IPFS("/ip4/192.168.0.1/tcp/5001");
+        IPFS ipfs = new IPFS("/ip4/" + getServerIp() + "/tcp/5001");
 
         NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(multipartFileToFile(imageFile));
         MerkleNode addResult = ipfs.add(image).get(0);
         String pinId = addResult.hash.toBase58();
         System.out.println(pinId);
 
-        ipfsInfo.setImageUrl("http://localhost:8000/ipfs/" + pinId);
+        ipfsInfo.setImageUrl(pinId);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonStr = mapper.writeValueAsString(ipfsInfo);
@@ -89,10 +92,6 @@ public class IpfsController {
 
     /**
      * multipartFile을 File로 변환한다.
-     *
-     * @param MultipartFile file 멀티파트 파일
-     * @return File 변환된 파일을 반환한다.
-     * @throws IOException
      */
     public static File multipartFileToFile(MultipartFile file) throws IOException {
 
@@ -106,4 +105,21 @@ public class IpfsController {
 
     }
 
+    private String getServerIp() {
+        InetAddress local = null;
+        try {
+            local = InetAddress.getLocalHost();
+        }
+        catch ( UnknownHostException e ) {
+            e.printStackTrace();
+        }
+        if( local == null ) {
+            return "";
+        }
+        else {
+            String ip = local.getHostAddress();
+            return ip;
+        }
+
+    }
 }
