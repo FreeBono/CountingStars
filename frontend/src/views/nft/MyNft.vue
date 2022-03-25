@@ -8,7 +8,7 @@
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> My NFTs</div>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;" @click="toast"> My NFTs</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
@@ -31,7 +31,8 @@
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:15px;">  
                     <div style="txt-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" >{{myWallet.substring(0,8) + '...' + myWallet.substring(34,42)}}</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,8) + '...' + myWallet.substring(34,42)}}</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
                     <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
@@ -96,24 +97,36 @@
         </div> -->
         
   
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px;">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
-                  <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:85%;">
+                  <div align="left" >NFT 목록</div>
+                  <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
+                    <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
                         <figcaption class="card__caption" style="left:5%;">
-                          <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                          <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;" >Detail</span>
                         </figcaption>
                       </figure>
                     </div>
+                    <div class="card col-3" style="padding:0px; width:85%;" v-else>
+                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                        <img src="@/assets/cslogo.png" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
+                        <figcaption class="card__caption" style="left:5%;">
+                          <h2 class="card__title" v-if="nft.name" style="color:white;">이전 중인 NFT입니다.</h2>
+                          <!-- <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p> -->
+                          <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span> -->
+                        </figcaption>
+                      </figure>
+                    </div>
                   </div>
-              </div>
+                </div>
+                
             </div>
           </div>
         </div>
@@ -193,7 +206,8 @@ import {ref, computed } from 'vue'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import checkAccount from '@/utils/CheckMainWallet.js'
-
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 
 
@@ -203,6 +217,13 @@ export default {
     Sidebar,
   },
   setup() {
+    const toast = () => {
+        createToast(
+        { title: 'some title', description: 'some good description', },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'success', showIcon:true, position:'bottom-right', }
+        )
+    }
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -248,7 +269,7 @@ export default {
       })
 
     // 메인 지갑 설정
-    const myWallet = store.state.auth.user.address
+    const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
     const privatekey = ref('')
 
@@ -267,10 +288,18 @@ export default {
             console.log(err)
           })
 
-
-          alert('main 지갑 설정완료')
+          store.state.auth.user.address = res.adderss
+          createToast(
+            { title: 'Mainwallet is registered',  },
+            // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+            { type:'success', showIcon:true, position:'bottom-right', }
+          )
         } else {
-          alert('올바른 값을 입력해주세요')
+          createToast(
+            { title: 'Information is not correct',  },
+            // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+            { type:'danger', showIcon:true, position:'bottom-right', }
+          )
         }
         })
       // console.log(abc)
@@ -307,6 +336,7 @@ export default {
       sendWalletInfo,
       myWallet,
       copyToClickBoard,
+      toast,
 
     }
   }
@@ -613,4 +643,22 @@ $gray: #9b9b9b;
   width:100vw;
   
 }
+
+//스크롤
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+   display: none; 
+} 
+
+/*특정 부분 스크롤바 없애기*/ 
+.content_box { 
+  -ms-overflow-style: none; 
+}
+
+.content_box::-webkit-scrollbar{ display:none; }
+
+
 </style>

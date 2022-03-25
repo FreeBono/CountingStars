@@ -78,7 +78,7 @@
         <LoginKakao/>
       </div> -->
     </div>
-    <Block/>
+    <!-- <Block/> -->
   </body>
 
 </template>
@@ -87,11 +87,11 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import LoginKakao from "../components/LoginKakao.vue"
-import Block from "@/components/Block.vue"
+// import Block from "@/components/Graph.vue"
 export default {
   name: "Login",
   components: {
-    Block,
+    // Block,
     Form,
     Field,
     ErrorMessage,

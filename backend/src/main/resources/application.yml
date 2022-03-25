@@ -1,15 +1,22 @@
 server:
-    address: localhost
-    compression:
-        enabled: true
-        mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    # address: j6e204.p.ssafy.io
+    # compression:
+    #     enabled: true
+    #     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    
+#    ssl:
+#    enabled: true
+#    key-store-type: PKCS12
+#    key-store:
+#        classpath: /root/key.p12
+#    key-store-password: cs124578
+    # servlet:
+    #     contextPath: /
+    #     encoding:
+    #         charset: UTF-8
+    #         enabled: true
+    #         force: true
     port: 8080
-    servlet:
-        contextPath: /
-        encoding:
-            charset: UTF-8
-            enabled: true
-            force: true
 #spa:
 #    default-file: /dist/index.html
 
@@ -20,10 +27,10 @@ spring:
                 one-indexed-parameters: true
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+        url: jdbc:mysql://j6e204.p.ssafy.io:3306/counting_stars?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true&useSSL=false
         hikari:
-            username: root
-            password: root
+            username: countingstars
+            password: cs124578
     devtools:
         livereload:
             enabled: true
@@ -65,3 +72,6 @@ bezkoder:
 
 
 spring.main.allow-bean-definition-overriding: true
+
+##TEWST##
+#3.38.212.17
