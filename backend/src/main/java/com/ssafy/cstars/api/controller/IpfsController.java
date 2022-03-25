@@ -40,7 +40,7 @@ public class IpfsController {
         System.out.println(getServerIp());
         System.out.println(ipfsInfo);
 
-        IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/9094");
+        IPFS ipfs = new IPFS("/ip4/0.0.0.0/tcp/9094");
 
         NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(multipartFileToFile(imageFile));
         MerkleNode addResult = ipfs.add(image).get(0);
