@@ -82,6 +82,10 @@ services:
   ipfs1:
     container_name: ipfs1
     image: ipfs/go-ipfs:latest
+    ports:
+      - "4002:4002" # ipfs swarm - expose if needed/wanted
+      - "5002:5002" # ipfs api - expose if needed/wanted
+      - "8001:8001" # ipfs gateway - expose if needed/wanted
     volumes:
       - ./compose/ipfs1:/data/ipfs
 
@@ -107,6 +111,10 @@ services:
   ipfs2:
     container_name: ipfs2
     image: ipfs/go-ipfs:latest
+    ports:
+      - "4003:4003" # ipfs swarm - expose if needed/wanted
+      - "5003:5003" # ipfs api - expose if needed/wanted
+      - "8002:8002" # ipfs gateway - expose if needed/wanted
     volumes:
       - ./compose/ipfs2:/data/ipfs
 
