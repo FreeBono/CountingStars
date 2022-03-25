@@ -40,32 +40,44 @@ public class IpfsController {
 //        System.out.println(getServerIp());
 //        System.out.println(ipfsInfo);
 
-        IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+        String[] ipAddress = { "/ip4/0.0.0.0/tcp/5001", "/ip4/172.17.0.1/tcp/5001",
+                "/ip4/127.0.0.1/tcp/5001", "/ip4/172.18.0.1/tcp/5001", "/ip4/172.26.14.69/tcp/5001" };
 
-        NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(multipartFileToFile(imageFile));
-        MerkleNode addResult = ipfs.add(image).get(0);
-        String pinId = addResult.hash.toBase58();
-        System.out.println(pinId);
+        IPFS ipfs = null;
+        for(int i = 0; i < ipAddress.length; i++) {
+            try {
+                IPFS ipfs1 = new IPFS(ipAddress[i]);
+                System.out.println(ipAddress + " ---------------------- 연결성공-------------------------------");
+            } catch(Exception e) {}
+        }
 
-        ipfsInfo.setImageUrl(pinId);
+        if(ipfs != null) {
+            NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(multipartFileToFile(imageFile));
+            MerkleNode addResult = ipfs.add(image).get(0);
+            String pinId = addResult.hash.toBase58();
+            System.out.println(pinId);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonStr = mapper.writeValueAsString(ipfsInfo);
+            ipfsInfo.setImageUrl(pinId);
 
-        NamedStreamable.ByteArrayWrapper file = new NamedStreamable.ByteArrayWrapper(ipfsInfo.getSerialNumber() + ".json", convertObjectToBytes(jsonStr));
-        addResult = ipfs.add(file).get(0);
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonStr = mapper.writeValueAsString(ipfsInfo);
 
-        // get
+            NamedStreamable.ByteArrayWrapper file = new NamedStreamable.ByteArrayWrapper(ipfsInfo.getSerialNumber() + ".json", convertObjectToBytes(jsonStr));
+            addResult = ipfs.add(file).get(0);
 
-        byte[] ipfsCat = ipfs.cat(addResult.hash);
-        Object ipfsObject = convertBytesToObject(ipfsCat);
+            // get
 
-        System.out.println(ipfsObject);
+            byte[] ipfsCat = ipfs.cat(addResult.hash);
+            Object ipfsObject = convertBytesToObject(ipfsCat);
+
+            System.out.println(ipfsObject);
 
 //        IPFSCluster ipfsCluster = new IPFSCluster("127.0.0.1", 9094);
 //        ipfsCluster.pins.add(pinId);
+        }
+
 //
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, addResult.hash.toBase58()));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "addResult.hash.toBase58()"));
     }
 
     /*
