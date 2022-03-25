@@ -106,11 +106,12 @@
 </template>
 
 <script>
-import pinata from '../services/pinataApiFile'
-import pinataJson from '../services/pinataApiJson'
 import { ref,computed } from 'vue';
+// import pinata from '../services/pinataApiFile'
+// import pinataJson from '../services/pinataApiJson'
+import axios from "axios";
 import { onMounted } from 'vue';
-import publishToken from '../utils/PublishNFT'
+// import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
 import SearchToken from '../utils/SearchNFT'
 import qwe from '../utils/LookupNFT'
@@ -156,7 +157,7 @@ export default {
     }
 
     const transferJSON = async function (url) {
-      const data = {
+      const metadata = {
         name: "Luxury",
         description: "It contains a warranty for luxury goods.",
         serialNumber: state.value.serialNumber,
@@ -168,17 +169,29 @@ export default {
         material: state.value.material,
         productColor: state.value.productColor,
         productPrice: state.value.productPrice,
-        image: url,
       }
 
-      const response = await pinata(state.value.nftImgFile);
+      const formData = new FormData();
 
-      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
+      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      formData.append('image', state.value.nftImgFile);
 
-      const jsonResponse = await pinataJson(data);
+      // var cid = "";
 
-      console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
-      publishToken(jsonResponse.data.IpfsHash)
+      axios
+      .post(`http://j6e204.p.ssafy.io:8443/api/v1/ipfs`, formData)
+      .then(function (response) {
+        console.log(response);
+
+        // cid = response.data.message;
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+
+      // console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
+      // publishToken(jsonResponse.data.IpfsHash)
     }
 
 

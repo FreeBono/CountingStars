@@ -16,7 +16,7 @@ server:
     #         charset: UTF-8
     #         enabled: true
     #         force: true
-    port: 8080
+    port: 8081
 #spa:
 #    default-file: /dist/index.html
 
