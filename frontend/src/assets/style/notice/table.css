@@ -538,7 +538,7 @@ a.btn.disabled {
 .page-link:hover {
   z-index: 2;
   text-decoration: none;
-  color: #28b9b0d6;
+  color: #2dce89;
   border-color: #dee2e6;
   background-color: #dee2e6;
 }
@@ -570,8 +570,8 @@ a.btn.disabled {
 }
 
 .page-item.active .page-link {  
-  background-color: #3adacf !important;  
-  border-color: #3adacf !important;  
+  background-color: #2dce89 !important;  
+  border-color: #2dce89 !important;  
   color: #fff !important;
 }
 

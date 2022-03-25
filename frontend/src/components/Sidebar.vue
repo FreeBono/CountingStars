@@ -2,7 +2,7 @@
   <body>
     <nav class="main-menu">
       <div class="logo-img-tag" @click="goMainPage">
-        <img class="fa-2x" src="@/assets/cslogo.png" alt="로고부분" style="width:30px;">
+        <img class="fa-2x" src="@/assets/cslogo.png" alt="로고부분" style="width: 50px;">
         <p class="logo-title">Counting Stars</p>
       </div>
       <ul>
@@ -109,7 +109,7 @@ export default {
   transition: all .1s linear;
   height: 36px;
   bottom: 10px;
-  right: 8px;
+  right: 16px;
 }
 
 .logo-img-tag:hover {
@@ -124,7 +124,7 @@ export default {
   text-align: right;
   bottom: 32px;
   font-weight: 800;
-  color: #28b9b0d6;
+  color: #2dce89;
 }
 
 .fa-2x {
@@ -241,7 +241,7 @@ nav ul,nav li {
 
 .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
   color:#ffffff;
-  background-color:#3adacf;
+  background-color:#2dce89;
 }
 /* .main-menu li > a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
   color:#ffffff;
