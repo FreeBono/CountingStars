@@ -243,25 +243,18 @@ export default {
 		}
 
 		const sendToken = () => {
-      // store.state.nftValues.forEach(e => {
-      //   if (e.tokenId === tokenNum.value) {
-      //     e.status = 1
-      //   }
-      // nfts.value = store.state.nftValues
+      //알람
+      createToast(
+          { title: 'Send Transaction',  },
+          // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+          { type:'info', showIcon:true, position:'bottom-right', }
+          )
       
-      // })
-      store.dispatch('sendToken',tokenNum.value)
 			console.log(tokenNum.value)
-      api.post("/userTransaction",{
-        userId : store.state.auth.user.id, count : 1
-      })
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      
 			TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+
+      
       // LookupNFTs()
 		}
     

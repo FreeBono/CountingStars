@@ -31,7 +31,8 @@ export default createStore({
         }
       }
       console.log(state.nftValues)
-    }
+    },
+  
   },
   actions: {
     nftValues({commit},data) {
@@ -45,7 +46,8 @@ export default createStore({
     },
     sendToken({commit}, data) {
       commit("SEND_TOKEN",data)
-    }
+    },
+
 
   },
   modules: {

@@ -1,4 +1,9 @@
 // import Web3 from 'web3'
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
+import store from '@/store';
+import api from '@/services/api.js'
+
 
 export default async function TransferToken(receiveAccount,receiveKey, tokenId) {
   var Web3 = require('web3');
@@ -497,6 +502,33 @@ export default async function TransferToken(receiveAccount,receiveKey, tokenId) 
   console.log(sendAccount)
   console.log(receiveAccount)
   console.log(parseInt(tokenId))
-  contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: "0x67Ec0790223db78A170C2C5B5eC564a746D0514c",gas:600000, })
+  try {
+    await contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: "0x67Ec0790223db78A170C2C5B5eC564a746D0514c",gas:600000, })
+    store.dispatch('sendToken',tokenId)
+    
+    //거래 내역 저장
+    api.post("/userTransaction",{
+      userId : store.state.auth.user.id, count : 1
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    //알람
+    createToast(
+      { title: 'NFT Transfer Success',  },
+      // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+      { type:'success', showIcon:true, position:'bottom-right', }
+      )
+  } catch(err) {
+    createToast(
+      { title: 'NFT Transfer Failed',  },
+      // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+      { type:'danger', showIcon:true, position:'bottom-right', }
+      )
+  }
   
   }

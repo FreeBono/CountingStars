@@ -8,7 +8,7 @@
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> My NFTs</div>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;" @click="toast"> My NFTs</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
@@ -206,7 +206,8 @@ import {ref, computed } from 'vue'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import checkAccount from '@/utils/CheckMainWallet.js'
-
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 
 
@@ -216,6 +217,13 @@ export default {
     Sidebar,
   },
   setup() {
+    const toast = () => {
+        createToast(
+        { title: 'some title', description: 'some good description', },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'success', showIcon:true, position:'bottom-right', }
+        )
+    }
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -261,7 +269,7 @@ export default {
       })
 
     // 메인 지갑 설정
-    const myWallet = store.state.auth.user.address
+    const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
     const privatekey = ref('')
 
@@ -280,10 +288,18 @@ export default {
             console.log(err)
           })
 
-
-          alert('main 지갑 설정완료')
+          store.state.auth.user.address = res.adderss
+          createToast(
+            { title: 'Mainwallet is registered',  },
+            // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+            { type:'success', showIcon:true, position:'bottom-right', }
+          )
         } else {
-          alert('올바른 값을 입력해주세요')
+          createToast(
+            { title: 'Information is not correct',  },
+            // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+            { type:'danger', showIcon:true, position:'bottom-right', }
+          )
         }
         })
       // console.log(abc)
@@ -320,6 +336,7 @@ export default {
       sendWalletInfo,
       myWallet,
       copyToClickBoard,
+      toast,
 
     }
   }
