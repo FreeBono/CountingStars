@@ -37,8 +37,8 @@ public class IpfsController {
                                                           @RequestPart(value = "image")  @ApiParam(value = "IPFS 이미지", required = true) MultipartFile imageFile) throws IOException, ClassNotFoundException {
 
         System.out.println("테스트 잘 넘어오나???");
-        System.out.println(getServerIp());
-        System.out.println(ipfsInfo);
+//        System.out.println(getServerIp());
+//        System.out.println(ipfsInfo);
 
         IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
 
