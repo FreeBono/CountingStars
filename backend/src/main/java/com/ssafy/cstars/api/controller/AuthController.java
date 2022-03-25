@@ -152,6 +152,7 @@ public class AuthController {
       jwtResponse = new JwtResponse(jwt, refreshToken.getToken(), brandDetails.getId(), brandDetails.getName(), brandDetails.getWallet(), brandDetails.getRole(), roles);
 
     }
+    System.out.println(jwtResponse);
     return ResponseEntity.ok(jwtResponse);
   }
 

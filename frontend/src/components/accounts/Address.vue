@@ -87,7 +87,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #postcode {
   width : 300px;
 }

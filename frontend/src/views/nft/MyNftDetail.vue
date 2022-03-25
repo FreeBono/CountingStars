@@ -67,32 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.sidenav {
-  text-align: left;
-  box-sizing: border-box;
-  padding: 1rem 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  padding-top: 0;
-  border-style: solid;
-  z-index: 1000;
-  transition: all .15s ease;
-  background-color: #333333!important;
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  max-width: 250px!important;
-  transform: translateX(0);
-  left: 0;
-  border-width: 0 1px 0 0;
-}
-
 .nft_img {
   display: flex;
   justify-content: flex-start;

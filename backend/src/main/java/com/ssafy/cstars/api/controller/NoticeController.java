@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(value = "공지사항 API", tags = {"Notice"})
 @RestController
-@RequestMapping("api/v1/notice")
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/v1/notice")
 @Controller
 public class NoticeController {
 

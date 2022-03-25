@@ -1,7 +1,9 @@
 <template>
+
   <div>
     <!-- Navbar -->
     <Navbar />
+    
     <!-- 최상위 gif -->
     <img src="@/assets/MAINGIF.gif" alt="" style="width:100%; height: 100vh;">
 
@@ -9,12 +11,23 @@
     <div class="container-fluid" style="margin-top:30px;" >
       <div class="row">
         <div class="col">
+          <p class="mt-3 mx-1" id="small-title" style="margin-bottom: 80px;" align="right">ABOUT</p>
           <div class="about">
-            <p style="margin-bottom:80px;" align="right">ABOUT</p>
-            <p style="font-size: 27px; ">명품 고객경험 향상을 위한 블록체인 솔루션</p>
-            <p style="margin-top:35px;">블록체인 솔루션을 통해 명품 업계가 공통적으로 갖고 있는 이슈를 해결함으로써 전반적인 고객 경험을 향상시킵니다.</p>
-            <p style="margin-top:35px;">Counting Stars는 명품 파트너사들의 구매자를 위한 디지털 보증 서비스부터 중고시장 판매 시 제품 이력 및 진품 증명 서비스를 제공합니다. </p>
-            <p style="margin-top:35px;">모든 파트너사, 명품 구매자들이 규모에 상관없이 쉽게 블록체인을 통해 명품 보증 서비스를 사용할 수 있습니다.</p>
+            <p id="title1">블록체인 기반의</p>
+            <p id="title2" style="margin">디지털 명품 인증 솔루션</p>
+            <p style="margin-top: 35px;">
+              대체 불가능한 토큰(NFT)을 통해 명품 업계가 공통적으로 갖고 있는 이슈를 해결함으로써 전반적인 고객 경험을 향상시킵니다
+              위 변조가 불가능한 블록체인 기술을 활용하여 모든 고객에게 투명성을 제공하고 신뢰성을 확보합니다
+            </p>
+            <p style="margin-top:35px;">
+              Counting Stars는 명품사의 제품 구매자들을 위한 디지털 보증 서비스부터 중고시장 판매 시 제품 이력 및 진품 증명 서비스를 제공합니다
+              발급된 NFT 조회부터, 소유권 이전 등 모든 내역을 확인하고 사용할 수 있습니다
+            </p>
+            <p style="margin-top:35px;">
+              모든 명품 파트너사 혹은 명품 구매자들은 규모에 상관없이 누구나 손쉽게 블록체인을 통한 명품 보증 서비스를 사용할 수 있습니다 
+              <span>발급된 디지털 인증서를 자신의 지갑를 통해 확인할 수 있으며 모든 기록을 한 눈에 확인할 수 있습니다</span>
+            </p>
+            <p style="margin-top:35px;"></p>
           </div>
         </div>
         <div class="col" style="padding:0px; height: 100vh;">
@@ -31,20 +44,21 @@
     <!-- Modal -->
     
     <!-- EXPERIENCE -->
-    <p style="margin-top:80px; margin-right:40px; margin-bottom : 50px;" align="right">EXPERIENCE</p>
-    <p style="margin-bottom:40px;">서비스를 통한 긍정적인 명품시장에 기여</p>
+    <p id="small-title" style="margin-top:80px; margin-right: 70px; margin-bottom : 100px;" align="right">EXPERIENCE</p>
+    <p id="common-title" style="margin-bottom: 50px;">명품 시장에 기여할 수 있는 긍정적인 효과</p>
     
     <div class="container">
-      <div class="row">
-        <div class="col" align="left">
-          Counting Stars의 배경은 파트너사들과의 협력이 명품시장 발전으로 이어져 나갈 수 있다는 비전에서 탄생했습니다. 명품구매 고객의 구매 경험을 개선하기 위해 신뢰, 지속 가능하며 새로운 가치를 만들어 낼 수 있는 서비스를 제공합니다.
+      <div class="row" style="justify-content: center;">
+        <div class="col-5 mr-2" align="justify">
+          Counting Stars의 기획 배경은 파트너사들과의 협력이 명품시장의 발전으로 이어져 나갈 수 있다는 비전에서 탄생했습니다. 명품을 구매하는 고객의 구매 경험을 개선하기 위해 신뢰할 수 있고 지속 가능한 새로운 가치를 만들어 낼 수 있는 서비스를 제공합니다
         </div>
-        <div class="col" align="left">
+        <div class="col-5" align="justify">
           Counting Stars는 명품 브랜드들의 탄생 이례로 끊임없이 싸워왔던 진품 보증이라는 분야의 새로운 기술 허브로 발돋움하기 위한 서비스입니다. 우리는 블록체인의 잠재력을 통해 그동안 힘들다고만 생각해왔던 가품구매의 위험에서 소비자들을 보호하며 새로운 시대를 맞이할 것입니다.
         </div>
       </div>
-      <div class="row" style="margin-top:50px;">
-        <hr style="margin: 40px 0;">
+      
+      <hr id="hr-tag1" >
+      <div class="row" style="margin-top: 130px;">
         <div class="col-4" align="left">
           <p style="text-align:center; line-height:200px; font-size:40px;">Partners</p>
         </div>
@@ -62,15 +76,15 @@
           </div>
         </div>
       </div>
-      <hr style="margin: 40px 0;">
+      <hr id="hr-tag2" >
     </div>
 
     <!-- BENEFITS -->
     <div>
-      <p style="margin-top:80px; margin-right:40px; margin-bottom : 50px;" align="right">BENEFITS</p>
+      <p id="small-title" style="margin-top: 170px; margin-right: 70px; margin-bottom: 50px;" align="right">BENEFITS</p>
     </div>
-    <div style="margin: 60px 0;">
-      대충 명품 보증시스템이라는 제목인데 있어보이게
+    <div id="common-title" style="margin: 60px 0;">
+      위 변조 불가능한 NFT 명품 보증시스템
     </div>
 
     <div class="container-fluid" style="margin-top:30px; height: 721px;">
@@ -201,7 +215,7 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import Navbar from "../components/Navbar.vue"
 import LoginModal from "../components/accounts/LoginModal.vue"
-import getWeb3 from '../utils/Web3.js'
+
 
 export default {
   name : "Mainpage",
@@ -214,11 +228,11 @@ export default {
     LoginModal,
   },
   setup() {
-    // getWeb3
-    // Test.tt()
+  
+  
     
     return {
-
+      
     }
   }
 }
@@ -226,7 +240,7 @@ export default {
 
 <style scoped>
 * {
-  font-family: 'MaruBuri-Regular';
+  /* font-family: 'MaruBuri-Regular'; */
   /* font-family: 'Galmuri9'; */
   /* font-family: 'SUIT-Regular'; */
   /* font-family: 'MinSans-Regular'; */
@@ -236,11 +250,54 @@ export default {
   /* font-family: "휴먼고딕", "human gothic"; */
   /* font-family: 'NanumMyeongjo'; */
   /* font-family: 'NanumBarunGothicLight'; */
-  /* font-family: 'NanumBarunGothicYetHangul'; */
+  font-family: 'NanumBarunGothicYetHangul';
   /* font-family: 'Spoqa Han Sans Neo', 'Malgun Gothic', sans-serif; */
   /* font-family: 'Hahmlet', serif; */
 }
 
+#common-title {
+  font-size: 3rem; 
+  font-weight: 600;
+}
+
+#title1 {
+  display: flex;
+  position: relative;
+  top: 10px;
+  font-size: 3rem; 
+  font-weight: 600;
+}
+
+#title2 {
+  display: flex;
+  position: relative;
+  bottom: 10px;
+  font-size: 3rem; 
+  font-weight: 600;
+}
+
+#small-title {
+  position: relative;
+  font-size: 0.9rem; 
+  font-weight: 600;
+}
+
+#hr-tag1 {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin: auto;
+  width: 85%;
+  top: 80px;
+}
+#hr-tag2 {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin: auto;
+  width: 85%;
+  top: 40px;
+}
 
 .about {
   padding-left: 50px;

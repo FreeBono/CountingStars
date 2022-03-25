@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <button @click="TransferToken()">ㅇㅇㅇ</button>
+    <button @click="SearchToken()">에고고</button>
+    <button @click="qwe()">테스트</button>
+    
     <h1>Pinata API test</h1>
     <div>
       <div class="row mb-3">
@@ -97,21 +100,37 @@
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
     </div>
   </div>
+  <LineChart :chartData="testData" style="width:700px;"/>
+  <!-- <Block/> -->
+  <button @click="toast">Toast it!</button>
 </template>
 
 <script>
 import pinata from '../services/pinataApiFile'
 import pinataJson from '../services/pinataApiJson'
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
 import { onMounted } from 'vue';
 import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
+import SearchToken from '../utils/SearchNFT'
+import qwe from '../utils/LookupNFT'
+// import Block from '@/components/Block'
 // import Web3 from 'web3'
+import { DoughnutChart,BarChart,LineChart, } from 'vue-chart-3';
 
+import { Chart, registerables } from "chart.js";
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
+
+Chart.register(...registerables);
 
 export default {
   name : 'Pinata',
+  components: { DoughnutChart, BarChart,LineChart,},
   setup() {
+    const toast = () => {
+        createToast('Wow, easy')
+    }
     
     // var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
     const state = ref({
@@ -162,10 +181,30 @@ export default {
       publishToken(jsonResponse.data.IpfsHash)
     }
 
+
+
+
+    //테스트
+    
+    const testData = {
+      labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
+      datasets: [
+        {
+          data: [30, 40, 60, 70, 5],
+          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+        },
+      ],
+    };
+
     return {
       onMounted, state,
       changeImgFile, transferJSON,
       TransferToken,
+      SearchToken,
+      qwe,
+      testData,
+      toast,
+  
     }
   },
   props: {

@@ -1,56 +1,9 @@
 <template>
   <h1>공지사항 상세보기</h1>
     <div class="wrapper">
-      <!-- 사이드바 부분 -->
-    <div data="vue" class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white ps">
-      <div class="scrollbar-inner">
-      <div class="navbar-inner">
-        <ul class="navbar-nav">
-          <li to="/" class="nav-item">
-            <a href="/mynft"  class="sidebar-menu-item nav-link" style="margin-top: 130px">
-              <span class="nav-link-text">MY NFT<b class="caret"></b></span>
-            </a>
-            <div>
-              <ul class="nav nav-sm flex-column">
-                <a href="/nftwallettransfer" class="nav-link">
-                  <span class="nav-link-text">NFT 조회</span>
-                </a>
-                <a href="/nfttransfer" class="nav-link">
-                  <span class="nav-link-text">NFT 이전</span>
-                </a>
-              </ul>
-            </div>
-          </li>
-          <li to="/notice" class="nav-item">
-            <a href="/notice" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">공지사항<b class="caret"></b></span>
-            </a>
-          </li>
-
-          <!-- ADMIN일 경우만 보이게 -->
-          <li to="/admin" class="nav-item">
-            <a href="/admin" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">ADMIN<b class="caret"></b></span>
-            </a>
-          </li>
-          <li to="/partner" class="nav-item">
-            <a href="/partner" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">거래처 관리<b class="caret"></b></span>
-            </a>
-          </li>
-          <li to="/nftcreate" class="nav-item">
-            <a href="/nftcreate" class="sidebar-menu-item nav-link">
-              <span class="nav-link-text">NFT 발급<b class="caret"></b></span>
-            </a>
-          </li>
-        </ul>
-        </div>
-      </div>
-    </div>
-    <!-- 새로운 사이드 끝 -->
-
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
+      <sidebar/>
       <div class="header">
         <p class="head_title">공지사항 등록</p>
       </div>
@@ -62,362 +15,204 @@
               <div class="notice_board_head">
                 <p class="mt-5">
                   No.
-                  <em>몇 번째 글</em>
+                  <em>{{noticeContents.noticeId}}</em>
                 </p>
               </div>
               <table class="detail_table mt-1 mb-1">
                 <colgroup>
                   <col width="15%">
-                  <col width="85%">
+                  <!-- <col width="85%"> -->
                 </colgroup>
                 <tbody>
                   <tr >
-                    <th style="text-align: left;">Title</th>
-                    <td class="pd-0">
-                      <em>[공지]</em>
-                      <span>날짜(등록일)</span>
-                    </td>
+                    <th class="" style="text-align: center;">Title</th>
+                    <th class="pd-0" style="text-align: left;">
+                      <em v-if="editBtn === false">[공지]</em>
+                      <b-form-input 
+                        v-if="editBtn === true" 
+                        type="text" 
+                        maxlength="30" 
+                        style="height: 35px; text-align: left; width:400px;"
+                        v-model="noticeContents.title"
+                        >
+                      </b-form-input>
+                      <span class="mx-1" v-else>{{noticeContents.title}}</span>
+                    </th>
+                  </tr>
+                  <tr>
                   </tr>
                 </tbody>
               </table>
+              <b-form-textarea 
+              v-if="editBtn === true"
+              id="textarea-rows"
+              rows="8" 
+              v-model="noticeContents.content" 
+              class="form-control"
+              >
+              </b-form-textarea>
+              <p v-else class="content-tag mt-3 mx-3" style="white-space: wrap; text-align: left;">{{ noticeContents.content }}</p>
             </div>
               <!-- 테이블 끝 -->
           </div>
 
           <!-- 관리자만 버튼 보이게 -->
-          <div class="createBtn_position2">
-            <button type="button" class="btn createBtn mx-2" @click="updateNotice" style="width: 60px">수정</button>
-            <button type="button" class="btn deleteBtn" @click="deleteNotice" style="width: 60px">삭제</button>
-            <button type="button" class="btn backBtn mx-2" @click="goNoticeMain" style="width: 60px">목록</button>
+          <!-- 수정 버튼 누르기 전 -->
+          <div v-show="editBtn === false">
+            <div class="createBtn_position2">
+              <button type="button" class="btn createBtn " @click="editNotice" style="width: 60px">수정</button>
+              <button type="button" class="btn deleteBtn" @click="deleteNotice" style="width: 60px">삭제</button>
+              <button type="button" class="btn backBtn " @click="goNoticeMain" style="width: 60px">목록</button>
+            </div>
+          </div>
+          <!-- 수정 버튼 누른 후 (저장) -->
+          <div v-show="editBtn === true">
+            <div class="createBtn_position2">
+              <button v-if="editBtn === true" type="button" class="btn createBtn " @click="updateNotice" style="width: 60px">수정</button>
+              <button type="button" class="btn deleteBtn" @click="editCancel" style="width: 60px">취소</button>
+              <button type="button" class="btn backBtn " @click="goNoticeMain" style="width: 60px">목록</button>
+            </div>
           </div>
         </div>
-
-        <!-- 블록 이미지 부분 테두리 따기 -->
-          <div class="box_img">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
-          </div>
-        <!-- 블록 이미지 끝 -->
-
       </div>
     </div>
     <!-- 내용 들어갈 곳 끝 -->
-    </div>
+  </div>
 
 </template>
 
 <script>
-// import { useRouter } from 'vue-router'
+// 테이블, 사이드 css
+
+import Sidebar from '@/components/Sidebar.vue'
+import api from "@/services/api.js"
+import { onMounted, ref } from 'vue';
+import router from '@/router'
+import { useStore } from "vuex";
+import axios from 'axios';
+
+import { useRouter } from 'vue-router'
 
 export default {
   name : 'NoticeDetail',
+  components: {
+    Sidebar,
+  },
   setup() {
-    // const router = useRouter()
-  }
+    const store = useStore();
+    const router = useRouter()
+    const myapi = ref(api)
+    const noticeNo = store.state.noticeNo
+    const noticeContents = ref({
+      noticeId: null,
+      title: null,
+      content: null,
+      date: null,
+    })
+    const editBtn = ref(false)
+
+    
+    // 메인으로 보내기
+    function goNoticeMain() {
+      router.push({name: 'MainNotice'})
+    }
+
+    // 디테일 번호 가져와서 내용 불러오기
+    const getNotice = () => {
+      myapi.value.get(`/notice/${noticeNo}`)
+      .then((res) => {
+        noticeContents.value.noticeId = res.data.noticeId
+        noticeContents.value.content = res.data.content
+        noticeContents.value.title = res.data.title
+        noticeContents.value.date = res.data.date
+        console.log(noticeContents.value.noticeId, '번호 계속 뜨는지 확인')
+      })
+    }
+
+    // 공지 삭제
+    const deleteNotice = () => {
+      const noticeInfo = {
+        noticeId: store.state.noticeNo,
+        adminId: 1,
+      }
+      axios({
+        method: 'delete',
+        url: 'http://localhost:8080/api/v1/notice',
+        data: {noticeId: noticeInfo.noticeId, adminId: noticeInfo.adminId}
+      })
+      .then(() => {
+        console.log(noticeInfo.noticeId, '삭제 된 데이터 확인', noticeInfo.adminId)
+        router.push({name: 'MainNotice'})
+      })
+    }
+
+    // 수정 버튼 눌렀을 때 변경
+    const editNotice = () => {
+      editBtn.value = true
+      console.log(editBtn.value, '수정 버튼 변화')
+    }
+
+    // 수정 취소
+    const editCancel = () => {
+      editBtn.value = false
+      getNotice()
+    }
+
+    // 공지 수정
+    const updateNotice = () => {
+      const updateInfo = {
+        adminId: 1,
+        content: noticeContents.value.content,
+        title: noticeContents.value.title,
+        noticeId: store.state.noticeNo,
+      }
+      axios({
+        method: 'put',
+        url: 'http://localhost:8080/api/v1/notice',
+        data: {
+              noticeId: updateInfo.noticeId, 
+              adminId: updateInfo.adminId, 
+              content: updateInfo.content,
+              title: updateInfo.title
+              }
+      })
+      .then(() => {
+        console.log(updateInfo.content, '수정 확인', updateInfo.title)
+        editBtn.value = false
+        console.log(editBtn.value, '수정 저장 버튼')
+      })
+    }
+
+    onMounted(() => {
+      getNotice()
+    })
+
+    return {
+      noticeNo,
+      goNoticeMain,
+      noticeContents,
+      deleteNotice,
+      updateNotice,
+      editBtn,
+      editNotice,
+      editCancel,
+      getNotice,
+    }
+  },
 }
 </script>
 
 <style scoped>
-.sidenav {
-  text-align: left;
-  box-sizing: border-box;
-  padding: 1rem 1rem;
+.content-tag {
+  height: 200px;
+  display: flex;
+  justify-content: flex-start;
+  /* align-content: center; */
   flex-wrap: wrap;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  padding-top: 0;
-  border-style: solid;
-  z-index: 1000;
-  transition: all .15s ease;
-  background-color: #333333!important;
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  max-width: 250px!important;
-  transform: translateX(0);
-  left: 0;
-  border-width: 0 1px 0 0;
+  border-bottom: 1px solid #d8d7d7;
 }
 
-
-/* 디테일 테이블부분 */
-.detail_area {
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  word-wrap: break-word;
-  word-break: keep-all;
-}
-
-.detail_info {
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  word-wrap: break-word;
-  word-break: keep-all;
-}
-
-.detail_content {
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  word-wrap: break-word;
-  word-break: keep-all;
-  margin-bottom: 20px !important;
-  border-bottom: 1px solid #e2e2e2;
-}
-
-.detail_table {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-  width: 90%;
-  border-top: 1px solid black;
-  border-bottom: 1px solid #E2E2E2;
-  padding-top: 15px !important;
-  padding-bottom: 15px !important;
-  position: relative;
-  margin: auto;
-}
-
-colgroup {
-  font-size: 16px;
-  border-collapse: collapse;
-  border-spacing: 0;
-  box-sizing: border-box;
-  color: #000;
-}
-
-.tbody {
-  font-size: 16px;
-  border-collapse: collapse;
-  border-spacing: 0;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-}
-
-tr {
-  font-size: 16px;
-  border-collapse: collapse;
-  border-spacing: 0;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-}
-
-th {
-  border-collapse: collapse;
-  border-spacing: 0;
-  box-sizing: border-box;
-  margin: 0;
-  border: 0;
-  text-align: left;
-  vertical-align: top;
-  line-height: 40px;
-  font-size: 0.875rem;
-  padding: 0;
-  padding-left: 15px;
-}
-
-td {
-  border-collapse: collapse;
-  border-spacing: 0;
-  box-sizing: border-box;
-  margin: 0;
-  border: 0;
-  padding: 0px !important;
-  line-height: 26px;
-  letter-spacing: -0.05em;
-  font-weight: 400;
-  text-align: left;
-  vertical-align: middle;
-  font-size: 0.875rem;
-  min-height: 40px;
-}
-
-em {
-  border-collapse: collapse;
-  border-spacing: 0;
-  line-height: 26px;
-  text-align: left;
-  font-size: 0.875rem;
-  letter-spacing: -0.06em;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-  font-style: normal;
-}
-
-span {
-  border-collapse: collapse;
-  border-spacing: 0;
-  line-height: 26px;
-  font-weight: 400;
-  text-align: left;
-  font-size: 0.875rem;
-  letter-spacing: -0.06em;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-}
-
-.notice_board_head {
-  display: flex;
-  margin-left: 45px;
-}
-
-/* 사이드바 부분 */
-* {
-  font-family: 'MinSans-Regular';
-}
-
-.nav-link {
-  text-align: left;
-  font-size: 17px;
-  /* color: black; */
-  /* margin-left: 5px; */
-  margin-bottom: 15px;
-}
-
-.nav-link:hover {
-  background-color: #3adacf
-;
-}
-
-.header {
-  display: flex;
-  position: relative;
-  background-color: #3adacf
-;
-  height: 380px;
-  left: 150px;
-  padding-bottom: 72px;
-}
-
-.main-content {
-  position: relative;
-  background-color: #f5f6fc;
-}
-
-.nav-link-text {
-  /* color: white; */
-  color: black;
-  font-size: 24px;
-  margin-left: 40px;
-  font-family: 'MinSans-Regular';
-}
-
-.nav-link-text:hover {
-  color: black;
-  cursor: pointer;
-}
-
-.head_title {
-  font-size: 36px;
-  margin: auto;
-}
-
-.content_outside_box {
-  position: relative;
-  bottom: 130px;
-  left: 150px;
-}
-
-.content_box {
-  width: 50%;
-  height: 600px;
-  background-color: white;
-  margin: auto;
-  border: 1px;
-  border-radius: 10px;
-  box-shadow: 3px 3px 10px 1px #d8d7d7;
-}
-
-.pagination_outside {
-  display: flex;
-  position: relative;
-  bottom: 130px;
-  /* left: 150px; */
-}
-
-.pagination {
-  margin: auto;
-}
-
-.createBtn_position {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 20px;
-  margin-top: 10px;
-}
-
-.createBtn {
-  background-color: #3adacf
- !important;
-}
-
-.createBtn:hover {
-background-color: #fae779 !important;
-}
-
-.deleteBtn {
-  background-color: #FC5E5E !important;
-}
-
-.deleteBtn:hover {
-background-color: #fa8e8e !important;
-}
-
-.backBtn {
-  background-color: #333333 !important;
-  color: white !important;
-}
-
-.backBtn:hover {
-background-color: #727171 !important;
-}
-
-.box_img {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  opacity: 0.5;
-  bottom: 100px;
-  z-index: -1;
-  /* left: 150px; */
-}
-
-
-/* 테이블 부분 */
+/* 테이블 css */
 table {
   font-size: 16px;
   box-sizing: border-box;
@@ -463,6 +258,7 @@ p {
 em {
   font-size: 0.875rem;
   margin-left: 3px;
+  font-style: normal !important;
 }
 
 colgroup {
@@ -525,4 +321,128 @@ td {
   font-size: 0.875rem;
   border-bottom: 1px solid #E2E2E2;
 }
+
+* {
+  font-family: 'MinSans-Regular';
+}
+
+.nav-link {
+  text-align: left;
+  font-size: 17px;
+  /* color: black; */
+  /* margin-left: 5px; */
+  margin-bottom: 15px;
+}
+
+.nav-link:hover {
+  background-color: #2dce89;
+}
+
+.header {
+  display: flex;
+  position: relative;
+  background-color: #2dce89;
+  height: 380px;
+  left: 7px;
+  padding-bottom: 72px;
+}
+
+.main-content {
+  position: relative;
+  background-color: #f5f6fc;
+}
+
+.nav-link-text {
+  /* color: white; */
+  color: black;
+  font-size: 24px;
+  margin-left: 40px;
+  font-family: 'MinSans-Regular';
+}
+
+.nav-link-text:hover {
+  color: black;
+  cursor: pointer;
+}
+
+.head_title {
+  font-size: 36px;
+  margin: auto;
+}
+
+.content_outside_box {
+  position: relative;
+  bottom: 200px;
+  left: 40px;
+}
+
+.content_box {
+  width: 50%;
+  height: 600px;
+  background-color: white;
+  margin: auto;
+  border: 1px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px 1px #d8d7d7;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pagination_outside {
+  display: flex;
+  position: relative;
+  bottom: 130px;
+  /* left: 150px; */
+}
+
+.pagination {
+  margin: auto;
+}
+
+.createBtn_position2 {
+  display: flex;
+  justify-content: flex-end !important;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.createBtn {
+  background-color: #2dce89
+ !important;
+}
+
+.createBtn:hover {
+background-color: #28b9b0d6 !important;
+}
+
+.deleteBtn {
+  background-color: #FC5E5E !important;
+}
+
+.deleteBtn:hover {
+background-color: #fa8e8e !important;
+}
+
+.backBtn {
+  background-color: #333333 !important;
+  color: white !important;
+}
+
+.backBtn:hover {
+background-color: #727171 !important;
+}
+
+.box_img {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  opacity: 0.5;
+  bottom: 100px;
+  z-index: -1;
+  /* left: 150px; */
+}
+
+
 </style>
