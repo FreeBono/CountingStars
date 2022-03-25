@@ -47,7 +47,7 @@
       <label for="name"></label>
       <input type="text" placeholder="E-mail" name="telephone" id="telephone_input" required>
     </div>
-    <Address/>
+   
     
     <!-- <div class="subject">
       <label for="subject"></label>

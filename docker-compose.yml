@@ -1,0 +1,43 @@
+version: '3.2'
+
+services: 
+  # db:
+  #   image: mysql
+  #   container_name: database
+  #   environment:
+  #     - MYSQL_DATABASE=counting_stars
+  #     - MYSQL_ROOT_HOST=%
+  #     - MYSQL_ROOT_PASSWORD=cs124578
+  #   ports:
+  #     - 3306:3306
+  #   networks:
+  #     - counting_star
+
+  frontend:
+    image: frontend-vue
+    build:
+      context: frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443" 
+    # [인증서 파일 저장 경로]:/var/www/html
+    volumes:
+      - /home/ubuntu/docker-volume:/var/www/html
+    container_name: "frontend"
+    # networks:
+    #   - counting_star
+  
+  backend:
+    image: backend-spring
+    build:
+      context: backend/
+      dockerfile: Dockerfile
+    ports:
+      - "8443:8443"
+      # [인증서 파일 저장 경로]:/root
+    volumes:
+      - /home/ubuntu/docker-volume:/root
+    container_name: "backend"
+    # networks:
+    #   - counting_star

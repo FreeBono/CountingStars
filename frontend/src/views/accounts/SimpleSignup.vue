@@ -20,7 +20,7 @@
 
 </template>
 
-<script>
+<script scoped>
 import LoginKakao from "../../components/LoginKakao.vue"
 
 export default {

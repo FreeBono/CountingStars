@@ -17,6 +17,7 @@ import MyNft from '@/views/nft/MyNft.vue'
 import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
 import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
+import PartnerCreate from '@/views/admin/PartnerCreate.vue'
 
 
 import Pinata from "../components/Pinata.vue"
@@ -129,6 +130,11 @@ const routes = [
     path: '/pinata',
     name: 'Pinata',
     component : Pinata
+  },
+  {
+    path: '/partnercreate',
+    name: 'PartnerCreate',
+    component : PartnerCreate
   },
 ]
 

@@ -3,24 +3,20 @@ package com.ssafy.cstars.api.controller;
 import com.ssafy.cstars.api.request.BrandDeleteReq;
 import com.ssafy.cstars.api.request.BrandPostReq;
 import com.ssafy.cstars.api.response.BaseResponseBody;
-import com.ssafy.cstars.api.response.BrandListRes;
 import com.ssafy.cstars.api.response.BrandRes;
-import com.ssafy.cstars.domain.entity.Brand;
 import com.ssafy.cstars.service.BrandService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+
+@CrossOrigin(origins = "*")
 @Api(value = "브랜드 API", tags = {"Brand"})
 @RestController
-@RequestMapping("api/v1/brand")
+@RequestMapping("/api/v1/brand")
 @Controller
 public class BrandController {
     @Autowired
@@ -33,24 +29,22 @@ public class BrandController {
             @ApiResponse(code =404 , message = "NOT FOUND", response = BrandRes.class),
             @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
     })
-    public ResponseEntity<Page<BrandRes>> getBrandList(@PageableDefault(page = 0, size = 10)Pageable pageable){
+        public ResponseEntity<List<BrandRes>> getBrandList(){
 
+            List<BrandRes> brands = brandService.GetBrandList();
 
-        Page<Brand> brands = brandService.GetBrandList(pageable);
-
-
-        if(brands != null){
-            return ResponseEntity.status(200).body(BrandListRes.of(brands));
-        }else{
-            return ResponseEntity.status(500).body(null);
-        }
+            if(brands != null){
+                return ResponseEntity.status(200).body(brands);
+            }else{
+                return ResponseEntity.status(500).body(null);
+            }
     }
 
     @PostMapping()
     @ApiOperation(value = "브랜드 등록", notes = "<strong>브랜드</strong> 등록한다")
     @ApiResponses({
             @ApiResponse(code =200 , message = "SUCCESS", response = BrandRes.class),
-            @ApiResponse(code =401, message = "ACCESS DENIED", response = BaseResponseBody.class),
+            @ApiResponse(code =401, message = "ACCESS DENIED", response = BrandRes.class),
             @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
     })
     public ResponseEntity<BaseResponseBody> createBrand(@RequestBody @ApiParam(value = "브랜드 등록", required = true) BrandPostReq brandInfo){

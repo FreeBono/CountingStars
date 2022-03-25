@@ -1,10 +1,7 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
+<test class="qq">
   <router-view/>
-  
+</test>
 </template>
 
 <script>
@@ -66,6 +63,7 @@ export default {
 }
 </script>
 <style>
+
 @font-face {
   font-family: 'MaruBuri-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
@@ -121,6 +119,8 @@ export default {
     font-weight: normal;
     font-style: normal;
 }
+
+
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
