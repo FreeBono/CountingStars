@@ -335,13 +335,13 @@ td {
 }
 
 .nav-link:hover {
-  background-color: #3adacf;
+  background-color: #2dce89;
 }
 
 .header {
   display: flex;
   position: relative;
-  background-color: #3adacf;
+  background-color: #2dce89;
   height: 380px;
   left: 7px;
   padding-bottom: 72px;
@@ -409,7 +409,7 @@ td {
 }
 
 .createBtn {
-  background-color: #3adacf
+  background-color: #2dce89
  !important;
 }
 

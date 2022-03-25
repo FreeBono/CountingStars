@@ -96,17 +96,27 @@
         </div> -->
         
   
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px;">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:85%;">
+                    <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
-                        <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                        <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
                         <figcaption class="card__caption" style="left:5%;">
-                          <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                          <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
+                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
+                        </figcaption>
+                      </figure>
+                    </div>
+                    <div class="card col-3" style="padding:0px; width:85%;" v-else>
+                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                        <img src="@/assets/cslogo.png" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
+                        <figcaption class="card__caption" style="left:5%;">
+                          <h2 class="card__title" v-if="nft.name" style="color:white;">이전 중인 NFT입니다.</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
@@ -123,9 +133,11 @@
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
-                  <div align="left" >Highest Value</div>
-                  <hr style="margin-top:15px 0;">
-                  <div></div>
+                  <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
+                  <!-- <hr style="margin-top:15px 0;"> -->
+                  <div align="center" >
+                    <Graph style="width:90%; height:100%; margin-top:30px;"/>
+                  </div>
               </div>
             </div>
           </div>
@@ -148,6 +160,12 @@
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
 						<label for="name" class="form__label">Account</label>
+					</div>
+				</div>
+        <div>
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Name" name="name2" v-model="receivePrivatekey" required />
+						<label for="name" class="form__label">Privatekey</label>
 					</div>
 				</div>
 				<!-- <div>로 이전합니다.</div> -->
@@ -181,6 +199,7 @@ import {ref, computed } from 'vue'
 // import axios from 'axios'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
+import Graph from '@/components/Graph'
 
 
 
@@ -189,6 +208,7 @@ export default {
   name: 'NftTransfer',
   components: {
     Sidebar,
+    Graph,
   },
   setup() {
     
@@ -198,6 +218,7 @@ export default {
     // const store = useStore()
     const nfts = ref([])
 		const receiveAccount = ref('')
+    const receivePrivatekey = ref('')
     nfts.value = []
     function sendNft() {
       // router.push({name: 'NftTransfer'})
@@ -222,22 +243,22 @@ export default {
 		}
 
 		const sendToken = () => {
+      //알람
+      createToast(
+          { title: 'Send Transaction',  },
+          // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+          { type:'info', showIcon:true, position:'bottom-right', }
+          )
+      
 			console.log(tokenNum.value)
-      api.post("/userTransaction",{
-        userId : store.state.auth.user.id, count : 1
-      })
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-			TransferToken(receiveAccount.value ,tokenNum.value)
-      LookupNFTs()
+      
+			TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+
+      
+      // LookupNFTs()
 		}
     
-    // console.log(nfts)
-    
+
 
     const worth = computed(() => {
       return store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}).reduce(function(a,b) { return a+b;},0)
@@ -267,37 +288,14 @@ export default {
       worth,
       highestPrice,
       // getTransferInfo,
+ 
+      receivePrivatekey
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.sidenav {
-  text-align: left;
-  box-sizing: border-box;
-  padding: 1rem 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  padding-top: 0;
-  border-style: solid;
-  z-index: 1000;
-  transition: all .15s ease;
-  background-color: #333333!important;
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  max-width: 250px!important;
-  transform: translateX(0);
-  left: 0;
-  border-width: 0 1px 0 0;
-}
 
 .nft_img {
   display: flex;
@@ -564,4 +562,24 @@ $gray: #9b9b9b;
   width:100vw;
   
 }
+
+
+
+//스크롤
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+   display: none; 
+} 
+
+/*특정 부분 스크롤바 없애기*/ 
+.content_box { 
+  -ms-overflow-style: none; 
+}
+
+.content_box::-webkit-scrollbar{ display:none; }
+
+
 </style>
