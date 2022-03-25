@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import '@/assets/style/notice/noticeSide.css'
-import '@/assets/style/notice/noticeTable.css'
+// import '@/assets/style/notice/noticeSide.css'
+// import '@/assets/style/notice/noticeTable.css'
 // import '@/assets/style/notice/noticeForm.css'
 
 import Sidebar from '@/components/Sidebar.vue'
@@ -116,6 +116,18 @@ export default {
 
 .cancleBtn:hover {
 background-color: #fa8e8e !important;
+}
+
+.content_outside_box {
+  display: flex;
+  justify-content: center;
+}
+
+.head_title {
+  color: white;
+  display: flex;
+  margin-left: 300px;
+  margin-top: 30px;
 }
 
 </style>

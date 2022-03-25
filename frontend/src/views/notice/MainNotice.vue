@@ -1609,8 +1609,8 @@ a.btn-icon-only {
 }
 
 .page-item.active .page-link {  
-  background-color: #3adacf !important;  
-  border-color: #3adacf !important;  
+  background-color: #2dce89 !important;  
+  border-color: #2dce89 !important;  
   color: #fff !important;
 }
 
