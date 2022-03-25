@@ -179,7 +179,7 @@ export default {
       // var cid = "";
 
       axios
-      .post(`http://j6e204.p.ssafy.io:8443/api/v1/ipfs`, formData)
+      .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
       .then(function (response) {
         console.log(response);
 

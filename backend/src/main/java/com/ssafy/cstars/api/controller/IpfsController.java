@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * ipfs 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -35,9 +37,10 @@ public class IpfsController {
                                                           @RequestPart(value = "image")  @ApiParam(value = "IPFS 이미지", required = true) MultipartFile imageFile) throws IOException, ClassNotFoundException {
 
         System.out.println("테스트 잘 넘어오나???");
+        System.out.println(getServerIp());
         System.out.println(ipfsInfo);
 
-        IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+        IPFS ipfs = new IPFS("/ip4/" + getServerIp() + "/tcp/5001");
 
         NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(multipartFileToFile(imageFile));
         MerkleNode addResult = ipfs.add(image).get(0);
@@ -106,4 +109,22 @@ public class IpfsController {
 
     }
 
+
+    private String getServerIp() {
+        InetAddress local = null;
+        try {
+            local = InetAddress.getLocalHost();
+        }
+        catch ( UnknownHostException e ) {
+            e.printStackTrace();
+        }
+
+        if( local == null ) {
+            return "";
+        }
+        else {
+            String ip = local.getHostAddress();
+            return ip;
+        }
+    }
 }
