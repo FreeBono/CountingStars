@@ -9,12 +9,13 @@
       <div class="content_outside_box">
         <div class="content_box ">
           <div class="container">
-          <div style="width:40%; align-items:center; margin-top:8rem;">
+          <!-- <div style="width:40%; align-items:center; margin-top:8rem;">
             <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData"/>
-          </div>
-            <div class="form-tag" style="width:60%;">
+          </div> -->
+            <div class="form-tag" style="width: 100%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
-              <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.endDate" placeholder=" 계약만료일자(계약일?)" maxlength="30"></b-form-input>
+              <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.imageUrl" placeholder=" 브랜드 이미지 URL"></b-form-input>
+              <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.endDate" placeholder=" 계약 만료 일자" maxlength="30"></b-form-input>
               <b-form-input class="input_tag" type="text" v-model="brandInfo.address" placeholder=" 지갑주소" maxlength="30"></b-form-input>
             </div>
           </div>
@@ -57,22 +58,22 @@ export default {
       imageUrl : null,
     })
 
-    const brandImg = ref(null)
-    const brandImgFile = ref(null)
+    // const brandImg = ref(null)
+    // const brandImgFile = ref(null)
 
     // 이미지 등록
-    const imageData = (event) => {
+    // const imageData = (event) => {
     
-      brandImg.value = event.nftImg
-      brandImgFile.value = event.nftImgFile
-    }
+    //   brandImg.value = event.nftImg
+    //   brandImgFile.value = event.nftImgFile
+    // }
 
     // json으로 변환
-    const transferJSON = async function (url) {
-      const data = {
-        image: url,
-        brandName: brandInfo.value.name
-      }
+    // const transferJSON = async function (url) {
+    //   const data = {
+    //     image: url,
+    //     brandName: brandInfo.value.name
+    //   }
 
       // const response = await pinata(state.value.nftImgFile);
       
@@ -82,7 +83,7 @@ export default {
 
       // console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
       // publishToken(jsonResponse.data.IpfsHash)
-    }
+    // }
 
     // 거래처관리 페이지로 가기
     function goPatnerMain() {
@@ -104,10 +105,10 @@ export default {
       goPatnerMain,
       brandInfo,
       createBrand,
-      imageData,
-      brandImg,
-      brandImgFile,
-      transferJSON,
+      // imageData,
+      // brandImg,
+      // brandImgFile,
+      // transferJSON,
     }
   }
 }
@@ -171,7 +172,17 @@ background-color: #fa8e8e !important;
 
 .form-tag {
   position: relative;
-  margin: auto;
+  /* margin: auto; */
 }
 
+.content_box {
+  /* display: flex; */
+  /* position: relative; */
+  /* justify-content: center; */
+}
+
+.content_outside_box {
+  display: flex;
+  justify-content: center;
+}
 </style>

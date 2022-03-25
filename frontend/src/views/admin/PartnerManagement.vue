@@ -14,7 +14,7 @@
             <div class="col">
               <div class="card shadow">
                 <div class="card-header border-0 my-2 d-flex" style="justify-content: space-between; align-content: center;">
-                  <h3 class="mb-0 d-flex" style="align-items: center;">Notice</h3>
+                  <h3 class="mb-0 d-flex" style="align-items: center;">Partner</h3>
                   <div >
                     <button type="button" class="btn createBtn" @click="createPartner">거래처 등록</button>
                   </div>
@@ -26,7 +26,7 @@
                         <th style="width: 10%;">이미지</th>
                         <th style="width: 15%;">브랜드명</th>
                         <th style="width: 5%;">Admin</th>
-                        <th style="width: 5%;">계약일?(만료일?)</th>
+                        <th style="width: 5%;">계약 만료일</th>
                         <th style="width: 5%;">관리</th>
                       </tr>
                     </thead>
@@ -45,7 +45,7 @@
                               <!-- <span class="badge badge-dot mr-4">
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
-                              <span class="mb-0 text-sm">로고 이미지</span>
+                              <span class="mb-0 text-sm">{{ branditem.name }}</span>
                             </div>
                           </div>
                         </th>
@@ -71,7 +71,7 @@
                         </td>
                         <td>
                           <div>
-                            <span class="mr-2">계약만료일</span>
+                            <span class="mr-2">{{ makeDate(branditem.endDate) }}</span>
                           </div>
                         </td>
                         <td>
@@ -140,18 +140,18 @@ export default {
       api.get('/brand')
       .then((res) => {
         console.log(res)
-        brandItems.value = res.data.content
+        brandItems.value = res.data
         console.log(brandItems.value, '브랜드 목록 확인')
   
-        currentPage.value = res.data.pageable['pageNumber']
-        console.log(currentPage.value, 'currentPage 확인')
+        // currentPage.value = res.data.pageable['pageNumber']
+        // console.log(currentPage.value, 'currentPage 확인')
   
-        rowws.value = res.data.totalElements
-        console.log(rowws.value, 'rowws 전체 개수')
+        // rowws.value = res.data.totalElements
+        // console.log(rowws.value, 'rowws 전체 개수')
 
   
-        perPage.value = res.data.pageable['pageSize']
-        console.log(perPage.value, 'perP 확인')
+        // perPage.value = res.data.pageable['pageSize']
+        // console.log(perPage.value, 'perP 확인')
       })
     }
 
@@ -185,6 +185,12 @@ export default {
       })
     }
 
+    // 등록일 슬라이싱
+    const makeDate = (datetime) => {
+      const old = ''+datetime
+      return old.substring(0, 10)
+    }
+
     onMounted(() => {
       getBrand()
       brandItems
@@ -199,7 +205,8 @@ export default {
       noticeId,
       pageClick,
       deletePartner,
-      getBrand
+      getBrand,
+      makeDate,
     }
   }
 }
@@ -231,7 +238,7 @@ thead {
 .deleteBtn2:hover {
   border: none !important;
   box-shadow: none !important;
-  background-color: #3adacf ;
+  background-color: #2dce89 ;
   color: white ;
 }
 
@@ -308,13 +315,13 @@ background-color: #727171 !important;
 }
 
 .nav-link:hover {
-  background-color: #3adacf;
+  background-color: #2dce89;
 }
 
 .header {
   display: flex;
   position: relative;
-  background-color: #3adacf;
+  background-color: #2dce89;
   height: 380px;
   left: 7px;
   padding-bottom: 72px;
@@ -1724,8 +1731,8 @@ a.btn-icon-only {
 }
 
 .page-item.active .page-link {  
-  background-color: #3adacf !important;  
-  border-color: #3adacf !important;  
+  background-color: #2dce89 !important;  
+  border-color: #2dce89 !important;  
   color: #fff !important;
 }
 

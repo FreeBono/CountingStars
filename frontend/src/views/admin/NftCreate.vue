@@ -69,7 +69,6 @@
 <script>
 import {ref} from 'vue'
 import Sidebar from '@/components/Sidebar.vue'
-import "@/assets/style/notice/noticeSide.css"
 import FileUpload from "@/components/common/FileUpload.vue"
 import publishToken from '@/utils/PublishNFT'
 import pinata from '@/services/pinataApiFile'
@@ -137,31 +136,16 @@ export default {
 </script>
 
 <style scoped>
+.content_outside_box {
+  display: flex;
+  justify-content: center;
+}
 
-.sidenav {
-  text-align: left;
-  box-sizing: border-box;
-  padding: 1rem 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  padding-top: 0;
-  border-style: solid;
-  z-index: 1000;
-  transition: all .15s ease;
-  background-color: #333333!important;
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  max-width: 250px!important;
-  transform: translateX(0);
-  left: 0;
-  border-width: 0 1px 0 0;
+.head_title {
+  color: white;
+  display: flex;
+  margin-left: 300px;
+  margin-top: 30px;
 }
 
 .nft_img {
