@@ -42,7 +42,7 @@
                     <figure class="card__thumb" style="margin:0px; height:250px;">
                       <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
                       <figcaption class="card__caption" style="left:5%;">
-                        <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
+                        <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
                         <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                         <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
                       </figcaption>

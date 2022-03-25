@@ -42,18 +42,6 @@ public class UserTransactionController {
             return ResponseEntity.status(500).body(null);
         }
     }
-//    public ResponseEntity<List<UserTransactionRes>> getUserTransaction(@RequestBody @ApiParam(value = "user 거래 조회", required = true) UserReq user){
-//
-//
-//        List<UserTransactionRes> list = userTransactionService.getUserTransactionList(user);
-//
-//
-//    if(list != null){
-//        return ResponseEntity.status(200).body(list);
-//    }else{
-//        return ResponseEntity.status(500).body(null);
-//    }
-//    }
 
     @PostMapping()
     @ApiOperation(value = "NFT 거래 등록", notes = "날짜 별 <strong>NFT거래</strong> 등록합니다. ")

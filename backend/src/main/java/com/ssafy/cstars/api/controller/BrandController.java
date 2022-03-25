@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@CrossOrigin(origins = "*")
 @Api(value = "브랜드 API", tags = {"Brand"})
 @RestController
-@RequestMapping("api/v1/brand")
+@RequestMapping("/api/v1/brand")
 @Controller
 public class BrandController {
     @Autowired

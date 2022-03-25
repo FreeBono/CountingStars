@@ -7,7 +7,7 @@
                     
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
                     <a class="nav-link" href="#" id="container3">About</a> <a class="nav-link" href="#" id="container4">Services</a>
-                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">Contact</a>
+                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.auth.status.loggedIn">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
                   
@@ -43,7 +43,8 @@ import {useStore} from 'vuex'
 import {useRouter} from 'vue-router'
 import LoginModal from './accounts/LoginModal.vue'
 import LookupNFTs from '@/utils/LookupNFT.js'
-
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 export default {
   name : "Navbar",
@@ -60,8 +61,16 @@ export default {
     }
     const getAccount = async function () {
       store.dispatch("nftValues",[])
+      
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       console.log(accounts)
+      if (accounts) {
+        createToast(
+        { title: 'MetaMask is Connected',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'success', showIcon:true, position:'bottom-right', }
+        )
+      }
       LookupNFTs()
       
 

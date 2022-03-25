@@ -9,7 +9,13 @@ import setupInterceptors from './services/setupInterceptors';
 import BootstrapVue3 from 'bootstrap-vue-3'
 import VueNextSelect from 'vue-next-select'
 import { globalCookiesConfig } from "vue3-cookies";
+import { Chart, Legend,Title,Tooltip} from "chart.js"
+
+
+
+Chart.register(Legend,Title,Tooltip)
 setupInterceptors(store);
+Chart.defaults.plugins.title.display = true
 
 
 

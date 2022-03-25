@@ -523,7 +523,7 @@ export default async function LookupNFTs() {
         .then(res => {
           const myData = res.data
           myData['tokenId'] = element
-          myData['stats'] = 0
+          myData['status'] = 0
           objects.push(myData)
           console.log(myData)
     

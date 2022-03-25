@@ -1,11 +1,16 @@
 // import Web3 from 'web3'
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
+import store from '@/store';
+import api from '@/services/api.js'
 
-export default async function TransferToken(receiveAccount, tokenId) {
+
+export default async function TransferToken(receiveAccount,receiveKey, tokenId) {
   var Web3 = require('web3');
   var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/1b71a03449674cfe98b98c4915a7cbc7'));
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
   const sendAccount = accounts[0]
-  var sender = web3.eth.accounts.privateKeyToAccount('0x'+"3f5480375cbab19af805d26913fb9e7ee93ae744434ec20fbffc3c06ba39d18e")
+  var sender = web3.eth.accounts.privateKeyToAccount('0x'+receiveKey)
   console.log('sender 확인 : ',sender)
   web3.eth.accounts.wallet.add(sender);
   
@@ -491,11 +496,39 @@ export default async function TransferToken(receiveAccount, tokenId) {
       "constant": true
     }
   ], "0xc57Fdd9b62B985861440782d6eD0B9c5a1F9f81f")
-  
   console.log('contract 확인 : ',contract)
+  // await contract.methods.approve("0xc57Fdd9b62B985861440782d6eD0B9c5a1F9f81f",parseInt(tokenId)).send()
+
   console.log(sendAccount)
   console.log(receiveAccount)
   console.log(parseInt(tokenId))
-  contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: sender.address,gas:600000, })
+  try {
+    await contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: "0x67Ec0790223db78A170C2C5B5eC564a746D0514c",gas:600000, })
+    store.dispatch('sendToken',tokenId)
+    
+    //거래 내역 저장
+    api.post("/userTransaction",{
+      userId : store.state.auth.user.id, count : 1
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    //알람
+    createToast(
+      { title: 'NFT Transfer Success',  },
+      // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+      { type:'success', showIcon:true, position:'bottom-right', }
+      )
+  } catch(err) {
+    createToast(
+      { title: 'NFT Transfer Failed',  },
+      // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+      { type:'danger', showIcon:true, position:'bottom-right', }
+      )
+  }
   
   }
