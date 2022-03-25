@@ -37,7 +37,7 @@ public class IpfsController {
         System.out.println("테스트 잘 넘어오나???");
         System.out.println(ipfsInfo);
 
-        IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+        IPFS ipfs = new IPFS("/ip4/192.168.0.1/tcp/5001");
 
         NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(multipartFileToFile(imageFile));
         MerkleNode addResult = ipfs.add(image).get(0);
