@@ -21,6 +21,15 @@ export default {
           if (!window.Kakao.isInitialized()) {
               // JavaScript key를 인자로 주고 SDK 초기화
               window.Kakao.init('eb6b89b350284c15c748ea3d3855f6c5');
+                          Kakao.API.request({
+                url: '/v1/api/talk/channels',
+                success: function(response) {
+                  console.log(response);
+                },
+                fail: function(error) {
+                  console.log(error);
+                }
+              });
               // SDK 초기화 여부를 확인하자.
               console.log(window.Kakao.isInitialized());
               }
@@ -58,23 +67,23 @@ export default {
                 // this.schema['email'] =  response.kakao_account.email,
                 
                 // console.log(this.schema)
-                api.post("/auth/signup",a)
-                .then(res => {
-                  console.log(res)
-                  const b = response.id
-                  vm.$store.dispatch("auth/login", {email:b,password:b})
-                  vm.$router.push("/");
-                })
-                .catch(err => {
-                  console.log(err)
+                // api.post("/auth/signup",a)
+                // .then(res => {
+                //   console.log(res)
+                //   const b = response.id
+                //   vm.$store.dispatch("auth/login", {email:b,password:b})
+                //   vm.$router.push("/");
+                // })
+                // .catch(err => {
+                //   console.log(err)
                   
-                  const b = response.id
-                  // async 해보기
-                  vm.$store.dispatch("auth/login", {email:response.kakao_account.email,password:b})
-                  console.log('ewf' ,b,b)
-                  vm.$router.push("/main");
+                //   const b = response.id
+                //   // async 해보기
+                //   vm.$store.dispatch("auth/login", {email:response.kakao_account.email,password:b})
+                //   console.log('ewf' ,b,b)
+                //   vm.$router.push("/main");
 
-                })
+                // })
               },
               fail: function (error) {
                 console.log(error)

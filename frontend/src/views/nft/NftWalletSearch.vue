@@ -106,6 +106,8 @@ import { useCookies } from "vue3-cookies";
 import { VueperSlides, VueperSlide } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
 
+
+
 export default {
   name: 'NftWalletSearch',
   components: {
