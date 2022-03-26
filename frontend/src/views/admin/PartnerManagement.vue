@@ -46,6 +46,7 @@
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
                               <span class="mb-0 text-sm">{{ branditem.name }}</span>
+                              <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dior_Logo.svg/1200px-Dior_Logo.svg.png" alt=""> -->
                             </div>
                           </div>
                         </th>

@@ -46,7 +46,7 @@
                               <!-- <span class="badge badge-dot mr-4">
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
-                              <span class="mb-0 text-sm">{{ noticeitem.noticeId }}</span>
+                              <span class="mb-0 text-sm">{{noticeitem.noticeId }}</span>
                             </div>
                           </div>
                         </th>
