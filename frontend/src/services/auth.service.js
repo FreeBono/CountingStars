@@ -2,6 +2,7 @@ import api from "./api";
 import TokenService from "./token.service";
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+import store from '@/store'
 class AuthService {
   login({ email, password }) {
     console.log(email)
@@ -12,7 +13,10 @@ class AuthService {
         password
       })
       .then((response) => {
-        console.log("authservice : " + response)
+        // const tmp = JSON.stringify(response)
+        console.log("authservice : " + JSON.stringify(response))
+        store.dispatch('setUser',response.data)
+        
 
         // 알람
         createToast(
@@ -58,11 +62,11 @@ class AuthService {
         )
     )
     .catch(
-      createToast(
-        { title: 'Signup Failed',  },
-        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
-        { type:'danger', showIcon:true, position:'bottom-right', }
-        )
+      // createToast(
+      //   { title: 'Signup Failed',  },
+      //   // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+      //   { type:'danger', showIcon:true, position:'bottom-right', }
+      //   )
     )
   }
 }

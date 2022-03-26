@@ -100,9 +100,8 @@
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
     </div>
   </div>
-  <LineChart :chartData="testData" style="width:700px;"/>
+  <DoughnutChart :chartData="testData" style="width:700px;"/>
   <!-- <Block/> -->
-  <button @click="toast">Toast it!</button>
 </template>
 
 <script>
@@ -119,8 +118,6 @@ import qwe from '../utils/LookupNFT'
 import { DoughnutChart,BarChart,LineChart, } from 'vue-chart-3';
 
 import { Chart, registerables } from "chart.js";
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css'
 
 Chart.register(...registerables);
 
@@ -128,9 +125,6 @@ export default {
   name : 'Pinata',
   components: { DoughnutChart, BarChart,LineChart,},
   setup() {
-    const toast = () => {
-        createToast('Wow, easy')
-    }
     
     // var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/dc8ab5b698624450b473183f2d33e5b3'));
     const state = ref({
@@ -203,7 +197,6 @@ export default {
       SearchToken,
       qwe,
       testData,
-      toast,
   
     }
   },
