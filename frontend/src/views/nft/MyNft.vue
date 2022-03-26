@@ -31,7 +31,7 @@
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:15px;">  
                     <div style="txt-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,8) + '...' + myWallet.substring(34,42)}}</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet}}</div>
                     <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
                     <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
@@ -96,7 +96,7 @@
           </div>
         </div> -->
         
-  
+        <!-- NFT목록 -->
         <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
@@ -131,6 +131,7 @@
           </div>
         </div>
 
+        <!-- 메인 지갑 설정 -->
         <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px; min-height:300px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
@@ -152,6 +153,23 @@
               <div align="right" style="margin-right:25px;">
                 <button style="width:80px; margin-top:25px; background-color: #2dce89; border:0px; border-radius:5px; height:40px;" @click="sendWalletInfo">확인</button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 도넛 차트 -->
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 610px; left:47%; width : 41%;min-width:650px; min-height:300px;">
+          <div  class="container-fluid">
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div align="left" >메인 지갑 설정</div>
+                  <!-- <hr style="margin:15px 0;"> -->
+                  <!-- <div>현재 지갑 주소 </div> -->
+                  <DoughnutChart :chartData="testData" style="width:700px;"/>
+                  
+                </div>
+             
             </div>
           </div>
         </div>
@@ -208,13 +226,16 @@ import TransferToken from '@/utils/TransferNFT.js'
 import checkAccount from '@/utils/CheckMainWallet.js'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
-
+import { DoughnutChart, } from 'vue-chart-3';
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
 
 
 export default {
   name: 'NftTransfer',
   components: {
     Sidebar,
+    DoughnutChart,
   },
   setup() {
     const toast = () => {
@@ -269,7 +290,14 @@ export default {
       })
 
     // 메인 지갑 설정
-    const myWallet = ref(store.state.auth.user.address)
+    const myWallet = ref('')
+    if (store.state.userInfo.address) {
+      myWallet.value = store.state.userInfo.address
+      return
+    } else if (store.state.walletInfo) {
+      myWallet.value = store.state.walletInfo
+    }
+    // const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
     const privatekey = ref('')
 
@@ -287,8 +315,9 @@ export default {
           .catch(err => {
             console.log(err)
           })
-
-          store.state.auth.user.address = res.adderss
+          console.log(res.address)
+          store.dispatch("setWallet",res.address)
+          myWallet.value = store.state.walletInfo
           createToast(
             { title: 'Mainwallet is registered',  },
             // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
@@ -319,6 +348,19 @@ export default {
   
       }
 
+    
+    //테스트 도넛
+    // store.state.nftValues 에 나중에 더미 정상적으로 작동하면 사용
+     const testData = {
+      labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
+      datasets: [
+        {
+          data: [30, 40, 60, 70, 5],
+          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+        },
+      ],
+    };
+
     return {
       goMyNftDetail,
       sendNft,
@@ -337,6 +379,7 @@ export default {
       myWallet,
       copyToClickBoard,
       toast,
+      testData,
 
     }
   }
