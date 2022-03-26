@@ -45,7 +45,7 @@
     
     <!-- EXPERIENCE -->
     <p id="small-title" style="margin-top:80px; margin-right: 70px; margin-bottom : 100px;" align="right">EXPERIENCE</p>
-    <p id="common-title" style="margin-bottom: 50px;">명품 시장에 기여할 수 있는 긍정적인 효과</p>
+    <p id="common-title" style="margin-bottom: 50px;">명품 시장에 가져 올 긍정적인 효과</p>
     
     <div class="container">
       <div class="row" style="justify-content: center;">
@@ -60,7 +60,7 @@
       <hr id="hr-tag1" >
       <div class="row" style="margin-top: 130px;">
         <div class="col-4" align="left">
-          <p style="text-align:center; line-height:200px; font-size:40px;">Partners</p>
+          <p style="text-align:center; line-height:200px; "><em style="font-size:40px;">Partners</em></p>
         </div>
         <div class="col-8" >
           <div class="row-vh d-flex flex-row justify-content-between">
@@ -81,31 +81,37 @@
 
     <!-- BENEFITS -->
     <div>
-      <p id="small-title" style="margin-top: 170px; margin-right: 70px; margin-bottom: 50px;" align="right">BENEFITS</p>
+      <p id="small-title" style="margin-top: 170px; margin-right: 70px; " align="right">BENEFITS</p>
     </div>
-    <div id="common-title" style="margin: 60px 0;">
+    <div id="common-title" style="margin: 50px 0;">
       위 변조 불가능한 NFT 명품 보증시스템
     </div>
 
     <div class="container-fluid" style="margin-top:30px; height: 721px;">
       <div class="row">
-        <div class="col" style="padding:0px; height: 100vh;">
-          <img src="@/assets/gif3.gif" alt="" style="width:100%;height: 45rem; ">
+        <div class="col" style="padding:0px; height: 100vh; margin-top: 30px;">
+          <img src="@/assets/gif3.gif" alt="" style="width:100%; height: 45rem; ">
         </div>
         <div class="col">
           <div class="about">
-            <div style="margin-top:50px;">
-              <h2>구매자를 위한 혜택</h2>
-              <p style="margin-top:35px;">1. 상품의 진위 및 소유권 증명</p>
-              <p >2. 제품 유통 과정, 소유주 변경 정보 엑세스</p>
-              <p >3. 정보 투명성 향상을 통한 고객 만족도 강화</p>
+            <div style="margin-top: 70px;">
+              <h2>제품 구매 고객을 위한 혜택</h2>
+              <!-- <div class="container"> -->
+                <p style="margin-top:35px;">1. 상품의 진위 여부 및 소유권 증명 등의 히스토리내역을 확인할 수 있습니다</p>
+                <p >2. 제품 유통 과정에서 소유주 변경 등의 필요한 정보에 대한 접근이 가능합니다</p>
+                <p >3. 정보의 투명성 강화를 통해 고객 만족도를 향상시킬 수 있습니다</p>
+                <p >4. 브랜드가 제공하는 새로운 서비스에 접근할 수 있습니다</p>
+              <!-- </div> -->
             </div>
-            <hr>
+            <hr style="color: #9e9e9e; margin-top: 50px;">
             <div style="margin-top:50px;">
-              <h2>파트너를 위한 혜택</h2>
-              <p style="margin-top:35px;">1. 위조로부터의 안전성 향상, 중고 시장 영향력 향상 </p>
-              <p >2. 중개자 없이 구매자와의 신뢰관계 구축</p>
-              <p >3. 블록체인을 통해 투명한 정보를 구매자에게 제공(?)</p>
+              <h2>브랜드 고객사에게 제공하는 혜택</h2>
+              <!-- <div class="container"> -->
+                <p style="margin-top:35px;">1. 위조 제품으로부터의 시장을 보호하고, 중고 시장에 대한 영향력을 상승시킬 수 있습니다</p>
+                <p >2. 제 3자의 중개자 없이 직접 구매자와의 신뢰관계를 구축할 수 있습니다</p>
+                <p >3. 블록체인을 통해 투명한 정보를 구매자에게 제공하여 신뢰성을 확보할 수 있습니다</p>
+                <p >4. 브랜드가 설정한 표준에 따라 제품을 만들고 취급하도록 합니다</p>
+              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -116,23 +122,23 @@
 
 
     <!-- governance -->
-    <div class="governance" style="margin-top:20px;">
-      <p style="padding-top:40px; margin-right:40px; margin-bottom : 50px;" align="right">GOVERNANCE</p>
+    <div class="governance" style="margin-top:30px;">
+      <p id="small-title" style="padding-top: 40px; margin-right: 70px; margin-bottom : 50px;" align="right">GOVERNANCE</p>
       <div class="container-fluid" style="margin-top:30px;">
         <div class="row">
           
           <div class="col">
             <div class="about">
               <div style="margin-top:150px;">
-                <h2 style="margin-top:50px;">명품인증을 위한 새로운 플랫폼</h2>
-                <p style="margin-top:50px;">이 프로젝트는 지갑을 소유하고 있는 모든 참여자들에게 NFT를 소유, 이전할 수 있는 기능을 제공한다. </p>
-                <p style="margin-top:50px;">Counting Stars는 브랜드의 크고 작음과 관계 없이 같은 견해를 공유하는 모든 브랜드들을 환영한다. 우리는 NFT를 통한 명품인증의 편의성을 제공할 뿐만 아니라 NFT를 통해 더 많은 추가기능을 만들어낼 수 있도록 다양한 솔루션들을 제공한다.</p>
+                <h2 id="common-title" style="margin-top:50px; color: white;">명품인증을 위한 새로운 플랫폼</h2>
+                <p style="margin-top:50px;">저희의 프로젝트는 지갑을 소유하고 있는 모든 사용자들에게 명품 NFT를 소유, 이전할 수 있는 기능을 제공합니다 </p>
+                <p style="margin-top:50px;">Counting Stars는 고객사의 규모가 크고 작음의 관계 없이 동일한 관점을 공유하는 모든 명품 고객사들을 동등하게 환영합니다. Counting Stars는 NFT를 통한 명품인증의 편의성을 제공할 뿐만 아니라 NFT를 통해 더 많은 추가기능을 만들어낼 수 있도록 다양한 솔루션들을 제공합니다</p>
         
               </div>
             </div>
           </div>
           <div class="col">
-            <img src="@/assets/flow.png" alt="" style="width:85%; height:85%; ">
+            <img src="@/assets/flow.png" alt="" style="width:85%; ">
           </div>
         </div>
       </div>
@@ -155,9 +161,11 @@
         <img src="@/assets/gori.png" alt="" style="height:30%; width:70%; margin-left:50px;" >
       </div>
     </div> -->
-    <h1 style="margin-top: 120px; margin-bottom: 80px;">
-      전체 가치체인을 통해 고객의 신뢰와 경험을 향상시킨다.
-    </h1>
+    <div style="margin-top: 120px; margin-bottom: 80px; margin-left: 10rem;" align="left">
+      <p id="common-title">블록체인의 투명성을 통해 </p> 
+      <p id="title3">고객에게 신뢰와 브랜드 서비스를 제공하여</p>
+      <p id="title4"> 관계를 강화시킵니다</p>
+    </div>
   
     <Carousel :items-to-show="2.5" :wrap-around="true">
     <Slide v-for="slide in 10" :key="slide">
@@ -189,10 +197,10 @@
 
 
     <!-- 문의사항 -->
-    <h1 style="margin-top: 150px;">Want to know more?</h1>
-    <p style="margin-top : 50px;">if you want to know about technological solution or have a questioin, contact us.</p>
-    <button style="cursor: pointer; background-color: #ffd700; border:none; margin:20px; margin-top: 50px; width:251px; height:35px; color: #303030; border-radius:5px;">FOR GENERAL INQUIRIES</button><br>
-    <button style="cursor: pointer; background-color: #ffd700; border:none; margin:20px; width:221px; height:35px; color : #303030; border-radius:5px;">FOR PRESS INQUIRIES</button>
+    <h1 style="margin-top: 150px;">지금 바로 시작해 보세요</h1>
+    <p style="margin-top : 50px;">컨소시엄의 일원이 되어 저희 <span style="color: #2dce89;">COUNTING STARS</span>가 제공하는 기술 솔루션의 이점을 누리고 싶다면 언제든 문의주십시오</p>
+    <button style="cursor: pointer; background-color: #2dce89; border:none; margin:20px; margin-top: 50px; width:251px; height:35px; color: #303030; border-radius:5px;">FOR GENERAL INQUIRIES</button><br>
+    <button style="cursor: pointer; background-color: #2dce89; border:none; margin:20px; width:221px; height:35px; color : #303030; border-radius:5px;">FOR PRESS INQUIRIES</button>
     
 
 
@@ -256,6 +264,11 @@ export default {
   /* font-family: 'Hahmlet', serif; */
 }
 
+::selection {
+  background-color: #8bd3b4;
+  /* color: yellow; */
+}
+
 #common-title {
   font-size: 3rem; 
   font-weight: 600;
@@ -273,6 +286,22 @@ export default {
   display: flex;
   position: relative;
   bottom: 10px;
+  font-size: 3rem; 
+  font-weight: 600;
+}
+
+#title3 {
+  display: flex;
+  position: relative;
+  bottom: 25px;
+  font-size: 3rem; 
+  font-weight: 600;
+}
+
+#title4 {
+  display: flex;
+  position: relative;
+  bottom: 50px;
   font-size: 3rem; 
   font-weight: 600;
 }

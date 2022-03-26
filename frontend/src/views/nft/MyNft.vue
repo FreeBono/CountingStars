@@ -101,6 +101,20 @@
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
+
+
+                <!-- 필터링 부분 -->
+                <div class="searchbarr mb-4">
+                  <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
+                  <b-form-select class="mx-2" v-model="categorySelected" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
+                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
+                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 색상 소재를 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
+                  <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
+                </div>
+                <!-- 필터링 부분 끝 -->
+
+
                 <div class="row" >
                   <div align="left" >NFT 목록</div>
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
@@ -205,8 +219,6 @@
 
 
 
-
-
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
@@ -231,6 +243,8 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 
+
+
 export default {
   name: 'NftTransfer',
   components: {
@@ -245,6 +259,10 @@ export default {
         { type:'success', showIcon:true, position:'bottom-right', }
         )
     }
+
+    // 필터 부분
+    const src = ref([]) // 초기 nft를 저장할 배열
+
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -257,7 +275,7 @@ export default {
       alert('전송 되었습니다.')
       // 전송되면 내 목록에서 삭제 되야 함
     }
-
+    // nft 디테일로 가기
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
     }
@@ -266,6 +284,8 @@ export default {
     }
     nfts.value = store.state.nftValues
 
+    // 필터 부분
+    src.value = nfts.value
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -307,7 +327,7 @@ export default {
           
           console.log(store.state.auth.user.id, walletAddress.value)
           api.put("/user", {
-             userId : store.state.auth.user.id, wallet : walletAddress.value 
+            userId : store.state.auth.user.id, wallet : walletAddress.value 
           })
           .then(res => {
             console.log(res)
@@ -361,6 +381,204 @@ export default {
       ],
     };
 
+    
+    // 필터 부분
+    const brandSelected = ref(null)
+    const categorySelected = ref(null)
+    const searchSelected = ref("color")
+
+
+      // filter 사용될 데이터들
+    
+    api.get('/brand')
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+    const brandOpt = ref([
+        { value: null, text: '브랜드' },
+        { value: 'Chanel', text: 'CHANEL' },
+        { value: 'cartier', text: 'CARTIER' },
+        { value: 'louis vuitton', text: 'LOUIS VUITTON' },
+        { value: 'gucci', text: 'GUCCI' },
+        { value: 'versace', text: 'VERSACE' },
+        { value: 'fendi', text: 'FENDI' },
+        { value: 'prada', text: 'PRADA' },
+        // { value: true, text: '기타' },
+      ])
+    
+    const categoryOpt = ref([
+        { value: null, text: '카테고리' },
+        { value: 'bag', text: 'BAG' },
+        // { value: true, text: '지갑' },
+        // { value: true, text: '의류' },
+        // { value: true, text: '악세사리' },
+        // { value: true, text: '기타' },
+      ])
+    
+    const searchOpt = ref([
+        { value: "color", text: '색상' },
+        { value: "type", text: '소재' },
+      ])
+
+    // const src = ref([]) // 초기 nft를 저장할 배열
+    const word = ref("")
+    const str = ref(null)
+    const rowws = ref(null)
+    // const nftLists = ref(store.state.searchednft)
+    console.log(nfts.value, '😀리스트 확인😀')
+
+
+    const searchPaging = () => {
+      rowws.value = store.state.nftValues.length;
+    //   if (store.state.nftValues.length === 0) {
+    //   LookupNFTs()
+    // }
+      // currentPage = 1
+      // router.go()
+      console.log(store.state.nftValues.length, 'nfts.value.length')
+      console.log(rowws.value, 'serchpaging')
+    }
+
+    // 검색 초기화
+    const searchInit = () => {
+      categorySelected.value = null;
+      brandSelected.value = null;
+      word.value = "";
+      nfts.value = src.value;
+      // this.searchPaging();
+      searchPaging()
+      // router.go()
+    }
+
+    // 전체 검색
+    const searchTotal = () => {
+      nfts.value = src.value;
+      console.log(nfts.value, 'searchTotal')
+      console.log(src.value, 'srccccccccccccccccc')
+      // this.searchPaging();
+      searchPaging()
+      // console.log(searchPaging, '여기 작동하나?')
+    }
+
+    // 카테고리 셀렉
+    const headerSel = () => {
+      word.value ="";
+      console.log(nfts.value,' headerSel----작동 확인----')
+
+      if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+        if(brandSelected.value == null){ //  선택을 안했을 때
+        console.log(categorySelected.value,' headerSel----작동 확인----')
+        console.log(brandSelected.value, '되나여기')
+          searchTotal(); // 전체 목록 불러오기
+        } else{ // 브랜드 선택을 했을 때
+            nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+            console.log(nfts.value,' headerSel----작동 확인----')
+            return nft.brandName == brandSelected.value;
+          });
+          // searchPaging();
+        }
+      } else{ // 카테고리 선택을 했을 때
+        if(brandSelected.value == null){ // 브랜드 선택이 안 되어 있을 때
+          nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+          console.log(nft.productClassification, '선택했을 때')
+            return nft.productClassification == categorySelected.value;
+          });
+          // this.searchPaging();
+        } else{ // 브랜드 선택이 되어 있을 때
+          nfts.value = src.value.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
+            return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
+          });
+          // this.searchPaging();
+        }
+      }
+    }
+    
+    // 브랜드 선택
+    const brandSel = () => {
+      word.value ="";
+      console.log(nfts.value, 'brandSel 확인')
+
+      if(brandSelected.value == null){ // 브랜드을 선택 안했을 때
+        if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+          searchTotal(); // 전체 목록 불러오기
+        } else{ // 카테고리 선택을 했을 때
+          nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+          console.log(nfts.value, 'brandSel 작동 확인')
+            return nft.productClassification == categorySelected.value;
+          });
+          // this.searchPaging();
+        }
+      } else{ // 브랜드 선택을 했을 때
+        if(categorySelected.value == null){ // 카테고리 선택이 안 되어 있을 때
+          nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+            return nft.brandName == brandSelected.value;
+          });
+          // this.searchPaging();
+        } else{ // 카테고리 선택이 되어 있을 때
+          nfts.value = src.value.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
+            return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
+          });
+          // this.searchPaging();
+        }
+      }
+    }
+
+    const searchTitle = () => {
+      if(searchSelected.value == "color"){ // 색상이 선택 되었을 때
+        if (word.value == "") { // 아무 것도 입력 되지 않았을 때
+          alert("내용을 입력해주세요.")
+        } else {
+          if(categorySelected.value == null && brandSelected.value == null){
+              nfts.value = src.value.filter((nft) => {
+                if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
+                  return nft
+                }
+              });
+              // this.searchPaging();
+          }else{
+            nfts.value = src.value.filter((nft) => {
+              if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
+                if(categorySelected.value != null && nft.brandName != null){ 
+                  return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
+                }
+                else if(categorySelected.value != null){
+                  return nft.productClassification == categorySelected.value
+                }
+                else if(brandSelected.value != null){
+                  return nft.brandName == brandSelected.value
+                }
+              }
+            });
+            // this.searchPaging();
+          }
+        }
+      }else if(searchSelected.value == "type"){ // 분류가 선택 되었을 때
+        if (word.value == "") { // 아무 것도 입력 되지 않았을 때
+          alert("소재를 입력해주세요.")
+        } else {
+          if(categorySelected.value == null && brandSelected.value == null){
+            nfts.value = src.value.filter((nft) => {
+              if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
+                return nft
+              }
+            });
+            // this.searchPaging();  
+          }else{
+            nfts.value = src.value.filter((nft) => {
+              if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
+                if(categorySelected.value != null && brandSelected.value != null) 
+                  return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
+                else if(categorySelected.value != null)
+                  return nft.productClassification == categorySelected.value
+                else if(brandSelected.value != null)
+                  return nft.brandName == brandSelected.value
+              }
+            });
+            // this.searchPaging();
+          }
+        }
+      }
+    }
+
     return {
       goMyNftDetail,
       sendNft,
@@ -381,12 +599,68 @@ export default {
       toast,
       testData,
 
+      brandSelected,
+      categorySelected,
+      searchSelected,
+      brandOpt,
+      categoryOpt,
+      searchOpt,
+      src,
+      word,
+      str,
+      searchTotal,
+      searchInit,
+      searchPaging,
+      headerSel,
+      brandSel,
+      searchTitle,
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+
+// 필터링 부분
+.searchbarr {
+  display: flex;
+}
+
+.searchBtn {
+  width: 60px;
+  padding: 0; 
+  height: 40px; 
+  font-size: 15px;
+  color: #333333;
+  background-color: #fff !important;
+  border-color: transparent;
+  border: 1px solid transparent !important;
+  box-shadow: 1px 1px 2px 2px #ececf0;
+}
+
+.searchBtn:hover {
+  background-color: #32CCBC !important;
+  color: white;
+}
+
+.resetSearchBtn {
+  padding: 0; 
+  width: 60px; 
+  height: 40px; 
+  font-size: 15px;
+  color: #333333;
+  background-color: #fff !important;
+  border-color: transparent;
+  border: 1px solid transparent !important;
+  box-shadow: 1px 1px 2px 2px #ececf0;
+}
+
+.resetSearchBtn:hover {
+  background-color: #32CCBC !important;
+  color: white;
+}
+
+// 필터링 끝
 
 .nft_img {
   display: flex;

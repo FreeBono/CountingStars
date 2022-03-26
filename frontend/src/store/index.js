@@ -18,7 +18,7 @@ export default createStore({
       state.nftValues = data
     },
     SEARCH_WALLET(state,data) {
-      console.log(data)
+      console.log(data, '데이터 확인')
       state.searchednft = data
     },
     GET_NOTICE_NO(state, noticeNumber){

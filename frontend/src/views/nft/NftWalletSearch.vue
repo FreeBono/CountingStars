@@ -3,8 +3,6 @@
   <sidebar style=""/>
   <div class="wrapper">
 
-  
-
     <div class="main-content">
       <div class="header">
         <div class="head_title" style="font-size:16px;">
@@ -65,7 +63,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-     
+    
 				<div>
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
@@ -128,14 +126,13 @@ export default {
     // console.log(datas)
     const walletAddress = ref('')
     const nfts = ref([])
-
+    
     //cookies
 
-    
 
     
 
-    //자겁조회실행
+    //지갑조회실행
     const searchWallet = () => {
       nfts.value = []
       console.log('실행')
@@ -207,10 +204,7 @@ export default {
       histories,
       convertedHistories,
       historySearch,
-      historiesUnique
-
-
-   
+      historiesUnique,
     }
   },
 
