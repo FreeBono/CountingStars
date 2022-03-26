@@ -45,7 +45,7 @@
                               <!-- <span class="badge badge-dot mr-4">
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
-                              <span class="mb-0 text-sm">{{ branditem.name }}</span>
+                              <span class="mb-0 text-sm"><img src="" alt="">{{ branditem.imageUrl }}</span>
                               <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dior_Logo.svg/1200px-Dior_Logo.svg.png" alt=""> -->
                             </div>
                           </div>
@@ -140,8 +140,8 @@ export default {
     const getBrand = () => {
       api.get('/brand')
       .then((res) => {
-        console.log(res)
-        brandItems.value = res.data
+        console.log(res, 'res 확인')
+        brandItems.value = res.data.content
         console.log(brandItems.value, '브랜드 목록 확인')
   
         // currentPage.value = res.data.pageable['pageNumber']
