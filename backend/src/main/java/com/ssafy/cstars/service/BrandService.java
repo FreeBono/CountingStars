@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface BrandService {
 
-    List<BrandRes>  GetBrandList();
+    Page<Brand> GetBrandList(Pageable pageable);
     Brand getBrand(Long brandId);
     int createBrand(BrandPostReq BrandInfo);
     int deleteBrand(BrandDeleteReq BrandInfo);
