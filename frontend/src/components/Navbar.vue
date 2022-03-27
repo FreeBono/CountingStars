@@ -168,7 +168,7 @@ export default {
     box-sizing: border-box;
     list-style: none;
     font-family: 'Montserrat', sans-serif;
-    /* z-index:1001; */
+    z-index:1001;
 }
 
 .test {
