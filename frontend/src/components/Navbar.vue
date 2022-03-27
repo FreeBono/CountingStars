@@ -163,7 +163,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 
 * {
-    margin: auto;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     list-style: none;
