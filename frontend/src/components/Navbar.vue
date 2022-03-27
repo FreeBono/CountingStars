@@ -169,6 +169,8 @@ export default {
     list-style: none;
     font-family: 'Montserrat', sans-serif;
     z-index:1001;
+    display: flex;
+    justify-content: center;
 }
 .test {
   background-color: rgb(255, 255, 255);
