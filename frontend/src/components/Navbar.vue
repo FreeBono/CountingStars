@@ -168,10 +168,9 @@ export default {
     box-sizing: border-box;
     list-style: none;
     font-family: 'Montserrat', sans-serif;
-    z-index:1001;
-    display: flex;
-    justify-content: center;
+    /* z-index:1001; */
 }
+
 .test {
   background-color: rgb(255, 255, 255);
   color:black !important
