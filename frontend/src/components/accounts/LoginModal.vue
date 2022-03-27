@@ -173,12 +173,11 @@ export default {
  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
  * {
-     margin: auto !important;
+     margin: 0;
      padding: 0;
      box-sizing: border-box;
      font-family: 'Poppins', sans-serif;
      padding-left:8px;
-     z-index: 1051;
  }
 
  body {
