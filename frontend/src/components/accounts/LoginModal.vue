@@ -342,7 +342,7 @@ export default {
      left: 33%;
      color: #000;
      padding: 0 0.3rem;
-     z-index: 100;
+     z-index: 1050;
      border-radius: 2px;
      background-color: #fff
  }
