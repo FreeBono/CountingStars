@@ -5,6 +5,7 @@ module.exports = {
   lintOnSave: false,
   configureWebpack: {
     plugins: [new NodePolyfillPlugin()]
-  }
+  },
+  publicPath: ''
   
 }
