@@ -46,9 +46,9 @@ services:
     container_name: ipfs0
     image: ipfs/go-ipfs:latest
     ports:
-      - "4001:4001" # ipfs swarm - expose if needed/wanted
+      - "172.17.0.1:4001:4001" # ipfs swarm - expose if needed/wanted
       - "172.17.0.1:5001:5001" # ipfs api - expose if needed/wanted
-      - "8000:8000" # ipfs gateway - expose if needed/wanted
+      - "172.17.0.1:8000:8000" # ipfs gateway - expose if needed/wanted
     environment:
       - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
       - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/swarm.key
@@ -87,9 +87,9 @@ services:
     container_name: ipfs1
     image: ipfs/go-ipfs:latest
     ports:
-      - "4001:4001" # ipfs swarm - expose if needed/wanted
-      - "5001:5001" # ipfs api - expose if needed/wanted
-      - "8000:8000" # ipfs gateway - expose if needed/wanted
+      - "172.17.0.1:4002:4001" # ipfs swarm - expose if needed/wanted
+      - "172.17.0.1:5002:5001" # ipfs api - expose if needed/wanted
+      - "172.17.0.1:8001:8000" # ipfs gateway - expose if needed/wanted
     environment:
       - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
       - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/swarm.key
@@ -120,9 +120,9 @@ services:
     container_name: ipfs2
     image: ipfs/go-ipfs:latest
     ports:
-      - "4001:4001" # ipfs swarm - expose if needed/wanted
-      - "5001:5001" # ipfs api - expose if needed/wanted
-      - "8000:8000" # ipfs gateway - expose if needed/wanted
+      - "172.17.0.1:4003:4001" # ipfs swarm - expose if needed/wanted
+      - "172.17.0.1:5003:5001" # ipfs api - expose if needed/wanted
+      - "172.17.0.1:8002:8000" # ipfs gateway - expose if needed/wanted
     environment:
       - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
       - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/swarm.key
