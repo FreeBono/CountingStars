@@ -11,7 +11,7 @@
                   <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div>
               </div>
               <div class="my-3"> <span class="btn btn-primary" @click="login()">Login</span> </div>
-              <div class="mb-3"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
+              <div class="mb-3" style="margin-left: 13%"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">or connect with</span> </div>
           <div class="text-center py-3 connections"> 
@@ -319,7 +319,8 @@ export default {
      width: 100px;
      background-color: #fff;
      color: #333;
-     border: none
+     border: none;
+     margin-left : 36%;
  }
 
  .wrapper .card .btn.btn-primary:hover {
