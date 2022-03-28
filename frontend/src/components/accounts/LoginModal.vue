@@ -38,10 +38,10 @@
               </div> -->
               <!-- <input type="text" v-model="signupData.roles"> -->
               <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
-              <div class="mb-3"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
+              <div class="mb-3" style="margin-left: 19%"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
               
           </form>
-          <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
+          <div class="position-relative border-bottom my-3 line" style="margin-left: 4%"> <span class="connect">Easy Sign up</span> </div>
           <!-- <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div> -->
       </div>
   </div>
