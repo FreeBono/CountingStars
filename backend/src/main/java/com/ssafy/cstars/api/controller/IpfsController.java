@@ -47,7 +47,7 @@ public class IpfsController {
         for(int i = 0; i < ipAddress.length; i++) {
             try {
                 IPFS ipfs1 = new IPFS(ipAddress[i]);
-                System.out.println(ipAddress[i] + " ---------------------- 연결성공-------------------------------");
+                System.out.println(ipAddress[i] + " ---------------------- 연결성공 -------------------------------");
             } catch(Exception e) {}
         }
 
