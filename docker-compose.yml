@@ -47,7 +47,7 @@ services:
     image: ipfs/go-ipfs:latest
     ports:
       - "4001:4001" # ipfs swarm - expose if needed/wanted
-      - "5001:5001" # ipfs api - expose if needed/wanted
+      - "172.17.0.1:5001:5001" # ipfs api - expose if needed/wanted
       - "8000:8000" # ipfs gateway - expose if needed/wanted
     environment:
       - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화

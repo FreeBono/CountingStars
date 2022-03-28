@@ -20,57 +20,58 @@ public class IpfsServiceImpl implements IpfsService{
 
     @Override
     public IpfsRes addFileToIpfs(IpfsPostReq ipfsInfo, MultipartFile imageFile) throws IOException, ClassNotFoundException {
+        // ipfs 연결, docker ip4 주소와 연결
+        IPFS ipfs = new IPFS("/ip4/172.17.0.1/tcp/5001");
 
-        try {
-            // ipfs 연결, docker ip4 주소와 연결
-            IPFS ipfs = new IPFS("/ip4/172.17.0.1/tcp/5001");
+        // MultipartFile 이미지파일 -> 파일로 바꾸기
+        NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(IpfsUtil.multipartFileToFile(imageFile));
+        // ipfs 추가
+        MerkleNode addResult = ipfs.add(image).get(0);
+        // pin id 받기
+        String pinId = addResult.hash.toBase58();
+        System.out.println(pinId);
 
-            // MultipartFile 이미지파일 -> 파일로 바꾸기
-            NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(IpfsUtil.multipartFileToFile(imageFile));
-            // ipfs 추가
-            MerkleNode addResult = ipfs.add(image).get(0);
-            // pin id 받기
-            String pinId = addResult.hash.toBase58();
-            System.out.println(pinId);
+        // ipfs 이미지 pid 담기
+        ipfsInfo.setImage(pinId);
 
-            // ipfs 이미지 pid 담기
-            ipfsInfo.setImage(pinId);
+        // json 문자열로 바꾸기
+        Gson gson = new Gson();
+        String ipfsInfoGson = gson.toJson(ipfsInfo);
 
-            // json 문자열로 바꾸기
-            Gson gson = new Gson();
-            String ipfsInfoGson = gson.toJson(ipfsInfo);
-
-            // 객체를 byte[]로 바꿔서 파일 새로 만들기
-            NamedStreamable.ByteArrayWrapper file
-                    = new NamedStreamable.ByteArrayWrapper(ipfsInfo.getSerialNumber() + ".json", IpfsUtil.convertObjectToBytes(ipfsInfoGson));
-            // ipfs 추가
-            addResult = ipfs.add(file).get(0);
-            // pin id 받기
-            pinId = addResult.hash.toBase58();
-            System.out.println(pinId);
+        // 객체를 byte[]로 바꿔서 파일 새로 만들기
+        NamedStreamable.ByteArrayWrapper file
+                = new NamedStreamable.ByteArrayWrapper(ipfsInfo.getSerialNumber() + ".json", IpfsUtil.convertObjectToBytes(ipfsInfoGson));
+        // ipfs 추가
+        addResult = ipfs.add(file).get(0);
+        // pin id 받기
+        pinId = addResult.hash.toBase58();
+        System.out.println(pinId);
 
 //            // NFT 발행까지 해야 함.
 //            Web3j web3j = Web3j.build(new HttpService("https://rinkeby.infura.io/v3/1b71a03449674cfe98b98c4915a7cbc7"));
 
-            // -----------------------------get 테스트-------------------------------------------------------
+        // -----------------------------get 테스트-------------------------------------------------------
 
-            // ipfs에서 찾아오기
-            byte[] ipfsCat = ipfs.cat(Multihash.fromBase58(pinId));
-            // byte[] -> Object
-            Object ipfsObject = IpfsUtil.convertBytesToObject(ipfsCat);
-            // Object(Json String) -> IpfsRes
-            IpfsRes ipfsRes = gson.fromJson(ipfsObject.toString(), IpfsRes.class);
+        // ipfs에서 찾아오기
+        byte[] ipfsCat = ipfs.cat(Multihash.fromBase58(pinId));
+        // byte[] -> Object
+        Object ipfsObject = IpfsUtil.convertBytesToObject(ipfsCat);
+        // Object(Json String) -> IpfsRes
+        IpfsRes ipfsRes = gson.fromJson(ipfsObject.toString(), IpfsRes.class);
 
-            // 이미지 가져오기
-            ipfsCat = ipfs.cat(Multihash.fromBase58(ipfsRes.getImage()));
-            // byte[] -> base64 인코딩 -> image에 담기
-            ipfsRes.setImage( new Base64().encodeToString(ipfsCat) );
+        // 이미지 가져오기
+        ipfsCat = ipfs.cat(Multihash.fromBase58(ipfsRes.getImage()));
+        // byte[] -> base64 인코딩 -> image에 담기
+        ipfsRes.setImage( new Base64().encodeToString(ipfsCat) );
 
-            return ipfsRes;
-        }catch (Exception e) {
-            System.out.println("IPFS 발행 및 NFT 발행 에러");
-            return null;
-        }
+        return ipfsRes;
+
+//        try {
+//
+//        }catch (Exception e) {
+//            System.out.println("IPFS 발행 및 NFT 발행 에러");
+//            return null;
+//        }
     }
 
     @Override
