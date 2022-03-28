@@ -61,12 +61,12 @@ services:
     depends_on:
       - ipfs0
     environment:
-      IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
+      # IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
       CLUSTER_PEERNAME: cluster0
       CLUSTER_SECRET: ${CLUSTER0_SECRET} # From shell variable if set
       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs0/tcp/5001
       # CLUSTER_CRDT_TRUSTEDPEERS: '*' # Trust all peers in Cluster
-      # CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+      CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/172.17.0.1/tcp/9094 # Expose API
       CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
     ports:
           # Open API port (allows ipfs-cluster-ctl usage on host)
@@ -102,7 +102,7 @@ services:
     depends_on:
       - ipfs1
     environment:
-      IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
+      # IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
       CLUSTER_PEERNAME: cluster1
       CLUSTER_SECRET: ${CLUSTER1_SECRET}
       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs1/tcp/5001
@@ -135,7 +135,7 @@ services:
     depends_on:
       - ipfs2
     environment:
-      IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
+      # IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
       CLUSTER_PEERNAME: cluster2
       CLUSTER_SECRET: ${CLUSTER2_SECRET}
       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs2/tcp/5001
