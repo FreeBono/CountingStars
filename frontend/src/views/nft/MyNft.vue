@@ -105,11 +105,25 @@
 
                 <!-- 필터링 부분 -->
                 <div class="searchbarr mb-4">
-                  <b-form-select v-model="filters[0]" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" ></b-form-select>
-                  <b-form-select class="mx-2" v-model="filters[1]" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;"  ></b-form-select>
-                  <!-- <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select> -->
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 색상 소재를 입력하세요." v-model="filters[2]" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
-                  <b-button class="searchBtn mr-1" @click="goFilter()">검색</b-button>
+                  <!-- <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
+                  <b-form-select class="mx-2" v-model="categorySelected" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
+                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @chage="headerSel()" ></b-form-select> -->
+                  <select v-model="brandSelected" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" >
+                    <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
+                      {{ brandoption.text }}
+                    </option>
+
+                  </select>
+                  <select class="mx-2"  v-model="categorySelected"  style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" >
+                    <option value="null" selected>카테고리</option>
+                    <option value="Class Bag">Bag</option>
+                    <option value="accessory">Accessory</option>
+                    <!-- <option value="gucci">GUCCI</option> -->
+                    <!-- <option value="versace">VERSACE</option> -->
+                  </select>
+
+                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>
                 <!-- 필터링 부분 끝 -->
@@ -124,7 +138,49 @@
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;" >Detail</span>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span>
+                          <div>
+                            <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">상세보기</span>
+                            
+
+                            <!-- 디테일 모달!!! -->
+                            <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
+                              <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
+                                <b-card-header>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem;"></div>
+                                </b-card-header>
+                                <b-card-body style="max-width: 20rem;">
+                                  <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
+                                  <b-card-text>
+                                    <p style=" font-size: 0.9rem;" >nft name: {{ nftName }}</p>
+                                    <p >description : {{ description }}</p>
+                                    <!-- <p>serialNumber : {{ serialNumber }}</p> -->
+                                    <p style="margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">제조국가 : {{ madeCountry }}</p>
+                                    <!-- <p>색상 : {{ productColor }}</p> -->
+                                    <p style="margin: 0; font-size: 0.8rem;">가격 : {{ price }}</p>
+                                    <!-- <p>제조일 : {{ madeDate }}</p> -->
+                                  </b-card-text>
+                                </b-card-body>
+                                <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " >
+                                <!-- <hr> -->
+                                  <div style="width: 20rem;">
+                                    <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
+                                    <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
+                                  </div>
+                                </b-card-footer>
+                              </div>
+                              <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button>
+                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block >닫기</button>
+                              </div>
+                            </b-modal>
+                            <!-- 디테일 모달 끝 -->
+
+
+                          </div>
                         </figcaption>
                       </figure>
                     </div>
@@ -138,6 +194,10 @@
                         </figcaption>
                       </figure>
                     </div>
+
+                  
+
+
                   </div>
                 </div>
                 
@@ -220,6 +280,7 @@
 
 
 
+
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
@@ -232,7 +293,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
 import LookupNFTs from '@/utils/LookupNFT.js'
-import {ref, computed } from 'vue'
+import {ref, computed, } from 'vue'
 // import axios from 'axios'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
@@ -261,9 +322,8 @@ export default {
         )
     }
 
-    // 필터 부분
-    const src = ref([]) // 초기 nft를 저장할 배열
 
+    const word = ref("")
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -285,8 +345,6 @@ export default {
     }
     nfts.value = store.state.nftValues
 
-    // 필터 부분
-    src.value = nfts.value
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -405,6 +463,8 @@ export default {
     const searchSelected = ref(null)
 
 
+
+
       // filter 사용될 데이터들
     
     const filters = ref([null,null,null])
@@ -429,6 +489,10 @@ export default {
       ])
     
     
+    const searchOpt = ref([
+        { value: "name", text: 'nft이름' },
+        // { value: "type", text: '소재' },
+      ])
 
     // 동현 필터
     // const goFilter = () => {
@@ -460,6 +524,119 @@ export default {
 
     
     
+    const searchPaging = () => {
+      rowws.value = store.state.nftValues.length;
+    }
+
+    // 검색 초기화
+    const searchInit = () => {
+      categorySelected.value = null;
+      brandSelected.value = null;
+      word.value = "";
+      nfts.value = store.state.nftValues;
+    }
+
+
+    // 카테고리 셀렉
+    const headerSel = () => {
+      word.value ="";
+      console.log(store.state.nftValues,' 카테고리--작동 확인--')
+
+      if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+        if(brandSelected.value == null){ // 브랜드 선택을 안했을 때
+          console.log(categorySelected.value,' 브랜 안 선택 카테고리2')
+          console.log(brandSelected.value, '되나여기')
+          } else { // 브랜드 선택을 했을 때
+              nfts.value = store.state.nftValues.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+              console.log(nfts.value,' 브랜드선택 카테고리')
+              console.log(nft,'nft 뭐 찍히나 확인----')
+              console.log(nft.brandName,'nft.brandName 뭐 찍히나 확인----')
+              return nft.brandName.toLowerCase() == brandSelected.value.toLowerCase();
+            });
+          }
+      } else { // 카테고리 선택을 했을 때
+        if(brandSelected.value == null){ // 브랜드 선택이 안 되어 있을 때
+          nfts.value = store.state.nftValues.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+          console.log(nft.productClassification, '카노 - 브노 선택했을 때')
+            return nft.productClassification.toLowerCase() == categorySelected.value.toLowerCase();
+          });
+        } else{ // 브랜드 선택이 되어 있을 때
+          nfts.value = store.state.nftValues.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
+            return nft.productClassification.toLowerCase() == categorySelected.value.toLowerCase() && nft.brandName.toLowerCase() == brandSelected.value.toLowerCase();
+          });
+        }
+      }
+    }
+    
+    // 브랜드 선택
+    const brandSel = () => {
+      word.value ="";
+
+
+      if(brandSelected.value == null){ // 브랜드을 선택 안했을 때
+        if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+          console.log(brandSelected.value, '브랜드 선택 😆')
+          console.log(categorySelected.value, '브노 - 카노 브랜드 선택 😆')
+        } else{ // 카테고리 선택을 했을 때
+          nfts.value = store.state.nftValues.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+          console.log(nfts.value, 'brandSel 작동 확인')
+            return nft.productClassification.toLowerCase() == categorySelected.value.toLowerCase();
+          });
+        }
+      } else { // 브랜드 선택을 했을 때
+        if(categorySelected.value == null){ // 카테고리 선택이 안 되어 있을 때
+          nfts.value = store.state.nftValues.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+          console.log(nft, '브랜드 선택 했다, 브랜드 셀에서')
+
+            return nft.brandName.toLowerCase() == brandSelected.value.toLowerCase();
+          });
+        } else{ // 카테고리 선택이 되어 있을 때
+          console.log(brandSelected.value, '브 else -브')
+          console.log(categorySelected.value, '브 else -카')
+          nfts.value = store.state.nftValues.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
+            return nft.productClassification.toLowerCase() == categorySelected.value.toLowerCase() && nft.brandName.toLowerCase() == brandSelected.value.toLowerCase();
+          });
+        }
+      }
+    }
+
+    const searchTitle = () => {
+      nfts.value = nfts.value.filter((nft) => {
+        console.log(nft.name, '검색 확인')
+        return nft.name.toLowerCase().includes(word.value.toLowerCase())
+      })
+    }
+
+    const selectedBrandName = ref(null)
+    const selectBrandImg = ref(null)
+    const showDetailModal = ref(null)
+    const madeCountry = ref(null)
+    const madeDate = ref(null)
+    const description = ref(null)
+    const material = ref(null)
+    const nftName = ref(null)
+    const productType = ref(null)
+    const productColor = ref(null)
+    const price = ref(null)
+    const serialNumber = ref(null)
+
+    // 디테일 모달
+    const goDetailModal = (index) => {
+      console.log(index, '뭘까?')
+      console.log(index.brandName, '모달 함수 뭘까?')
+      showDetailModal.value = true;
+      selectedBrandName.value = index.brandName;
+      selectBrandImg.value = index.image;
+      madeCountry.value = index.countryOfManufacture
+      madeDate.value = index.dateOfManufacture
+      description.value = index.description
+      material.value = index.material
+      nftName.value = index.name
+      productType.value = index.productClassification
+      productColor.value = index.productColor
+      price.value = index.productPrice
+      serialNumber.value = index.serialNumber
+    }
 
     return {
       goMyNftDetail,
@@ -480,31 +657,42 @@ export default {
       copyToClickBoard,
       toast,
       testData,
-
       brandSelected,
       categorySelected,
       searchSelected,
       brandOpt,
       categoryOpt,
-
-      // src,
-      // word,
-      // str,
-      // searchTotal,
       searchInit,
-      // searchPaging,
-      // headerSel,
-      // brandSel,
-      // searchTitle,
-      filters,
-      goFilter,
-  
+      searchOpt,
+      word,
+      searchInit,
+      searchPaging,
+      headerSel,
+      brandSel,
+      searchTitle,
+      goDetailModal,
+      selectedBrandName,
+      showDetailModal,
+      selectBrandImg,
+      madeCountry,
+      madeDate,
+      description,
+      material,
+      nftName,
+      productType,
+      productColor,
+      price,
+      serialNumber,
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+
+.transeferBtn {
+  background-color: #2dce89;
+}
 
 // 필터링 부분
 .searchbarr {

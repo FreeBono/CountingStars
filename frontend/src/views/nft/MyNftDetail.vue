@@ -1,9 +1,9 @@
 <template>
-  <sidebar/>
   <!-- <h2>My NFT 상세보기</h2> -->
   <div class="wrapper">
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
+    <sidebar/>
       <div class="header">
         <p class="head_title">MY NFT</p>
       </div>
@@ -24,13 +24,6 @@
             <button type="button" class="btn backBtn mx-2" @click="goMyNft" style="width: 60px">목록</button>
           </div>
         </div>
-
-        <!-- 블록 이미지 부분 테두리 따기 -->
-          <div class="box_img">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
-          </div>
-        <!-- 블록 이미지 끝 -->
 
       </div>
     </div>

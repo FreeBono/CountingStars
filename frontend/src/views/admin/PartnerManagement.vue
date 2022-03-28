@@ -45,7 +45,7 @@
                               <!-- <span class="badge badge-dot mr-4">
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
-                              <span class="mb-0 text-sm"><img src="" alt="">{{ branditem.imageUrl }}</span>
+                              <span class="mb-0 text-sm"><img :src="branditem.imageUrl" alt="logoimg" style="width: 60px;"></span>
                               <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dior_Logo.svg/1200px-Dior_Logo.svg.png" alt=""> -->
                             </div>
                           </div>
