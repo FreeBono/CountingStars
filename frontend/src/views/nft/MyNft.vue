@@ -105,11 +105,11 @@
 
                 <!-- 필터링 부분 -->
                 <div class="searchbarr mb-4">
-                  <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
-                  <b-form-select class="mx-2" v-model="categorySelected" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
-                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 색상 소재를 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
-                  <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
+                  <b-form-select v-model="filters[0]" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" ></b-form-select>
+                  <b-form-select class="mx-2" v-model="filters[1]" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;"  ></b-form-select>
+                  <!-- <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select> -->
+                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 색상 소재를 입력하세요." v-model="filters[2]" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-button class="searchBtn mr-1" @click="goFilter()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>
                 <!-- 필터링 부분 끝 -->
@@ -385,199 +385,221 @@ export default {
     // 필터 부분
     const brandSelected = ref(null)
     const categorySelected = ref(null)
-    const searchSelected = ref("color")
+    const searchSelected = ref(null)
 
 
       // filter 사용될 데이터들
     
+    const filters = ref([null,null,null])
+  
+
+    const brandOpt = ref([ { value: null, text: '브랜드' }])
     api.get('/brand')
-    .then(res => console.log(res))
+    .then(res => res.data.content.forEach( e => {
+      brandOpt.value.push({value:e.name.toLowerCase(),text: e.name})
+    
+    }))
     .catch(err => console.log(err))
-    const brandOpt = ref([
-        { value: null, text: '브랜드' },
-        { value: 'Chanel', text: 'CHANEL' },
-        { value: 'cartier', text: 'CARTIER' },
-        { value: 'louis vuitton', text: 'LOUIS VUITTON' },
-        { value: 'gucci', text: 'GUCCI' },
-        { value: 'versace', text: 'VERSACE' },
-        { value: 'fendi', text: 'FENDI' },
-        { value: 'prada', text: 'PRADA' },
-        // { value: true, text: '기타' },
-      ])
+
     
     const categoryOpt = ref([
         { value: null, text: '카테고리' },
-        { value: 'bag', text: 'BAG' },
-        // { value: true, text: '지갑' },
-        // { value: true, text: '의류' },
-        // { value: true, text: '악세사리' },
-        // { value: true, text: '기타' },
+        { value: 'Class Bag', text: 'BAG' },
+        { value: 'wallet', text: '지갑' },
+        { value: true, text: '의류' },
+        { value: 'accessories', text: '악세사리' },
+        { value: true, text: '기타' },
       ])
     
-    const searchOpt = ref([
-        { value: "color", text: '색상' },
-        { value: "type", text: '소재' },
-      ])
+    
+    const goFilter = () => {
+      console.log('엥실행')
+      console.log('brandselected : ', filters.value[0])
+      if (filters.value[0] != null) {
+        console.log('엥실행2')
+        nfts.value = nfts.value.filter( e => {
+          
+          return e.brandName.toLowerCase() == filters.value[0].toLowerCase()
+          
+        })
+      }
 
-    // const src = ref([]) // 초기 nft를 저장할 배열
-    const word = ref("")
-    const str = ref(null)
-    const rowws = ref(null)
-    // const nftLists = ref(store.state.searchednft)
-    console.log(nfts.value, '😀리스트 확인😀')
+      if (filters.value[1] != null) {
+        console.log('엥실행3')
+        nfts.value = nfts.value.filter( e => {
+          return e.productClassification == filters.value[1]
+        })
+      }
+
+      if (filters.value[2] != null ) {
+        nfts.value = nfts.value.filter( e => {
+          return e.name.toLowerCase().includes(filters.value[2].toLowerCase())
+        })
+      }
+      console.log(nfts.value)
+    }
+
+    //슬기 필터
+    // // const src = ref([]) // 초기 nft를 저장할 배열
+    // const word = ref("")
+    // const str = ref(null)
+    // const rowws = ref(null)
+    // // const nftLists = ref(store.state.searchednft)
+    // console.log(nfts.value, '😀리스트 확인😀')
 
 
-    const searchPaging = () => {
-      rowws.value = store.state.nftValues.length;
-    //   if (store.state.nftValues.length === 0) {
-    //   LookupNFTs()
+    // const np = () => {
+    //   rowws.value = store.state.nftValues.length;
+    // //   if (store.state.nftValues.length === 0) {
+    // //   LookupNFTs()
+    // // }
+    //   // currentPage = 1
+    //   // router.go()
+    //   console.log(store.state.nftValues.length, 'nfts.value.length')
+    //   console.log(rowws.value, 'serchpaging')
     // }
-      // currentPage = 1
-      // router.go()
-      console.log(store.state.nftValues.length, 'nfts.value.length')
-      console.log(rowws.value, 'serchpaging')
-    }
 
-    // 검색 초기화
+    // // 검색 초기화
     const searchInit = () => {
-      categorySelected.value = null;
-      brandSelected.value = null;
-      word.value = "";
-      nfts.value = src.value;
+      filters.value = [null,null,null]
+      // word.value = "";
+      nfts.value = store.state.nftValues;
       // this.searchPaging();
-      searchPaging()
+      // searchPaging()
       // router.go()
     }
 
-    // 전체 검색
-    const searchTotal = () => {
-      nfts.value = src.value;
-      console.log(nfts.value, 'searchTotal')
-      console.log(src.value, 'srccccccccccccccccc')
-      // this.searchPaging();
-      searchPaging()
-      // console.log(searchPaging, '여기 작동하나?')
-    }
+    // // 전체 검색
+    // const searchTotal = () => {
+    //   nfts.value = src.value;
+    //   console.log(nfts.value, 'searchTotal')
+    //   console.log(src.value, 'srccccccccccccccccc')
+    //   // this.searchPaging();
+    //   searchPaging()
+    //   // console.log(searchPaging, '여기 작동하나?')
+    // }
 
-    // 카테고리 셀렉
-    const headerSel = () => {
-      word.value ="";
-      console.log(nfts.value,' headerSel----작동 확인----')
-
-      if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
-        if(brandSelected.value == null){ //  선택을 안했을 때
-        console.log(categorySelected.value,' headerSel----작동 확인----')
-        console.log(brandSelected.value, '되나여기')
-          searchTotal(); // 전체 목록 불러오기
-        } else{ // 브랜드 선택을 했을 때
-            nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
-            console.log(nfts.value,' headerSel----작동 확인----')
-            return nft.brandName == brandSelected.value;
-          });
-          // searchPaging();
-        }
-      } else{ // 카테고리 선택을 했을 때
-        if(brandSelected.value == null){ // 브랜드 선택이 안 되어 있을 때
-          nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
-          console.log(nft.productClassification, '선택했을 때')
-            return nft.productClassification == categorySelected.value;
-          });
-          // this.searchPaging();
-        } else{ // 브랜드 선택이 되어 있을 때
-          nfts.value = src.value.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
-            return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
-          });
-          // this.searchPaging();
-        }
-      }
-    }
+    // // 카테고리 셀렉
+    // const headerSel = () => {
+    //   word.value ="";
+    //   console.log(nfts.value,' headerSel----작동 확인----')
+    //   console.log('카테고리 선택 값 : ' ,categorySelected.value)
+      
+    //   if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+    //     if(brandSelected.value == null){ //  선택을 안했을 때
+    //     console.log(categorySelected.value,' headerSel----작동 확인----')
+    //     console.log(brandSelected.value, '되나여기')
+    //       searchTotal(); // 전체 목록 불러오기
+    //     } else{ // 브랜드 선택을 했을 때
+    //         nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+    //         console.log(nfts.value,' headerSel----작동 확인----')
+    //         return nft.brandName == brandSelected.value;
+    //       });
+    //       // searchPaging();
+    //     }
+    //   } else{ // 카테고리 선택을 했을 때
+    //     if(brandSelected.value == null){ // 브랜드 선택이 안 되어 있을 때
+    //       console.log('들어ㅓ왓어요---------------------------------------')
+    //       nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+    //       console.log(nft.productClassification, '선택했을 때')
+    //         return nft.productClassification == categorySelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     } else{ // 브랜드 선택이 되어 있을 때
+    //       nfts.value = src.value.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
+    //         return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     }
+    //   }
+    // }
     
-    // 브랜드 선택
-    const brandSel = () => {
-      word.value ="";
-      console.log(nfts.value, 'brandSel 확인')
+    // // 브랜드 선택
+    // const brandSel = () => {
+    //   word.value ="";
+    //   console.log(nfts.value, 'brandSel 확인')
 
-      if(brandSelected.value == null){ // 브랜드을 선택 안했을 때
-        if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
-          searchTotal(); // 전체 목록 불러오기
-        } else{ // 카테고리 선택을 했을 때
-          nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
-          console.log(nfts.value, 'brandSel 작동 확인')
-            return nft.productClassification == categorySelected.value;
-          });
-          // this.searchPaging();
-        }
-      } else{ // 브랜드 선택을 했을 때
-        if(categorySelected.value == null){ // 카테고리 선택이 안 되어 있을 때
-          nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
-            return nft.brandName == brandSelected.value;
-          });
-          // this.searchPaging();
-        } else{ // 카테고리 선택이 되어 있을 때
-          nfts.value = src.value.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
-            return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
-          });
-          // this.searchPaging();
-        }
-      }
-    }
+    //   if(brandSelected.value == null){ // 브랜드을 선택 안했을 때
+    //     if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+    //       searchTotal(); // 전체 목록 불러오기
+    //     } else{ // 카테고리 선택을 했을 때
+    //       nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+    //       console.log(nfts.value, 'brandSel 작동 확인')
+    //         return nft.productClassification == categorySelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     }
+    //   } else{ // 브랜드 선택을 했을 때
+    //     if(categorySelected.value == null){ // 카테고리 선택이 안 되어 있을 때
+    //       nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+    //         return nft.brandName == brandSelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     } else{ // 카테고리 선택이 되어 있을 때
+    //       nfts.value = src.value.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
+    //         return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     }
+    //   }
+    // }
 
-    const searchTitle = () => {
-      if(searchSelected.value == "color"){ // 색상이 선택 되었을 때
-        if (word.value == "") { // 아무 것도 입력 되지 않았을 때
-          alert("내용을 입력해주세요.")
-        } else {
-          if(categorySelected.value == null && brandSelected.value == null){
-              nfts.value = src.value.filter((nft) => {
-                if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
-                  return nft
-                }
-              });
-              // this.searchPaging();
-          }else{
-            nfts.value = src.value.filter((nft) => {
-              if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
-                if(categorySelected.value != null && nft.brandName != null){ 
-                  return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
-                }
-                else if(categorySelected.value != null){
-                  return nft.productClassification == categorySelected.value
-                }
-                else if(brandSelected.value != null){
-                  return nft.brandName == brandSelected.value
-                }
-              }
-            });
-            // this.searchPaging();
-          }
-        }
-      }else if(searchSelected.value == "type"){ // 분류가 선택 되었을 때
-        if (word.value == "") { // 아무 것도 입력 되지 않았을 때
-          alert("소재를 입력해주세요.")
-        } else {
-          if(categorySelected.value == null && brandSelected.value == null){
-            nfts.value = src.value.filter((nft) => {
-              if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
-                return nft
-              }
-            });
-            // this.searchPaging();  
-          }else{
-            nfts.value = src.value.filter((nft) => {
-              if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
-                if(categorySelected.value != null && brandSelected.value != null) 
-                  return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
-                else if(categorySelected.value != null)
-                  return nft.productClassification == categorySelected.value
-                else if(brandSelected.value != null)
-                  return nft.brandName == brandSelected.value
-              }
-            });
-            // this.searchPaging();
-          }
-        }
-      }
-    }
+    // const searchTitle = () => {
+    //   if(searchSelected.value == "color"){ // 색상이 선택 되었을 때
+    //     if (word.value == "") { // 아무 것도 입력 되지 않았을 때
+    //       alert("내용을 입력해주세요.")
+    //     } else {
+    //       if(categorySelected.value == null && brandSelected.value == null){
+    //           nfts.value = src.value.filter((nft) => {
+    //             if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
+    //               return nft
+    //             }
+    //           });
+    //           // this.searchPaging();
+    //       }else{
+    //         nfts.value = src.value.filter((nft) => {
+    //           if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
+    //             if(categorySelected.value != null && nft.brandName != null){ 
+    //               return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
+    //             }
+    //             else if(categorySelected.value != null){
+    //               return nft.productClassification == categorySelected.value
+    //             }
+    //             else if(brandSelected.value != null){
+    //               return nft.brandName == brandSelected.value
+    //             }
+    //           }
+    //         });
+    //         // this.searchPaging();
+    //       }
+    //     }
+    //   }else if(searchSelected.value == "type"){ // 분류가 선택 되었을 때
+    //     if (word.value == "") { // 아무 것도 입력 되지 않았을 때
+    //       alert("소재를 입력해주세요.")
+    //     } else {
+    //       if(categorySelected.value == null && brandSelected.value == null){
+    //         nfts.value = src.value.filter((nft) => {
+    //           if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
+    //             return nft
+    //           }
+    //         });
+    //         // this.searchPaging();  
+    //       }else{
+    //         nfts.value = src.value.filter((nft) => {
+    //           if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
+    //             if(categorySelected.value != null && brandSelected.value != null) 
+    //               return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
+    //             else if(categorySelected.value != null)
+    //               return nft.productClassification == categorySelected.value
+    //             else if(brandSelected.value != null)
+    //               return nft.brandName == brandSelected.value
+    //           }
+    //         });
+    //         // this.searchPaging();
+    //       }
+    //     }
+    //   }
+    // }
 
     return {
       goMyNftDetail,
@@ -604,16 +626,19 @@ export default {
       searchSelected,
       brandOpt,
       categoryOpt,
-      searchOpt,
-      src,
-      word,
-      str,
-      searchTotal,
+
+      // src,
+      // word,
+      // str,
+      // searchTotal,
       searchInit,
-      searchPaging,
-      headerSel,
-      brandSel,
-      searchTitle,
+      // searchPaging,
+      // headerSel,
+      // brandSel,
+      // searchTitle,
+      filters,
+      goFilter,
+  
     }
   },
 }

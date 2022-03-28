@@ -226,6 +226,7 @@ import LoginModal from "../components/accounts/LoginModal.vue"
 import testt from '@/services/testt'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+
 export default {
   name : "Mainpage",
   components: {
