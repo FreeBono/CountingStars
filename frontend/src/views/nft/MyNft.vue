@@ -105,10 +105,24 @@
 
                 <!-- 필터링 부분 -->
                 <div class="searchbarr mb-4">
-                  <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
+                  <!-- <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
                   <b-form-select class="mx-2" v-model="categorySelected" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
-                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 색상 소재를 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @chage="headerSel()" ></b-form-select> -->
+                  <select v-model="brandSelected" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" >
+                    <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
+                      {{ brandoption.text }}
+                    </option>
+
+                  </select>
+                  <select class="mx-2"  v-model="categorySelected"  style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" >
+                    <option value="null" selected>카테고리</option>
+                    <option value="Class Bag">Bag</option>
+                    <option value="accessory">Accessory</option>
+                    <!-- <option value="gucci">GUCCI</option> -->
+                    <!-- <option value="versace">VERSACE</option> -->
+                  </select>
+
+                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
                   <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>
@@ -260,7 +274,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
 import LookupNFTs from '@/utils/LookupNFT.js'
-import {ref, computed } from 'vue'
+import {ref, computed, } from 'vue'
 // import axios from 'axios'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
@@ -286,8 +300,7 @@ export default {
         )
     }
 
-    // 필터 부분
-    const src = ref([]) // 초기 nft를 저장할 배열
+
 
     const store = useStore()
     const router = useRouter()
@@ -310,8 +323,6 @@ export default {
     }
     nfts.value = store.state.nftValues
 
-    // 필터 부분
-    src.value = nfts.value
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -394,18 +405,17 @@ export default {
     const searchSelected = ref("color")
 
 
+
+
       // filter 사용될 데이터들
-    const brandOpt = ref([
-        { value: null, text: '브랜드' },
-        { value: 'Chanel', text: 'CHANEL' },
-        { value: 'cartier', text: 'CARTIER' },
-        { value: 'louis vuitton', text: 'LOUIS VUITTON' },
-        { value: 'gucci', text: 'GUCCI' },
-        { value: 'versace', text: 'VERSACE' },
-        { value: 'fendi', text: 'FENDI' },
-        { value: 'prada', text: 'PRADA' },
-        // { value: true, text: '기타' },
-      ])
+    const brandOpt = ref([ { value: null, text: '브랜드' }])
+    api.get('/brand')
+    .then(res => res.data.content.forEach( e => {
+      brandOpt.value.push({value:e.name.toLowerCase(),text: e.name})
+    
+    }))
+    .catch(err => console.log(err))
+
     
     const categoryOpt = ref([
         { value: null, text: '카테고리' },
@@ -417,8 +427,8 @@ export default {
       ])
     
     const searchOpt = ref([
-        { value: "color", text: '색상' },
-        { value: "type", text: '소재' },
+        { value: "name", text: 'nft이름' },
+        // { value: "type", text: '소재' },
       ])
 
     // const src = ref([]) // 초기 nft를 저장할 배열
@@ -431,13 +441,6 @@ export default {
 
     const searchPaging = () => {
       rowws.value = store.state.nftValues.length;
-    //   if (store.state.nftValues.length === 0) {
-    //   LookupNFTs()
-    // }
-      // currentPage = 1
-      // router.go()
-      console.log(store.state.nftValues.length, 'nfts.value.length')
-      console.log(rowws.value, 'serchpaging')
     }
 
     // 검색 초기화
@@ -445,51 +448,37 @@ export default {
       categorySelected.value = null;
       brandSelected.value = null;
       word.value = "";
-      nfts.value = src.value;
-      // this.searchPaging();
-      searchPaging()
-      // router.go()
+      nfts.value = store.state.nftValues;
     }
 
-    // 전체 검색
-    const searchTotal = () => {
-      nfts.value = src.value;
-      console.log(nfts.value, 'searchTotal')
-      console.log(src.value, 'srccccccccccccccccc')
-      // this.searchPaging();
-      searchPaging()
-      // console.log(searchPaging, '여기 작동하나?')
-    }
 
     // 카테고리 셀렉
     const headerSel = () => {
       word.value ="";
-      console.log(nfts.value,' headerSel----작동 확인----')
+      console.log(store.state.nftValues,' 카테고리--작동 확인--')
 
       if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
-        if(brandSelected.value == null){ //  선택을 안했을 때
-        console.log(categorySelected.value,' headerSel----작동 확인----')
-        console.log(brandSelected.value, '되나여기')
-          searchTotal(); // 전체 목록 불러오기
-        } else{ // 브랜드 선택을 했을 때
-            nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
-            console.log(nfts.value,' headerSel----작동 확인----')
-            return nft.brandName == brandSelected.value;
-          });
-          // searchPaging();
-        }
-      } else{ // 카테고리 선택을 했을 때
+        if(brandSelected.value == null){ // 브랜드 선택을 안했을 때
+          console.log(categorySelected.value,' 브랜 안 선택 카테고리2')
+          console.log(brandSelected.value, '되나여기')
+          } else { // 브랜드 선택을 했을 때
+              nfts.value = store.state.nftValues.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+              console.log(nfts.value,' 브랜드선택 카테고리')
+              console.log(nft,'nft 뭐 찍히나 확인----')
+              console.log(nft.brandName,'nft.brandName 뭐 찍히나 확인----')
+              return nft.brandName == brandSelected.value;
+            });
+          }
+      } else { // 카테고리 선택을 했을 때
         if(brandSelected.value == null){ // 브랜드 선택이 안 되어 있을 때
-          nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
-          console.log(nft.productClassification, '선택했을 때')
+          nfts.value = store.state.nftValues.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+          console.log(nft.productClassification, '카노 - 브노 선택했을 때')
             return nft.productClassification == categorySelected.value;
           });
-          // this.searchPaging();
         } else{ // 브랜드 선택이 되어 있을 때
-          nfts.value = src.value.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
+          nfts.value = store.state.nftValues.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
             return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
           });
-          // this.searchPaging();
         }
       }
     }
@@ -497,89 +486,42 @@ export default {
     // 브랜드 선택
     const brandSel = () => {
       word.value ="";
-      console.log(nfts.value, 'brandSel 확인')
+
 
       if(brandSelected.value == null){ // 브랜드을 선택 안했을 때
         if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
-          searchTotal(); // 전체 목록 불러오기
+          console.log(brandSelected.value, '브랜드 선택 😆')
+          console.log(categorySelected.value, '브노 - 카노 브랜드 선택 😆')
         } else{ // 카테고리 선택을 했을 때
-          nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+          nfts.value = store.state.nftValues.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
           console.log(nfts.value, 'brandSel 작동 확인')
             return nft.productClassification == categorySelected.value;
           });
-          // this.searchPaging();
         }
-      } else{ // 브랜드 선택을 했을 때
+      } else { // 브랜드 선택을 했을 때
         if(categorySelected.value == null){ // 카테고리 선택이 안 되어 있을 때
-          nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+          nfts.value = store.state.nftValues.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+          console.log(nft, '브랜드 선택 했다, 브랜드 셀에서')
+
             return nft.brandName == brandSelected.value;
           });
-          // this.searchPaging();
         } else{ // 카테고리 선택이 되어 있을 때
-          nfts.value = src.value.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
+          console.log(brandSelected.value, '브 else -브')
+          console.log(categorySelected.value, '브 else -카')
+          nfts.value = store.state.nftValues.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
             return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
           });
-          // this.searchPaging();
         }
       }
     }
 
     const searchTitle = () => {
-      if(searchSelected.value == "color"){ // 색상이 선택 되었을 때
-        if (word.value == "") { // 아무 것도 입력 되지 않았을 때
-          alert("내용을 입력해주세요.")
-        } else {
-          if(categorySelected.value == null && brandSelected.value == null){
-              nfts.value = src.value.filter((nft) => {
-                if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
-                  return nft
-                }
-              });
-              // this.searchPaging();
-          }else{
-            nfts.value = src.value.filter((nft) => {
-              if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
-                if(categorySelected.value != null && nft.brandName != null){ 
-                  return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
-                }
-                else if(categorySelected.value != null){
-                  return nft.productClassification == categorySelected.value
-                }
-                else if(brandSelected.value != null){
-                  return nft.brandName == brandSelected.value
-                }
-              }
-            });
-            // this.searchPaging();
-          }
-        }
-      }else if(searchSelected.value == "type"){ // 분류가 선택 되었을 때
-        if (word.value == "") { // 아무 것도 입력 되지 않았을 때
-          alert("소재를 입력해주세요.")
-        } else {
-          if(categorySelected.value == null && brandSelected.value == null){
-            nfts.value = src.value.filter((nft) => {
-              if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
-                return nft
-              }
-            });
-            // this.searchPaging();  
-          }else{
-            nfts.value = src.value.filter((nft) => {
-              if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
-                if(categorySelected.value != null && brandSelected.value != null) 
-                  return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
-                else if(categorySelected.value != null)
-                  return nft.productClassification == categorySelected.value
-                else if(brandSelected.value != null)
-                  return nft.brandName == brandSelected.value
-              }
-            });
-            // this.searchPaging();
-          }
-        }
-      }
+      nfts.value = nfts.value.filter((nft) => {
+        console.log(nft.name, '검색 확인')
+        return nft.name.toLowerCase().includes(word.value.toLowerCase())
+      })
     }
+
     const selectedBrandName = ref(null)
     const selectBrandImg = ref(null)
     const showDetailModal = ref(null)
@@ -636,10 +578,8 @@ export default {
       brandOpt,
       categoryOpt,
       searchOpt,
-      src,
       word,
       str,
-      searchTotal,
       searchInit,
       searchPaging,
       headerSel,
