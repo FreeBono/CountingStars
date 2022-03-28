@@ -50,7 +50,7 @@ services:
       - "172.17.0.1:5001:5001" # ipfs api - expose if needed/wanted
       - "172.17.0.1:8000:8000" # ipfs gateway - expose if needed/wanted
     environment:
-      - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
+      # - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
       - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/swarm.key
     volumes:
       - /home/ubuntu/docker-volume/compose/ipfs0:/data/ipfs
@@ -91,7 +91,7 @@ services:
       - "172.17.0.1:5002:5001" # ipfs api - expose if needed/wanted
       - "172.17.0.1:8001:8000" # ipfs gateway - expose if needed/wanted
     environment:
-      - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
+      # - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
       - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/swarm.key
     volumes:
       - /home/ubuntu/docker-volume/compose/ipfs1:/data/ipfs
@@ -124,7 +124,7 @@ services:
       - "172.17.0.1:5003:5001" # ipfs api - expose if needed/wanted
       - "172.17.0.1:8002:8000" # ipfs gateway - expose if needed/wanted
     environment:
-      - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
+      # - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
       - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/swarm.key
     volumes:
       - /home/ubuntu/docker-volume/compose/ipfs2:/data/ipfs
