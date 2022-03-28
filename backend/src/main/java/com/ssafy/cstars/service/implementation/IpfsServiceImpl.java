@@ -23,7 +23,7 @@ public class IpfsServiceImpl implements IpfsService{
 
         try {
             // ipfs 연결, docker ip4 주소와 연결
-            IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+            IPFS ipfs = new IPFS("/ip4/172.17.0.1/tcp/5001");
 
             // MultipartFile 이미지파일 -> 파일로 바꾸기
             NamedStreamable.FileWrapper image = new NamedStreamable.FileWrapper(IpfsUtil.multipartFileToFile(imageFile));
@@ -77,7 +77,7 @@ public class IpfsServiceImpl implements IpfsService{
     public IpfsRes getMetadataFromCid(String cid) {
         try {
             // ipfs 연결, docker ip4 주소와 연결
-            IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+            IPFS ipfs = new IPFS("/ip4/172.17.0.1/tcp/5001");
 
             Gson gson = new Gson();
             // ipfs에서 찾아오기
