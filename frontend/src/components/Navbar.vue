@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="container-fluid" id="container1">
     <nav class="navbar navbar-expand-lg navbar-light mb-5">
         <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
@@ -35,6 +36,7 @@
         </div>
       </div>
     </div>
+</div>
 </template>
 
 <script>
