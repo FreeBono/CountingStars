@@ -47,7 +47,7 @@
     <p id="small-title" style="margin-top:80px; margin-right: 70px; margin-bottom : 100px;" align="right">EXPERIENCE</p>
     <p id="common-title" style="margin-bottom: 50px;">명품 시장에 가져 올 긍정적인 효과</p>
     
-    <div class="container">
+    <div class="container" >
       <div class="row" style="justify-content: center;">
         <div class="col-5 mr-2" align="justify">
           Counting Stars의 기획 배경은 파트너사들과의 협력이 명품시장의 발전으로 이어져 나갈 수 있다는 비전에서 탄생했습니다. 명품을 구매하는 고객의 구매 경험을 개선하기 위해 신뢰할 수 있고 지속 가능한 새로운 가치를 만들어 낼 수 있는 서비스를 제공합니다

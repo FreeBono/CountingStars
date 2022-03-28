@@ -14,12 +14,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div>TOTAL NFTS</div>
-                    <div align="left">{{nfts.length}}</div>
+                  <div class="media-body" style="float:left; margin-top:20px; text-align:left" >  
+                    <div >TOTAL NFTS</div>
+                    <div >{{nfts.length}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -29,14 +29,14 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden; ">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div style="txt-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet}}</div>
+                  <div class="media-body" style="float:left; margin-top:18px;">  
+                    <div style="text-align:left;">MAIN WALLET ADDRESS</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div>
                     <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
                     <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x" style="color:gold;"></i>
+                    <i class="fas fa-wallet fa-3x" style="color: #9d6510;"></i>
                   </div>    
                 </div>
               </div>
@@ -46,12 +46,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
+                  <div class="media-body" style="float:left; margin-top:15px; text-align:left;">  
                     <div>TOTAL WORTH</div>
                     <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -61,12 +61,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
+                  <div class="media-body" style="float:left; margin-top:15px; text-align:left;">  
                     <div>HIGHEST PRICE</div>
                     <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -176,11 +176,12 @@
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
-                <div class="row" >
-                  <div align="left" >메인 지갑 설정</div>
+                <div align="left" >메인 지갑 설정</div>
+                <div class="row" style="" >
+                  
                   <!-- <hr style="margin:15px 0;"> -->
                   <!-- <div>현재 지갑 주소 </div> -->
-                  <DoughnutChart :chartData="testData" style="width:700px;"/>
+                  <DoughnutChart :chartData="testData" style="width:100%; "/>
                   
                 </div>
              
@@ -371,16 +372,32 @@ export default {
     
     //테스트 도넛
     // store.state.nftValues 에 나중에 더미 정상적으로 작동하면 사용
-     const testData = {
-      labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
+    
+    const testData = {
+      labels: ['chanel', 'louis vuitton', 'gucci', 'cartier', 'versace','fendi'],
       datasets: [
         {
-          data: [30, 40, 60, 70, 5],
+          data: [0, 0, 0, 0, 0],
           backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
         },
       ],
     };
 
+    nfts.value.forEach( e =>{
+      if (e.brandName.toLowerCase() == 'chanel') {
+        testData.datasets[0].data[0] += 1
+      } else if (e.brandName.toLowerCase() == 'louis vuitton') {
+        testData.datasets[0].data[1] += 1
+      } else if (e.brandName.toLowerCase() == 'gucci') {
+        testData.datasets[0].data[2] += 1
+      } else if (e.brandName.toLowerCase() == 'cartier') {
+        testData.datasets[0].data[3] += 1
+      } else if (e.brandName.toLowerCase() == 'versace') {
+        testData.datasets[0].data[4] += 1
+      } else if (e.brandName.toLowerCase() == 'fendi') {
+        testData.datasets[0].data[5] += 1
+      }
+    })
     
     // 필터 부분
     const brandSelected = ref(null)
