@@ -31,7 +31,7 @@
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:15px;">  
                     <div style="txt-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,8) + '...' + myWallet.substring(34,42)}}</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet}}</div>
                     <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
                     <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
@@ -96,11 +96,25 @@
           </div>
         </div> -->
         
-  
+        <!-- NFT목록 -->
         <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
+
+
+                <!-- 필터링 부분 -->
+                <div class="searchbarr mb-4">
+                  <b-form-select v-model="filters[0]" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" ></b-form-select>
+                  <b-form-select class="mx-2" v-model="filters[1]" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;"  ></b-form-select>
+                  <!-- <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select> -->
+                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 색상 소재를 입력하세요." v-model="filters[2]" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-button class="searchBtn mr-1" @click="goFilter()">검색</b-button>
+                  <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
+                </div>
+                <!-- 필터링 부분 끝 -->
+
+
                 <div class="row" >
                   <div align="left" >NFT 목록</div>
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
@@ -131,6 +145,7 @@
           </div>
         </div>
 
+        <!-- 메인 지갑 설정 -->
         <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px; min-height:300px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
@@ -152,6 +167,23 @@
               <div align="right" style="margin-right:25px;">
                 <button style="width:80px; margin-top:25px; background-color: #2dce89; border:0px; border-radius:5px; height:40px;" @click="sendWalletInfo">확인</button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 도넛 차트 -->
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 610px; left:47%; width : 41%;min-width:650px; min-height:300px;">
+          <div  class="container-fluid">
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div align="left" >메인 지갑 설정</div>
+                  <!-- <hr style="margin:15px 0;"> -->
+                  <!-- <div>현재 지갑 주소 </div> -->
+                  <DoughnutChart :chartData="testData" style="width:700px;"/>
+                  
+                </div>
+             
             </div>
           </div>
         </div>
@@ -187,8 +219,6 @@
 
 
 
-
-
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
@@ -208,6 +238,10 @@ import TransferToken from '@/utils/TransferNFT.js'
 import checkAccount from '@/utils/CheckMainWallet.js'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+import { DoughnutChart, } from 'vue-chart-3';
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
+
 
 
 
@@ -215,6 +249,7 @@ export default {
   name: 'NftTransfer',
   components: {
     Sidebar,
+    DoughnutChart,
   },
   setup() {
     const toast = () => {
@@ -224,6 +259,10 @@ export default {
         { type:'success', showIcon:true, position:'bottom-right', }
         )
     }
+
+    // 필터 부분
+    const src = ref([]) // 초기 nft를 저장할 배열
+
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -236,7 +275,7 @@ export default {
       alert('전송 되었습니다.')
       // 전송되면 내 목록에서 삭제 되야 함
     }
-
+    // nft 디테일로 가기
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
     }
@@ -245,6 +284,8 @@ export default {
     }
     nfts.value = store.state.nftValues
 
+    // 필터 부분
+    src.value = nfts.value
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -269,7 +310,14 @@ export default {
       })
 
     // 메인 지갑 설정
-    const myWallet = ref(store.state.auth.user.address)
+    const myWallet = ref('')
+    if (store.state.userInfo.address) {
+      myWallet.value = store.state.userInfo.address
+      return
+    } else if (store.state.walletInfo) {
+      myWallet.value = store.state.walletInfo
+    }
+    // const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
     const privatekey = ref('')
 
@@ -279,7 +327,7 @@ export default {
           
           console.log(store.state.auth.user.id, walletAddress.value)
           api.put("/user", {
-             userId : store.state.auth.user.id, wallet : walletAddress.value 
+            userId : store.state.auth.user.id, wallet : walletAddress.value 
           })
           .then(res => {
             console.log(res)
@@ -287,8 +335,9 @@ export default {
           .catch(err => {
             console.log(err)
           })
-
-          store.state.auth.user.address = res.adderss
+          console.log(res.address)
+          store.dispatch("setWallet",res.address)
+          myWallet.value = store.state.walletInfo
           createToast(
             { title: 'Mainwallet is registered',  },
             // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
@@ -319,6 +368,239 @@ export default {
   
       }
 
+    
+    //테스트 도넛
+    // store.state.nftValues 에 나중에 더미 정상적으로 작동하면 사용
+     const testData = {
+      labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
+      datasets: [
+        {
+          data: [30, 40, 60, 70, 5],
+          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+        },
+      ],
+    };
+
+    
+    // 필터 부분
+    const brandSelected = ref(null)
+    const categorySelected = ref(null)
+    const searchSelected = ref(null)
+
+
+      // filter 사용될 데이터들
+    
+    const filters = ref([null,null,null])
+  
+
+    const brandOpt = ref([ { value: null, text: '브랜드' }])
+    api.get('/brand')
+    .then(res => res.data.content.forEach( e => {
+      brandOpt.value.push({value:e.name.toLowerCase(),text: e.name})
+    
+    }))
+    .catch(err => console.log(err))
+
+    
+    const categoryOpt = ref([
+        { value: null, text: '카테고리' },
+        { value: 'Class Bag', text: 'BAG' },
+        { value: 'wallet', text: '지갑' },
+        { value: true, text: '의류' },
+        { value: 'accessories', text: '악세사리' },
+        { value: true, text: '기타' },
+      ])
+    
+    
+    const goFilter = () => {
+      console.log('엥실행')
+      console.log('brandselected : ', filters.value[0])
+      if (filters.value[0] != null) {
+        console.log('엥실행2')
+        nfts.value = nfts.value.filter( e => {
+          
+          return e.brandName.toLowerCase() == filters.value[0].toLowerCase()
+          
+        })
+      }
+
+      if (filters.value[1] != null) {
+        console.log('엥실행3')
+        nfts.value = nfts.value.filter( e => {
+          return e.productClassification == filters.value[1]
+        })
+      }
+
+      if (filters.value[2] != null ) {
+        nfts.value = nfts.value.filter( e => {
+          return e.name.toLowerCase().includes(filters.value[2].toLowerCase())
+        })
+      }
+      console.log(nfts.value)
+    }
+
+    //슬기 필터
+    // // const src = ref([]) // 초기 nft를 저장할 배열
+    // const word = ref("")
+    // const str = ref(null)
+    // const rowws = ref(null)
+    // // const nftLists = ref(store.state.searchednft)
+    // console.log(nfts.value, '😀리스트 확인😀')
+
+
+    // const np = () => {
+    //   rowws.value = store.state.nftValues.length;
+    // //   if (store.state.nftValues.length === 0) {
+    // //   LookupNFTs()
+    // // }
+    //   // currentPage = 1
+    //   // router.go()
+    //   console.log(store.state.nftValues.length, 'nfts.value.length')
+    //   console.log(rowws.value, 'serchpaging')
+    // }
+
+    // // 검색 초기화
+    const searchInit = () => {
+      filters.value = [null,null,null]
+      // word.value = "";
+      nfts.value = store.state.nftValues;
+      // this.searchPaging();
+      // searchPaging()
+      // router.go()
+    }
+
+    // // 전체 검색
+    // const searchTotal = () => {
+    //   nfts.value = src.value;
+    //   console.log(nfts.value, 'searchTotal')
+    //   console.log(src.value, 'srccccccccccccccccc')
+    //   // this.searchPaging();
+    //   searchPaging()
+    //   // console.log(searchPaging, '여기 작동하나?')
+    // }
+
+    // // 카테고리 셀렉
+    // const headerSel = () => {
+    //   word.value ="";
+    //   console.log(nfts.value,' headerSel----작동 확인----')
+    //   console.log('카테고리 선택 값 : ' ,categorySelected.value)
+      
+    //   if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+    //     if(brandSelected.value == null){ //  선택을 안했을 때
+    //     console.log(categorySelected.value,' headerSel----작동 확인----')
+    //     console.log(brandSelected.value, '되나여기')
+    //       searchTotal(); // 전체 목록 불러오기
+    //     } else{ // 브랜드 선택을 했을 때
+    //         nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+    //         console.log(nfts.value,' headerSel----작동 확인----')
+    //         return nft.brandName == brandSelected.value;
+    //       });
+    //       // searchPaging();
+    //     }
+    //   } else{ // 카테고리 선택을 했을 때
+    //     if(brandSelected.value == null){ // 브랜드 선택이 안 되어 있을 때
+    //       console.log('들어ㅓ왓어요---------------------------------------')
+    //       nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+    //       console.log(nft.productClassification, '선택했을 때')
+    //         return nft.productClassification == categorySelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     } else{ // 브랜드 선택이 되어 있을 때
+    //       nfts.value = src.value.filter((nft) => { // 카테고리와 브랜드에 해당하는 게시글 불러오기
+    //         return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     }
+    //   }
+    // }
+    
+    // // 브랜드 선택
+    // const brandSel = () => {
+    //   word.value ="";
+    //   console.log(nfts.value, 'brandSel 확인')
+
+    //   if(brandSelected.value == null){ // 브랜드을 선택 안했을 때
+    //     if(categorySelected.value == null){ // 카테고리 선택을 안했을 때
+    //       searchTotal(); // 전체 목록 불러오기
+    //     } else{ // 카테고리 선택을 했을 때
+    //       nfts.value = src.value.filter((nft) => { // 카테고리에 해당하는 게시글 불러오기
+    //       console.log(nfts.value, 'brandSel 작동 확인')
+    //         return nft.productClassification == categorySelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     }
+    //   } else{ // 브랜드 선택을 했을 때
+    //     if(categorySelected.value == null){ // 카테고리 선택이 안 되어 있을 때
+    //       nfts.value = src.value.filter((nft) => { // 브랜드에 해당하는 게시글 불러오기
+    //         return nft.brandName == brandSelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     } else{ // 카테고리 선택이 되어 있을 때
+    //       nfts.value = src.value.filter((nft) => {  // 카테고리와 브랜드에 해당하는 게시글 불러오기
+    //         return nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value;
+    //       });
+    //       // this.searchPaging();
+    //     }
+    //   }
+    // }
+
+    // const searchTitle = () => {
+    //   if(searchSelected.value == "color"){ // 색상이 선택 되었을 때
+    //     if (word.value == "") { // 아무 것도 입력 되지 않았을 때
+    //       alert("내용을 입력해주세요.")
+    //     } else {
+    //       if(categorySelected.value == null && brandSelected.value == null){
+    //           nfts.value = src.value.filter((nft) => {
+    //             if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
+    //               return nft
+    //             }
+    //           });
+    //           // this.searchPaging();
+    //       }else{
+    //         nfts.value = src.value.filter((nft) => {
+    //           if(nft.productColor.toLowerCase().includes(word.value.toLowerCase())){
+    //             if(categorySelected.value != null && nft.brandName != null){ 
+    //               return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
+    //             }
+    //             else if(categorySelected.value != null){
+    //               return nft.productClassification == categorySelected.value
+    //             }
+    //             else if(brandSelected.value != null){
+    //               return nft.brandName == brandSelected.value
+    //             }
+    //           }
+    //         });
+    //         // this.searchPaging();
+    //       }
+    //     }
+    //   }else if(searchSelected.value == "type"){ // 분류가 선택 되었을 때
+    //     if (word.value == "") { // 아무 것도 입력 되지 않았을 때
+    //       alert("소재를 입력해주세요.")
+    //     } else {
+    //       if(categorySelected.value == null && brandSelected.value == null){
+    //         nfts.value = src.value.filter((nft) => {
+    //           if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
+    //             return nft
+    //           }
+    //         });
+    //         // this.searchPaging();  
+    //       }else{
+    //         nfts.value = src.value.filter((nft) => {
+    //           if(nft.material!=null && nft.material.toLowerCase().includes(word.value.toLowerCase())){
+    //             if(categorySelected.value != null && brandSelected.value != null) 
+    //               return (nft.productClassification == categorySelected.value && nft.brandName == brandSelected.value)
+    //             else if(categorySelected.value != null)
+    //               return nft.productClassification == categorySelected.value
+    //             else if(brandSelected.value != null)
+    //               return nft.brandName == brandSelected.value
+    //           }
+    //         });
+    //         // this.searchPaging();
+    //       }
+    //     }
+    //   }
+    // }
+
     return {
       goMyNftDetail,
       sendNft,
@@ -337,13 +619,73 @@ export default {
       myWallet,
       copyToClickBoard,
       toast,
+      testData,
 
+      brandSelected,
+      categorySelected,
+      searchSelected,
+      brandOpt,
+      categoryOpt,
+
+      // src,
+      // word,
+      // str,
+      // searchTotal,
+      searchInit,
+      // searchPaging,
+      // headerSel,
+      // brandSel,
+      // searchTitle,
+      filters,
+      goFilter,
+  
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+
+// 필터링 부분
+.searchbarr {
+  display: flex;
+}
+
+.searchBtn {
+  width: 60px;
+  padding: 0; 
+  height: 40px; 
+  font-size: 15px;
+  color: #333333;
+  background-color: #fff !important;
+  border-color: transparent;
+  border: 1px solid transparent !important;
+  box-shadow: 1px 1px 2px 2px #ececf0;
+}
+
+.searchBtn:hover {
+  background-color: #32CCBC !important;
+  color: white;
+}
+
+.resetSearchBtn {
+  padding: 0; 
+  width: 60px; 
+  height: 40px; 
+  font-size: 15px;
+  color: #333333;
+  background-color: #fff !important;
+  border-color: transparent;
+  border: 1px solid transparent !important;
+  box-shadow: 1px 1px 2px 2px #ececf0;
+}
+
+.resetSearchBtn:hover {
+  background-color: #32CCBC !important;
+  color: white;
+}
+
+// 필터링 끝
 
 .nft_img {
   display: flex;

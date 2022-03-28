@@ -200,7 +200,8 @@ import {ref, computed } from 'vue'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import Graph from '@/components/Graph'
-
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 
 
@@ -242,7 +243,7 @@ export default {
 			tokenNum.value = e
 		}
 
-		const sendToken = () => {
+		async function sendToken() {
       //알람
       createToast(
           { title: 'Send Transaction',  },
@@ -252,7 +253,8 @@ export default {
       
 			console.log(tokenNum.value)
       
-			TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      nfts.value = store.state.nftValues
 
       
       // LookupNFTs()
