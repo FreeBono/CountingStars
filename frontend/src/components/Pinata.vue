@@ -86,17 +86,18 @@
       </div>
       <div class="row mb-3">
         <label class="col-sm-2 col-form-label">이미지</label>
-          <div class="col-sm-10">
+        <FileUpload @file-upload="imageData"/>
+          <!-- <div class="col-sm-10">
             <div class="d-flex justify-content-center">
               <label class="front__text-hover btn btn-info" for="input-file" style="cursor: pointer;">업로드</label>
-              <input @change="changeImgFile" type="file" id="input-file" style="display: none;"><!-- C -->
+              <input @change="changeImgFile" type="file" id="input-file" style="display: none;">
             </div>
             <div id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper mb-5">
-              <!-- vue way img 를 만들어서 append 하지 않고, v-for 로 처리 -->
               <img class="card__thumb" v-bind:src="nftImg" >
             </div>
+          </div> -->
+          <img id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper mb-5" :src="state.downImage" />
       </div>
-        </div>
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
     </div>
   </div>
@@ -118,7 +119,7 @@ import qwe from '../utils/LookupNFT'
 // import Block from '@/components/Block'
 // import Web3 from 'web3'
 import { DoughnutChart,BarChart,LineChart, } from 'vue-chart-3';
-
+import FileUpload from "@/components/common/FileUpload.vue"
 import { Chart, registerables } from "chart.js";
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
@@ -127,7 +128,7 @@ Chart.register(...registerables);
 
 export default {
   name : 'Pinata',
-  components: { DoughnutChart, BarChart,LineChart,},
+  components: { DoughnutChart, BarChart,LineChart, FileUpload, },
   setup() {
     const toast = () => {
         createToast('Wow, easy')
@@ -146,15 +147,20 @@ export default {
       productPrice: '5,700$',
       nftImg: null,
       nftImgFile: null,
+      downImage: null,
     })
 
-    const changeImgFile = async function (event) {
-      if( event.target.files && event.target.files.length > 0 ) {
-        
-        state.value.nftImgFile = event.target.files[0];
-        state.value.nftImg = URL.createObjectURL(state.value.nftImgFile); // 파일 경로로 바꿔서 추가
-      }
+    const imageData = (event) => {
+      state.value.nftImg = event.nftImg
+      state.value.nftImgFile = event.nftImgFile
     }
+
+    // const changeImgFile = async function (event) {
+    //   if( event.target.files && event.target.files.length > 0 ) {
+    //     state.value.nftImgFile = event.target.files[0];
+    //     state.value.nftImg = URL.createObjectURL(state.value.nftImgFile); // 파일 경로로 바꿔서 추가
+    //   }
+    // }
 
     const transferJSON = async function (url) {
       const metadata = {
@@ -182,6 +188,10 @@ export default {
       .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
       .then(function (response) {
         console.log(response);
+
+        const resData = response.data;
+
+        state.value.downImage = "data:image/jpeg;base64," + resData.image;
 
         // cid = response.data.message;
 
@@ -211,7 +221,7 @@ export default {
 
     return {
       onMounted, state,
-      changeImgFile, transferJSON,
+      imageData, transferJSON,
       TransferToken,
       SearchToken,
       qwe,
