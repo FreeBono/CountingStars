@@ -124,7 +124,49 @@
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;" >Detail</span>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span>
+                          <div>
+                            <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">상세보기</span>
+                            
+
+                            <!-- 디테일 모달!!! -->
+                            <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
+                              <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
+                                <b-card-header>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem;"></div>
+                                </b-card-header>
+                                <b-card-body style="max-width: 20rem;">
+                                  <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
+                                  <b-card-text>
+                                    <p style=" font-size: 0.9rem;" >nft name: {{ nftName }}</p>
+                                    <p >description : {{ description }}</p>
+                                    <!-- <p>serialNumber : {{ serialNumber }}</p> -->
+                                    <p style="margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">제조국가 : {{ madeCountry }}</p>
+                                    <!-- <p>색상 : {{ productColor }}</p> -->
+                                    <p style="margin: 0; font-size: 0.8rem;">가격 : {{ price }}</p>
+                                    <!-- <p>제조일 : {{ madeDate }}</p> -->
+                                  </b-card-text>
+                                </b-card-body>
+                                <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " >
+                                <!-- <hr> -->
+                                  <div style="width: 20rem;">
+                                    <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
+                                    <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
+                                  </div>
+                                </b-card-footer>
+                              </div>
+                              <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button>
+                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block >닫기</button>
+                              </div>
+                            </b-modal>
+                            <!-- 디테일 모달 끝 -->
+
+
+                          </div>
                         </figcaption>
                       </figure>
                     </div>
@@ -138,6 +180,10 @@
                         </figcaption>
                       </figure>
                     </div>
+
+                  
+
+
                   </div>
                 </div>
                 
@@ -198,6 +244,7 @@
     </div>
   </div>
 </div>
+
 
 
 
@@ -533,6 +580,36 @@ export default {
         }
       }
     }
+    const selectedBrandName = ref(null)
+    const selectBrandImg = ref(null)
+    const showDetailModal = ref(null)
+    const madeCountry = ref(null)
+    const madeDate = ref(null)
+    const description = ref(null)
+    const material = ref(null)
+    const nftName = ref(null)
+    const productType = ref(null)
+    const productColor = ref(null)
+    const price = ref(null)
+    const serialNumber = ref(null)
+
+    // 디테일 모달
+    const goDetailModal = (index) => {
+      console.log(index, '뭘까?')
+      console.log(index.brandName, '모달 함수 뭘까?')
+      showDetailModal.value = true;
+      selectedBrandName.value = index.brandName;
+      selectBrandImg.value = index.image;
+      madeCountry.value = index.countryOfManufacture
+      madeDate.value = index.dateOfManufacture
+      description.value = index.description
+      material.value = index.material
+      nftName.value = index.name
+      productType.value = index.productClassification
+      productColor.value = index.productColor
+      price.value = index.productPrice
+      serialNumber.value = index.serialNumber
+    }
 
     return {
       goMyNftDetail,
@@ -568,12 +645,30 @@ export default {
       headerSel,
       brandSel,
       searchTitle,
+
+      goDetailModal,
+      selectedBrandName,
+      showDetailModal,
+      selectBrandImg,
+      madeCountry,
+      madeDate,
+      description,
+      material,
+      nftName,
+      productType,
+      productColor,
+      price,
+      serialNumber,
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+
+.transeferBtn {
+  background-color: #2dce89;
+}
 
 // 필터링 부분
 .searchbarr {

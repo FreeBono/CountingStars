@@ -97,7 +97,7 @@
                 <!-- 페이지네이션 끝 -->
               </div>
           <div class="createBtn_position">
-            <button type="button" class="btn createBtn" @click="goNoticeForm" >글생성</button>
+            <button type="button" class="btn createBtn" @click="goNoticeForm">공지사항등록</button>
           </div>
             </div>
           <!-- 템플릿 테이블 끝 -->

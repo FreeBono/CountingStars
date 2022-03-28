@@ -163,12 +163,12 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 
 * {
-    margin: 0;
+    /* margin: 0; */
     padding: 0;
     box-sizing: border-box;
     list-style: none;
     font-family: 'Montserrat', sans-serif;
-    z-index:1001;
+    z-index:1051;
 }
 .test {
   background-color: rgb(255, 255, 255);

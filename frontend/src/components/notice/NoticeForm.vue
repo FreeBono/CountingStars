@@ -16,6 +16,7 @@
               id="textarea-rows"
               rows="8" 
               v-model="noticeInfo.content" 
+              @keyup.enter="createNotice"
               class="form-control" >
             </b-form-textarea>
           </div>
