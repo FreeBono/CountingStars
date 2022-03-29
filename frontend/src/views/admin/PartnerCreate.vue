@@ -9,9 +9,11 @@
       <div class="content_outside_box">
         <div class="content_box ">
           <div class="container">
-          <!-- <div style="width:40%; align-items:center; margin-top:8rem;">
-            <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData"/>
-          </div> -->
+          <div style="width:40%; align-items:center; margin-top:8rem;">
+            <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData" accept="image/*" />
+          </div>
+            
+
             <div class="form-tag" style="width: 100%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
               <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.imageUrl" placeholder=" 브랜드 이미지 URL"></b-form-input>
@@ -58,32 +60,25 @@ export default {
       imageUrl : null,
     })
 
-    // const brandImg = ref(null)
-    // const brandImgFile = ref(null)
+    const brandImg = ref(null)
+    const brandImgFile = ref(null)
+
 
     // 이미지 등록
-    // const imageData = (event) => {
-    
-    //   brandImg.value = event.nftImg
-    //   brandImgFile.value = event.nftImgFile
-    // }
+    const imageData = (event) => {
+      brandInfo.value.imageUrl = event.nftImg
+      brandImgFile.value = event.nftImgFile
+      console.log(brandInfo.value.imageUrl, '이미지')
+      console.log(brandImgFile.value, '이미지 파일')
+    }
 
-    // json으로 변환
-    // const transferJSON = async function (url) {
-    //   const data = {
-    //     image: url,
-    //     brandName: brandInfo.value.name
-    //   }
 
-      // const response = await pinata(state.value.nftImgFile);
-      
-      // data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
+    // 등록일 슬라이싱
+    const changeUpper = (datetime) => {
+      const old = ''+datetime
+      return old.substring(0, 10)
+    }
 
-      // const jsonResponse = await pinataJson(data);
-
-      // console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
-      // publishToken(jsonResponse.data.IpfsHash)
-    // }
 
     // 거래처관리 페이지로 가기
     function goPatnerMain() {
@@ -100,15 +95,17 @@ export default {
         router.push({name: 'PartnerManagement'})
       })
     }
+
       
     return {
       goPatnerMain,
       brandInfo,
       createBrand,
-      // imageData,
-      // brandImg,
-      // brandImgFile,
-      // transferJSON,
+      imageData,
+      brandImg,
+      brandImgFile,
+      changeUpper,
+
     }
   }
 }

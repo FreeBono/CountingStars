@@ -31,8 +31,8 @@
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:18px;">  
                     <div style="text-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
+                    <!-- <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div> -->
+                    <!-- <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div> -->
                     <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
@@ -105,21 +105,19 @@
 
                 <!-- 필터링 부분 -->
                 <div class="searchbarr mb-4">
-                  <!-- <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
-                  <b-form-select class="mx-2" v-model="categorySelected" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
-                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @chage="headerSel()" ></b-form-select> -->
-                  <select v-model="brandSelected" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" >
+                  <select class="brandSel-tag" v-model="brandSelected" @change="brandSel()" >
                     <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
                       {{ brandoption.text }}
                     </option>
 
                   </select>
-                  <select class="mx-2"  v-model="categorySelected"  style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" >
+                  <select class="categorySel-tag" v-model="categorySelected" @change="headerSel()" >
                     <option value="null" selected>카테고리</option>
                     <option value="Class Bag">Bag</option>
                     <option value="accessory">Accessory</option>
-                    <!-- <option value="gucci">GUCCI</option> -->
-                    <!-- <option value="versace">VERSACE</option> -->
+                    <option value="Clothes">Clothes</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="Wallet">Wallet</option>
                   </select>
 
                   <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
@@ -138,10 +136,8 @@
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">Detail</span>
                           <div>
-                            <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">상세보기</span>
-                            
 
                             <!-- 디테일 모달!!! -->
                             <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
@@ -154,13 +150,14 @@
                                   <b-card-text>
                                     <p style=" font-size: 0.9rem;" >nft name: {{ nftName }}</p>
                                     <p >description : {{ description }}</p>
-                                    <!-- <p>serialNumber : {{ serialNumber }}</p> -->
-                                    <p style="margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
-                                    <p style="margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
-                                    <p style="margin: 0; font-size: 0.8rem;">제조국가 : {{ madeCountry }}</p>
-                                    <!-- <p>색상 : {{ productColor }}</p> -->
-                                    <p style="margin: 0; font-size: 0.8rem;">가격 : {{ price }}</p>
-                                    <!-- <p>제조일 : {{ madeDate }}</p> -->
+                                    <div  style="width: 20rem;">
+                                      <p style="float: left; margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">{{ madeCountry }}</p>
+                                    </div>
+                                    <div class="d-flex" style="width: 20rem; justify-content: space-between;">
+                                      <p style="float: left; margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">{{ price }}</p>
+                                    </div>
                                   </b-card-text>
                                 </b-card-body>
                                 <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " >
@@ -173,7 +170,7 @@
                               </div>
                               <div class="modal-footer">
                                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button>
+                                <!-- <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button> -->
                                 <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block >닫기</button>
                               </div>
                             </b-modal>
@@ -699,12 +696,31 @@ export default {
   display: flex;
 }
 
+.brandSel-tag {
+  border-color: #ced4da;
+  width: 150px; 
+  height: 40px; 
+  font-size: 15px;
+  border-radius: 0.25rem;
+  color: #717981;
+}
+
+.categorySel-tag {
+  border-color: #ced4da;
+  margin-left: 0.5rem;
+  width: 170px; 
+  height: 40px; 
+  font-size: 15px;
+  border-radius: 0.25rem;
+  color: #717981;
+}
+
 .searchBtn {
   width: 60px;
   padding: 0; 
   height: 40px; 
   font-size: 15px;
-  color: #333333;
+  color: #333333 !important;
   background-color: #fff !important;
   border-color: transparent;
   border: 1px solid transparent !important;
@@ -721,7 +737,7 @@ export default {
   width: 60px; 
   height: 40px; 
   font-size: 15px;
-  color: #333333;
+  color: #333333 !important;
   background-color: #fff !important;
   border-color: transparent;
   border: 1px solid transparent !important;
