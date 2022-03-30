@@ -7,6 +7,9 @@ import com.ssafy.cstars.api.response.UserTransactionRes;
 import com.ssafy.cstars.service.UserTransactionService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +59,24 @@ public class UserTransactionController {
 
         return createResponseEntityToStatusCode(statusCode);
 
+    }
+
+    @GetMapping("/rank")
+    @ApiOperation(value = "NFT 이전 랭킹", notes = "<strong>NFT 이전 랭킹</strong>을 등록합니다. ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "SUCCESS", response = BaseResponseBody.class),
+            @ApiResponse(code = 401, message = "ACCESS DENIED", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
+    })
+    public ResponseEntity<Page<String>> getRank(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+
+        Page<String> rank = userTransactionService.getRank(pageable);
+
+        if(rank != null) {
+            return ResponseEntity.status(200).body(rank);
+        } else {
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
     private ResponseEntity<BaseResponseBody> createResponseEntityToStatusCode(int statusCode) {
