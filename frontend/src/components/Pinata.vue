@@ -30,30 +30,6 @@
           <input type="text" class="form-control" id="countryOfManufacture" v-model="state.countryOfManufacture">
         </div>
       </div>
-      <!-- productClassification
-      <fieldset class="row mb-3">
-        <legend class="col-form-label col-sm-2 pt-0">상품분류</legend>
-        <div class="col-sm-10">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="의류" checked>
-            <label class="form-check-label" for="gridRadios1">
-              의류
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="악세사리">
-            <label class="form-check-label" for="gridRadios2">
-              악세사리
-            </label>
-          </div>
-          <div class="form-check disabled">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="가방">
-            <label class="form-check-label" for="gridRadios3">
-              가방
-            </label>
-          </div>
-        </div>
-      </fieldset> -->
       <div class="row mb-3">
         <label for="productClassification" class="col-sm-2 col-form-label">상품분류</label>
         <div class="col-sm-10">
@@ -98,6 +74,11 @@
           </div> -->
           <img id="imgFileUploadInsertThumbnail" class="thumbnail-wrapper mb-5" :src="state.downImage" />
       </div>
+        <div class="d-flex justify-content-center">
+          <label class="front__text-hover btn btn-info" for="input-file" style="cursor: pointer;">엑셀 파일 업로드</label>
+          <input @change="changeExcelFile" type="file" id="input-file" style="display: none;">
+        </div>
+
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
     </div>
   </div>
@@ -108,21 +89,18 @@
 
 <script>
 import { ref,computed } from 'vue';
-// import pinata from '../services/pinataApiFile'
-// import pinataJson from '../services/pinataApiJson'
 import axios from "axios";
 import { onMounted } from 'vue';
-// import publishToken from '../utils/PublishNFT'
 import TransferToken from '../utils/TransferNFT'
 import SearchToken from '../utils/SearchNFT'
 import qwe from '../utils/LookupNFT'
-// import Block from '@/components/Block'
-// import Web3 from 'web3'
 import { DoughnutChart,BarChart,LineChart, } from 'vue-chart-3';
 import FileUpload from "@/components/common/FileUpload.vue"
 import { Chart, registerables } from "chart.js";
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+import { create } from "ipfs-http-client";
+import encodeImageFileAsURL from '../services/encodeImageFileAsURL'
 
 Chart.register(...registerables);
 
@@ -155,14 +133,8 @@ export default {
       state.value.nftImgFile = event.nftImgFile
     }
 
-    // const changeImgFile = async function (event) {
-    //   if( event.target.files && event.target.files.length > 0 ) {
-    //     state.value.nftImgFile = event.target.files[0];
-    //     state.value.nftImg = URL.createObjectURL(state.value.nftImgFile); // 파일 경로로 바꿔서 추가
-    //   }
-    // }
 
-    const transferJSON = async function (url) {
+    const transferJSON = async function () {
       const metadata = {
         name: "Luxury",
         description: "It contains a warranty for luxury goods.",
@@ -177,38 +149,84 @@ export default {
         productPrice: state.value.productPrice,
       }
 
+      const ipfs = create(`/ip4/127.0.0.1/tcp/5001`);
+
+      // console.log(state.value.nftImgFile);
+
+      encodeImageFileAsURL(state.value.nftImgFile).then(res  => {
+        console.log(res);
+
+      })
+
+      // console.log(base64File);
+
+      // const base64File = await encodeImageFileAsURL(state.value.nftImgFile);
+
+      // reader.readAsArrayBuffer()
+      // const imageEncoding = base64.replace()
+      // const bufferImage = Buffer.write(state.value.nftImgFile , 'base64');
+
+      // const ipfsUpload = await ipfs.add(bufferImage);
+
+      // console(ipfsUpload.path);
+
+
+
+
+
+
+
+
+
+
+
+
+      // const formData = new FormData();
+
+      // formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      // formData.append('image', state.value.nftImgFile);
+
+      // var cid = "";
+
+      // axios
+      // .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
+      // .then(function (response) {
+      //   console.log(response);
+
+      //   const resData = response.data;
+
+      //   state.value.downImage = "data:image/jpeg;base64," + resData.image;
+
+      //   // cid = response.data.message;
+
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
+
+    }
+
+    const changeExcelFile = async function (event) {
       const formData = new FormData();
 
-      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
-      formData.append('image', state.value.nftImgFile);
+      var excel = event.target.files[0];
+
+      formData.append('excel', excel);
 
       // var cid = "";
 
       axios
-      .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
+      .post(`http://127.0.0.1:8081/api/v1/ipfs/excel`, formData)
       .then(function (response) {
         console.log(response);
-
-        const resData = response.data;
-
-        state.value.downImage = "data:image/jpeg;base64," + resData.image;
-
-        // cid = response.data.message;
 
       })
       .catch(function (error) {
         console.log(error);
       })
 
-      // console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
-      // publishToken(jsonResponse.data.IpfsHash)
     }
 
-
-
-
-    //테스트
-    
     const testData = {
       labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
       datasets: [
@@ -221,7 +239,7 @@ export default {
 
     return {
       onMounted, state,
-      imageData, transferJSON,
+      imageData, transferJSON, changeExcelFile,
       TransferToken,
       SearchToken,
       qwe,

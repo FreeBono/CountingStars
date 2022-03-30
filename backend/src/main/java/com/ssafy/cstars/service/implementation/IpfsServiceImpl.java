@@ -5,6 +5,7 @@ import com.ssafy.cstars.api.request.IpfsPostReq;
 import com.ssafy.cstars.api.response.IpfsRes;
 import com.ssafy.cstars.service.IpfsService;
 import com.ssafy.cstars.util.IpfsUtil;
+import com.ssafy.cstars.util.ReadExcelUtil;
 import io.ipfs.api.IPFS;
 import io.ipfs.api.MerkleNode;
 import io.ipfs.api.NamedStreamable;
@@ -49,9 +50,6 @@ public class IpfsServiceImpl implements IpfsService{
             pinId = addResult.hash.toBase58();
             System.out.println(pinId);
 
-//            // NFT 발행까지 해야 함.
-//            Web3j web3j = Web3j.build(new HttpService("https://rinkeby.infura.io/v3/1b71a03449674cfe98b98c4915a7cbc7"));
-
             // -----------------------------get 테스트-------------------------------------------------------
 
             // ipfs에서 찾아오기
@@ -71,6 +69,13 @@ public class IpfsServiceImpl implements IpfsService{
             System.out.println("IPFS 발행 및 NFT 발행 에러");
             return null;
         }
+    }
+
+    @Override
+    public IpfsRes multiAddFileToIpfs(MultipartFile excelFile) throws IOException, ClassNotFoundException {
+        ReadExcelUtil.readExcelFile(excelFile);
+
+        return null;
     }
 
     @Override
