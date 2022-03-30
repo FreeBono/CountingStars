@@ -24,16 +24,16 @@ public class BrandRes {
     @ApiModelProperty(name = "Brand endDate")
     Date endDate;
 
-    @ApiModelProperty(name = "Brand brandAdmin")
-    List<String> brandAdmin;
+    @ApiModelProperty(name = "Brand endDate")
+    String imageUrl;
 
-    public static BrandRes of(Brand brand, List<String> adminEmail){
+    public static BrandRes of(Brand brand){
         BrandRes res = new BrandRes();
-
         res.setBrandId(brand.getId());
         res.setName(brand.getName());
         res.setEndDate(brand.getEndDate());
-        res.setBrandAdmin(adminEmail);
+        res.setImageUrl(brand.getImageUrl());
+
         return res;
     }
 

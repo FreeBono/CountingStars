@@ -99,6 +99,8 @@ export default {
     
       state.value.nftImg = event.nftImg
       state.value.nftImgFile = event.nftImgFile
+      console.log(state.value.nftImg, '이미지')
+      console.log(state.value.nftImgFile, '이미지 파일')
     }
 
     const transferJSON = async function (url) {

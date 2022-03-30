@@ -45,7 +45,8 @@
                               <!-- <span class="badge badge-dot mr-4">
                                 <i style="background-color: #3adacf;"></i>
                               </span> -->
-                              <span class="mb-0 text-sm">{{ branditem.name }}</span>
+                              <span class="mb-0 text-sm"><img :src="branditem.imageUrl" alt="logoimg" style="width: 60px;"></span>
+                              <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dior_Logo.svg/1200px-Dior_Logo.svg.png" alt=""> -->
                             </div>
                           </div>
                         </th>
@@ -131,6 +132,9 @@ export default {
     const perPage = ref(null)
     const noticeId = ref(null)
 
+    const brandImg = ref([])
+    console.log(brandImg.value, '⭐⭐⭐⭐⭐⭐⭐')
+
     function createPartner() {
       router.push({name: 'PartnerCreate'})
     }
@@ -139,21 +143,27 @@ export default {
     const getBrand = () => {
       api.get('/brand')
       .then((res) => {
-        console.log(res)
-        brandItems.value = res.data
+        console.log(res, 'res 확인')
+        brandItems.value = res.data.content
         console.log(brandItems.value, '브랜드 목록 확인')
-  
-        // currentPage.value = res.data.pageable['pageNumber']
-        // console.log(currentPage.value, 'currentPage 확인')
-  
-        // rowws.value = res.data.totalElements
-        // console.log(rowws.value, 'rowws 전체 개수')
 
-  
-        // perPage.value = res.data.pageable['pageSize']
-        // console.log(perPage.value, 'perP 확인')
+        currentPage.value = res.data.pageable['pageNumber']
+        console.log(currentPage.value, 'currentPage 확인')
+
+        rowws.value = res.data.totalElements
+        console.log(rowws.value, 'rowws 전체 개수')
+
+        perPage.value = res.data.pageable['pageSize']
+        console.log(perPage.value, 'perP 확인')
+
+        res.data.content.forEach(element => {
+          console.log(element.imageUrl, 'for문확인')
+          brandImg.value.push(element.imageUrl)
+          console.log(brandImg.value, '💐확인💐')
+        });
       })
     }
+
 
     // 버튼 누르면 페이지 변경
     const pageClick = () => {
@@ -207,6 +217,7 @@ export default {
       deletePartner,
       getBrand,
       makeDate,
+      brandImg,
     }
   }
 }

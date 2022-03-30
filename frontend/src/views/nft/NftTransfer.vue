@@ -15,12 +15,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div>TOTAL NFTS</div>
-                    <div align="left">{{nfts.length}}</div>
+                  <div class="media-body" style="float:left; margin-top:20px; text-align:left" >  
+                    <div >TOTAL NFTS</div>
+                    <div >{{nfts.length}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -30,12 +30,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden; ">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div>TOTAL TRANSFER</div>
-                    <div align="left">{{nfts.length}}</div>
+                  <div class="media-body" style="float:left; margin-top:18px;">  
+                    <div style="text-align:left;">TOTAL TRANSFER</div>
+                    <div align="left">{{transferHistory}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"   ></i>
+                    <i class="fas fa-handshake fa-3x" style="color:#3773f6;"></i>
                   </div>    
                 </div>
               </div>
@@ -45,12 +45,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
+                  <div class="media-body" style="float:left; margin-top:18px; text-align:left;">  
                     <div>TOTAL WORTH</div>
                     <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -60,12 +60,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
+                  <div class="media-body" style="float:left; margin-top:18px; text-align:left;">  
                     <div>HIGHEST PRICE</div>
                     <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -200,7 +200,8 @@ import {ref, computed } from 'vue'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import Graph from '@/components/Graph'
-
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 
 
@@ -219,6 +220,7 @@ export default {
     const nfts = ref([])
 		const receiveAccount = ref('')
     const receivePrivatekey = ref('')
+    const transferHistory = ref(0)
     nfts.value = []
     function sendNft() {
       // router.push({name: 'NftTransfer'})
@@ -242,7 +244,7 @@ export default {
 			tokenNum.value = e
 		}
 
-		const sendToken = () => {
+		async function sendToken() {
       //알람
       createToast(
           { title: 'Send Transaction',  },
@@ -252,7 +254,8 @@ export default {
       
 			console.log(tokenNum.value)
       
-			TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      nfts.value = store.state.nftValues
 
       
       // LookupNFTs()
@@ -271,6 +274,7 @@ export default {
     api.get('/userTransaction',{params: {userId: store.state.auth.user.id}})
     .then(res => {
       console.log(res)
+      transferHistory.value = res.data.length
     })
     .catch(err => {
       console.log(err)
@@ -288,6 +292,7 @@ export default {
       worth,
       highestPrice,
       // getTransferInfo,
+      transferHistory,
  
       receivePrivatekey
     }
