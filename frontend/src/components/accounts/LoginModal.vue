@@ -11,7 +11,7 @@
                   <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div>
               </div>
               <div class="my-3"> <span class="btn btn-primary" @click="login()">Login</span> </div>
-              <div class="mb-3"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
+              <div class="mb-3" style="margin-left: 13%"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">or connect with</span> </div>
           <div class="text-center py-3 connections"> 
@@ -38,10 +38,10 @@
               </div> -->
               <!-- <input type="text" v-model="signupData.roles"> -->
               <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
-              <div class="mb-3"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
+              <div class="mb-3" style="margin-left: 19%"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
               
           </form>
-          <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
+          <div class="position-relative border-bottom my-3 line" style="margin-left: 5%"> <span class="connect">Easy Sign up</span> </div>
           <!-- <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div> -->
       </div>
   </div>
@@ -319,7 +319,8 @@ export default {
      width: 100px;
      background-color: #fff;
      color: #333;
-     border: none
+     border: none;
+     margin-left : 36%;
  }
 
  .wrapper .card .btn.btn-primary:hover {

@@ -1,0 +1,58 @@
+import { create } from "ipfs-http-client";
+import axios from "axios";
+
+const addFileToIpfs = (imageFile, metadata) =>  {
+    const Ipfs = create(`/ip4/127.0.0.1/tcp/5001`);
+
+    //we gather a local file for this example, but any valid readStream source will work here.
+    const formData = new FormData();
+    
+    formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+    formData.append('image', imageFile);
+
+    //You'll need to make sure that the metadata is in the form of a JSON object that's been convered to a string
+    //metadata is optional
+    const metadata = JSON.stringify({
+        name: 'testname',
+        keyvalues: {
+            exampleKey: 'exampleValue'
+        }
+    });
+    data.append('pinataMetadata', metadata);
+
+    //pinataOptions are optional
+    const pinataOptions = JSON.stringify({
+        cidVersion: 0, // CID 버전
+        customPinPolicy: {
+            regions: [
+                {
+                    id: 'FRA1',
+                    desiredReplicationCount: 1
+                },
+                {
+                    id: 'NYC1',
+                    desiredReplicationCount: 2
+                }
+            ]
+        }
+    });
+    data.append('pinataOptions', pinataOptions);
+
+    return axios
+        .post(url, data, {
+            maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large files
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                pinata_api_key: "f15021ccdb4f250811be",
+                pinata_secret_api_key: "e92f052b8554d308b42b38921b823ac35741f390fe5e42d04b1505c88b1e9f0f",
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export default addFileToIpfs;
