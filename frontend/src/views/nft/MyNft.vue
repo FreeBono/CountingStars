@@ -31,7 +31,7 @@
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:18px;">  
                     <div style="text-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet.length >= 1">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div>
                     <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
                     <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
                   </div>
@@ -138,9 +138,9 @@
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span>
+                          <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span> -->
                           <div>
-                            <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">상세보기</span>
+                            <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">Detail</span>
                             
 
                             <!-- 디테일 모달!!! -->
@@ -252,31 +252,7 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">NFT를 이전할 지갑 주소를 입력해주세요.</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- <div>지갑 주소</div> -->
-				<div>
-					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
-						<label for="name" class="form__label">Account</label>
-					</div>
-				</div>
-				<!-- <div>로 이전합니다.</div> -->
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="sendToken">transfer</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
 
@@ -461,7 +437,6 @@ export default {
     const brandSelected = ref(null)
     const categorySelected = ref(null)
     const searchSelected = ref(null)
-
 
 
 
