@@ -8,8 +8,11 @@ import com.ssafy.cstars.domain.entity.Brand;
 import com.ssafy.cstars.domain.entity.BrandAdmin;
 import com.ssafy.cstars.domain.repository.BradnRepository;
 import com.ssafy.cstars.domain.repository.BrandAdminRepository;
+import com.ssafy.cstars.domain.repository.BrandRepositorySupport;
 import com.ssafy.cstars.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,26 +25,17 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     BrandAdminRepository brandAdminRepository;
 
+    @Autowired
+    BrandRepositorySupport brandRepositorySupport;
 
     @Override
-    public List<BrandRes> GetBrandList() {
+    public Page<Brand> GetBrandList(Pageable pageable) {
 
-        List<Brand> brands = brandRepository.findAll();
+        Page<Brand> brands = brandRepositorySupport.findAll(pageable);
 
-        List<BrandRes> res = new ArrayList<>();
+        if(brands.isEmpty()) return null;
 
-        brands.forEach( brand -> {
-
-            List<BrandAdmin> byName = brandAdminRepository.findByName(brand.getName());
-            List<String> adminEmail = new ArrayList<>();
-
-            byName.forEach( name -> {
-                adminEmail.add(name.getEmail());
-            });
-            res.add(BrandRes.of(brand, adminEmail));
-        });
-
-        return res;
+        return brands;
     }
 
     @Override
