@@ -1,10 +1,10 @@
-package com.ssafy.cstars.security;
+package com.ssafy.cstars.config;
 
 import com.ssafy.cstars.security.jwt.AuthEntryPointJwt;
 import com.ssafy.cstars.security.jwt.AuthTokenFilter;
-import com.ssafy.cstars.security.services.BrandAdminDetailsServiceImpl;
-import com.ssafy.cstars.security.services.StoreAdminDetailsServiceImpl;
-import com.ssafy.cstars.security.services.UserDetailsServiceImpl;
+import com.ssafy.cstars.service.implementation.BrandAdminDetailsServiceImpl;
+import com.ssafy.cstars.service.implementation.StoreAdminDetailsServiceImpl;
+import com.ssafy.cstars.service.implementation.UserDetailsServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

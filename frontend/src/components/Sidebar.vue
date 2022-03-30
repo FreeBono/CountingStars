@@ -156,7 +156,7 @@ export default {
   bottom:0;
   height:100%;
   left:0;
-  width: 70px;
+  width: 66px;
   /* hidden 으로 바꿔주기 */
   overflow: hidden;
   -webkit-transition:width .05s linear;

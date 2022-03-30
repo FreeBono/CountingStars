@@ -1,11 +1,10 @@
 package com.ssafy.cstars.security.jwt;
 
-import java.security.SignatureException;
 import java.util.Date;
 
-import com.ssafy.cstars.security.services.BrandAdminDetailsImpl;
-import com.ssafy.cstars.security.services.StoreAdminDetailsImpl;
-import com.ssafy.cstars.security.services.UserDetailsImpl;
+import com.ssafy.cstars.service.BrandAdminDetailsImpl;
+import com.ssafy.cstars.service.StoreAdminDetailsImpl;
+import com.ssafy.cstars.service.UserDetailsImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
