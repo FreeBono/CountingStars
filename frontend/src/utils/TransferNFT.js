@@ -503,7 +503,12 @@ export default async function TransferToken(receiveAccount,receiveKey, tokenId) 
   console.log(receiveAccount)
   console.log(parseInt(tokenId))
   try {
-    await contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: "0x67Ec0790223db78A170C2C5B5eC564a746D0514c",gas:600000, })
+    console.log('엥')
+    // const a = await contract.methods.approve(sendAccount,parseInt(tokenId)).send({from: "0x67Ec0790223db78A170C2C5B5eC564a746D0514c",gas:600000, })
+
+    // console.log(a)
+    await contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: sendAccount,gas:600000, }).then(res =>console.log(res)).catch(err => console.log(err))
+    console.log('음')
     store.dispatch('sendToken',tokenId)
     
     //거래 내역 저장

@@ -9,6 +9,7 @@ export default createStore({
   noticeNo: null,
   userInfo : [],
   walletInfo : [],
+  blockEvent : [],
   },
   getters: {
   },
@@ -41,6 +42,10 @@ export default createStore({
     SET_WALLET(state,data) {
       state.walletInfo = data
     },
+    SET_BLOCKEVENT(state,data) {
+      state.blockEvent = data
+      
+    },
   
   },
   actions: {
@@ -61,6 +66,9 @@ export default createStore({
     },
     setWallet({commit}, data) {
       commit("SET_WALLET",data)
+    },
+    setBlockevent({commit}, data) {
+      commit("SET_BLOCKEVENT",data)
     },
 
 

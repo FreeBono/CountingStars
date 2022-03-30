@@ -21,7 +21,7 @@
       
 
       
-      <div class="content_box row-vh d-flex flex-row" style="position:absolute; top:280px; left:8%; width:75%; overflow:hidden;">
+      <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
         <div  class="container-fluid">
           <div class="row">
             <div class="searchBarTag mt-3">
@@ -35,22 +35,154 @@
             
             <!-- <div class="container justify-content-center"> -->
               <div class="row" >
-                <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                  <div class="card col-3" style="padding:0px; width:200px;">
-                    <figure class="card__thumb" style="margin:0px; height:250px;">
-                      <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                      <figcaption class="card__caption" style="left:5%;">
-                        <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
-                        <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                        <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
-                      </figcaption>
-                    </figure>
-                  </div>
+                <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
+                    <div class="card col-3" style="padding:0px; width:85%;" >
+                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                        <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
+                        <figcaption class="card__caption" style="left:5%;">
+                          <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
+                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                       
+                          <div>
+                            <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">Detail</span>
+                            
+
+                            <!-- 디테일 모달!!! -->
+                            <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
+                              <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
+                                <b-card-header>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem;"></div>
+                                </b-card-header>
+                                <b-card-body style="max-width: 20rem;">
+                                  <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
+                                  <b-card-text>
+                                    <p style=" font-size: 0.9rem;" >nft name: {{ nftName }}</p>
+                                    <p >description : {{ description }}</p>
+                                    <!-- <p>serialNumber : {{ serialNumber }}</p> -->
+                                    <p style="margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">제조국가 : {{ madeCountry }}</p>
+                                    <!-- <p>색상 : {{ productColor }}</p> -->
+                                    <p style="margin: 0; font-size: 0.8rem;">가격 : {{ price }}</p>
+                                    <!-- <p>제조일 : {{ madeDate }}</p> -->
+                                  </b-card-text>
+                                </b-card-body>
+                                <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " >
+                                <!-- <hr> -->
+                                  <div style="width: 20rem;">
+                                    <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
+                                    <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
+                                  </div>
+                                </b-card-footer>
+                              </div>
+                              <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button>
+                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block >닫기</button>
+                              </div>
+                            </b-modal>
+                            <!-- 디테일 모달 끝 -->
+
+
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </div>
+                    
+
+                  
+
+
                 </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px; overflow-y:scroll; max-height:600px;">
+          <div  class="container-fluid">
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div align="left" style="margin-left:10px; margin-top:10px; ">월별 NFT이전</div>
+                  <!-- <hr style="margin-top:15px 0;"> -->
+                  <div align="center" style=" margin-top:10px; " >
+                    <div class="d-flex" style="padding-top:10px; height:40px; border:2px solid #e7eaf3; background-color: #f8fafd;  color: #6c757e;">
+                      <div style="width:20%; text-align:left;">Txn Hash</div><div style="width:20%; text-align:left;">Block</div><div style="width:25%; text-align:left;">From</div><div style="width:25%; text-align:left; margin-left:10px;">To</div><div style="width:10%; text-align:left;">Token ID</div>
+                    </div>
+                    <div v-for="(item,idx) in transactions" :key="idx" align="left" style="margin-top:10px;">
+                      <div class="d-flex">
+                      <div class="testt" style="width:20%;" @click="goTxDetail(item.transactionHash)" data-bs-toggle="modal" :data-bs-target="'#exampleModal'+idx">
+                        {{item.transactionHash.substring(0,10)}}...
+                      </div>
+                      <!-- Modal -->
+                      <div class="modal fade" :id="'exampleModal'+idx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Transaction Details</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="d-flex">
+                                <div style="width:25%; font-size:14px">
+                        
+                                  <div class="TxDetail" style="font-weight:bold;">Transaction Hash</div><div class="TxDetail" style="font-weight:bold;">Status</div ><div class="TxDetail" style="font-weight:bold;">Block Hash</div><div class="TxDetail" style="font-weight:bold;">Block Number</div>
+                                  <hr>
+                                  <div class="TxDetail" style="font-weight:bold;">From</div><div class="TxDetail" style="font-weight:bold;">To</div>
+                                  <hr>
+                                  <div class="TxDetail" style="font-weight:bold;">Gas Price</div>
+                              
+                                </div>
+                                <div style="width:75%; font-size:14px">
+                                  <div class="TxDetail">{{TxData.hash}}</div><div class="TxDetail"><span class="status">&nbsp;&nbsp;Success&nbsp;&nbsp;</span></div><div class="TxDetail">{{TxData.blockHash}}</div><div class="TxDetail">{{TxData.blockNumber}}</div>
+                                  <hr>
+                                  <div class="TxDetail">{{TxData.from}}</div><div class="TxDetail">{{TxData.to}}</div>
+                                  <hr>
+                                  <div class="TxDetail">{{TxData.gasPrice}}</div>
+                                </div>
+                              
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="testt" style="width:20%;">
+                        {{item.blockHash.substring(0,10)}}...
+                      </div>
+                      <div class="testt" style="width:25%;">
+                        <div style="float:left;">
+                        {{item.returnValues.from.substring(0,10)}}...
+                        </div>
+                        <div class="warning" style="float:right; margin-right:10px;" v-if="item.returnValues.from===walletAddress">
+                          out
+                        </div>
+                        <div class="success" style="float:right; margin-right:10px;"  v-else>
+                          in
+                        </div>
+                        
+                      </div>
+                      <div class="testt" style="width:25%; margin-left:10px;">
+                        {{item.returnValues.to.substring(0,10)}}...
+                      </div>
+                      <div class="testt" style="width:10%; text-align:center;">
+                        {{item.returnValues.tokenId}}
+                      </div>
+                      </div>
+                      <hr>
+                      
+                    </div>
+
+                    <!-- <div v-if="transactions.length===0">검색결과음슴</div>
+                    <div v-else>{{transactions}}</div> -->
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
 
@@ -83,10 +215,15 @@
 
 
 
-
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
+
+
+
+
+
+
 </template>
 
 <script>
@@ -100,10 +237,10 @@ import {useStore} from 'vuex'
 import { Carousel, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import { useCookies } from "vue3-cookies";
-
+import SearchToken from '@/utils/SearchNFT'
 import { VueperSlides, VueperSlide } from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
-
+import CheckTransaction from '@/utils/CheckTransaction'
 
 
 export default {
@@ -127,9 +264,17 @@ export default {
     const walletAddress = ref('')
     const nfts = ref([])
     
-    //cookies
-
-
+    //transactions
+    const transactions = ref([])
+    const TxData = ref([])
+    const goTxDetail = (txHash) => {
+      CheckTransaction(txHash).then(res => {
+        console.log(res)
+        TxData.value = res
+        })
+      // console.log(TxData.value)
+    }
+    
     
 
     //지갑조회실행
@@ -139,10 +284,14 @@ export default {
       // localStorage.setItem(  , JSON.stringify({a: 1, b: 2}))
       searchNFTs(walletAddress.value)
       addEntry()
+      SearchToken(walletAddress.value).then(res => transactions.value = res.sort(function(a,b) {
+        return b.blockNumber - a.blockNumber
+      }))
       setTimeout(()=> {
       nfts.value.push(...store.state.searchednft)
       store.state.searchednft = []
-      },3000)
+      },2000)
+      
       
   
     }
@@ -184,14 +333,15 @@ export default {
     }
 
     const historySearch = (x) => {
-      nfts.value = []
+      // nfts.value = []
       walletAddress.value = histories[x].searchHistory
-      addEntry()
-      searchNFTs(walletAddress.value)
-      setTimeout(()=> {
-        nfts.value.push(...store.state.searchednft)
-        store.state.searchednft = []
-      },3000)
+      searchWallet()
+      // addEntry()
+      // searchNFTs(walletAddress.value)
+      // setTimeout(()=> {
+      //   nfts.value.push(...store.state.searchednft)
+      //   store.state.searchednft = []
+      // },3000)
       
     } 
 
@@ -205,6 +355,9 @@ export default {
       convertedHistories,
       historySearch,
       historiesUnique,
+      transactions,
+      goTxDetail,
+      TxData,
     }
   },
 
@@ -542,4 +695,59 @@ h1.tag {
     font-size : 14px;
 }
 
+
+//스크롤
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+   display: none; 
+} 
+
+/*특정 부분 스크롤바 없애기*/ 
+.content_box { 
+  -ms-overflow-style: none; 
+}
+
+.content_box::-webkit-scrollbar{ display:none; }
+
+
+
+
+
+// transaction 부분
+.testt {
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
+  // // width: 100px;
+  height: 20px;
+}
+
+.success {
+    color: #02977e;
+    background-color: rgba(0,201,167,.2);
+    width:40px;
+    text-align:center;
+    border-radius:10px;
+}
+
+.warning {
+    color: #b47d00;
+    background-color: rgba(219,154,4,.2);
+    width:40px;
+    text-align:center;
+    border-radius:10px;
+}
+
+.TxDetail {
+  height : 40px;
+  
+}
+
+.status {
+  color: #00c9a7;
+  background-color: rgba(0,201,167,.1);
+}
 </style>
