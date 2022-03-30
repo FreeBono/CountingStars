@@ -132,6 +132,9 @@ export default {
     const perPage = ref(null)
     const noticeId = ref(null)
 
+    const brandImg = ref([])
+    console.log(brandImg.value, '⭐⭐⭐⭐⭐⭐⭐')
+
     function createPartner() {
       router.push({name: 'PartnerCreate'})
     }
@@ -152,8 +155,15 @@ export default {
 
         perPage.value = res.data.pageable['pageSize']
         console.log(perPage.value, 'perP 확인')
+
+        res.data.content.forEach(element => {
+          console.log(element.imageUrl, 'for문확인')
+          brandImg.value.push(element.imageUrl)
+          console.log(brandImg.value, '💐확인💐')
+        });
       })
     }
+
 
     // 버튼 누르면 페이지 변경
     const pageClick = () => {
@@ -207,6 +217,7 @@ export default {
       deletePartner,
       getBrand,
       makeDate,
+      brandImg,
     }
   }
 }

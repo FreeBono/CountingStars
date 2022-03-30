@@ -97,7 +97,7 @@
                 <!-- 페이지네이션 끝 -->
               </div>
           <div class="createBtn_position">
-            <button type="button" class="btn createBtn" @click="goNoticeForm">공지사항등록</button>
+            <button v-show="userRole.role === 'ROLE_SITE_ADMIN'" type="button" class="btn createBtn" @click="goNoticeForm">공지사항등록</button>
           </div>
             </div>
           <!-- 템플릿 테이블 끝 -->
@@ -113,7 +113,7 @@
 // import '@/assets/style/notice/table.css'
 
 import api from "@/services/api.js"
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Sidebar from '@/components/Sidebar.vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios';
@@ -190,6 +190,15 @@ export default {
       })
     }
 
+    // 유저 정보 가져오기
+    const userRole = store.state.userInfo
+    console.log(userRole.role, '유저정보')
+    console.log(userRole, '유저정보')
+
+    // onMounted(() => {
+    //   userRole
+    // })
+
     return {
       goNoticeForm,
       noticeItems,
@@ -202,11 +211,10 @@ export default {
       myapi,
       noticeId,
       goNoticeDetail,
+      userRole,
     }
   },
-  
-  methods: {
-    },
+
   computed: {
     rows() {
       return this.rowws

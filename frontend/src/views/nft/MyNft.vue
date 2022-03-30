@@ -143,7 +143,7 @@
                             <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
                               <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
                                 <b-card-header>
-                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem;"></div>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem; width: 300px; height: 200px;"></div>
                                 </b-card-header>
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
@@ -241,7 +241,7 @@
                   <DoughnutChart :chartData="testData" style="width:100%; "/>
                   
                 </div>
-             
+            
             </div>
           </div>
         </div>
@@ -291,7 +291,6 @@ import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
 import LookupNFTs from '@/utils/LookupNFT.js'
 import {ref, computed, } from 'vue'
-// import axios from 'axios'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import checkAccount from '@/utils/CheckMainWallet.js'
@@ -327,12 +326,12 @@ export default {
     const nfts = ref([])
 		const receiveAccount = ref('')
     nfts.value = []
+
+
     function sendNft() {
-      // router.push({name: 'NftTransfer'})
-      // 모달? 알럿? 띄우기
       alert('전송 되었습니다.')
-      // 전송되면 내 목록에서 삭제 되야 함
     }
+
     // nft 디테일로 가기
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
@@ -350,11 +349,8 @@ export default {
 		}
 
 		const sendToken = () => {
-			// console.log(tokenNum.value)
 			TransferToken(receiveAccount.value ,tokenNum.value)
 		}
-    
-    // console.log(nfts)
     
 
     const worth = computed(() => {
@@ -373,6 +369,7 @@ export default {
     } else if (store.state.walletInfo) {
       myWallet.value = store.state.walletInfo
     }
+
     // const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
     const privatekey = ref('')
@@ -458,8 +455,6 @@ export default {
     const brandSelected = ref(null)
     const categorySelected = ref(null)
     const searchSelected = ref(null)
-
-
 
 
       // filter 사용될 데이터들
@@ -620,7 +615,7 @@ export default {
     // 디테일 모달
     const goDetailModal = (index) => {
       console.log(index, '뭘까?')
-      console.log(index.brandName, '모달 함수 뭘까?')
+      console.log(index.brandName, '모달 함수 브랜드 뭘까?')
       showDetailModal.value = true;
       selectedBrandName.value = index.brandName;
       selectBrandImg.value = index.image;
@@ -634,6 +629,9 @@ export default {
       price.value = index.productPrice
       serialNumber.value = index.serialNumber
     }
+
+    const userRole = store.state.userInfo
+    console.log(userRole.role, '유저정보')
 
     return {
       goMyNftDetail,
@@ -680,6 +678,7 @@ export default {
       productColor,
       price,
       serialNumber,
+      userRole,
     }
   },
 }

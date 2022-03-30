@@ -9,10 +9,10 @@
       <div class="content_outside_box">
         <div class="content_box ">
           <div class="container">
-          <div style="width:40%; align-items:center; margin-top:8rem;">
-            <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData" accept="image/*" />
-          </div>
-            
+          <!-- <div style="width:40%; align-items:center; margin-top:8rem;">
+            <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData" accept="image/*" id="image" />
+          </div> -->
+
 
             <div class="form-tag" style="width: 100%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
@@ -39,7 +39,6 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import FileUpload from "@/components/common/FileUpload.vue"
-
 import api from "@/services/api.js"
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
@@ -63,7 +62,7 @@ export default {
     const brandImg = ref(null)
     const brandImgFile = ref(null)
 
-
+    
     // 이미지 등록
     const imageData = (event) => {
       brandInfo.value.imageUrl = event.nftImg
@@ -72,7 +71,7 @@ export default {
       console.log(brandImgFile.value, '이미지 파일')
     }
 
-
+    
     // 등록일 슬라이싱
     const changeUpper = (datetime) => {
       const old = ''+datetime
@@ -95,7 +94,6 @@ export default {
         router.push({name: 'PartnerManagement'})
       })
     }
-
       
     return {
       goPatnerMain,
@@ -107,8 +105,9 @@ export default {
       changeUpper,
 
     }
-  }
+  },
 }
+
 </script>
 
 <style scoped>
