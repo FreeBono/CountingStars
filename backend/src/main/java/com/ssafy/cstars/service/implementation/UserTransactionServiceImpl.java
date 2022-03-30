@@ -6,8 +6,11 @@ import com.ssafy.cstars.domain.entity.User;
 import com.ssafy.cstars.domain.entity.UserTransaction;
 import com.ssafy.cstars.domain.repository.UserRepository;
 import com.ssafy.cstars.domain.repository.UserTransactionRepository;
+import com.ssafy.cstars.domain.repository.UserTransactionRepositorySupport;
 import com.ssafy.cstars.service.UserTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ public class UserTransactionServiceImpl implements UserTransactionService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserTransactionRepositorySupport userTransactionRepositorySupport;
 
     private User getUser(Long userId) {
 
@@ -62,6 +68,15 @@ public class UserTransactionServiceImpl implements UserTransactionService {
 
 
         return res;
+    }
+
+    @Override
+    public Page<String> getRank(Pageable pageable) {
+        Page<String> rank = userTransactionRepositorySupport.rank(pageable);
+
+        if(rank.isEmpty()) return null;
+
+        return rank;
     }
 
 
