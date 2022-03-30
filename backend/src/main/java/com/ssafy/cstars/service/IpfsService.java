@@ -8,5 +8,6 @@ import java.io.IOException;
 
 public interface IpfsService {
     IpfsRes addFileToIpfs(IpfsPostReq ipfsInfo, MultipartFile imageFile) throws IOException, ClassNotFoundException;
+    IpfsRes multiAddFileToIpfs(MultipartFile excelFile) throws IOException, ClassNotFoundException;
     IpfsRes getMetadataFromCid(String cid);
 }

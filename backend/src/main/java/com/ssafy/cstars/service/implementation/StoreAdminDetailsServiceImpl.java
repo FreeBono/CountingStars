@@ -1,8 +1,9 @@
-package com.ssafy.cstars.security.services;
+package com.ssafy.cstars.service.implementation;
 
 import com.ssafy.cstars.domain.entity.StoreAdmin;
 import com.ssafy.cstars.domain.repository.StoreAdminRepository;
 
+import com.ssafy.cstars.service.StoreAdminDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
