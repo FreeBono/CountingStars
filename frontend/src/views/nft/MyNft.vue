@@ -105,21 +105,19 @@
 
                 <!-- 필터링 부분 -->
                 <div class="searchbarr mb-4">
-                  <!-- <b-form-select v-model="brandSelected" :options="brandOpt" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" ></b-form-select>
-                  <b-form-select class="mx-2" v-model="categorySelected" :options="categoryOpt" style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" ></b-form-select>
-                  <b-form-select v-model="searchSelected" :options="searchOpt" style="width: 100px; height: 40px; font-size: 15px;" @chage="headerSel()" ></b-form-select> -->
-                  <select v-model="brandSelected" style="width: 150px; height: 40px; font-size: 15px;" @change="brandSel()" >
+                  <select class="brandSel-tag" v-model="brandSelected" @change="brandSel()" >
                     <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
                       {{ brandoption.text }}
                     </option>
 
                   </select>
-                  <select class="mx-2"  v-model="categorySelected"  style="width: 170px; height: 40px; font-size: 15px;" @change="headerSel()" >
+                  <select class="categorySel-tag" v-model="categorySelected" @change="headerSel()" >
                     <option value="null" selected>카테고리</option>
                     <option value="Class Bag">Bag</option>
                     <option value="accessory">Accessory</option>
-                    <!-- <option value="gucci">GUCCI</option> -->
-                    <!-- <option value="versace">VERSACE</option> -->
+                    <option value="Clothes">Clothes</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="Wallet">Wallet</option>
                   </select>
 
                   <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
@@ -147,20 +145,21 @@
                             <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
                               <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
                                 <b-card-header>
-                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem;"></div>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem; width: 300px; height: 200px;"></div>
                                 </b-card-header>
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
                                   <b-card-text>
                                     <p style=" font-size: 0.9rem;" >nft name: {{ nftName }}</p>
                                     <p >description : {{ description }}</p>
-                                    <!-- <p>serialNumber : {{ serialNumber }}</p> -->
-                                    <p style="margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
-                                    <p style="margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
-                                    <p style="margin: 0; font-size: 0.8rem;">제조국가 : {{ madeCountry }}</p>
-                                    <!-- <p>색상 : {{ productColor }}</p> -->
-                                    <p style="margin: 0; font-size: 0.8rem;">가격 : {{ price }}</p>
-                                    <!-- <p>제조일 : {{ madeDate }}</p> -->
+                                    <div  style="width: 20rem;">
+                                      <p style="float: left; margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">{{ madeCountry }}</p>
+                                    </div>
+                                    <div class="d-flex" style="width: 20rem; justify-content: space-between;">
+                                      <p style="float: left; margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">{{ price }}</p>
+                                    </div>
                                   </b-card-text>
                                 </b-card-body>
                                 <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " >
@@ -173,7 +172,7 @@
                               </div>
                               <div class="modal-footer">
                                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                                <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button>
+                                <!-- <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="sendToken">transfer</button> -->
                                 <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block >닫기</button>
                               </div>
                             </b-modal>
@@ -244,7 +243,7 @@
                   <DoughnutChart :chartData="testData" style="width:100%; "/>
                   
                 </div>
-             
+            
             </div>
           </div>
         </div>
@@ -270,7 +269,6 @@ import "@/assets/style/notice/noticeSide.css"
 import { useRouter } from 'vue-router'
 import LookupNFTs from '@/utils/LookupNFT.js'
 import {ref, computed, } from 'vue'
-// import axios from 'axios'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import checkAccount from '@/utils/CheckMainWallet.js'
@@ -306,12 +304,12 @@ export default {
     const nfts = ref([])
 		const receiveAccount = ref('')
     nfts.value = []
+
+
     function sendNft() {
-      // router.push({name: 'NftTransfer'})
-      // 모달? 알럿? 띄우기
       alert('전송 되었습니다.')
-      // 전송되면 내 목록에서 삭제 되야 함
     }
+
     // nft 디테일로 가기
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
@@ -329,11 +327,8 @@ export default {
 		}
 
 		const sendToken = () => {
-			// console.log(tokenNum.value)
 			TransferToken(receiveAccount.value ,tokenNum.value)
 		}
-    
-    // console.log(nfts)
     
 
     const worth = computed(() => {
@@ -352,6 +347,7 @@ export default {
     } else if (store.state.walletInfo) {
       myWallet.value = store.state.walletInfo
     }
+
     // const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
     const privatekey = ref('')
@@ -598,7 +594,7 @@ export default {
     // 디테일 모달
     const goDetailModal = (index) => {
       console.log(index, '뭘까?')
-      console.log(index.brandName, '모달 함수 뭘까?')
+      console.log(index.brandName, '모달 함수 브랜드 뭘까?')
       showDetailModal.value = true;
       selectedBrandName.value = index.brandName;
       selectBrandImg.value = index.image;
@@ -612,6 +608,9 @@ export default {
       price.value = index.productPrice
       serialNumber.value = index.serialNumber
     }
+
+    const userRole = store.state.userInfo
+    console.log(userRole.role, '유저정보')
 
     return {
       goMyNftDetail,
@@ -658,6 +657,7 @@ export default {
       productColor,
       price,
       serialNumber,
+      userRole,
     }
   },
 }
@@ -674,12 +674,31 @@ export default {
   display: flex;
 }
 
+.brandSel-tag {
+  border-color: #ced4da;
+  width: 150px; 
+  height: 40px; 
+  font-size: 15px;
+  border-radius: 0.25rem;
+  color: #717981;
+}
+
+.categorySel-tag {
+  border-color: #ced4da;
+  margin-left: 0.5rem;
+  width: 170px; 
+  height: 40px; 
+  font-size: 15px;
+  border-radius: 0.25rem;
+  color: #717981;
+}
+
 .searchBtn {
   width: 60px;
   padding: 0; 
   height: 40px; 
   font-size: 15px;
-  color: #333333;
+  color: #333333 !important;
   background-color: #fff !important;
   border-color: transparent;
   border: 1px solid transparent !important;
@@ -696,7 +715,7 @@ export default {
   width: 60px; 
   height: 40px; 
   font-size: 15px;
-  color: #333333;
+  color: #333333 !important;
   background-color: #fff !important;
   border-color: transparent;
   border: 1px solid transparent !important;
