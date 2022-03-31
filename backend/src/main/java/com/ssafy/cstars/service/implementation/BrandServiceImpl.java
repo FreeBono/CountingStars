@@ -13,6 +13,7 @@ import com.ssafy.cstars.service.BrandService;
 import com.ssafy.cstars.util.ImageUtil;
 import com.ssafy.cstars.util.IpfsUtil;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,10 +56,11 @@ public class BrandServiceImpl implements BrandService {
         // MultipartFile 이미지파일 -> File로 바꾸기
         File file = ImageUtil.multipartFileToFile(imageFile);
         // File -> byte[] 바꾸기
-        byte[] byteArray = ImageUtil.convertObjectToBytes(file);
+        byte[] byteArray = FileUtils.readFileToByteArray(file);
         // byte[] -> String(base64)
         String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArray);
 
+        System.out.println(base64);
 
         Brand brand = Brand.builder()
                 .name(brandInfo.getName())
