@@ -161,7 +161,7 @@ export default {
 
       axios({
         method: 'post',
-        url : `http://172.17.0.1:5001/api/v0/add`
+        url : `https://172.17.0.1:5001/api/v0/add`
       }, metadata)
       .then(res => console.log(res.data))
       .catch(err => console.log(err))
