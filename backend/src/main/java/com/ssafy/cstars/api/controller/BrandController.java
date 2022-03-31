@@ -47,29 +47,13 @@ public class BrandController {
         }
     }
 
-//    @PostMapping()
-//    @ApiOperation(value = "브랜드 등록", notes = "<strong>브랜드</strong> 등록한다")
-//    @ApiResponses({
-//            @ApiResponse(code =200 , message = "SUCCESS", response = BrandRes.class),
-//            @ApiResponse(code =401, message = "ACCESS DENIED", response = BrandRes.class),
-//            @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
-//    })
-//    public ResponseEntity<BaseResponseBody> createBrand(@RequestBody @ApiParam(value = "브랜드 등록", required = true) BrandPostReq brandInfo){
-//
-//        int statusCode = brandService.createBrand(brandInfo);
-//
-//        return createResponseEntityToStatusCode(statusCode);
-//
-//    }
-
     @PostMapping()
     @ApiOperation(value = "브랜드 등록", notes = "<strong>브랜드</strong> 등록한다")
     @ApiResponses({
-            @ApiResponse(code =200 , message = "SUCCESS", response = BrandRes.class),
-            @ApiResponse(code =401, message = "ACCESS DENIED", response = BrandRes.class),
-            @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
+            @ApiResponse(code =200 , message = "SUCCESS", response = BaseResponseBody.class),
+            @ApiResponse(code =401, message = "ACCESS DENIED", response = BaseResponseBody.class),
+            @ApiResponse(code =500 , message = "SERVER ERROR", response = BaseResponseBody.class),
     })
-//    public ResponseEntity<BaseResponseBody> createBrand(@RequestBody @ApiParam(value = "브랜드 등록", required = true) BrandPostReq brandInfo){
     public ResponseEntity<BaseResponseBody> crateBrand(@RequestPart(value = "metadata") @ApiParam(value = "브랜드 정보", required = true) BrandPostReq brandInfo,
                                                        @RequestPart(value = "image") @ApiParam(value = "브랜드 이미지", required = true)MultipartFile imgeFile) throws IOException, ClassNotFoundException {
 

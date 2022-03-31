@@ -23,7 +23,4 @@ public class BrandPostReq {
     @ApiModelProperty(name = "브랜드 지갑 주소")
     String address;
 
-//    @ApiModelProperty(name = "브랜드 이미지 URl")
-//    String imageUrl;
-
 }
