@@ -207,28 +207,28 @@ export default {
       // console(ipfsUpload.path);
 
 
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
-      formData.append('image', state.value.nftImgFile);
+      // formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      // formData.append('image', state.value.nftImgFile);
 
       // var cid = "";
 
-      axios
-      .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
-      .then(function (response) {
-        console.log(response);
+      // axios
+      // .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
+      // .then(function (response) {
+      //   console.log(response);
 
-        const resData = response.data;
+      //   const resData = response.data;
 
-        state.value.downImage = "data:image/jpeg;base64," + resData.image;
+      //   state.value.downImage = "data:image/jpeg;base64," + resData.image;
 
-        // cid = response.data.message;
+      //   // cid = response.data.message;
 
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
 
     }
 
