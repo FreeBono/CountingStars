@@ -150,22 +150,23 @@ export default {
         image: test.value,
       }
 
-      // const ipfs = create('/ip4/172.17.0.1/tcp/5001');
+      const ipfs = create('/ip4/172.17.0.1/tcp/5001');
 
       console.log("동작하는거가???");
 
-      // ipfs.add(JSON.stringify(metadata)).then(res => {
+      ipfs.add(JSON.stringify(metadata)).then(res => {
+        console.log(res);
+      });
+
+      // axios
+      // .post('http://172.17.0.1:5001/api/v0/add', metadata)
+      // .then( res => {
       //   console.log(res);
+      // })
+      // .catch( e => {
+      //   console.error(e);
       // });
 
-      axios
-      .post('http://172.17.0.1:5001/api/v0/add', metadata)
-      .then( res => {
-        console.log(res);
-      })
-      .catch( e => {
-        console.error(e);
-      });
       // axios({
       //   method: 'post',
       //   url : `http://172.17.0.1:5001/api/v0/add`
