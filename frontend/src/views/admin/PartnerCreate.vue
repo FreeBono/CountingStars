@@ -12,7 +12,14 @@
           <!-- <div style="width:40%; align-items:center; margin-top:8rem;">
             <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData" accept="image/*" id="image" />
           </div> -->
+            <!-- <input type="file" name="testImg" id="testImg" v-on:click="uploadImgFile"> -->
+            <input @change="onInputImage" ref="inputImg" type="file" id="input-file" >
 
+            <!-- <form id="formElem" enctype="multipart/form-data">
+              <input type="file" class="hidden_input" id="reviewImageFileOpenInput" accept="image/*" multiple>
+            </form> -->
+
+            <!-- <input @change="changeExcelFile" type="file" id="input-file" style="display: none;"> -->
 
             <div class="form-tag" style="width: 100%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
@@ -42,7 +49,7 @@ import FileUpload from "@/components/common/FileUpload.vue"
 import api from "@/services/api.js"
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
-
+import FormData from 'form-data';
 
 export default {
   name: 'PartnerCreate',
@@ -56,7 +63,7 @@ export default {
       name: null,
       endDate : null,
       address : null,
-      imageUrl : null,
+      imageUrl: null,
     })
 
     const brandImg = ref(null)
@@ -71,7 +78,15 @@ export default {
       console.log(brandImgFile.value, '이미지 파일')
     }
 
+    const onInputImage = () => {
+      // 이미지 파일 brandImg에 담는 것
+    }
+
     
+
+    // const transferJSON = async function () {
+      
+    // }
     // 등록일 슬라이싱
     const changeUpper = (datetime) => {
       const old = ''+datetime
@@ -86,14 +101,37 @@ export default {
 
     // 거래처 등록
     const createBrand = () => {
+      const metadata = {
+        name: brandInfo.value.name,
+        endDate : brandInfo.value.endDate,
+        address : brandInfo.value.address,
+      }
+
+      const formData = new FormData();
+      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      formData.append('image', brandFile.value);
+      console.log(formData, 'formData 확인')  
+        
       console.log(brandInfo.value, '브랜드 확인')
-      api.post('/brand', brandInfo.value)
+      api.post('/brand', formData)
       .then((res) => {
         console.log(res)
         // 거래처 메인으로 가기
         router.push({name: 'PartnerManagement'})
       })
     }
+
+    // 이미지 보내기
+      // axios 
+      //   .post(http://127.0.0.1:8081/api/v1/ipfs, formData)
+      //   .then(function (response) {
+      //     console.log(response);
+
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   })
+      // }
       
     return {
       goPatnerMain,
@@ -103,7 +141,8 @@ export default {
       brandImg,
       brandImgFile,
       changeUpper,
-
+      onInputImage,
+      // transferJSON,
     }
   },
 }

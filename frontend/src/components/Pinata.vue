@@ -154,17 +154,16 @@ export default {
 
       console.log("동작하는거가???");
 
-      // CORS
-      // ipfs.add(JSON.stringify(metadata)).then(res => {
-      //   console.log(res);
-      // });
+      ipfs.add(JSON.stringify(metadata)).then(res => {
+        console.log(res);
+      });
 
-      axios({
-        method: 'post',
-        url : `https://172.17.0.1:5001/api/v0/add`
-      }, metadata)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
+      // axios({
+      //   method: 'post',
+      //   url : `http://172.17.0.1:5001/api/v0/add`
+      // }, metadata)
+      // .then(res => console.log(res.data))
+      // .catch(err => console.log(err))
 
       // const ipfs = create(
       //   host: "127.0.0.1",
@@ -208,28 +207,28 @@ export default {
       // console(ipfsUpload.path);
 
 
-      // const formData = new FormData();
+      const formData = new FormData();
 
-      // formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
-      // formData.append('image', state.value.nftImgFile);
+      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      formData.append('image', state.value.nftImgFile);
 
       // var cid = "";
 
-      // axios
-      // .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
-      // .then(function (response) {
-      //   console.log(response);
+      axios
+      .post(`http://127.0.0.1:8081/api/v1/ipfs`, formData)
+      .then(function (response) {
+        console.log(response);
 
-      //   const resData = response.data;
+        const resData = response.data;
 
-      //   state.value.downImage = "data:image/jpeg;base64," + resData.image;
+        state.value.downImage = "data:image/jpeg;base64," + resData.image;
 
-      //   // cid = response.data.message;
+        // cid = response.data.message;
 
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // })
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
 
     }
 
