@@ -15,6 +15,12 @@
             <!-- <input type="file" name="testImg" id="testImg" v-on:click="uploadImgFile"> -->
             <input @change="onInputImage" ref="inputImg" type="file" id="input-file" >
 
+            <!-- <form id="formElem" enctype="multipart/form-data">
+              <input type="file" class="hidden_input" id="reviewImageFileOpenInput" accept="image/*" multiple>
+            </form> -->
+
+            <!-- <input @change="changeExcelFile" type="file" id="input-file" style="display: none;"> -->
+
             <div class="form-tag" style="width: 100%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
               <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.imageUrl" placeholder=" 브랜드 이미지 URL"></b-form-input>
@@ -43,7 +49,7 @@ import FileUpload from "@/components/common/FileUpload.vue"
 import api from "@/services/api.js"
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
-
+import FormData from 'form-data';
 
 export default {
   name: 'PartnerCreate',
@@ -57,7 +63,7 @@ export default {
       name: null,
       endDate : null,
       address : null,
-      imageUrl : null,
+      imageUrl: null,
     })
 
     const brandImg = ref(null)
@@ -65,23 +71,25 @@ export default {
 
     
     // 이미지 등록
-    // const imageData = (event) => {
-    //   brandInfo.value.imageUrl = event.nftImg
-    //   brandImgFile.value = event.nftImgFile
-    //   console.log(brandInfo.value.imageUrl, '이미지')
-    //   console.log(brandImgFile.value, '이미지 파일')
-    // }
+    const imageData = (event) => {
+      brandInfo.value.imageUrl = event.nftImg
+      brandImgFile.value = event.nftImgFile
+      console.log(brandInfo.value.imageUrl, '이미지')
+      console.log(brandImgFile.value, '이미지 파일')
+    }
 
-    const onInputImage = () => {
-      brandImg.value = brandInfo.value.imageUrl
+    const onInputImage = (event) => {
+      // 이미지 파일 brandImg에 담는 것
+      // console.log(event)
+      brandImg.value = event.target.files[0];
       console.log(brandImg.value, 'brandImg.value 확인')
     }
 
-    const formData = new FormData();
-    formData.append('metadata', new Blob([JSON.stringify(brandImgFile.value)] , {type: "application/json"}));
-    formData.append('image', brandImgFile.value);
-    console.log(formData, 'formData 확인')
     
+
+    // const transferJSON = async function () {
+      
+    // }
     // 등록일 슬라이싱
     const changeUpper = (datetime) => {
       const old = ''+datetime
@@ -96,8 +104,19 @@ export default {
 
     // 거래처 등록
     const createBrand = () => {
+      const metadata = {
+        name: brandInfo.value.name,
+        endDate : brandInfo.value.endDate,
+        address : brandInfo.value.address,
+      }
+
+      const formData = new FormData();
+      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      formData.append('image', brandImg.value);
+      console.log(formData, 'formData 확인')  
+        
       console.log(brandInfo.value, '브랜드 확인')
-      api.post('/brand', brandInfo.value)
+      api.post('/brand', formData)
       .then((res) => {
         console.log(res)
         // 거래처 메인으로 가기
@@ -121,18 +140,14 @@ export default {
       goPatnerMain,
       brandInfo,
       createBrand,
-      // imageData,
+      imageData,
       brandImg,
       brandImgFile,
       changeUpper,
-
-      formData,
       onInputImage,
+      // transferJSON,
     }
   },
-  computed: {
-    
-  }
 }
 
 </script>
