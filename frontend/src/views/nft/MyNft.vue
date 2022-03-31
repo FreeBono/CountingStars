@@ -8,7 +8,7 @@
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;" @click="toast"> My NFTs</div>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;" @click="toast"> My NFTs</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
@@ -145,7 +145,7 @@
                             <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
                               <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
                                 <b-card-header>
-                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem; width: 300px; height: 200px;"></div>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem; width: 300px; height: 250px;"></div>
                                 </b-card-header>
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>

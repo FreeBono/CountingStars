@@ -65,8 +65,8 @@
         <div class="col-8" >
           <div class="row-vh d-flex flex-row justify-content-between">
             <div CLASS="absolute-img"><img src="@/assets/Cartier.png" alt="" ></div>
-            <div CLASS="absolute-img"><img src="@/assets/gucci.jpg" alt="" ></div>
-            <div CLASS="absolute-img"><img src="@/assets/ddd.jpg" alt=""></div>
+            <div CLASS="absolute-img"><img src="@/assets/gucci.png" alt="" ></div>
+            <div CLASS="absolute-img"><img src="@/assets/versace.png" alt=""></div>
           </div>
         
           <div class="row-vh d-flex flex-row justify-content-between">

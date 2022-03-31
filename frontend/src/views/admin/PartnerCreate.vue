@@ -12,7 +12,8 @@
           <!-- <div style="width:40%; align-items:center; margin-top:8rem;">
             <FileUpload v-model="brandInfo.imageUrl" @file-upload="imageData" accept="image/*" id="image" />
           </div> -->
-
+            <!-- <input type="file" name="testImg" id="testImg" v-on:click="uploadImgFile"> -->
+            <input @change="onInputImage" ref="inputImg" type="file" id="input-file" >
 
             <div class="form-tag" style="width: 100%;">
               <b-form-input class="input_tag" type="text" v-model="brandInfo.name" placeholder=" 브랜드명" maxlength="30"></b-form-input>
@@ -64,13 +65,22 @@ export default {
 
     
     // 이미지 등록
-    const imageData = (event) => {
-      brandInfo.value.imageUrl = event.nftImg
-      brandImgFile.value = event.nftImgFile
-      console.log(brandInfo.value.imageUrl, '이미지')
-      console.log(brandImgFile.value, '이미지 파일')
+    // const imageData = (event) => {
+    //   brandInfo.value.imageUrl = event.nftImg
+    //   brandImgFile.value = event.nftImgFile
+    //   console.log(brandInfo.value.imageUrl, '이미지')
+    //   console.log(brandImgFile.value, '이미지 파일')
+    // }
+
+    const onInputImage = () => {
+      brandImg.value = brandInfo.value.imageUrl
+      console.log(brandImg.value, 'brandImg.value 확인')
     }
 
+    const formData = new FormData();
+    formData.append('metadata', new Blob([JSON.stringify(brandImgFile.value)] , {type: "application/json"}));
+    formData.append('image', brandImgFile.value);
+    console.log(formData, 'formData 확인')
     
     // 등록일 슬라이싱
     const changeUpper = (datetime) => {
@@ -94,18 +104,35 @@ export default {
         router.push({name: 'PartnerManagement'})
       })
     }
+
+    // 이미지 보내기
+      // axios 
+      //   .post(http://127.0.0.1:8081/api/v1/ipfs, formData)
+      //   .then(function (response) {
+      //     console.log(response);
+
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   })
+      // }
       
     return {
       goPatnerMain,
       brandInfo,
       createBrand,
-      imageData,
+      // imageData,
       brandImg,
       brandImgFile,
       changeUpper,
 
+      formData,
+      onInputImage,
     }
   },
+  computed: {
+    
+  }
 }
 
 </script>

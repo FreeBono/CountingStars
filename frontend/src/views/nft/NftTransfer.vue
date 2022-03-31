@@ -9,7 +9,7 @@
     <div class="main-content">
 
       <div class="header">
-        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> NFT Transfer</div>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;"> NFT Transfer</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
