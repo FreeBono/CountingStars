@@ -1,6 +1,8 @@
 package com.ssafy.cstars.service;
 
+import com.querydsl.core.Tuple;
 import com.ssafy.cstars.api.request.UserTransactionPostReq;
+import com.ssafy.cstars.api.response.UserTransactionRankDto;
 import com.ssafy.cstars.api.response.UserTransactionRes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,5 +17,5 @@ public interface UserTransactionService {
     List<UserTransactionRes> getUserTransactionList(Long userId);
 
 
-    Page<String> getRank(Pageable pageable);
+    Page<UserTransactionRankDto> getRank(Pageable pageable);
 }
