@@ -126,13 +126,13 @@ export default {
       downImage: null,
     })
 
-    const test = ref('');
+    const imageRef = ref('');
 
     const imageData = (event) => {
       state.value.nftImg = event.nftImg
       state.value.nftImgFile = event.nftImgFile
       encodeImageFileAsURL(state.value.nftImgFile)
-      test.value = store.state.ipfsData
+      imageRef.value = store.state.ipfsData
     }
 
     const transferJSON = async function () {
@@ -148,30 +148,22 @@ export default {
         material: state.value.material,
         productColor: state.value.productColor,
         productPrice: state.value.productPrice,
-        image: test.value,
+        image: imageRef.value,
       }
 
       // http://172.17.0.1:5001
       // const ipfs = create('/ip4/127.0.0.1/tcp/5001');
 
-      const ipfs = create({
-        // host: "/ipfs",
-        // // port: 443,
-        // protocol: "https",
-      });
+      const ipfs = create();
 
       console.log("동작하는건가???");
 
-      // api/vo/add
+      // api/v0/add
       ipfs
       .add(JSON.stringify(metadata))
       .then(res => {
         console.log("ipfs add 요청 성공");
         console.log(res);
-      })
-      .error( e => {
-        console.log("ipfs add 요청 에러")
-        console.log(e);
       });
 
       // axios

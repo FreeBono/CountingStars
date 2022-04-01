@@ -6,7 +6,7 @@ module.exports = {
   configureWebpack: {
     plugins: [new NodePolyfillPlugin()]
   },
-  // 개발 서버 설정
+  // 개발 서버 설정, run serve할때만 작동
   devServer: {
     // 프록시 설정
     proxy: {

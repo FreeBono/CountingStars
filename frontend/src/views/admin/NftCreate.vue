@@ -54,7 +54,7 @@
             
 
               <div class="submit" align="right">
-                <button type="button" class="btn btn-primary" @click="transferJSON()">발급</button>
+                <button type="button" class="btn btn-primary" @click="transferJSON">발급</button>
               </div>
             </form><!-- // End form -->
           </div><!-- // End #container -->
@@ -68,12 +68,12 @@
 
 <script>
 import {ref} from 'vue'
+import { create } from "ipfs-http-client";
+import store from '@/store'
 import Sidebar from '@/components/Sidebar.vue'
 import FileUpload from "@/components/common/FileUpload.vue"
 import publishToken from '@/utils/PublishNFT'
-import pinata from '@/services/pinataApiFile'
-import pinataJson from '@/services/pinataApiJson'
-
+import encodeImageFileAsURL from '../../services/encodeImageFileAsURL'
 
 export default {
   name: 'NftCreate',
@@ -95,15 +95,19 @@ export default {
       nftImgFile: null,
     })
 
+    const imageRef = ref('');
+
     const imageData = (event) => {
     
       state.value.nftImg = event.nftImg
       state.value.nftImgFile = event.nftImgFile
-      console.log(state.value.nftImg, '이미지')
-      console.log(state.value.nftImgFile, '이미지 파일')
+      // console.log(state.value.nftImg, '이미지')
+      // console.log(state.value.nftImgFile, '이미지 파일')
+      encodeImageFileAsURL(state.value.nftImgFile)
+      imageRef.value = store.state.ipfsData
     }
 
-    const transferJSON = async function (url) {
+    const transferJSON = async function() {
       const data = {
         name: "Luxury",
         description: "It contains a warranty for luxury goods.",
@@ -115,17 +119,23 @@ export default {
         material: state.value.material,
         productColor: state.value.color,
         productPrice: state.value.price,
-        image: url,
+        image: imageRef.value,
       }
 
-      const response = await pinata(state.value.nftImgFile);
+      const ipfs = create();
+      const response = await ipfs.add(JSON.stringify(data));
+      const ipfsHash = response.path;
 
-      data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
+      // const response = await pinata(state.value.nftImgFile);
+      // data.image = "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash; // ipfs:// + response.data.IpfsHash를 넣어야 하나? 다른 NFT는 다 이렇게 넣던데
+      // const jsonResponse = await pinataJson(data);
 
-      const jsonResponse = await pinataJson(data);
+      console.log(ipfsHash); // json ipfs 주소
+      publishToken(ipfsHash)
 
-      console.log(jsonResponse.data.IpfsHash); // json ipfs 주소
-      publishToken(jsonResponse.data.IpfsHash)
+      // console.log("---------------")
+      // const getResponse = await ipfs.get(ipfsHash);
+      // console.log(getResponse);
     }
 
     return {
