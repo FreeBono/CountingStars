@@ -152,12 +152,12 @@ export default {
       }
 
       // http://172.17.0.1:5001
-      // const ipfs = create('/ip4/172.17.0.1/tcp/5001');
+      // const ipfs = create('/ip4/127.0.0.1/tcp/5001');
 
       const ipfs = create({
-        host: "j6e204.p.ssafy.io/ipfs",
-        // port: 443,
-        protocol: "https",
+        // host: "/ipfs",
+        // // port: 443,
+        // protocol: "https",
       });
 
       console.log("동작하는건가???");
