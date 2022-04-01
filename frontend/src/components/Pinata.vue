@@ -160,11 +160,18 @@ export default {
         protocol: "https",
       });
 
-      console.log("동작하는거가???");
+      console.log("동작하는건가???");
 
       // api/vo/add
-      ipfs.add(JSON.stringify(metadata)).then(res => {
+      ipfs
+      .add(JSON.stringify(metadata))
+      .then(res => {
+        console.log("ipfs add 요청 성공");
         console.log(res);
+      })
+      .error( e => {
+        console.log("ipfs add 요청 에러")
+        console.log(e);
       });
 
       // axios
