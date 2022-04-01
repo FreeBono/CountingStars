@@ -100,6 +100,7 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import { create } from "ipfs-http-client";
 import encodeImageFileAsURL from '../services/encodeImageFileAsURL'
+import readExcelFile from '../services/readExcelFile'
 import store from '@/store'
 
 Chart.register(...registerables);
@@ -156,7 +157,7 @@ export default {
       const ipfs = create({
         host: "j6e204.p.ssafy.io",
         port: 5001,
-        protocol: "http",
+        protocol: "https",
       });
 
       console.log("동작하는거가???");
@@ -250,23 +251,25 @@ export default {
     }
 
     const changeExcelFile = async function (event) {
-      const formData = new FormData();
+      readExcelFile(event.target.files[0]);
 
-      var excel = event.target.files[0];
+      // const formData = new FormData();
 
-      formData.append('excel', excel);
+      // var excel = event.target.files[0];
 
-      // var cid = "";
+      // formData.append('excel', excel);
 
-      axios
-      .post(`http://127.0.0.1:8081/api/v1/ipfs/excel`, formData)
-      .then(function (response) {
-        console.log(response);
+      // // var cid = "";
 
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+      // axios
+      // .post(`http://127.0.0.1:8081/api/v1/ipfs/excel`, formData)
+      // .then(function (response) {
+      //   console.log(response);
+
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
 
     }
 

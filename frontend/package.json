@@ -67,6 +67,7 @@
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0",
     "web3": "^1.7.1",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {
