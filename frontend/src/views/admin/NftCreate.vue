@@ -76,6 +76,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import FileUpload from "@/components/common/FileUpload.vue"
 import publishToken from '@/utils/PublishNFT'
 import encodeImageFileAsURL from '../../services/encodeImageFileAsURL'
+import getMetadataFromIpfs from '../../services/getMetadataFromIpfs'
 
 export default {
   name: 'NftCreate',
@@ -135,9 +136,7 @@ export default {
       console.log(ipfsHash); // json ipfs 주소
       publishToken(ipfsHash)
 
-      // console.log("---------------")
-      // const getResponse = await ipfs.get(ipfsHash);
-      // console.log(getResponse);
+      getMetadataFromIpfs(ipfsHash);
     }
 
     return {

@@ -228,16 +228,6 @@ export default {
       // console(ipfsUpload.path);
 
 
-
-
-
-
-
-
-
-
-
-
       // const formData = new FormData();
 
       // formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
