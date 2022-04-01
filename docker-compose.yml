@@ -39,5 +39,113 @@ services:
     volumes:
       - /home/ubuntu/docker-volume:/root
     container_name: "backend"
+
     # networks:
     #   - counting_star
+  ipfs0:
+    container_name: ipfs0
+    image: ipfs/go-ipfs:latest
+    ports:
+      - "4001:4001" # ipfs swarm - expose if needed/wanted
+      - "5001:5001" # ipfs api - expose if needed/wanted
+      # - "172.17.0.1:8000:8000" # ipfs gateway - expose if needed/wanted
+    environment:
+      - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
+      - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/ipfs0/swarm.key
+    volumes:
+      - /home/ubuntu/docker-volume/compose/ipfs0:/data/ipfs
+
+  cluster0:
+    container_name: cluster0
+    image: ipfs/ipfs-cluster:latest
+    depends_on:
+      - ipfs0
+    environment:
+      # CLUSTER_PEERNAME: cluster0
+      # CLUSTER_SECRET: ${CLUSTER0_SECRET} # From shell variable if set
+      # CLUSTER_CRDT_TRUSTEDPEERS: '*' # Trust all peers in Cluster
+      # CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+      CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs0/tcp/5001
+      CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+      IPFS_BOOTSTRAP_RM_ALL: "true"
+    ports:
+          # Open API port (allows ipfs-cluster-ctl usage on host)
+          - "9092:9094"
+          # The cluster swarm port would need  to be exposed if this container
+          # was to connect to cluster peers on other hosts.
+          # But this is just a testing cluster.
+          # - "9096:9096" # Cluster IPFS Proxy endpoint
+    volumes:
+      - /home/ubuntu/docker-volume/compose/cluster0:/data/ipfs-cluster
+
+##################################################################################
+## Cluster PEER 1 ################################################################
+##################################################################################
+
+# See Cluster PEER 0 for comments (all removed here and below)
+  ipfs1:
+    container_name: ipfs1
+    image: ipfs/go-ipfs:latest
+    ports:
+      - "4002:4001" # ipfs swarm - expose if needed/wanted
+      - "5002:5001" # ipfs api - expose if needed/wanted
+      # - "172.17.0.1:8001:8000" # ipfs gateway - expose if needed/wanted
+    environment:
+      - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
+      - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/ipfs1/swarm.key
+    volumes:
+      - /home/ubuntu/docker-volume/compose/ipfs1:/data/ipfs
+
+  cluster1:
+    container_name: cluster1
+    image: ipfs/ipfs-cluster:latest
+    depends_on:
+      - ipfs1
+    environment:
+      # CLUSTER_PEERNAME: cluster1
+      # CLUSTER_SECRET: ${CLUSTER1_SECRET}
+      # CLUSTER_CRDT_TRUSTEDPEERS: '*'
+      # CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+      CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs1/tcp/5001
+      CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+      IPFS_BOOTSTRAP_RM_ALL: "true" # 다른 네트워크 목록 전부 지움
+    ports:
+      - 9093:9094
+    volumes:
+      - /home/ubuntu/docker-volume/compose/cluster1:/data/ipfs-cluster
+
+##################################################################################
+## Cluster PEER 2 ################################################################
+##################################################################################
+
+# See Cluster PEER 0 for comments (all removed here and below)
+  ipfs2:
+    container_name: ipfs2
+    image: ipfs/go-ipfs:latest
+    ports:
+      - "4003:4001" # ipfs swarm - expose if needed/wanted
+      - "5003:5001" # ipfs api - expose if needed/wanted
+      # - "172.17.0.1:8002:8000" # ipfs gateway - expose if needed/wanted
+    environment:
+      - LIBP2P_FORCE_PNET=1 # 네트워크 보호를 강화
+      - IPFS_SWARM_KEY_FILE=/home/ubuntu/docker-volume/compose/ipfs2/swarm.key
+    volumes:
+      - /home/ubuntu/docker-volume/compose/ipfs2:/data/ipfs
+
+  cluster2:
+    container_name: cluster2
+    image: ipfs/ipfs-cluster:latest
+    depends_on:
+      - ipfs2
+    environment:
+      # CLUSTER_PEERNAME: cluster2
+      # CLUSTER_SECRET: ${CLUSTER2_SECRET}
+      # CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+      # CLUSTER_CRDT_TRUSTEDPEERS: '*'
+      CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs2/tcp/5001
+      CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS: /ip4/0.0.0.0/tcp/9094 # Expose API
+      IPFS_BOOTSTRAP_RM_ALL: "true"
+    ports:
+      - 9094:9094
+    volumes:
+      - /home/ubuntu/docker-volume/compose/cluster2:/data/ipfs-cluster

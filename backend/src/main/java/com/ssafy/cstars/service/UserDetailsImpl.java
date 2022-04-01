@@ -1,4 +1,4 @@
-package com.ssafy.cstars.security.services;
+package com.ssafy.cstars.service;
 
 import java.util.Collection;
 import java.util.List;
