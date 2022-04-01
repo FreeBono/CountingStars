@@ -105,7 +105,7 @@
                     <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
-                        <figcaption class="card__caption" style="left:5%;">
+                        <figcaption class="card__caption" style="left:15%;">
                           <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
@@ -143,30 +143,74 @@
           </div>
         </div>
 
-        <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:250px;">
+        <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:900px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
                   <!-- <hr style="margin-top:15px 0;"> -->
-                  <div align="center" >
+                
                     <div class="row-vh d-flex flex-row justify-content-around">
-                      <div>
-                        <div class="row-vh d-flex flex-row justify-content-around">
-                          <div>1</div>
-                          <div>
-                            <div>아이디</div>
-                            <div>주소</div>
-                          </div>
-                          
-                          <div>개수</div>
-                        </div>
+                      <div class="row-vh d-flex flex-column" >
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                            <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+1}}</div>
+                            <div style="padding-left:15px; text-align:left; width:75%;">
+                              <div align="left" style="font-size:20px; ">{{item.email}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,22)}}</div>
+                              
+                            </div>
+                            <!-- <div style=" padding-left:20px; font-size : 25px; width:15%;;">
+                              <div style="font-size:14px;">
+                                token
+                              </div>
+                              <div>
+                              {{item.countTransaction}}
+                              </div>
+                            </div> -->
+                          </div>                       
                       </div>
-                      <div>ab</div>
-                      <div>abc</div>
-
-                    </div>
+                      <div class="row-vh d-flex flex-column" >
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                            <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+4}}</div>
+                            <div style="padding-left:15px; text-align:left; width:75%;">
+                              <div align="left" style="font-size:20px; ">{{item.email}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,22)}}</div>
+                              
+                            </div>
+                            <!-- <div style="margin-top:5px;  padding-left:20px; font-size : 25px; width:15%;;">
+                              <div style="font-size:14px;">
+                                token
+                              </div>
+                              <div>
+                              {{item.countTransaction}}
+                              </div>
+                            </div> -->
+                          </div>                       
+                      </div>
+                      <div class="row-vh d-flex flex-column" >
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                            <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+7}}</div>
+                            <div style="padding-left:15px; text-align:left; width:75%;">
+                              <div align="left" style="font-size:20px; ">{{item.email}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,22)}}</div>
+                              
+                            </div>
+                            <!-- <div style="margin-top:5px;  padding-left:20px; font-size : 25px; width:40%;">
+                              <div style="font-size:14px;">
+                                token
+                              </div>
+                              <div style="padding-left:5px;">
+                              {{item.countTransaction}}
+                              </div>
+                            </div> -->
+                          </div>                       
+                      </div>
+                      
+                      
+                      
+          
+                    
                     
 
 
@@ -259,6 +303,7 @@ export default {
 		const receiveAccount = ref('')
     const receivePrivatekey = ref('')
     const transferHistory = ref(0)
+    const rankData = ref([])
     nfts.value = []
     function sendNft() {
       // router.push({name: 'NftTransfer'})
@@ -322,6 +367,9 @@ export default {
     api.get('/userTransaction/rank',)
     .then(res => {
       console.log(res)
+      rankData.value = res.data.content.filter(e => {
+        return e.address != null
+      })
       
     })
     .catch(err => {
@@ -341,7 +389,7 @@ export default {
       highestPrice,
       // getTransferInfo,
       transferHistory,
- 
+      rankData,
       receivePrivatekey,
 
 
