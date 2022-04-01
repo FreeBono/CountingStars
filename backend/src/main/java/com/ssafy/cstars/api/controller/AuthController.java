@@ -12,6 +12,7 @@ import com.ssafy.cstars.api.request.LogOutRequest;
 import com.ssafy.cstars.api.request.LoginRequest;
 import com.ssafy.cstars.api.request.SignupRequest;
 import com.ssafy.cstars.api.request.TokenRefreshRequest;
+import com.ssafy.cstars.api.response.BrandRes;
 import com.ssafy.cstars.api.response.JwtResponse;
 import com.ssafy.cstars.api.response.MessageResponse;
 import com.ssafy.cstars.api.response.TokenRefreshResponse;
@@ -39,6 +40,9 @@ import com.ssafy.cstars.service.StoreAdminDetailsImpl;
 import com.ssafy.cstars.service.UserDetailsImpl;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
