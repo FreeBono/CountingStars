@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public class UserTransactionRankDto {
-    private String username;
+    private String email;
     private String address;
     private Long countTransaction;
 
@@ -18,8 +18,8 @@ public class UserTransactionRankDto {
     }
 
     @QueryProjection
-    public UserTransactionRankDto(String username, String address, Long countTransaction) {
-        this.username = username;
+    public UserTransactionRankDto(String email, String address, Long countTransaction) {
+        this.email = email;
         this.address = address;
         this.countTransaction = countTransaction;
     }

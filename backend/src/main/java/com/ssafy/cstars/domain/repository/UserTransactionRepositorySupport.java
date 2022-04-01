@@ -26,7 +26,7 @@ public class UserTransactionRepositorySupport {
 
     public Page<UserTransactionRankDto> rank(Pageable pageable) {
         QueryResults<UserTransactionRankDto> ranks = jpaQueryFactory
-                .select(Projections.constructor(UserTransactionRankDto.class, qUser.username, qUser.address, qUserTransaction.user.count()))
+                .select(Projections.constructor(UserTransactionRankDto.class, qUser.email, qUser.address, qUserTransaction.user.count()))
                 .from(qUser, qUserTransaction)
                 .where(qUserTransaction.user.eq(qUser))
                 .groupBy(qUserTransaction.user)
