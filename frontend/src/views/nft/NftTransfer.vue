@@ -96,7 +96,7 @@
         </div> -->
         
   
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:1000px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
@@ -128,7 +128,7 @@
           </div>
         </div>
 
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px;">
+        <div class="content_box row-vh d-flex flex-row " style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
@@ -137,6 +137,34 @@
                   <!-- <hr style="margin-top:15px 0;"> -->
                   <div align="center" >
                     <Graph style="width:90%; height:100%; margin-top:30px;"/>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:250px;">
+          <div  class="container-fluid">
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
+                  <!-- <hr style="margin-top:15px 0;"> -->
+                  <div align="center" >
+                    <div class="row-vh d-flex flex-row justify-content-around">
+                      <div>a</div>
+                      <div>ab</div>
+                      <div>abc</div>
+
+                    </div>
+                    
+
+
+
+
+
+
+
                   </div>
               </div>
             </div>
@@ -205,6 +233,7 @@ import 'mosha-vue-toastify/dist/style.css'
 
 
 
+
 export default {
   name: 'NftTransfer',
   components: {
@@ -213,7 +242,6 @@ export default {
   },
   setup() {
     
-
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -253,9 +281,9 @@ export default {
           )
       
 			console.log(tokenNum.value)
-      
-			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
-      nfts.value = store.state.nftValues
+      testt(2)  
+			// await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      // nfts.value = store.state.nftValues
 
       
       // LookupNFTs()
@@ -280,6 +308,16 @@ export default {
       console.log(err)
     })
 
+    // transfer ranking
+    api.get('/userTransaction/rank',)
+    .then(res => {
+      console.log(res)
+      
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
     return {
       goMyNftDetail,
       sendNft,
@@ -294,7 +332,10 @@ export default {
       // getTransferInfo,
       transferHistory,
  
-      receivePrivatekey
+      receivePrivatekey,
+
+
+  
     }
   }
 }
@@ -585,6 +626,16 @@ body {
 }
 
 .content_box::-webkit-scrollbar{ display:none; }
+
+.abc {
+  // width: 75%;
+  min-height: 350px;
+  background-color: white;
+  margin-left: 100px;
+  border: 1px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px 1px #d8d7d7;
+}
 
 
 </style>
