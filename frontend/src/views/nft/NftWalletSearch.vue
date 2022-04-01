@@ -178,18 +178,17 @@
                               
                                 </div>
                                 <div style="width:75%; font-size:14px">
-                                  <div class="TxDetail">{{TxData.hash}}</div><div class="TxDetail"><span class="status">&nbsp;&nbsp;Success&nbsp;&nbsp;</span></div><div class="TxDetail">{{TxData.blockHash}}</div><div class="TxDetail">{{TxData.blockNumber}}</div>
+                                  <div class="TxDetail">{{TxData.hash}}</div><div class="TxDetail"><span class="status">&nbsp;&nbsp;<i class="fa fa-check-circle"></i>&nbsp;Success&nbsp;&nbsp;</span></div><div class="TxDetail">{{TxData.blockHash}}</div><div class="TxDetail">{{TxData.blockNumber}}</div>
                                   <hr>
-                                  <div class="TxDetail">{{TxData.from}}</div><div class="TxDetail">{{TxData.to}}</div>
+                                  <div class="TxDetail" id="copytext" >{{TxData.from}}<i class="far fa-copy" style="margin-left:10px; cursor:pointer;" @click="copyToClickBoard(TxData.from)"></i></div><div class="TxDetail" @click="copyToClickBoard(TxData.to)">{{TxData.to}}<i class="far fa-copy" style="margin-left:10px; cursor:pointer;"></i></div>
                                   <hr>
-                                  <div class="TxDetail">{{TxData.gasPrice}}</div>
+                                  <div class="TxDetail" id="copytext2">{{TxData.gasPrice}}</div>
                                 </div>
                               
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
                             </div>
                           </div>
                         </div>
@@ -220,8 +219,6 @@
                       
                     </div>
 
-                    <!-- <div v-if="transactions.length===0">검색결과음슴</div>
-                    <div v-else>{{transactions}}</div> -->
                   </div>
               </div>
             </div>
@@ -231,36 +228,10 @@
 
 
 
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">NFT를 이전할 지갑 주소를 입력해주세요.</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-    
-				<div>
-					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
-						<label for="name" class="form__label">Account</label>
-					</div>
-				</div>
-
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="sendToken">transfer</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
 
 
     </div>
-    <!-- 내용 들어갈 곳 끝 -->
+
   </div>
 
 
@@ -301,11 +272,9 @@ export default {
 
   },
   setup() {
-    // const values = ref([])
+
     const store = useStore()
     const router = useRouter()
-    // const datas = 'ipfs://QmVHcbX4KFHGfdkWbaFNT6x66LKrHaKCdR1THD42pbMWc5'.substring(7)
-    // console.log(datas)
     const walletAddress = ref('')
     const nfts = ref([])
     
@@ -317,7 +286,7 @@ export default {
         console.log(res)
         TxData.value = res
         })
-      // console.log(TxData.value)
+    
     }
     
     
@@ -337,30 +306,23 @@ export default {
       store.state.searchednft = []
       },2000)
       
-      
-  
     }
   
+    // 지갑 검색 기록
     function addEntry() {
-      // Parse any JSON previously stored in allEntries
       var existingEntries = JSON.parse(localStorage.getItem(store.state.auth.user.email));
-      // console.log(existingEntries)
       if(existingEntries == null) existingEntries = [];
       var value = {
           "searchHistory": walletAddress.value,
       };
-      // console.log(value)
       localStorage.setItem("value", JSON.stringify(value));
-      // Save allEntries back to local storage
       existingEntries.push(value);
       localStorage.setItem(store.state.auth.user.email, JSON.stringify(existingEntries));
-      // console.log(localStorage.getItem(store.state.auth.user.email).searchHistory)
     };
 
     const histories = JSON.parse(localStorage.getItem(store.state.auth.user.email))
     const historiesUnique = []
     if (histories != [] && histories != null) {
-      // console.log(histories)
       histories.forEach(e => {
       if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <7) {
         console.log(e.searchHistory)
@@ -368,26 +330,14 @@ export default {
     }})
     }
 
-
-
-    console.log(histories)
-    console.log(historiesUnique)
     const convertedHistories = (x) => {
       
       return x.substring(0,8) + '...' + x.substring(34,42)
     }
 
     const historySearch = (x) => {
-      // nfts.value = []
       walletAddress.value = histories[x].searchHistory
       searchWallet()
-      // addEntry()
-      // searchNFTs(walletAddress.value)
-      // setTimeout(()=> {
-      //   nfts.value.push(...store.state.searchednft)
-      //   store.state.searchednft = []
-      // },3000)
-      
     } 
 
     // 필터 부분
@@ -541,6 +491,19 @@ export default {
       serialNumber.value = index.serialNumber
     }
 
+
+    // 주소 복사
+    function copyToClickBoard(val){
+      var content = val;
+      navigator.clipboard.writeText(content)
+          .then(() => {
+          console.log("Text copied to clipboard...")
+      })
+          .catch(err => {
+          console.log('Something went wrong', err);
+      })
+  
+      }
     return {
 
       searchWallet,
@@ -581,6 +544,7 @@ export default {
       price,
       serialNumber,
 
+      copyToClickBoard,
     }
   },
 
