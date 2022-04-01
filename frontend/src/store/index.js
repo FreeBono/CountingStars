@@ -11,6 +11,7 @@ export default createStore({
   walletInfo : [],
   blockEvent : [],
   },
+  ipfsData : [],
   getters: {
   },
   mutations: {
@@ -44,7 +45,10 @@ export default createStore({
     },
     SET_BLOCKEVENT(state,data) {
       state.blockEvent = data
-      
+    },
+    SET_IPFS(state,data) {
+      console.log(data)
+      state.ipfsData = data
     },
   
   },
@@ -69,6 +73,9 @@ export default createStore({
     },
     setBlockevent({commit}, data) {
       commit("SET_BLOCKEVENT",data)
+    },
+    setIpfs({commit}, data) {
+      commit("SET_IPFS",data)
     },
 
 

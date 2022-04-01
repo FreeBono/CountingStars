@@ -30,6 +30,7 @@
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "firebase": "^9.6.10",
+    "form-data": "^4.0.0",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
@@ -57,6 +58,7 @@
     "vue": "^3.2.31",
     "vue-chart-3": "^3.1.6",
     "vue-cookies": "^1.7.4",
+    "vue-excel-xlsx": "^1.2.2",
     "vue-next-select": "^2.10.3",
     "vue-router": "^4.0.3",
     "vue-select": "^4.0.0-beta.3",
@@ -66,6 +68,7 @@
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0",
     "web3": "^1.7.1",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {
