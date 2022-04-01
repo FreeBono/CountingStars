@@ -76,7 +76,7 @@
       </div>
         <div class="d-flex justify-content-center">
           <label class="front__text-hover btn btn-info" for="input-file" style="cursor: pointer;">엑셀 파일 업로드</label>
-          <input @change="changeExcelFile" type="file" id="input-file" style="display: none;">
+          <input id="input-file" type="file" @change="changeExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;">
         </div>
 
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
@@ -100,8 +100,8 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import { create } from "ipfs-http-client";
 import encodeImageFileAsURL from '../services/encodeImageFileAsURL'
-import readExcelFile from '../services/readExcelFile'
 import store from '@/store'
+import XLSX from "xlsx";
 
 Chart.register(...registerables);
 
@@ -251,26 +251,43 @@ export default {
     }
 
     const changeExcelFile = async function (event) {
-      readExcelFile(event.target.files[0]);
+      const file = event.target.files[0];
+      const reader = new FileReader(); //FileReader를 생성한다.
+      let tmpResult = {};
+
+      //성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
+      reader.onload = function(e) {
+          // let data = reader.result;
+          let data = e.target.result;
+          //바이너리 형태로 엑셀파일을 읽는다.
+          let workbook = XLSX.read(data, {type: 'binary'});
+          workbook.SheetNames.forEach(sheetName => {
+            workbook.Sheets[sheetName].A1.w = "test1";
+            workbook.Sheets[sheetName].B1.w = "test2";
+            workbook.Sheets[sheetName].C1.w = "test3";
+            workbook.Sheets[sheetName].D1.w = "test4";
+
+            console.log(workbook.Sheets[sheetName].A1);
+            const roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+            tmpResult = roa;
+          });
+          console.log(tmpResult);
+      };
+      //파일객체를 읽는다. 완료되면 원시 이진 데이터가 문자열로 포함됨.
+      reader.readAsBinaryString(file);
 
       // const formData = new FormData();
-
       // var excel = event.target.files[0];
-
       // formData.append('excel', excel);
-
       // // var cid = "";
-
       // axios
       // .post(`http://127.0.0.1:8081/api/v1/ipfs/excel`, formData)
       // .then(function (response) {
       //   console.log(response);
-
       // })
       // .catch(function (error) {
       //   console.log(error);
       // })
-
     }
 
     const testData = {
