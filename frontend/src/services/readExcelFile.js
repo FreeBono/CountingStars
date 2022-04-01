@@ -1,6 +1,6 @@
 import XLSX from "xlsx";
 
-export default async function encodeImageFileAsURL(excelFile) {
+export default async function readExcelFile(excelFile) {
   const reader = new FileReader(); //FileReader를 생성한다.
   let tmpResult = {};
 
