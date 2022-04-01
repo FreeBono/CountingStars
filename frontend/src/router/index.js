@@ -18,7 +18,6 @@ import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
 import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
 import PartnerCreate from '@/views/admin/PartnerCreate.vue'
-import Firebase from '@/components/common/Firebase.vue'
 
 
 import Pinata from "../components/Pinata.vue"
@@ -136,11 +135,6 @@ const routes = [
     path: '/partnercreate',
     name: 'PartnerCreate',
     component : PartnerCreate
-  },
-  {
-    path: '/firebase',
-    name: 'Firebase',
-    component : Firebase
   },
 ]
 

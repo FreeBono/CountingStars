@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div style="overflow-x: hidden">
     <!-- Navbar -->
     <Navbar />
     
@@ -65,8 +65,8 @@
         <div class="col-8" >
           <div class="row-vh d-flex flex-row justify-content-between">
             <div CLASS="absolute-img"><img src="@/assets/Cartier.png" alt="" ></div>
-            <div CLASS="absolute-img"><img src="@/assets/gucci.jpg" alt="" ></div>
-            <div CLASS="absolute-img"><img src="@/assets/ddd.jpg" alt=""></div>
+            <div CLASS="absolute-img"><img src="@/assets/gucci.png" alt="" ></div>
+            <div CLASS="absolute-img"><img src="@/assets/versace.png" alt=""></div>
           </div>
         
           <div class="row-vh d-flex flex-row justify-content-between">
@@ -167,26 +167,26 @@
       <p id="title4"> 관계를 강화시킵니다</p>
     </div>
   
-    <Carousel :items-to-show="2.5" :wrap-around="true">
-    <Slide v-for="slide in 10" :key="slide">
-      <div class="carousel__item">
-        <div class="row-vh d-flex flex-row" style="width:650px; height: 175px; background-color:#f4f4f4;">
-      <div style="height:175px; width:15%; line-height:175px;" >
-        <img src="@/assets/icon.png" alt="" style="height:50%; width:70%;">
-      </div>
-        <div style="width:70%; padding-top:30px;" align="left">
-          <div>
-          Production
+    <Carousel :items-to-show="2.5" :wrap-around="true" :autoplay="3000">
+    <Slide v-for="slide in slides" :key="slide">
+      <div class="carousel__item" style="width:90% ">
+        <!-- {{slide}} -->
+        <div class="row-vh d-flex" style="height: 175px; background-color:#f4f4f4; ">
+          <div style="height:150px;  line-height:175px; width:15%" >
+            <img src="@/assets/greenlogo.png" alt="" style="height:50%; width:50%; ">
           </div>
-          <div>
-          wefiowjifoewjiojiojwoifjo
+          <div style=" padding-top:50px; width:70%; padding-left:15px; padding-right :15px;" align="left">
+            <div>
+              {{slide.title}}
+            </div>
+            <div>
+              {{slide.content}}
+            </div>
+          </div>
+          <div style="height:175px;  background-color:white; line-height:175px; padding-left:7%; align:right; width:15%">
+            <img src="@/assets/gori.png" alt="" style="height:30%; " >
           </div>
         </div>
-      <div style="height:175px; width:15%; background-color:white; line-height:175px;">
-        <img src="@/assets/gori.png" alt="" style="height:30%; width:70%; margin-left:15px;" >
-      </div>
-    </div>
-
       </div>
     </Slide>
 
@@ -199,23 +199,24 @@
     <!-- 문의사항 -->
     <h1 style="margin-top: 150px;">지금 바로 시작해 보세요</h1>
     <p style="margin-top : 50px;">컨소시엄의 일원이 되어 저희 <span style="color: #2dce89;">COUNTING STARS</span>가 제공하는 기술 솔루션의 이점을 누리고 싶다면 언제든 문의주십시오</p>
-    <button style="cursor: pointer; background-color: #2dce89; border:none; margin:20px; margin-top: 50px; width:251px; height:35px; color: #303030; border-radius:5px;">FOR GENERAL INQUIRIES</button><br>
-    <button style="cursor: pointer; background-color: #2dce89; border:none; margin:20px; width:221px; height:35px; color : #303030; border-radius:5px;">FOR PRESS INQUIRIES</button>
+    <button onclick="location.href='mailto:ehdgus6191@gmail.com'" style="cursor: pointer; background-color: #2dce89; border:none; margin:20px; margin-top: 50px; width:251px; height:35px; color: #303030; border-radius:5px;">FOR GENERAL INQUIRIES</button><br>
+    <button onclick="location.href='mailto:ehdgus6191@gmail.com'" style="cursor: pointer; background-color: #2dce89; border:none; margin:20px; width:221px; height:35px; color : #303030; border-radius:5px;">FOR PRESS INQUIRIES</button>
     
 
 
     <!-- footer -->
-    <hr style="height:2px; margin-top:180px;">
-    <!-- <center style="margin-top:40px;">
+    <hr style="height:2px; margin-top:150px;">
+    <center style="margin-top:70px;">
       <div style="height :60px; width : 200px">
         <img src="@/assets/cslogo.png" alt="" style="height:100%; width:60px;">
         <span style="margin-left:10px;">Counting Stars</span>
       </div>
       <div style="margin-top:20px;">2022 Counting Stars. All rights reserved | SSAFY</div>
-    </center> -->
+    </center>
 
 
   </div>
+  
 </template>
 
 <script>
@@ -226,6 +227,8 @@ import LoginModal from "../components/accounts/LoginModal.vue"
 import testt from '@/services/testt'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+
+
 
 export default {
   name : "Mainpage",
@@ -238,11 +241,20 @@ export default {
     LoginModal,
   },
   setup() {
-  
-  
+    const slides = [
+      {title : 'Production', content : '제품 라이프 사이클 전체에 걸쳐 거래 가능한 컨디션을 실현하기 위해 각 제품에 고유한 디지털 ID를 생성합니다.'},
+      {title : 'Distribution', content : '제품 디지털 보증서에 모든 거래내역을 저장합니다.'},
+      {title : 'Purchase', content : '제품이 진품임을 보증하고 투명한 생산정보에 접근할 수 있는 디지털 인증서 발급'},
+      {title : 'Care', content : '확실한 제품 정보를 디지털 인증서에 기입하여 수리, 보수 등이 쉽도록 한다.'},
+      {title : 'Reselling', content : '디지털 증명서로 제품의 신뢰성을 보증하고 중고 거래시 정품 인증이 가능하도록 하여 중고 시장 영향력 강화'},
+    ]
+    
+    
+    // location.scrollIntoView();
     
     return {
-      
+      slides,
+      // location,
     }
   }
 }
@@ -263,6 +275,7 @@ export default {
   font-family: 'NanumBarunGothicYetHangul';
   /* font-family: 'Spoqa Han Sans Neo', 'Malgun Gothic', sans-serif; */
   /* font-family: 'Hahmlet', serif; */
+  
 }
 
 ::selection {
@@ -367,4 +380,6 @@ export default {
 .modal-content{
   border-radius: 4rem;
 }
+
+
 </style>

@@ -4,11 +4,12 @@
       <div class="card" v-if="check">
           <form action="#" class="d-flex flex-column">
               <div class="h3 text-center text-white">Login</div>
-              <div class="d-flex align-items-center input-field my-3 mb-4" > <span class="far fa-user p-2"></span> <input type="text" placeholder="Email" required class="form-control" v-model="loginData.email"> </div>
-              <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" id="pwd" v-model="loginData.password"><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field mt-3 mb-1" > <span class="far fa-user p-2"></span> <input type="text" placeholder="Email" required class="form-control" v-model="loginData.email" @blur="emailValidation"> </div>
+              <div v-if="!loginData.emailValidationFlag" align="left" style="color:red;">유효하지 않은 이메일이요</div>
+              <div class="d-flex align-items-center input-field my-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" id="pwd" v-model="loginData.password" ><span class="fas fa-eye-slash"></span></div>
               <div class="d-sm-flex align-items-sm-center justify-content-sm-between">
-                  <div class="d-flex align-items-center"> <label class="option"> <span class="text-light-white">Remember Me</span> <input type="checkbox" checked> <span class="checkmark"></span> </label> </div>
-                  <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div>
+                  <!-- <div class="d-flex align-items-center"> <label class="option"> <span class="text-light-white">Remember Me</span> <input type="checkbox" checked> <span class="checkmark"></span> </label> </div>
+                  <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div> -->
               </div>
               <div class="my-3"> <span class="btn btn-primary" @click="login()">Login</span> </div>
               <div class="mb-3"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
@@ -26,10 +27,13 @@
       <div class="card" v-else>
           <form action="#" class="d-flex flex-column">
               <div class="h3 text-center text-white">Sign up</div>
-              <div class="d-flex align-items-center input-field my-3 mb-4" > <span class="far fa-user p-2"></span> <input type="text" placeholder="Email" required class="form-control" v-model="signupData.email"> </div>
+              <div class="d-flex align-items-center input-field mt-3 mb-1" > <span class="far fa-user p-2"></span> <input type="text" placeholder="Email" required class="form-control" v-model="signupData.email" @blur="SignupEmailValidation"> </div>
+              <div v-if="!signupData.emailValidationFlag" align="left" style="color:red;" >유효하지 않은 이메일이요</div>
               <div class="d-flex align-items-center input-field my-3 mb-4" > <span class="far fa-user p-2"></span> <input type="text" placeholder="username" required class="form-control" v-model="signupData.username"> </div>
-              <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" v-model="signupData.password"><span class="fas fa-eye-slash"></span></div>
-              <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="PasswordConfirmation" required class="form-control" v-model="signupData.passwordConfirmation"><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field mb-3"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" v-model="signupData.password" @blur="passwordValidation"><span class="fas fa-eye-slash"></span></div>
+              <div class="mb-2" v-if="!passwordValidFlag" align="left">Your password is not allowed</div>
+              <div class="d-flex align-items-center input-field mb-3"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="PasswordConfirmation" required class="form-control" v-model="signupData.passwordConfirmation" @blur="passwordCheck"><span class="fas fa-eye-slash"></span></div>
+              <div class="mb-2" align="left" v-if="!passwordFlag" >Check your password</div>
               <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="text" placeholder="Admin Code" required class="form-control" v-model="signupData.roles"><span class="fas fa-eye-slash"></span></div>
               <!-- <div class="d-sm-flex align-items-sm-center justify-content-sm-between" style="padding-left:0px">
                 <div class="d-flex align-items-center input-field mb-4 w-75" style="margin-right:10px;" > <span class="fas fa-lock p-2"></span> <input type="text" placeholder="phone" required class="form-control" > <button class="btn" onclick="showPassword()"> <span class="fas fa-eye-slash"></span> </button> </div>
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref,computed} from 'vue'
 import {useStore} from 'vuex'
 import LoginKakao from '../LoginKakao.vue'
 import {useRouter} from 'vue-router'
@@ -66,6 +70,7 @@ export default {
     const loginData = ref({
         email : '',
         password : '',
+        emailValidationFlag : true,
     })
     const signupData = ref({
         name : '',
@@ -74,11 +79,12 @@ export default {
         password : '',  
         passwordConfirmation : '',
         roles : '',
+        emailValidationFlag : true,
         
     }) 
     const message = ''
-    
-    
+    const passwordFlag = ref(true)
+    const passwordValidFlag = ref(true)
 
 
 
@@ -149,9 +155,48 @@ export default {
     }
 
     
+    //정규식
+//     computed: {
+//     emailValidation() {
+//         let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+//         return re.test(this.userItems.id);
+//     }
+// }
+    const emailValidation = computed(() => {
+        let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        if (re.test(loginData.value.email)) {
+            loginData.value.emailValidationFlag = true
+        } else {
+            loginData.value.emailValidationFlag = false
+        }
+    })
 
+    const SignupEmailValidation = computed(() => {
+        let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        if (re.test(signupData.value.email)) {
+            signupData.value.emailValidationFlag = true
+        } else {
+            signupData.value.emailValidationFlag = false
+        }
+    })
+
+    const passwordCheck = computed(() => {
+        if ( signupData.value.password == signupData.value.passwordConfirmation) {
+            passwordFlag.value = true
+        } else {
+            passwordFlag.value = false
+        }
+    })
+
+    const passwordValidation = computed(() => {
+        let re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/i
+        if (re.test(signupData.value.password)) {
+            passwordValidFlag.value = true
+        } else {
+            passwordValidFlag.value = false
+        }
+    })
     
-
 
     return {
         goSignup,
@@ -163,7 +208,14 @@ export default {
         signupData,
         signup,
         kakaologin,
-      
+        emailValidation,
+        SignupEmailValidation,
+        passwordCheck,
+        passwordFlag,
+        passwordValidation,
+        passwordValidFlag,
+
+
     }
     }
 }
