@@ -156,7 +156,7 @@ export default {
 
       const ipfs = create({
         host: "j6e204.p.ssafy.io/ipfs",
-        port: 443,
+        // port: 443,
         protocol: "https",
       });
 
