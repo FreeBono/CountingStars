@@ -152,7 +152,17 @@
                   <!-- <hr style="margin-top:15px 0;"> -->
                   <div align="center" >
                     <div class="row-vh d-flex flex-row justify-content-around">
-                      <div>a</div>
+                      <div>
+                        <div class="row-vh d-flex flex-row justify-content-around">
+                          <div>1</div>
+                          <div>
+                            <div>아이디</div>
+                            <div>주소</div>
+                          </div>
+                          
+                          <div>개수</div>
+                        </div>
+                      </div>
                       <div>ab</div>
                       <div>abc</div>
 
