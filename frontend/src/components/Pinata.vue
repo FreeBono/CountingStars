@@ -155,7 +155,7 @@ export default {
       // const ipfs = create('/ip4/172.17.0.1/tcp/5001');
 
       const ipfs = create({
-        host: "j6e204.p.ssafy.io",
+        host: "j6e204.p.ssafy.io/ipfs",
         port: 5001,
         protocol: "https",
       });
