@@ -2,9 +2,9 @@
   <!-- <h2>My NFT 상세보기</h2> -->
   <sidebar/>
   
-  <div class="test">
+  <!-- <div class="test"> -->
   <div class="wrapper">
-
+    
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
@@ -16,7 +16,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:20px; text-align:left" >  
                     <div >TOTAL NFTS</div>
-                    <div >{{nfts.length}}</div>
+                    <!-- <div >{{nfts.length}}</div> -->
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
@@ -31,9 +31,9 @@
                 <div class="media" style="overflow:hidden; ">
                   <div class="media-body" style="float:left; margin-top:18px;">  
                     <div style="text-align:left;">MAIN WALLET ADDRESS</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet.length >= 1">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div>
+                    <!-- <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-if="myWallet.length >= 1">{{myWallet.substring(0,10)}} ... {{myWallet.substring(32,42)}}</div>
                     <div align="left" style="word-break:break-all;" @click="copyToClickBoard" v-else>지갑을 설정해주세요..</div>
-                    <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div>
+                    <div align="left" style="word-break:break-all; display:none;" id="copytext" @click="copyToClickBoard" >{{myWallet}}</div> -->
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fas fa-wallet fa-3x" style="color: #9d6510;"></i>
@@ -48,7 +48,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:15px; text-align:left;">  
                     <div>TOTAL WORTH</div>
-                    <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
+                    <!-- <div align="left">{{worth.toLocaleString('ko-KR')}}$</div> -->
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
@@ -63,7 +63,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:15px; text-align:left;">  
                     <div>HIGHEST PRICE</div>
-                    <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
+                    <!-- <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div> -->
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
@@ -110,7 +110,8 @@
 
 
                 <div class="row" >
-                  <div align="left" >NFT 목록</div>
+                  <div align="left" >NFT 목록></div>
+                  
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
                     <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
@@ -219,10 +220,10 @@
               <!-- <div class="container justify-content-center"> -->
                 <div align="left" >메인 지갑 설정</div>
                 <div class="row" style="" >
-                  
+                  <div>{{testt}}</div>
                   <!-- <hr style="margin:15px 0;"> -->
                   <!-- <div>현재 지갑 주소 </div> -->
-                  <DoughnutChart :chartData="testData" style="width:100%; "/>
+                  <!-- <DoughnutChart :chartData="tes tData" style="width:100%; "/> -->
                   
                 </div>
             
@@ -241,7 +242,7 @@
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -264,7 +265,7 @@ Chart.register(...registerables);
 
 
 export default {
-  name: 'NftTransfer',
+  name: 'MyNfts',
   components: {
     Sidebar,
     DoughnutChart,
@@ -285,7 +286,7 @@ export default {
     // const store = useStore()
     const nfts = ref([])
 		const receiveAccount = ref('')
-    nfts.value = []
+    const testt = store.state.nftValues
 
 
     function sendNft() {
@@ -296,11 +297,11 @@ export default {
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
     }
-    if (store.state.nftValues.length === 0) {
-      LookupNFTs()
-    }
+    // if (store.state.nftValues.length === 0) {
+    //   LookupNFTs()
+    // }
     nfts.value = store.state.nftValues
-
+    console.log(nfts.value)
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -313,22 +314,22 @@ export default {
 		}
     
 
-    const worth = computed(() => {
-      return store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}).reduce(function(a,b) { return a+b;},0)
-    })
+    // const worth = computed(() => {
+    //   return store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}).reduce(function(a,b) { return a+b;},0)
+    // })
 
-    const highestPrice = computed(() => {
-      return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
-      })
+    // const highestPrice = computed(() => {
+    //   return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
+    //   })
 
     // 메인 지갑 설정
     const myWallet = ref('')
-    if (store.state.userInfo.address) {
-      myWallet.value = store.state.userInfo.address
-      return
-    } else if (store.state.walletInfo) {
-      myWallet.value = store.state.walletInfo
-    }
+    // if (store.state.userInfo.address) {
+    //   myWallet.value = store.state.userInfo.address
+    //   return
+    // } else if (store.state.walletInfo) {
+    //   myWallet.value = store.state.walletInfo
+    // }
 
     // const myWallet = ref(store.state.auth.user.address)
     const walletAddress = ref('')
@@ -420,7 +421,7 @@ export default {
 
       // filter 사용될 데이터들
     
-    const filters = ref([null,null,null])
+    // const filters = ref([null,null,null])
   
 
     const brandOpt = ref([ { value: null, text: '브랜드' }])
@@ -477,9 +478,9 @@ export default {
 
     
     
-    const searchPaging = () => {
-      rowws.value = store.state.nftValues.length;
-    }
+    // const searchPaging = () => {
+    //   rowws.value = store.state.nftValues.length;
+    // }
 
     // 검색 초기화
     const searchInit = () => {
@@ -603,8 +604,8 @@ export default {
 			sendToken,
 			tokenNum,
       tokenChangeNum,
-      worth,
-      highestPrice,
+      // worth,
+      // highestPrice,
       checkAccount,
       walletAddress,
       privatekey,
@@ -622,7 +623,7 @@ export default {
       searchOpt,
       word,
       searchInit,
-      searchPaging,
+      // searchPaging,
       headerSel,
       brandSel,
       searchTitle,
@@ -640,6 +641,7 @@ export default {
       price,
       serialNumber,
       userRole,
+      testt,
     }
   },
 }
