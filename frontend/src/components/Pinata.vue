@@ -77,6 +77,7 @@
         <div class="d-flex justify-content-center">
           <label class="front__text-hover btn btn-info" for="input-file" style="cursor: pointer;">엑셀 파일 업로드</label>
           <input @change="changeExcelFile" type="file" id="input-file" style="display: none;">
+          <input id="input-file" type="file" @change="changeExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;">
         </div>
 
         <button @click="transferJSON" class="btn btn-primary">NFT 등록</button>
@@ -99,8 +100,11 @@ import { Chart, registerables } from "chart.js";
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import { create } from "ipfs-http-client";
-import encodeImageFileAsURL from '../utils/encodeImageFileAsURL'
 import {useStore} from 'vuex'
+import encodeImageFileAsURL from '../services/encodeImageFileAsURL'
+import store from '@/store'
+import XLSX from "xlsx";
+
 Chart.register(...registerables);
 
 export default {
@@ -118,20 +122,22 @@ export default {
       detailProductClassification: 'Class Bag',
       material: 'cowhide',
       productColor: 'black',
-      productPrice: '5,700$',
+      productPrice: '5,700',
       nftImg: null,
       nftImgFile: null,
       downImage: null,
     })
     const test = ref('')
 
+    const imageRef = ref('');
+
     const imageData = (event) => {
       state.value.nftImg = event.nftImg
       state.value.nftImgFile = event.nftImgFile
       encodeImageFileAsURL(state.value.nftImgFile)
       test.value = store.state.ipfsData
+      imageRef.value = store.state.ipfsData
     }
-
 
     const transferJSON = async function () {
       const metadata = {
@@ -146,15 +152,68 @@ export default {
         material: state.value.material,
         productColor: state.value.productColor,
         productPrice: state.value.productPrice,
+        image: imageRef.value,
       }
 
-      const ipfs = create(`/ip4/127.0.0.1/tcp/5001`);
+      // http://172.17.0.1:5001
+      // const ipfs = create('/ip4/127.0.0.1/tcp/5001');
+
+      const ipfs = create();
+
+      console.log("동작하는건가???");
+
+      // api/v0/add
+      ipfs
+      .add(JSON.stringify(metadata))
+      .then(res => {
+        console.log("ipfs add 요청 성공");
+        console.log(res);
+      });
+
+      // axios
+      // .post('http://172.17.0.1:5001/api/v0/add', metadata)
+      // .then( res => {
+      //   console.log(res);
+      // })
+      // .catch( e => {
+      //   console.error(e);
+      // });
+
+      // axios({
+      //   method: 'post',
+      //   url : `http://172.17.0.1:5001/api/v0/add`
+      // }, metadata)
+      // .then(res => console.log(res.data))
+      // .catch(err => console.log(err))
+
+      // const ipfs = create(
+      //   host: "127.0.0.1",
+      //   port: 5001,
+      //   protocol: "http"
+      // });
+
+
+      // const uploadIpfs = await ipfs.add(JSON.stringify(metadata));
+
+      // console.log(uploadIpfs.path);
+
+      // axios
+      // .post('http://127.0.0.1:5001/api/v0/add', metadata)
+      // .then( res => {
+      //   console.log(res);
+      // })
+      // .catch( e => {
+      //   console.log(e);
+      // });
 
       // console.log(state.value.nftImgFile);
-      
-      
-      
-    
+
+      // console.log(state.value.nftImg);
+
+
+      // encodeImageFileAsURL(state.value.nftImgFile).then(res  => {
+      //   console.log(res);
+      // })
 
       // console.log(base64File);
 
@@ -205,24 +264,43 @@ export default {
     }
 
     const changeExcelFile = async function (event) {
-      const formData = new FormData();
+      // const file = event.target.files[0];
+      // const reader = new FileReader(); //FileReader를 생성한다.
+      // let tmpResult = {};
 
-      var excel = event.target.files[0];
+      //성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
+      // reader.onload = function(e) {
+          // let data = reader.result;
+          // let data = e.target.result;
+          //바이너리 형태로 엑셀파일을 읽는다.
+      //     let workbook = XLSX.read(data, {type: 'binary'});
+      //     workbook.SheetNames.forEach(sheetName => {
+      //       workbook.Sheets[sheetName].A1.w = "test1";
+      //       workbook.Sheets[sheetName].B1.w = "test2";
+      //       workbook.Sheets[sheetName].C1.w = "test3";
+      //       workbook.Sheets[sheetName].D1.w = "test4";
 
-      formData.append('excel', excel);
+      //       console.log(workbook.Sheets[sheetName].A1);
+      //       const roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+      //       tmpResult = roa;
+      //     });
+      //     console.log(tmpResult);
+      // };
+      //파일객체를 읽는다. 완료되면 원시 이진 데이터가 문자열로 포함됨.
+      // reader.readAsBinaryString(file);
 
-      // var cid = "";
-
-      axios
-      .post(`http://127.0.0.1:8081/api/v1/ipfs/excel`, formData)
-      .then(function (response) {
-        console.log(response);
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-
+      // const formData = new FormData();
+      // var excel = event.target.files[0];
+      // formData.append('excel', excel);
+      // // var cid = "";
+      // axios
+      // .post(`http://127.0.0.1:8081/api/v1/ipfs/excel`, formData)
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
     }
 
     const testData = {

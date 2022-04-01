@@ -11,7 +11,6 @@ import com.ssafy.cstars.domain.repository.BrandAdminRepository;
 import com.ssafy.cstars.domain.repository.BrandRepositorySupport;
 import com.ssafy.cstars.service.BrandService;
 import com.ssafy.cstars.util.ImageUtil;
-import com.ssafy.cstars.util.IpfsUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
