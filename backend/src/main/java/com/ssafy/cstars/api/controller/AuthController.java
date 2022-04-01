@@ -33,10 +33,10 @@ import com.ssafy.cstars.domain.repository.StoreAdminRepository;
 import com.ssafy.cstars.domain.repository.UserRepository;
 import com.ssafy.cstars.exception.TokenRefreshException;
 import com.ssafy.cstars.security.jwt.JwtUtils;
-import com.ssafy.cstars.security.services.BrandAdminDetailsImpl;
-import com.ssafy.cstars.security.services.RefreshTokenService;
-import com.ssafy.cstars.security.services.StoreAdminDetailsImpl;
-import com.ssafy.cstars.security.services.UserDetailsImpl;
+import com.ssafy.cstars.service.BrandAdminDetailsImpl;
+import com.ssafy.cstars.service.RefreshTokenService;
+import com.ssafy.cstars.service.StoreAdminDetailsImpl;
+import com.ssafy.cstars.service.UserDetailsImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
