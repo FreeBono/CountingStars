@@ -576,8 +576,6 @@ export default {
 
     // 디테일 모달
     const goDetailModal = (index) => {
-      console.log(index, '뭘까?')
-      console.log(index.brandName, '모달 함수 브랜드 뭘까?')
       showDetailModal.value = true;
       selectedBrandName.value = index.brandName;
       selectBrandImg.value = index.image;
@@ -593,7 +591,6 @@ export default {
     }
 
     const userRole = store.state.userInfo
-    console.log(userRole.role, '유저정보')
 
     return {
       goMyNftDetail,
