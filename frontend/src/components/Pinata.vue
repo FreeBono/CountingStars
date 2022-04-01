@@ -150,6 +150,7 @@ export default {
         image: test.value,
       }
 
+      // http://172.17.0.1:5001
       const ipfs = create('/ip4/172.17.0.1/tcp/5001');
 
       // const ipfs = create({
