@@ -5,7 +5,7 @@
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <p class="head_title">NFT 발급</p>
+        <div class="head_title">NFT 발급</div>
       </div>
       <div class="content_outside_box">
         <div class="content_box row-vh d-flex flex-row">
@@ -145,9 +145,9 @@ export default {
 
 .head_title {
   color: white;
-  display: flex;
-  margin-left: 300px;
-  margin-top: 30px;
+  position:absolute; 
+  margin-left:100px; 
+  margin-top: 50px;
 }
 
 .nft_img {
