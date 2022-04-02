@@ -167,67 +167,46 @@
           </div>
         </div>
 
-        <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:900px;">
-          <div  class="container-fluid">
+        <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:700px;">
+          <!-- <div  class="container-fluid"> -->
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
                   <!-- <hr style="margin-top:15px 0;"> -->
                   
-                    <div class="row-vh d-flex flex-row justify-content-around">
+                    <div class="row-vh d-flex flex-row justify-content-around" style="margin-left:7%;" >
                       <div class="row-vh d-flex flex-column" >
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+1}}</div>
-                            <div style="padding-left:15px; text-align:left; width:75%;">
+                            <div style="padding-left:5px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
-                              <div style="font-size:14px;">{{item.address}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
                               
                             </div>
-                            <!-- <div style=" padding-left:20px; font-size : 25px; width:15%;;">
-                              <div style="font-size:14px;">
-                                token
-                              </div>
-                              <div>
-                              {{item.countTransaction}}
-                              </div>
-                            </div> -->
+            
                           </div>                       
                       </div>
-                      <div class="row-vh d-flex flex-column" >
+                      <div class="row-vh d-flex flex-column" style="margin-left:40px;" >
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+4}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
-                              <div style="font-size:14px;">{{item.address}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
                               
                             </div>
-                            <!-- <div style="margin-top:5px;  padding-left:20px; font-size : 25px; width:15%;;">
-                              <div style="font-size:14px;">
-                                token
-                              </div>
-                              <div>
-                              {{item.countTransaction}}
-                              </div>
-                            </div> -->
+                 
                           </div>                       
                       </div>
-                      <div class="row-vh d-flex flex-column" >
+                      <div class="row-vh d-flex flex-column" style="margin-left:40px;">
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+7}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
-                              <div style="font-size:14px;">{{item.address}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
                               
                             </div>
-                            <!-- <div style="margin-top:5px;  padding-left:20px; font-size : 25px; width:40%;">
-                              <div style="font-size:14px;">
-                                token
-                              </div>
-                              <div style="padding-left:5px;">
-                              {{item.countTransaction}}
-                              </div>
-                            </div> -->
+              
                           </div>                       
                       </div>
                       
@@ -245,7 +224,7 @@
 
                   </div>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
         </div>
     

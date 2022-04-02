@@ -490,8 +490,8 @@ let contract = new web3.eth.Contract( [
   }
 ], "0xc57Fdd9b62B985861440782d6eD0B9c5a1F9f81f")
 
-console.log('contract 확인 : ',contract)
-console.log(`ipfs://${publisher}`)
+// console.log('contract 확인 : ',contract)
+// console.log(`ipfs://${publisher}`)
 const abc = await contract.methods.mintNFT("0x73007929D907b5B830A0A7CAF9C686Ca561B88d1",`ipfs://${publisher}`).send({from: "0xA4F883c083450f9D06B2bc5BaA31eEFB7d689D09",gas:600000, })
-console.log(abc)
+// console.log(abc)
 }

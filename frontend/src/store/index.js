@@ -47,7 +47,7 @@ export default createStore({
       state.blockEvent = data
     },
     SET_IPFS(state,data) {
-      console.log(data)
+      // console.log(data)
       state.ipfsData = data
     },
   
