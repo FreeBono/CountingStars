@@ -39,13 +39,16 @@
 </template>
 
 <script>
-import {computed ,onMounted, } from 'vue'
+import {ref, computed ,onMounted, } from 'vue'
 import {useStore} from 'vuex'
 import {useRouter} from 'vue-router'
 import LoginModal from './accounts/LoginModal.vue'
 import LookupNFTs from '@/utils/LookupNFT.js'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client'
+
 
 export default {
   name : "Navbar",
@@ -168,6 +171,60 @@ export default {
       }
     }
 
+    //socket test
+    
+    // const recvList = ref([])
+    // const connected = ref(true)
+    // const stompClient = ref('')
+    // const receiver = 'ROLE_BRAND_ADMIN'
+    // const sender = store.state.userInfo.email
+    // const connect = () => {
+    //   const serverURL = "http://localhost:8080/alarm"
+    //   let socket = new SockJS(serverURL);
+    //   stompClient.value = Stomp.over(socket);
+    //   console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+    //   stompClient.value.connect(
+    //     {},
+    //     frame => {
+    //       connected.value = true;
+    //       console.log('소켓 연결 성공', frame);
+
+    //       if(store.state.userInfo.role == 'ROLE_BRAND_ADMIN'){
+    //         stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.role, res => {
+    //           console.log('구독으로 받은 메시지 입니다.', res.body);
+    //           recvList.value.push(JSON.parse(res.body))
+    //         });
+    //       }else{
+    //         stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.sender, res => {
+    //           console.log('구독으로 받은 메시지 입니다.', res.body);
+    //           recvList.value.push(JSON.parse(res.body))
+    //         });
+    //       }
+    //     },
+    //     error => {
+    //       console.log('소켓 연결 실패', error);
+    //       connected.value = false;
+    //     }
+    //   ); 
+    // }
+
+    // const send = () => {
+    //   console.log("Send message:" + receiver + sender);
+    //   if (stompClient.value && stompClient.value.connected) {
+    //     const msg = { 
+    //       sender: sender,//보내는사람정보
+    //       receiver : receiver,//받는사람
+    //       productName: 'productname',//이전할상품정보
+    //     };
+    //     stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+    //   }
+    // }
+
+    // const sendAlarm = (e) => {
+    //   send()
+    // }
+
+    // connect()
 
     return {
       // divTag1,
@@ -178,6 +235,13 @@ export default {
       getAccount,
       goScroll,
       goNftpage,
+      // connect,
+      // recvList,
+      // connected,
+      // stompClient,
+      // receiver,
+      // sender,
+      // sendAlarm,
     }
   }
 }

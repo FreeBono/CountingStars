@@ -291,7 +291,6 @@ import TransferToken from '@/utils/TransferNFT.js'
 import Graph from '@/components/Graph'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
-
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 
@@ -302,18 +301,9 @@ export default {
     Sidebar,
     Graph,
   },
-  data(){
-    return{
-      role : this.userRole.role, //역할
-      sender : this.userRole.email, //해당이메일
-      receiver : 'ROLE_BRAND_ADMIN',
-      recvList : [],
-      registerDate : ""
-    }
-  },
+ 
   setup() {
     const store = useStore()
-    const userRole = store.state.userInfo;
     const router = useRouter()
     // const store = useStore()
     const nfts = ref([])
@@ -565,6 +555,63 @@ export default {
     const serialNumber = ref(null)
 
 
+    //socket test
+
+    const recvList = ref([])
+    const connected = ref(true)
+    const stompClient = ref('')
+    const receiver = 'ROLE_BRAND_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함
+    const sender = store.state.userInfo.email
+    const connect = () => {
+      const serverURL = "http://localhost:8080/alarm"
+      let socket = new SockJS(serverURL);
+      stompClient.value = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      stompClient.value.connect(
+        {},
+        frame => {
+          connected.value = true;
+          console.log('소켓 연결 성공', frame);
+
+          if(store.state.userInfo.role == 'ROLE_BRAND_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
+            stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.role, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }else{//일반 유저면 자기 email을 구독해야함
+            stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.sender, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          connected.value = false;
+        }
+      ); 
+    }
+
+    connect()
+
+    const send = () => {
+      console.log("Send message:" + receiver + sender);
+      if (stompClient.value && stompClient.value.connected) {
+        const msg = { 
+          sender: sender,//보내는사람정보
+          receiver : receiver,//받는사람
+          productName: 'productname',//이전할상품정보
+        };
+        stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+      }
+    }
+
+    const sendAlarm = (e) => {
+      send()
+    }
+    
+
+
     return {
       goMyNftDetail,
       sendNft,
@@ -607,58 +654,23 @@ export default {
       productColor,
       price,
       serialNumber,
+      
+      //socket
+      connect,
+      recvList,
+      connected,
+      stompClient,
+      receiver,
+      sender,
+      sendAlarm,
+      send,
+      
 
-      userRole
+     
     }
   },
-  created() {
-      this.connect() 
-  },
-  methods: {
-    sendAlarm (e) {
-        this.send()
-    },
-    send() {
-      console.log("Send message:" + this.receiver + this.sender);
-      if (this.stompClient && this.stompClient.connected) {
-        const msg = { 
-          sender: this.sender,//보내는사람정보
-          receiver : this.receiver,//받는사람
-          productName: 'productname',//이전할상품정보
-        };
-        this.stompClient.send("/pub/pubs", JSON.stringify(msg), {});
-      }
-    },
-    connect() {
-      const serverURL = "http://localhost:8080/alarm"
-      let socket = new SockJS(serverURL);
-      this.stompClient = Stomp.over(socket);
-      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
-      this.stompClient.connect(
-        {},
-        frame => {
-          this.connected = true;
-          console.log('소켓 연결 성공', frame);
-
-          if(this.role == 'ROLE_BRAND_ADMIN'){
-            this.stompClient.subscribe("/sub/channel/"+this.role, res => {
-              console.log('구독으로 받은 메시지 입니다.', res.body);
-              this.recvList.push(JSON.parse(res.body))
-            });
-          }else{
-            this.stompClient.subscribe("/sub/channel/"+this.sender, res => {
-              console.log('구독으로 받은 메시지 입니다.', res.body);
-              this.recvList.push(JSON.parse(res.body))
-            });
-          }
-        },
-        error => {
-          console.log('소켓 연결 실패', error);
-          this.connected = false;
-        }
-      ); 
-    }
-  }
+  
+  
 }
 </script>
 

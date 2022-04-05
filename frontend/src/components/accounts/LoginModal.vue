@@ -127,17 +127,22 @@ export default {
         if (signupData.value.roles === '') {
             signupData.value.roles = ["ROLE_USER"]
         } else if (signupData.value.roles === 'store1') {
-            signupData.value.store = 
+            signupData.value['store'] = 'cartier' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
         } else if (signupData.value.roles === 'store2') {
+            signupData.value['store'] = 'gucci' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
         } else if (signupData.value.roles === 'store3') {
+            signupData.value['store'] = 'versace' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
         } else if (signupData.value.roles === 'store4') {
+            signupData.value['store'] = 'louis vuitton' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
         } else if (signupData.value.roles === 'store5') {
+            signupData.value['store'] = 'prada' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
         } else if (signupData.value.roles === 'store6') {
+            signupData.value['store'] = 'fendi' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
         }
         
