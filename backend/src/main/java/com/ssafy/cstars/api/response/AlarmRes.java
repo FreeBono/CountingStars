@@ -24,12 +24,6 @@ public class AlarmRes {
     @ApiModelProperty(name = "alarm sender")
     String sender;
 
-
-
-
-
-
-
     public static AlarmRes of(Alarm alarm){
         AlarmRes res = new AlarmRes();
 

@@ -1,4 +1,4 @@
-package com.ssafy.cstars.stomp;
+package com.ssafy.cstars.api.controller;
 
 import com.ssafy.cstars.api.response.AlarmListRes;
 import com.ssafy.cstars.api.response.AlarmRes;
@@ -37,9 +37,9 @@ public class AlarmController {
 
     @GetMapping("/{receiver}")
     public ResponseEntity<Page<AlarmRes>> getBrandList(@PathVariable(name = "receiver") String receiver, @PageableDefault(page = 0, size = 10) Pageable pageable){
-
+        System.out.println("!!!");
         Page<Alarm> alarms = alarmService.GetAlarmList(pageable, receiver);
-
+        System.out.println(alarms + "알람");
         if(alarms != null){
             return ResponseEntity.status(200).body(AlarmListRes.of(alarms));
         }else{
