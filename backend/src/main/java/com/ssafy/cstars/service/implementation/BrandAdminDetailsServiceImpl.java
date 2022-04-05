@@ -1,8 +1,9 @@
-package com.ssafy.cstars.security.services;
+package com.ssafy.cstars.service.implementation;
 
 import com.ssafy.cstars.domain.entity.BrandAdmin;
 import com.ssafy.cstars.domain.repository.BrandAdminRepository;
 
+import com.ssafy.cstars.service.BrandAdminDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

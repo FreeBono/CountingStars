@@ -1,9 +1,9 @@
 <template>
   <!-- <h2>관리자 페이지</h2> -->
-    <sidebar/>
   <div class="wrapper">
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
+    <sidebar/>
       <div class="header">
         <p class="head_title">ADMIN</p>
       </div>
@@ -13,31 +13,31 @@
         <div class="content_outside_box">
           <div class="mt--6 container">
             <div class="row">
-              <div class="col col-lg-4">
-                <!-- 카드 -->
-                <div class="card" @click="goNoticeMain" style="background-color: #9950F4; width: 20rem;">
-                  <img class="card=img-top" src="icon.png" alt="공지사항">
-                  <div class="card-body">
-                    <h4 class="card-title h2 bm-0">공지사항</h4>
+                <div class="col col-lg-4">
+                  <!-- 카드 -->
+                  <div class="card" @click="goNoticeMain" style="background-color: #9950F4; width: 20rem;">
+                    <img class="card=img-top" src="@/assets/icon.png" alt="공지사항">
+                    <div class="card-body">
+                      <h4 class="card-title h2 bm-0">공지사항</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col col-lg-4">
-                <div class="card" @click="goPartenrManagement" style="background-color: #526EFF; width: 20rem;">
-                  <img class="card=img-top" src="icon.png" alt="거래처">
-                  <div class="card-body">
-                    <h4 class="card-title h2 bm-0">거래처관리</h4>
+                <div class="col col-lg-4">
+                  <div class="card" @click="goPartenrManagement" style="background-color: #526EFF; width: 20rem;">
+                    <img class="card=img-top" src="@/assets/icon.png" alt="거래처">
+                    <div class="card-body">
+                      <h4 class="card-title h2 bm-0">거래처관리</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col col-lg-4">
-                <div class="card" @click="goNftCreate" style="background-color: #FC5E5E; width: 20rem;">
-                  <img class="card=img-top" src="icon.png" alt="nft발급">
-                  <div class="card-body">
-                    <h4 class="card-title h2 bm-0">NFT 발급</h4>
+                <div class="col col-lg-4">
+                  <div class="card" @click="goNftCreate" style="background-color: #FC5E5E; width: 20rem;">
+                    <img class="card=img-top" src="@/assets/icon.png" alt="nft발급">
+                    <div class="card-body">
+                      <h4 class="card-title h2 bm-0">NFT 발급</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               </div>
             </div>
@@ -62,13 +62,6 @@
             <button type="button" class="btn createBtn mx-2" @click="updateNotice" style="width: 60px">발급</button>
           </div>
         </div> -->
-
-        <!-- 블록 이미지 부분 테두리 따기 -->
-          <div class="box_img">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자" style="width: 300px;">
-            <img class="mx-5" src="@/assets/icon.png" alt="블록 상자2" style="width: 300px;">
-          </div>
-        <!-- 블록 이미지 끝 -->
 
       <!-- </div> -->
       <!-- </div> -->

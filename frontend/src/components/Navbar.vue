@@ -3,10 +3,10 @@
     <nav class="navbar navbar-expand-lg navbar-light mb-5">
         <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar-bar">
-                <div class="navbar-nav ms-auto">
+                <div class="navbar-nav ms-auto" style="margin-top:15px;">
                     
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
-                    <a class="nav-link" href="#" id="container3">About</a> <a class="nav-link" href="#" id="container4">Services</a>
+                    <a class="nav-link"  id="container3" >About</a> <a class="nav-link" href="#" id="container4">Services</a>
                     <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.auth.status.loggedIn">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
@@ -16,6 +16,7 @@
             </div>
         </div>
     </nav>
+    
   </div>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -72,8 +73,10 @@ export default {
         )
       }
       LookupNFTs()
-      
-
+    }
+    const goScroll = () => {
+      console.log(document.getElementById("container3"))
+      document.getElementById("container3").scrollIntoView(true);
     }
 
 
@@ -154,6 +157,7 @@ export default {
       logOut,
       loginValue,
       getAccount,
+      goScroll,
     }
   }
 }
@@ -163,12 +167,12 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 
 * {
-    margin: 0;
+    /* margin: 0; */
     padding: 0;
     box-sizing: border-box;
     list-style: none;
     font-family: 'Montserrat', sans-serif;
-    z-index:1001;
+    z-index:1051;
 }
 .test {
   background-color: rgb(255, 255, 255);

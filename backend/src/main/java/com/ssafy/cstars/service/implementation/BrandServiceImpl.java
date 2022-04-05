@@ -8,10 +8,19 @@ import com.ssafy.cstars.domain.entity.Brand;
 import com.ssafy.cstars.domain.entity.BrandAdmin;
 import com.ssafy.cstars.domain.repository.BradnRepository;
 import com.ssafy.cstars.domain.repository.BrandAdminRepository;
+import com.ssafy.cstars.domain.repository.BrandRepositorySupport;
 import com.ssafy.cstars.service.BrandService;
+import com.ssafy.cstars.util.ImageUtil;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service("BrandService")
@@ -22,26 +31,17 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     BrandAdminRepository brandAdminRepository;
 
+    @Autowired
+    BrandRepositorySupport brandRepositorySupport;
 
     @Override
-    public List<BrandRes> GetBrandList() {
+    public Page<Brand> GetBrandList(Pageable pageable) {
 
-        List<Brand> brands = brandRepository.findAll();
+        Page<Brand> brands = brandRepositorySupport.findAll(pageable);
 
-        List<BrandRes> res = new ArrayList<>();
+        if(brands.isEmpty()) return null;
 
-        brands.forEach( brand -> {
-
-            List<BrandAdmin> byName = brandAdminRepository.findByName(brand.getName());
-            List<String> adminEmail = new ArrayList<>();
-
-            byName.forEach( name -> {
-                adminEmail.add(name.getEmail());
-            });
-            res.add(BrandRes.of(brand, adminEmail));
-        });
-
-        return res;
+        return brands;
     }
 
     @Override
@@ -50,13 +50,22 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public int createBrand(BrandPostReq brandInfo){
+    public int createBrand(BrandPostReq brandInfo, MultipartFile imageFile) throws IOException, ClassNotFoundException {
+
+        // MultipartFile 이미지파일 -> File로 바꾸기
+        File file = ImageUtil.multipartFileToFile(imageFile);
+        // File -> byte[] 바꾸기
+        byte[] byteArray = FileUtils.readFileToByteArray(file);
+        // byte[] -> String(base64)
+        String base64 = "data:image/jpeg;base64," + new Base64().encodeToString(byteArray);
+
+        System.out.println(base64);
 
         Brand brand = Brand.builder()
                 .name(brandInfo.getName())
                 .endDate(brandInfo.getEndDate())
                 .address(brandInfo.getAddress())
-                .imageUrl(brandInfo.getImageUrl())
+                .imageUrl(base64)
                 .build();
 
         if(brand == null) return 500;
