@@ -560,7 +560,8 @@ export default {
     const recvList = ref([])
     const connected = ref(true)
     const stompClient = ref('')
-    const receiver = 'ROLE_BRAND_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함
+    // const receiver = 'ROLE_BRAND_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
+    const receiver = store.state.userInfo.email //테스트용
     const sender = store.state.userInfo.email
     const connect = () => {
       const serverURL = "http://localhost:8080/alarm"
@@ -573,17 +574,17 @@ export default {
           connected.value = true;
           console.log('소켓 연결 성공', frame);
 
-          if(store.state.userInfo.role == 'ROLE_BRAND_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
-            stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.role, res => {
+          // if(store.state.userInfo.role == 'ROLE_BRAND_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
+          //   stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.role, res => { //store.state.userInfo.role 이거 고쳐야함
+          //     console.log('구독으로 받은 메시지 입니다.', res.body);
+          //     recvList.value.push(JSON.parse(res.body))
+          //   });
+          // }else{//일반 유저면 자기 email을 구독해야함
+            stompClient.value.subscribe("/sub/channel/" + sender, res => { //테스트 끝나면 위에 주석 풀어야함
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
             });
-          }else{//일반 유저면 자기 email을 구독해야함
-            stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.sender, res => {
-              console.log('구독으로 받은 메시지 입니다.', res.body);
-              recvList.value.push(JSON.parse(res.body))
-            });
-          }
+          // }
         },
         error => {
           console.log('소켓 연결 실패', error);
