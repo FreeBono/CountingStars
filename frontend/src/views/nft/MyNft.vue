@@ -102,7 +102,7 @@
                     <option value="Wallet">Wallet</option>
                   </select>
 
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-form-input class="mx-2" b-form-input style="width: 350px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
                   <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>
@@ -113,7 +113,7 @@
                   <div align="left" >NFT 목록></div>
                   
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
-                    <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
+                    <div class="card col-3" style="padding:0px; width:85%;" >
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
                         <figcaption class="card__caption" style="left:15%;">
@@ -166,16 +166,16 @@
                         </figcaption>
                       </figure>
                     </div>
-                    <div class="card col-3" style="padding:0px; width:85%;" v-else>
+                    <!-- <div class="card col-3" style="padding:0px; width:85%;" v-else>
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img src="@/assets/cslogo.png" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" v-if="nft.name" style="color:white;">이전 중인 NFT입니다.</h2>
-                          <!-- <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p> -->
-                          <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span> -->
+                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
                       </figure>
-                    </div>
+                    </div> -->
 
                   
 
@@ -576,8 +576,6 @@ export default {
 
     // 디테일 모달
     const goDetailModal = (index) => {
-      console.log(index, '뭘까?')
-      console.log(index.brandName, '모달 함수 브랜드 뭘까?')
       showDetailModal.value = true;
       selectedBrandName.value = index.brandName;
       selectBrandImg.value = index.image;
@@ -593,7 +591,6 @@ export default {
     }
 
     const userRole = store.state.userInfo
-    console.log(userRole.role, '유저정보')
 
     return {
       goMyNftDetail,

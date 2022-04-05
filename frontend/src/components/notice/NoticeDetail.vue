@@ -5,7 +5,7 @@
     <div class="main-content">
       <sidebar/>
       <div class="header">
-        <p class="head_title">공지사항 등록</p>
+        <p class="head_title">공지사항</p>
       </div>
       <div class="content_outside_box">
         <div class="content_box">
@@ -49,10 +49,10 @@
               rows="8" 
               v-model="noticeContents.content" 
               class="form-control"
-              @keyup.enter="updateNotice"
+              style="font-size: 1.1rem;"
               >
               </b-form-textarea>
-              <p v-else class="content-tag mt-3 mx-3" style="white-space: wrap; text-align: left;">{{ noticeContents.content }}</p>
+              <p v-else class="content-tag mt-5 mx-3" style="white-space: wrap; text-align: left; font-size: 1.1rem;">{{ noticeContents.content }}</p>
             </div>
               <!-- 테이블 끝 -->
           </div>
@@ -367,8 +367,11 @@ td {
 }
 
 .head_title {
-  font-size: 36px;
-  margin: auto;
+  color: white;
+  position:absolute; 
+  margin-left:100px; 
+  margin-top: 50px;
+  font-size: 2rem;
 }
 
 .content_outside_box {

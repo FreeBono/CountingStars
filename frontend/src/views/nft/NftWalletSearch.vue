@@ -9,7 +9,7 @@
         <div class="head_title" style="font-size:16px;">
 
           <div class="container d-flex justify-content-center" >
-            <div class="card mt-5 p-4" style="width:500px;" id="search-card">
+            <div class="card mt-7 p-4" style="width:500px;" id="search-card">
               <div class="input-group"> 
                 <select style="border-color: #ced4da; width:5.5rem;">
                   <option>지갑주소</option>
@@ -17,7 +17,7 @@
                 </select>
                 <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress">
                 <div class="input-group-append">
-                  <button class="btn " style="background-color: #2dce89;"><i class="fas fa-search" style="color: white;" @click="searchWallet"></i></button>
+                  <button class="btn " style="background-color: #2dce89;" @click="searchWallet"><i class="fas fa-search" style="color: white;" ></i></button>
                 </div>
               </div>
             </div>
