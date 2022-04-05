@@ -224,7 +224,6 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import Navbar from "../components/Navbar.vue"
 import LoginModal from "../components/accounts/LoginModal.vue"
-import testt from '@/services/testt'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 

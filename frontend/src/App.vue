@@ -1,7 +1,7 @@
 <template>
-<test class="qq">
+
   <router-view/>
-</test>
+
 </template>
 
 <script>

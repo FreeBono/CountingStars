@@ -2,9 +2,9 @@
   <!-- <h2>My NFT 상세보기</h2> -->
   <sidebar/>
   
-  <div class="test">
+  <!-- <div class="test"> -->
   <div class="wrapper">
-
+    
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
@@ -110,12 +110,13 @@
 
 
                 <div class="row" >
-                  <div align="left" >NFT 목록</div>
+                  <div align="left" >NFT 목록></div>
+                  
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
                     <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                        <figcaption class="card__caption" style="left:5%;">
+                        <figcaption class="card__caption" style="left:15%;">
                           <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span> -->
@@ -219,7 +220,6 @@
               <!-- <div class="container justify-content-center"> -->
                 <div align="left" >메인 지갑 설정</div>
                 <div class="row" style="" >
-                  
                   <!-- <hr style="margin:15px 0;"> -->
                   <!-- <div>현재 지갑 주소 </div> -->
                   <DoughnutChart :chartData="testData" style="width:100%; "/>
@@ -241,7 +241,7 @@
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -258,13 +258,14 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import { DoughnutChart, } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
+
 Chart.register(...registerables);
 
 
 
 
 export default {
-  name: 'NftTransfer',
+  name: 'MyNfts',
   components: {
     Sidebar,
     DoughnutChart,
@@ -278,6 +279,7 @@ export default {
         )
     }
 
+   
 
     const word = ref("")
     const store = useStore()
@@ -285,7 +287,7 @@ export default {
     // const store = useStore()
     const nfts = ref([])
 		const receiveAccount = ref('')
-    nfts.value = []
+    const testt = store.state.nftValues
 
 
     function sendNft() {
@@ -296,11 +298,11 @@ export default {
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
     }
-    if (store.state.nftValues.length === 0) {
-      LookupNFTs()
-    }
+    // if (store.state.nftValues.length === 0) {
+    //   LookupNFTs()
+    // }
     nfts.value = store.state.nftValues
-
+    console.log(nfts.value)
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -325,12 +327,11 @@ export default {
     const myWallet = ref('')
     if (store.state.userInfo.address) {
       myWallet.value = store.state.userInfo.address
-      return
+  
     } else if (store.state.walletInfo) {
       myWallet.value = store.state.walletInfo
     }
-
-    // const myWallet = ref(store.state.auth.user.address)
+    
     const walletAddress = ref('')
     const privatekey = ref('')
 
@@ -420,7 +421,7 @@ export default {
 
       // filter 사용될 데이터들
     
-    const filters = ref([null,null,null])
+    // const filters = ref([null,null,null])
   
 
     const brandOpt = ref([ { value: null, text: '브랜드' }])
@@ -477,9 +478,9 @@ export default {
 
     
     
-    const searchPaging = () => {
-      rowws.value = store.state.nftValues.length;
-    }
+    // const searchPaging = () => {
+    //   rowws.value = store.state.nftValues.length;
+    // }
 
     // 검색 초기화
     const searchInit = () => {
@@ -622,7 +623,7 @@ export default {
       searchOpt,
       word,
       searchInit,
-      searchPaging,
+      // searchPaging,
       headerSel,
       brandSel,
       searchTitle,
@@ -640,6 +641,7 @@ export default {
       price,
       serialNumber,
       userRole,
+      testt,
     }
   },
 }
