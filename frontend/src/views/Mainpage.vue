@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="col" style="padding:0px; height: 100vh;">
-          <img src="@/assets/GIF2.gif" alt="" style="width:100%;height: 100vh; ">
+          <img src="https://i.ibb.co/tCPgs6f/GIF2.gif" alt="" style="width:100%;height: 100vh; ">
         </div>
       </div>
     </div>
@@ -64,15 +64,15 @@
         </div>
         <div class="col-8" >
           <div class="row-vh d-flex flex-row justify-content-between">
-            <div CLASS="absolute-img"><img src="@/assets/Cartier.png" alt="" ></div>
-            <div CLASS="absolute-img"><img src="@/assets/gucci.png" alt="" ></div>
-            <div CLASS="absolute-img"><img src="@/assets/versace.png" alt=""></div>
+            <div CLASS="absolute-img"><img src="https://i.ibb.co/w64P7gS/Cartier.png" alt="CARTIER" ></div>
+            <div CLASS="absolute-img"><img src="https://i.ibb.co/2dykkwL/gucci.png" alt="GUCCI" ></div>
+            <div CLASS="absolute-img"><img src="https://i.ibb.co/TYhcqQS/versace.png" alt="VERSACE"></div>
           </div>
         
           <div class="row-vh d-flex flex-row justify-content-between">
-            <div CLASS="absolute-img"><img src="@/assets/Louis_Vuitton.png" alt=""></div>
-            <div CLASS="absolute-img"><img src="@/assets/Prada.png" alt=""></div>
-            <div CLASS="absolute-img"><img src="@/assets/Fendi-logo.png" alt=""></div>
+            <div CLASS="absolute-img"><img src="https://i.ibb.co/0J6dYWz/Louis-Vuitton.png" alt="LOUIS VUITTON"></div>
+            <div CLASS="absolute-img"><img src="https://i.ibb.co/tPfwcDV/Prada.png" alt="PRADA"></div>
+            <div CLASS="absolute-img"><img src="https://i.ibb.co/TMvkQws/Fendi-logo.png" alt="FENDI"></div>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
     <div class="container-fluid" style="margin-top:30px; height: 721px;">
       <div class="row">
         <div class="col" style="padding:0px; height: 100vh; margin-top: 30px;">
-          <img src="@/assets/gif3.gif" alt="" style="width:100%; height: 45rem; ">
+          <img src="https://i.ibb.co/z4kc69t/gif3.gif" alt="" style="width:100%; height: 45rem; ">
         </div>
         <div class="col">
           <div class="about">
@@ -138,7 +138,7 @@
             </div>
           </div>
           <div class="col">
-            <img src="@/assets/flow.png" alt="" style="width:85%; ">
+            <img src="https://i.ibb.co/KDsx44Y/flow.png" alt="" style="width:85%; ">
           </div>
         </div>
       </div>
@@ -173,7 +173,7 @@
         <!-- {{slide}} -->
         <div class="row-vh d-flex" style="height: 175px; background-color:#f4f4f4; ">
           <div style="height:150px;  line-height:175px; width:15%" >
-            <img src="@/assets/greenlogo.png" alt="" style="height:50%; width:50%; ">
+            <img src="https://i.ibb.co/0c5JbCg/greenlogo.png" alt="" style="height:50%; width:50%; ">
           </div>
           <div style=" padding-top:50px; width:70%; padding-left:15px; padding-right :15px;" align="left">
             <div>
@@ -184,7 +184,7 @@
             </div>
           </div>
           <div style="height:175px;  background-color:white; line-height:175px; padding-left:7%; align:right; width:15%">
-            <img src="@/assets/gori.png" alt="" style="height:30%; " >
+            <img src="https://i.ibb.co/42qnBJd/gori.png" alt="" style="height:30%; " >
           </div>
         </div>
       </div>
@@ -208,12 +208,11 @@
     <hr style="height:2px; margin-top:150px;">
     <center style="margin-top:70px;">
       <div style="height :60px; width : 200px">
-        <img src="@/assets/cslogo.png" alt="" style="height:100%; width:60px;">
+        <img src="https://i.ibb.co/VxPHC2T/cslogo.png" alt="" style="height:100%; width:60px;">
         <span style="margin-left:10px;">Counting Stars</span>
       </div>
       <div style="margin-top:20px;">2022 Counting Stars. All rights reserved | SSAFY</div>
     </center>
-
 
   </div>
   

@@ -9,7 +9,7 @@
         <div class="head_title" style="font-size:16px;">
 
           <div class="container d-flex justify-content-center" >
-            <div class="card mt-5 p-4" style="width:500px;" id="search-card">
+            <div class="card mt-7 p-4" style="width:500px;" id="search-card">
               <div class="input-group"> 
                 <select style="border-color: #ced4da; width:5.5rem;">
                   <option>지갑주소</option>

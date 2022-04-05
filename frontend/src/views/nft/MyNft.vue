@@ -102,7 +102,7 @@
                     <option value="Wallet">Wallet</option>
                   </select>
 
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-form-input class="mx-2" b-form-input style="width: 350px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
                   <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>
@@ -576,8 +576,6 @@ export default {
 
     // 디테일 모달
     const goDetailModal = (index) => {
-      console.log(index, '뭘까?')
-      console.log(index.brandName, '모달 함수 브랜드 뭘까?')
       showDetailModal.value = true;
       selectedBrandName.value = index.brandName;
       selectBrandImg.value = index.image;
@@ -593,7 +591,6 @@ export default {
     }
 
     const userRole = store.state.userInfo
-    console.log(userRole.role, '유저정보')
 
     return {
       goMyNftDetail,
