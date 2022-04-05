@@ -44,6 +44,7 @@ class AuthService {
   }
 
   logout() {
+    store.state.userInfo = null
     TokenService.removeUser();
   }
 

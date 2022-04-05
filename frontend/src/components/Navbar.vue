@@ -8,7 +8,7 @@
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
                     <a class="nav-link"  id="container3" >About</a> <a class="nav-link" href="#" id="container4">Services</a>
                     <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.auth.status.loggedIn">Login</a>
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.userInfo">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
                   
                 </div>
@@ -67,12 +67,17 @@ export default {
       console.log(accounts)
       if (accounts) {
         createToast(
-        { title: 'MetaMask is Connected',  },
+        { title: 'MetaMask is connected',  },
         // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
         { type:'success', showIcon:true, position:'bottom-right', }
         )
       }
-      LookupNFTs()
+      await LookupNFTs()
+      createToast(
+        { title: 'NFTs are loaded',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'success', showIcon:true, position:'bottom-right', }
+        )
     }
     const goScroll = () => {
       console.log(document.getElementById("container3"))
