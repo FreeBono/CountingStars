@@ -18,7 +18,7 @@ import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
 import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
 import PartnerCreate from '@/views/admin/PartnerCreate.vue'
-
+import NftAllCreate from '@/views/admin/NftAllCreate.vue'
 
 import Pinata from "../components/Pinata.vue"
 // import Test from "../components/test/Test.vue"
@@ -100,6 +100,11 @@ const routes = [
     path: '/nftcreate',
     name: 'NftCreate',
     component: NftCreate
+  },
+  {
+    path: '/NftAllCreate',
+    name: 'NftAllCreate',
+    component: NftAllCreate
   },
   {
     path: '/mynftdetail',
