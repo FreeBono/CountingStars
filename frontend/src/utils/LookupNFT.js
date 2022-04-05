@@ -53,9 +53,9 @@ export default async function LookupNFTs() {
 
   
 
-    // setTimeout(()=> {
-    //   store.dispatch('nftValues',objects)
-    // },1000)
+    setTimeout(()=> {
+      store.dispatch('nftValues',objects)
+    },1000)
     
 
 }
