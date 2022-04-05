@@ -1,11 +1,11 @@
 package com.ssafy.cstars.domain.entity;
 
-import jdk.nashorn.internal.ir.BaseNode;
+
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 
 @Entity
 @Getter
