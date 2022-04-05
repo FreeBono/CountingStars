@@ -6,8 +6,75 @@
       <sidebar/>
       <div class="header">
         <p class="head_title" >공지사항</p>
+
+        <!-- 위에 카드부분 -->
+      <!-- <div class="row-vh d-flex" style="margin-left: 90px; justify-content: center; width:100%; margin-top: 120px; justify-content: space-evenly;">
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; text-align:left; margin: auto 0;" >  
+                    <div >공지사항</div>
+                    <div >아무거나</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px; text-align:left;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden; ">
+                  <div class="media-body" style="float:left; margin: auto 0; ">  
+                    <div style="text-align:left;">FAQ</div>
+                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" >자주 하는 질문</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fas fa-question-circle fa-3x" style="color: rgb(253 59 78);"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; text-align:left; margin: auto 0;">  
+                    <div>TOTAL WORTH</div>
+                    <div align="left">아무거나</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; text-align:left;  margin: auto 0;">  
+                    <div>HIGHEST PRICE</div>
+                    <div align="left">아무거나</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div> -->
+      <!-- 카드부분 끝 -->
       </div>
-      <div class="content_outside_box">
+
+
+      <div class="content_outside_box ">
         <!-- <div class="content_box"> -->
           <div class="container-fluid mt-7">
 
@@ -27,6 +94,7 @@
                         <th style="width: 15%;">제목</th>
                         <th style="width: 10%;">Admin</th>
                         <th style="width: 5%;">작성일</th>
+                        <th style="width: 5%;">조회수</th>
                         <!-- <th style="width: 10%;">    </th> -->
                       </tr>
                     </thead>
@@ -61,22 +129,27 @@
                           
                           <div class="avatar-group">
                             <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="@/assets/광.jpg" class="rounded-circle">
+                              <img alt="Image placeholder" src="https://i.ibb.co/WpVn37y/image.jpg" class="rounded-circle">
                             </a>
                             <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="@/assets/동.jpg" class="rounded-circle">
+                              <img alt="Image placeholder" src="https://i.ibb.co/XDg4wFZ/image.jpg" class="rounded-circle">
                             </a>
                             <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="@/assets/현.jpg" class="rounded-circle">
+                              <img alt="Image placeholder" src="https://i.ibb.co/MfJqXtg/image.jpg" class="rounded-circle">
                             </a>
                             <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="@/assets/호.jpg" class="rounded-circle">
+                              <img alt="Image placeholder" src="https://i.ibb.co/jb90cNV/image.jpg" class="rounded-circle">
                             </a>
                           </div>
                         </td>
                         <td>
                           <div>
                             <span class="mr-2">{{ makeDate(noticeitem.date) }}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            <span class="mr-2">조회수</span>
                           </div>
                         </td>
                       </tr>
@@ -233,6 +306,7 @@ export default {
   box-sizing: border-box;
   width: 100%;
   margin-left: auto;
+  /* margin-top: 0.5rem!important; */
   margin-top: -4.5rem!important;
   padding-left: 70px!important;
   padding-right: 70px!important;
@@ -253,17 +327,6 @@ export default {
   right: 4px
 }
 
-* {
-  font-family: 'SUIT-Regular';
-}
-
-/* 크기 클 때 */
-/* .head_title {
-  color: white;
-  display: flex;
-  margin-left: 80px;
-  margin-top: 30px;
-} */
 
 /* 크기 작을 때 */
 .head_title {

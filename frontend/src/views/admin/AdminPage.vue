@@ -8,6 +8,7 @@
         <p class="head_title">ADMIN</p>
       </div>
 
+
       <!-- 카드 부분 -->
       <div>
         <div class="content_outside_box">
