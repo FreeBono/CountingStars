@@ -55,19 +55,19 @@
             </a>
           </li>
           <li>
-            <a href="/partner">
-              <i class="fa fa-handshake fa-2x" style="color: #6b6d72;"></i>
-              <span class="nav-text">
-                거래처 관리
-              </span>
-            </a>
-          </li>
-          <li>
             <a href="nftcreate">
               <i class="fa fas fa-cubes fa-2x" style="color: #ffd700;"></i>
               <!-- <i class="fa fas fa-cube fa-2x"></i> -->
               <span class="nav-text">
                 NFT 발급
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="/partner" v-show="userRole.role === 'ROLE_SITE_ADMIN'">
+              <i class="fa fa-handshake fa-2x" style="color: #6b6d72;" ></i>
+              <span class="nav-text" >
+                거래처 관리
               </span>
             </a>
           </li>
@@ -78,17 +78,26 @@
 
 <script>
 import { useRouter } from 'vue-router'
+import { useStore } from "vuex";
+
 export default {
   name: 'Sidebar',
   setup() {
     const router = useRouter()
+    const store = useStore()
 
     function goMainPage() {
       router.push({name: 'Mainpage'})
     }
 
+    // 유저 정보 가져오기
+    const userRole = store.state.userInfo
+    console.log(userRole.role, '유저정보')
+    console.log(userRole, '유저정보')
+
     return{
-      goMainPage
+      goMainPage,
+      userRole,
     }
   }
 }

@@ -1,6 +1,8 @@
 package com.ssafy.cstars.service.implementation;
 
+import com.querydsl.core.Tuple;
 import com.ssafy.cstars.api.request.UserTransactionPostReq;
+import com.ssafy.cstars.api.response.UserTransactionRankDto;
 import com.ssafy.cstars.api.response.UserTransactionRes;
 import com.ssafy.cstars.domain.entity.User;
 import com.ssafy.cstars.domain.entity.UserTransaction;
@@ -71,8 +73,8 @@ public class UserTransactionServiceImpl implements UserTransactionService {
     }
 
     @Override
-    public Page<String> getRank(Pageable pageable) {
-        Page<String> rank = userTransactionRepositorySupport.rank(pageable);
+    public Page<UserTransactionRankDto> getRank(Pageable pageable) {
+        Page<UserTransactionRankDto> rank = userTransactionRepositorySupport.rank(pageable);
 
         if(rank.isEmpty()) return null;
 

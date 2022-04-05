@@ -20,8 +20,8 @@ public class Alarm{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private String storeAdmin;
-    private String storeBrand;
+    private String receiver;
+    private String sender;
     private String productName;
     private String registerDate;
 

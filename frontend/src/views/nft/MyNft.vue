@@ -2,13 +2,13 @@
   <!-- <h2>My NFT 상세보기</h2> -->
   <sidebar/>
   
-  <div class="test">
+  <!-- <div class="test"> -->
   <div class="wrapper">
-
+    
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
       <div class="header">
-        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;" @click="toast"> My NFTs</div>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;" @click="toast"> My NFTs</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
@@ -77,24 +77,6 @@
         
         </div>
       </div>
-        <!-- <div class="testbox" style=">
-          <div class="container">
-            <div class="row">
-              <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:175px;">
-                      <figure class="card__thumb" style="margin:0px; height:250px;">
-                        <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                        <figcaption class="card__caption" style="left:5%;">
-                          <h2 class="card__title" v-if="nft.name">{{nft.name}}</h2>
-                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
-                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)">transfer</span>
-                        </figcaption>
-                      </figure>
-                    </div>
-                  </div>
-            </div>
-          </div>
-        </div> -->
         
         <!-- NFT목록 -->
         <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
@@ -120,7 +102,7 @@
                     <option value="Wallet">Wallet</option>
                   </select>
 
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-form-input class="mx-2" b-form-input style="width: 350px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
                   <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>
@@ -128,12 +110,13 @@
 
 
                 <div class="row" >
-                  <div align="left" >NFT 목록</div>
+                  <div align="left" >NFT 목록></div>
+                  
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
-                    <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
+                    <div class="card col-3" style="padding:0px; width:85%;" >
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                        <figcaption class="card__caption" style="left:5%;">
+                        <figcaption class="card__caption" style="left:15%;">
                           <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span> -->
@@ -145,7 +128,7 @@
                             <b-modal class="modal fade" id="detail-modal" title="Detail" hide-footer>
                               <div class="container" footer-tag="footer" style="margin-bottom: 20px;">
                                 <b-card-header>
-                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem; width: 300px; height: 200px;"></div>
+                                  <div class="picture"><img :src="selectBrandImg" alt="nft_img" style="max-width: 20rem; width: 300px; height: 250px;"></div>
                                 </b-card-header>
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
@@ -183,16 +166,16 @@
                         </figcaption>
                       </figure>
                     </div>
-                    <div class="card col-3" style="padding:0px; width:85%;" v-else>
+                    <!-- <div class="card col-3" style="padding:0px; width:85%;" v-else>
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img src="@/assets/cslogo.png" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
                         <figcaption class="card__caption" style="left:5%;">
                           <h2 class="card__title" v-if="nft.name" style="color:white;">이전 중인 NFT입니다.</h2>
-                          <!-- <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p> -->
-                          <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span> -->
+                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
                       </figure>
-                    </div>
+                    </div> -->
 
                   
 
@@ -237,7 +220,6 @@
               <!-- <div class="container justify-content-center"> -->
                 <div align="left" >메인 지갑 설정</div>
                 <div class="row" style="" >
-                  
                   <!-- <hr style="margin:15px 0;"> -->
                   <!-- <div>현재 지갑 주소 </div> -->
                   <DoughnutChart :chartData="testData" style="width:100%; "/>
@@ -259,7 +241,7 @@
     </div>
     <!-- 내용 들어갈 곳 끝 -->
   </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -276,13 +258,14 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import { DoughnutChart, } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
+
 Chart.register(...registerables);
 
 
 
 
 export default {
-  name: 'NftTransfer',
+  name: 'MyNfts',
   components: {
     Sidebar,
     DoughnutChart,
@@ -296,6 +279,7 @@ export default {
         )
     }
 
+   
 
     const word = ref("")
     const store = useStore()
@@ -303,7 +287,7 @@ export default {
     // const store = useStore()
     const nfts = ref([])
 		const receiveAccount = ref('')
-    nfts.value = []
+    const testt = store.state.nftValues
 
 
     function sendNft() {
@@ -314,11 +298,11 @@ export default {
     function goMyNftDetail() {
       router.push({name: 'MyNftDetail'})
     }
-    if (store.state.nftValues.length === 0) {
-      LookupNFTs()
-    }
+    // if (store.state.nftValues.length === 0) {
+    //   LookupNFTs()
+    // }
     nfts.value = store.state.nftValues
-
+    console.log(nfts.value)
 
 		const tokenNum = ref(0)
 		const tokenChangeNum = (e) => {
@@ -343,12 +327,11 @@ export default {
     const myWallet = ref('')
     if (store.state.userInfo.address) {
       myWallet.value = store.state.userInfo.address
-      return
+  
     } else if (store.state.walletInfo) {
       myWallet.value = store.state.walletInfo
     }
-
-    // const myWallet = ref(store.state.auth.user.address)
+    
     const walletAddress = ref('')
     const privatekey = ref('')
 
@@ -438,7 +421,7 @@ export default {
 
       // filter 사용될 데이터들
     
-    const filters = ref([null,null,null])
+    // const filters = ref([null,null,null])
   
 
     const brandOpt = ref([ { value: null, text: '브랜드' }])
@@ -495,9 +478,9 @@ export default {
 
     
     
-    const searchPaging = () => {
-      rowws.value = store.state.nftValues.length;
-    }
+    // const searchPaging = () => {
+    //   rowws.value = store.state.nftValues.length;
+    // }
 
     // 검색 초기화
     const searchInit = () => {
@@ -593,8 +576,6 @@ export default {
 
     // 디테일 모달
     const goDetailModal = (index) => {
-      console.log(index, '뭘까?')
-      console.log(index.brandName, '모달 함수 브랜드 뭘까?')
       showDetailModal.value = true;
       selectedBrandName.value = index.brandName;
       selectBrandImg.value = index.image;
@@ -610,7 +591,6 @@ export default {
     }
 
     const userRole = store.state.userInfo
-    console.log(userRole.role, '유저정보')
 
     return {
       goMyNftDetail,
@@ -640,7 +620,7 @@ export default {
       searchOpt,
       word,
       searchInit,
-      searchPaging,
+      // searchPaging,
       headerSel,
       brandSel,
       searchTitle,
@@ -658,6 +638,7 @@ export default {
       price,
       serialNumber,
       userRole,
+      testt,
     }
   },
 }

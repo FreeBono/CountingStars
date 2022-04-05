@@ -1,7 +1,8 @@
 <template>
-<test class="qq">
+
   <router-view/>
-</test>
+  
+  <kakao-chatbot/>
 </template>
 
 <script>
@@ -9,14 +10,12 @@ import EventBus from "/common/EventBus"
 import {onMounted, onUnmounted} from 'vue'
 import {useStore} from 'vuex'
 import {useRouter} from 'vue-router'
-// import { SidebarMenu } from 'vue-sidebar-menu'
-// import sidebar2 from '@/components/sidebar2.vue'
+import KakaoChatbot from '@/components/KakaoChatbot.vue';
 
 
 export default {
   components: {
-    // sidebar2,
-    // SidebarMenu,
+  KakaoChatbot,
   },
   setup() {
     const store = useStore()
@@ -142,4 +141,6 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+
 </style>

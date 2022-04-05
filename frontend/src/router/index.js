@@ -18,7 +18,9 @@ import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
 import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
 import PartnerCreate from '@/views/admin/PartnerCreate.vue'
-import Firebase from '@/components/common/Firebase.vue'
+import NftAllCreate from '@/views/admin/NftAllCreate.vue'
+import KakaoChatbot from '@/components/KakaoChatbot.vue'
+
 
 
 import Pinata from "../components/Pinata.vue"
@@ -103,6 +105,11 @@ const routes = [
     component: NftCreate
   },
   {
+    path: '/NftAllCreate',
+    name: 'NftAllCreate',
+    component: NftAllCreate
+  },
+  {
     path: '/mynftdetail',
     name: 'MyNftDetail',
     component: MyNftDetail
@@ -138,9 +145,9 @@ const routes = [
     component : PartnerCreate
   },
   {
-    path: '/firebase',
-    name: 'Firebase',
-    component : Firebase
+    path: '/testchatbot',
+    name: 'KakaoChatbot',
+    component : KakaoChatbot
   },
 ]
 

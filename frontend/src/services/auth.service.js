@@ -16,6 +16,7 @@ class AuthService {
         // const tmp = JSON.stringify(response)
         console.log("authservice : " + JSON.stringify(response))
         store.dispatch('setUser',response.data)
+        location.reload();
         
 
         // 알람
@@ -43,6 +44,7 @@ class AuthService {
   }
 
   logout() {
+    store.state.userInfo = null
     TokenService.removeUser();
   }
 

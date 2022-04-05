@@ -12,6 +12,7 @@ import com.ssafy.cstars.api.request.LogOutRequest;
 import com.ssafy.cstars.api.request.LoginRequest;
 import com.ssafy.cstars.api.request.SignupRequest;
 import com.ssafy.cstars.api.request.TokenRefreshRequest;
+import com.ssafy.cstars.api.response.BrandRes;
 import com.ssafy.cstars.api.response.JwtResponse;
 import com.ssafy.cstars.api.response.MessageResponse;
 import com.ssafy.cstars.api.response.TokenRefreshResponse;
@@ -38,6 +39,10 @@ import com.ssafy.cstars.service.RefreshTokenService;
 import com.ssafy.cstars.service.StoreAdminDetailsImpl;
 import com.ssafy.cstars.service.UserDetailsImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,6 +57,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Api(value = "로그인, 회원가입 API", tags = {"Login, Signin"})
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -92,6 +98,12 @@ public class AuthController {
   RefreshTokenBrandAdminRepository refreshTokenBrandAdminRepository;
 
   @PostMapping("/signin")
+  @ApiOperation(value = "로그인", notes = "<strong>로그인</strong>")
+  @ApiResponses({
+          @ApiResponse(code =200 , message = "SUCCESS", response = BrandRes.class),
+          @ApiResponse(code =401, message = "ACCESS DENIED", response = BrandRes.class),
+          @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
+  })
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     System.out.println(loginRequest.getEmail()+ "    " + loginRequest.getPassword());
 
@@ -108,9 +120,6 @@ public class AuthController {
       System.out.println("check authentic");
       SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-
-    
 
     if(userRepository.existsByEmail(loginRequest.getEmail())){
 
@@ -157,6 +166,12 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
+  @ApiOperation(value = "회원가입", notes = "<strong>회원가입</strong>")
+  @ApiResponses({
+          @ApiResponse(code =200 , message = "SUCCESS", response = BrandRes.class),
+          @ApiResponse(code =401, message = "ACCESS DENIED", response = BrandRes.class),
+          @ApiResponse(code =500 , message = "SERVER ERROR", response = BrandRes.class),
+  })
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     //user, store_admin, brand_admin의 이메일 존재 check ( 추후 admin도 추가 해줘야 할듯 )
     if (userRepository.existsByEmail(signUpRequest.getEmail()) || storeAdminRepository.existsByEmail(signUpRequest.getEmail()) || brandAdminRepository.existsByEmail(signUpRequest.getEmail())) {

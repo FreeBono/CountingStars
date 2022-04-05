@@ -1,7 +1,10 @@
 package com.ssafy.cstars.domain.repository;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.cstars.api.response.UserTransactionRankDto;
 import com.ssafy.cstars.domain.entity.QUser;
 import com.ssafy.cstars.domain.entity.QUserTransaction;
 import com.ssafy.cstars.domain.entity.UserTransaction;
@@ -21,9 +24,9 @@ public class UserTransactionRepositorySupport {
     QUser qUser = QUser.user;
     QUserTransaction qUserTransaction = QUserTransaction.userTransaction;
 
-    public Page<String> rank(Pageable pageable) {
-        QueryResults<String> ranks = jpaQueryFactory
-                .select(qUser.username)
+    public Page<UserTransactionRankDto> rank(Pageable pageable) {
+        QueryResults<UserTransactionRankDto> ranks = jpaQueryFactory
+                .select(Projections.constructor(UserTransactionRankDto.class, qUser.email, qUser.address, qUserTransaction.user.count()))
                 .from(qUser, qUserTransaction)
                 .where(qUserTransaction.user.eq(qUser))
                 .groupBy(qUserTransaction.user)
@@ -34,7 +37,7 @@ public class UserTransactionRepositorySupport {
 
         if(ranks == null) return Page.empty();
 
-        return new PageImpl<String>(ranks.getResults(), pageable, ranks.getTotal());
+        return new PageImpl<UserTransactionRankDto>(ranks.getResults(), pageable, ranks.getTotal());
     }
 }
 

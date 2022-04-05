@@ -1,8 +1,10 @@
 package com.ssafy.cstars.api.controller;
 
+import com.querydsl.core.Tuple;
 import com.ssafy.cstars.api.request.UserTransactionPostReq;
 import com.ssafy.cstars.api.response.BaseResponseBody;
 import com.ssafy.cstars.api.response.BrandRes;
+import com.ssafy.cstars.api.response.UserTransactionRankDto;
 import com.ssafy.cstars.api.response.UserTransactionRes;
 import com.ssafy.cstars.service.UserTransactionService;
 import io.swagger.annotations.*;
@@ -64,13 +66,13 @@ public class UserTransactionController {
     @GetMapping("/rank")
     @ApiOperation(value = "NFT 이전 랭킹", notes = "<strong>NFT 이전 랭킹</strong>을 등록합니다. ")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "SUCCESS", response = BaseResponseBody.class),
-            @ApiResponse(code = 401, message = "ACCESS DENIED", response = BaseResponseBody.class),
-            @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
+            @ApiResponse(code = 200, message = "SUCCESS", response = UserTransactionRankDto.class),
+            @ApiResponse(code = 401, message = "ACCESS DENIED", response = UserTransactionRankDto.class),
+            @ApiResponse(code = 500, message = "FAIL", response = UserTransactionRankDto.class)
     })
-    public ResponseEntity<Page<String>> getRank(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+    public ResponseEntity<Page<UserTransactionRankDto>> getRank(@PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-        Page<String> rank = userTransactionService.getRank(pageable);
+        Page<UserTransactionRankDto> rank = userTransactionService.getRank(pageable);
 
         if(rank != null) {
             return ResponseEntity.status(200).body(rank);

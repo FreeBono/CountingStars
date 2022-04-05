@@ -24,19 +24,19 @@ export default {
       console.log('로그아웃')
       console.log('엥')
       
-      // if (window.Kakao.Auth.getAccessToken()) {
-      //   console.log('in')
-      //   window.Kakao.API.request({
-      //     url: '/v1/user/unlink',
-      //     success: function (response) {
-      //       console.log(response)
-      //     },
-      //     fail: function (error) {
-      //       console.log(error)
-      //     },
-      //   })
-      //   window.Kakao.Auth.setAccessToken(undefined)
-      // }
+      if (window.Kakao.Auth.getAccessToken()) {
+        console.log('in')
+        window.Kakao.API.request({
+          url: '/v1/user/unlink',
+          success: function (response) {
+            console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+        window.Kakao.Auth.setAccessToken(undefined)
+      }
       console.log('out')
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');

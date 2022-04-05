@@ -15,9 +15,50 @@
               <div class="card shadow">
                 <div class="card-header border-0 my-2 d-flex" style="justify-content: space-between; align-content: center;">
                   <h3 class="mb-0 d-flex" style="align-items: center;">Partner</h3>
-                  <div >
-                    <button type="button" class="btn createBtn" @click="createPartner">거래처 등록</button>
+
+                  <!-- 브랜드 등록 모달 시작 -->
+                  <div>
+                    <span class="card__button btn createBtn" data-bs-toggle="modal" data-bs-target="#brand-modal" style="cursor:pointer;">거래처등록</span>
                   </div>
+
+                  <!-- 모달 내용 -->
+                  <b-modal class="modal fade" id="brand-modal" title="Brand" hide-footer @show="resetModal" @hidden="resetModal">
+                      <b-card class="overflow-hidden" style="max-width: 540px;">
+                        <!-- 이미지 부분 -->
+                        <div class="d-flex" style="justify-content: center; align-content: center;">
+                          <label for="fileName" class="join-profile-img-edit" >
+                            <input ref="image" type="file" id="fileName" accept="image/*" @change="onInputImage" style="opacity: 0">
+                            <div class="d-flex" style="justify-content: center; align-content: center;">
+                              <div class="d-flex" v-if="brandInfo.previewImg" style="height:250px; ">
+                                <img :src="brandInfo.previewImg" :state="modalState.imgState" alt="" class="aa" style="width: 250px; heigth: 200px;">
+                              </div>
+                              <div v-else style="height:250px; ">
+                                <img src="@/assets/uploadicon.jpg" alt="" style="width: 250px; height: 200px;">
+                              </div>
+                            </div>
+                          </label>
+                        </div>
+                        <!-- 이미지 등록 부분 끝-->
+                        
+                        <b-card-text class="mt-4">
+                          <div>
+                            <div class="form-tag" style="width: 100%;">
+                              <b-form-input class="input_tag" type="text" v-model="brandInfo.name" :state="modalState.brandNameState" placeholder=" 브랜드명" maxlength="30"></b-form-input>
+                              <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.endDate" :state="modalState.endDateState" placeholder=" 계약 만료 일자" maxlength="30"></b-form-input>
+                              <b-form-input class="input_tag" type="text" v-model="brandInfo.address" :state="modalState.addressState" placeholder=" 지갑주소" maxlength="30"></b-form-input>
+                            </div>
+                          </div>
+                        </b-card-text>
+                      </b-card>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn transeferBtn" data-bs-dismiss="modal" block @click="createBrand">등록</button>
+                      <button type="button" class="btn cancleBtn" style="width: 70px" data-bs-dismiss="modal" block>취소</button>
+                    </div>
+                  </b-modal>
+                  <!-- 브랜드 등록 모달 끝 -->
+                  
+
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
@@ -132,11 +173,42 @@ export default {
     const perPage = ref(null)
     const noticeId = ref(null)
 
+    const brandInfo = ref({
+      name: null,
+      endDate : null,
+      address : null,
+      imageUrl: null,
+      previewImg: null,
+    })
+
     const brandImg = ref([])
     console.log(brandImg.value, '⭐⭐⭐⭐⭐⭐⭐')
 
     function createPartner() {
       router.push({name: 'PartnerCreate'})
+    }
+
+    const brandLogoImg = ref(null)
+    const brandImgFile = ref(null)
+
+
+    // 이미지 업로드
+    const onInputImage = (event) => {
+      // 이미지 파일 brandImg에 담는 것
+      if( event.target.files && event.target.files.length > 0 ) {
+        console.log(event, '첨부 확인')
+        brandImgFile.value = event.target.files[0];
+        brandLogoImg.value = URL.createObjectURL(brandImgFile.value);
+        
+        // 이미지 미리보기 부분
+        brandInfo.value.previewImg = brandLogoImg.value
+        
+        console.log(brandLogoImg.value, 'brandImg.value 확인')
+        console.log(brandImgFile.value, 'brandImgFile.value 확인')
+        console.log(brandInfo.value.previewImg, 'brandInfo.value.previewImg 확인')
+      }
+      brandLogoImg.value = event.target.files[0];
+      console.log(brandLogoImg.value, 'brandImg.value 확인')
     }
 
     // 브랜드 조회 & 페이지네이션
@@ -157,12 +229,53 @@ export default {
         console.log(perPage.value, 'perP 확인')
 
         res.data.content.forEach(element => {
-          console.log(element.imageUrl, 'for문확인')
-          brandImg.value.push(element.imageUrl)
-          console.log(brandImg.value, '💐확인💐')
+        brandImg.value.push(element.imageUrl)
         });
       })
     }
+
+    // 거래처 등록
+    const createBrand = () => {
+      const metadata = {
+        name: brandInfo.value.name,
+        endDate : brandInfo.value.endDate,
+        address : brandInfo.value.address,
+      }
+
+    const formData = new FormData();
+      formData.append('metadata', new Blob([JSON.stringify(metadata)] , {type: "application/json"}));
+      formData.append('image', brandLogoImg.value);
+      console.log(formData, 'formData 확인')  
+        
+      console.log(brandInfo.value, '브랜드 확인')
+      api.post('/brand', formData)
+      .then((res) => {
+        console.log(res)
+        // 등록하고 바로 불러오기
+        getBrand()
+      }) 
+    }
+
+
+    // 모달 초기화
+    const modalState = ref({
+      brandNameState : null,
+      endDateState : null,
+      addressState : null,
+      imgState: null,
+    })
+
+    // 모달 초기화
+    const resetModal = () => {
+        brandInfo.value.name = null
+        brandInfo.value.endDate = null
+        brandInfo.value.address = null
+        brandInfo.value.previewImg = null
+        modalState.value.brandNameState = null
+        modalState.value.endDateState = null
+        modalState.value.addressState = null
+        modalState.value.imgState = null
+      }
 
 
     // 버튼 누르면 페이지 변경
@@ -195,6 +308,9 @@ export default {
       })
     }
 
+    
+
+
     // 등록일 슬라이싱
     const makeDate = (datetime) => {
       const old = ''+datetime
@@ -218,12 +334,38 @@ export default {
       getBrand,
       makeDate,
       brandImg,
+
+      brandInfo,
+      createBrand,
+
+      brandImg,
+      brandImgFile,
+      onInputImage,
+      resetModal,
+      modalState,
     }
   }
 }
 </script>
 
 <style scoped>
+
+/* 모달 부분 */
+.input_tag {
+  width: 90%;
+  height: 40px;
+  background-color: #e6f5f4 !important;
+  border: none !important;
+  font-size: 0.8rem;
+  margin: auto;
+}
+
+.form-tag {
+  position: relative;
+  /* margin: auto; */
+}
+
+/* 모달 부분 끝 */
 
 table {
   /* position: relative; */
@@ -302,9 +444,9 @@ background-color: #727171 !important;
 /* 크기 작을 때 */
 .head_title {
   color: white;
-  display: flex;
-  margin-left: 300px;
-  margin-top: 30px;
+  position:absolute; 
+  margin-left:100px; 
+  margin-top: 50px;
 }
 
 #my-table:hover {
