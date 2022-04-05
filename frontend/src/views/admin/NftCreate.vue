@@ -98,8 +98,6 @@ export default {
       nftImgFile: null,
     })
 
-    const imageRef = ref('');
-
     const imageData = (event) => {
     
       state.value.nftImg = event.nftImg
@@ -107,7 +105,6 @@ export default {
       // console.log(state.value.nftImg, '이미지')
       // console.log(state.value.nftImgFile, '이미지 파일')
       encodeImageFileAsURL(state.value.nftImgFile)
-      imageRef.value = store.state.ipfsData
     }
 
     const transferJSON = async function() {
@@ -122,7 +119,7 @@ export default {
         material: state.value.material,
         productColor: state.value.color,
         productPrice: state.value.price,
-        image: imageRef.value,
+        image: store.state.ipfsData,
       }
 
       console.log(123)
@@ -139,8 +136,7 @@ export default {
       console.log(ipfsHash); // json ipfs 주소
       publishToken(ipfsHash)
 
-      // const hash = await getMetadataFromIpfs(ipfsHash)
-      // console.log(hash)
+      // getMetadataFromIpfs(ipfsHash);
     }
 
     return {
