@@ -6,18 +6,18 @@
     <div class="main-content">
       <div class="header">
         <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;">NFT 조회</div>
-        <div class="head_title" style="font-size:16px;">
+        <div class="head_title" style="font-size: 2rem;">
 
           <div class="container d-flex justify-content-center" >
             <div class="card mt-7 p-4" style="width:500px;" id="search-card">
-              <div class="input-group"> 
-                <select style="border-color: #ced4da; width:5.5rem;">
+              <div class="input-group" style=""> 
+                <select style="border-color: #ced4da; width:5.5rem; height: 40px; font-size: 1rem;">
                   <option>지갑주소</option>
                   <option>아이디</option>
                 </select>
-                <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress">
-                <div class="input-group-append">
-                  <button class="btn " style="background-color: #2dce89;" @click="searchWallet"><i class="fas fa-search" style="color: white;" ></i></button>
+                <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress" style="height: 40px;">
+                <div class="input-group-append btn_position">
+                  <button class="btn " style="background-color: #2dce89; height: 40px;" @click="searchWallet"><i class="fas fa-search" style="color: white;" ></i></button>
                 </div>
               </div>
             </div>
@@ -1003,5 +1003,13 @@ body {
 #search-card {
   box-shadow: 1px 2px 5px 2px #d8d7d7;
   // box-shadow: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.btn_position {
+  position: relative;
+  bottom: 10px;
 }
 </style>

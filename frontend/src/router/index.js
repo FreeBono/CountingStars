@@ -105,7 +105,7 @@ const routes = [
     component: NftCreate
   },
   {
-    path: '/NftAllCreate',
+    path: '/nftallcreate',
     name: 'NftAllCreate',
     component: NftAllCreate
   },

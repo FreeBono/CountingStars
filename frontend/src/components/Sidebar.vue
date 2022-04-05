@@ -55,7 +55,7 @@
             </a>
           </li>
           <li>
-            <a href="nftcreate">
+            <a href="nftallcreate" v-show="userRole.role === 'ROLE_SITE_ADMIN'">
               <i class="fa fas fa-cubes fa-2x" style="color: #ffd700;"></i>
               <!-- <i class="fa fas fa-cube fa-2x"></i> -->
               <span class="nav-text">

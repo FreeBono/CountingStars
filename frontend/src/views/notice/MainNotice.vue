@@ -94,7 +94,6 @@
                         <th style="width: 15%;">제목</th>
                         <th style="width: 10%;">Admin</th>
                         <th style="width: 5%;">작성일</th>
-                        <th style="width: 5%;">조회수</th>
                         <!-- <th style="width: 10%;">    </th> -->
                       </tr>
                     </thead>
@@ -111,9 +110,6 @@
                         <th scope="row">
                           <div class="media align-items-center">
                             <div class="media-body" style="text-align: center;">
-                              <!-- <span class="badge badge-dot mr-4">
-                                <i style="background-color: #3adacf;"></i>
-                              </span> -->
                               <span class="mb-0 text-sm">{{noticeitem.noticeId }}</span>
                             </div>
                           </div>
@@ -145,11 +141,6 @@
                         <td>
                           <div>
                             <span class="mr-2">{{ makeDate(noticeitem.date) }}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            <span class="mr-2">조회수</span>
                           </div>
                         </td>
                       </tr>
@@ -334,6 +325,7 @@ export default {
   position:absolute; 
   margin-left:100px; 
   margin-top: 50px;
+  font-size: 2rem;
 }
 
 #my-table:hover {
