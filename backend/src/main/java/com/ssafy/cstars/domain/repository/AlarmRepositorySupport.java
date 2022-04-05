@@ -28,6 +28,7 @@ public class AlarmRepositorySupport {
                 .offset(pageable.getOffset())
                 .fetchResults();
 
+
         if(alarms == null) return Page.empty();
 
         return new PageImpl<Alarm>(alarms.getResults(), pageable, alarms.getTotal());

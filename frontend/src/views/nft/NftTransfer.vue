@@ -300,14 +300,16 @@ export default {
   },
   data(){
     return{
-      sender : 'aaa'
-      message : "",
+      role : this.userRole.role, //역할
+      sender : this.userRole.email, //해당이메일
+      receiver : 'ROLE_BRAND_ADMIN',
       recvList : [],
       registerDate : ""
     }
   },
   setup() {
     const store = useStore()
+    const userRole = store.state.userInfo;
     const router = useRouter()
     // const store = useStore()
     const nfts = ref([])
@@ -601,26 +603,23 @@ export default {
       productColor,
       price,
       serialNumber,
-  
+
+      userRole
     }
   },
   created() {
-    if(this.sender == 'ROLE_STORE_ADMIN' ){// || ROLE_BRAND_ADMIN
       this.connect() 
-    }
   },
   methods: {
     sendAlarm (e) {
-      if(this.sender == 'ROLE_STORE_ADMIN'){
         this.send()
-      }
     },
     send() {
-      console.log("Send message:" + this.message + this.sender);
+      console.log("Send message:" + this.receiver + this.sender);
       if (this.stompClient && this.stompClient.connected) {
         const msg = { 
-          receiver : 'receiveremail',//보내는사람이메일
-          sender: 'senderemail',//받는사람정보
+          sender: this.sender,//보내는사람정보
+          receiver : this.receiver,//받는사람
           productName: 'productname',//이전할상품정보
         };
         this.stompClient.send("/pub/pubs", JSON.stringify(msg), {});
@@ -637,8 +636,13 @@ export default {
           this.connected = true;
           console.log('소켓 연결 성공', frame);
 
-          if(this.sender == 'ROLE_BRAND_ADMIN'){
-            this.stompClient.subscribe("/sub/channel/store", res => {
+          if(this.role == 'ROLE_BRAND_ADMIN'){
+            this.stompClient.subscribe("/sub/channel/"+this.role, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              this.recvList.push(JSON.parse(res.body))
+            });
+          }else{
+            this.stompClient.subscribe("/sub/channel/"+this.sender, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               this.recvList.push(JSON.parse(res.body))
             });
