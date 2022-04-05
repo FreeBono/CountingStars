@@ -77,6 +77,7 @@ import FileUpload from "@/components/common/FileUpload.vue"
 import publishToken from '@/utils/PublishNFT'
 import encodeImageFileAsURL from '../../services/encodeImageFileAsURL'
 import getMetadataFromIpfs from '../../services/getMetadataFromIpfs'
+import { createToast } from 'mosha-vue-toastify';
 
 export default {
   name: 'NftCreate',
@@ -86,19 +87,17 @@ export default {
   },
   setup() {
     const state = ref({
-      serialNumber: '',
-      productDate: '',
-      brandName: '',
-      country: '',
-      category: '',
-      material: '',
-      color: '',
-      price: '',
+      serialNumber: 'AAA11111',
+      productDate: '2022-03-16',
+      brandName: 'Chanel',
+      country: 'Italy',
+      category: 'Class Bag',
+      material: 'cowhide',
+      color: 'black',
+      price: '5,700$',
       nftImg: null,
       nftImgFile: null,
     })
-
-    const imageRef = ref('');
 
     const imageData = (event) => {
     
@@ -107,7 +106,6 @@ export default {
       // console.log(state.value.nftImg, '이미지')
       // console.log(state.value.nftImgFile, '이미지 파일')
       encodeImageFileAsURL(state.value.nftImgFile)
-      imageRef.value = store.state.ipfsData
     }
 
     const transferJSON = async function() {
@@ -122,14 +120,11 @@ export default {
         material: state.value.material,
         productColor: state.value.color,
         productPrice: state.value.price,
-        image: imageRef.value,
+        image: store.state.ipfsData,
       }
 
-      console.log(123)
-      const ipfs = create("/ip4/127.0.0.1/tcp/5001");
-      console.log(456)
+      const ipfs = create('/ip4/127.0.0.1/tcp/5001');
       const response = await ipfs.add(JSON.stringify(data));
-      console.log(789)
       const ipfsHash = response.path;
 
       // const response = await pinata(state.value.nftImgFile);
@@ -138,9 +133,13 @@ export default {
 
       console.log(ipfsHash); // json ipfs 주소
       publishToken(ipfsHash)
+      createToast(
+        { title: 'Send NFT issue request',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'success', showIcon:true, position:'bottom-right', }
+        )
 
-      // const hash = await getMetadataFromIpfs(ipfsHash)
-      // console.log(hash)
+      // getMetadataFromIpfs(ipfsHash);
     }
 
     return {
