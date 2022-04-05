@@ -17,7 +17,7 @@
                 </select>
                 <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress">
                 <div class="input-group-append">
-                  <button class="btn " style="background-color: #2dce89;"><i class="fas fa-search" style="color: white;" @click="searchWallet"></i></button>
+                  <button class="btn " style="background-color: #2dce89;" @click="searchWallet"><i class="fas fa-search" style="color: white;" ></i></button>
                 </div>
               </div>
             </div>

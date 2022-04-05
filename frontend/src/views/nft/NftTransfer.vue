@@ -47,7 +47,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:18px; text-align:left;">  
                     <div>TOTAL WORTH</div>
-                    <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
+                    <div align="left">{{worth.toLocaleString('ko-KR')}} WON</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
@@ -62,7 +62,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:18px; text-align:left;">  
                     <div>HIGHEST PRICE</div>
-                    <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
+                    <div align="left">{{highestPrice.toLocaleString('ko-KR')}} WON</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
@@ -102,7 +102,7 @@
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
+                    <div class="card col-3" style="padding:0px; width:85%;" >
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
                         <figcaption class="card__caption" style="left:15%;">
@@ -112,7 +112,7 @@
                         </figcaption>
                       </figure>
                     </div>
-                    <div class="card col-3" style="padding:0px; width:85%;" v-else>
+                    <!-- <div class="card col-3" style="padding:0px; width:85%;" v-else>
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img src="@/assets/cslogo.png" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
                         <figcaption class="card__caption" style="left:5%;">
@@ -121,7 +121,7 @@
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
                       </figure>
-                    </div>
+                    </div> -->
                   </div>
               </div>
             </div>
@@ -315,22 +315,26 @@ export default {
           )
       
 			console.log(tokenNum.value)
-      testt(2)  
-			// await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
-      // nfts.value = store.state.nftValues
+   
+			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      nfts.value = store.state.nftValues
 
       
-      // LookupNFTs()
+      LookupNFTs()
 		}
     
 
 
     const worth = computed(() => {
-      return store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}).reduce(function(a,b) { return a+b;},0)
+      if (nfts) {
+      return (nfts.value.map(function(x) {return parseInt(x.productPrice)}).reduce(function(a,b) { return a+b;},0))
+      } else {
+        0
+      }
     })
 
     const highestPrice = computed(() => {
-      return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
+      return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice)}))
       })
 
     api.get('/userTransaction',{params: {userId: store.state.auth.user.id}})
