@@ -563,7 +563,7 @@ export default {
     const receiver = 'ROLE_BRAND_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함
     const sender = store.state.userInfo.email
     const connect = () => {
-      const serverURL = "http://localhost:8080/alarm"
+      const serverURL = "/api/v1/alarm"
       let socket = new SockJS(serverURL);
       stompClient.value = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
