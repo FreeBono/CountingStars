@@ -48,13 +48,14 @@ class AuthService {
     TokenService.removeUser();
   }
 
-  register({ username, email, password,roles, name}) {
+  register({ username, email, password,roles, name, store}) {
     return api.post("/auth/signup", {
       username,
       email,
       password,
       roles,
       name,
+      store,
     })
     .then(
       createToast(

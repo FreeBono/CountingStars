@@ -48,7 +48,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:15px; text-align:left;">  
                     <div>TOTAL WORTH</div>
-                    <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
+                    <div align="left">{{worth.toLocaleString('ko-KR')}} WON</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
@@ -63,7 +63,7 @@
                 <div class="media" style="overflow:hidden;">
                   <div class="media-body" style="float:left; margin-top:15px; text-align:left;">  
                     <div>HIGHEST PRICE</div>
-                    <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
+                    <div align="left">{{highestPrice.toLocaleString('ko-KR')}} WON</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
                     <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
@@ -80,13 +80,13 @@
         
         <!-- NFT목록 -->
         <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
-          <div  class="container-fluid">
+          <div  class="container-fluid ">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
 
-
+                <div align="left" >NFT 목록</div>
                 <!-- 필터링 부분 -->
-                <div class="searchbarr mb-4">
+                <div class="searchbarr mb-4" style="margin-top:20px;">
                   <select class="brandSel-tag" v-model="brandSelected" @change="brandSel()" >
                     <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
                       {{ brandoption.text }}
@@ -110,15 +110,18 @@
 
 
                 <div class="row" >
-                  <div align="left" >NFT 목록></div>
+                  
                   
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
-                    <div class="card col-3" style="padding:0px; width:85%;" >
-                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                    <div class="card" style="padding:0px; " >
+                      <figure class="card__thumb" style="margin:0px; height:250px; " >
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                        <figcaption class="card__caption" style="left:15%;">
-                          <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
-                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                        <figcaption class="card__caption" style="text-align:center;">
+                          <h2 class="card__title" style="color:white; " v-if="nft.name">{{nft.name}}</h2>
+                          <div class="card__snippet" >
+                            <div>{{nft.brandName.toUpperCase()}}</div>
+                            <div> {{parseInt(nft.productPrice).toLocaleString('ko-KR')}} WON</div>
+                          </div>
                           <!-- <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor:pointer;">Detail</span> -->
                           <div>
                             <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">Detail</span>
@@ -222,7 +225,8 @@
                 <div class="row" style="" >
                   <!-- <hr style="margin:15px 0;"> -->
                   <!-- <div>현재 지갑 주소 </div> -->
-                  <DoughnutChart :chartData="testData" style="width:100%; "/>
+                  <DoughnutChart :chartData="brandData" style="width:50%; "/>
+                  <DoughnutChart :chartData="categoryData" style="width:50%; "/>
                   
                 </div>
             
@@ -316,11 +320,15 @@ export default {
     
 
     const worth = computed(() => {
-      return store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}).reduce(function(a,b) { return a+b;},0)
+      if (nfts) {
+      return (nfts.value.map(function(x) {return parseInt(x.productPrice)}).reduce(function(a,b) { return a+b;},0))
+      } else {
+        0
+      }
     })
 
     const highestPrice = computed(() => {
-      return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice.substring(0,1)+x.productPrice.substring(2,5))}))
+      return Math.max.apply(null, store.state.nftValues.map(function(x) {return parseInt(x.productPrice)}))
       })
 
     // 메인 지갑 설정
@@ -386,8 +394,18 @@ export default {
     //테스트 도넛
     // store.state.nftValues 에 나중에 더미 정상적으로 작동하면 사용
     
-    const testData = {
+    const brandData = {
       labels: ['chanel', 'louis vuitton', 'gucci', 'cartier', 'versace','fendi'],
+      datasets: [
+        {
+          data: [0, 0, 0, 0, 0],
+          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+        },
+      ],
+    };
+
+    const categoryData = {
+      labels: ['BAG', 'ACCESORY', 'WALLET', 'CLOTH', 'WATCH'],
       datasets: [
         {
           data: [0, 0, 0, 0, 0],
@@ -398,18 +416,30 @@ export default {
 
     nfts.value.forEach( e =>{
       if (e.brandName.toLowerCase() == 'chanel') {
-        testData.datasets[0].data[0] += 1
+        brandData.datasets[0].data[0] += 1
       } else if (e.brandName.toLowerCase() == 'louis vuitton') {
-        testData.datasets[0].data[1] += 1
+        brandData.datasets[0].data[1] += 1
       } else if (e.brandName.toLowerCase() == 'gucci') {
-        testData.datasets[0].data[2] += 1
+        brandData.datasets[0].data[2] += 1
       } else if (e.brandName.toLowerCase() == 'cartier') {
-        testData.datasets[0].data[3] += 1
+        brandData.datasets[0].data[3] += 1
       } else if (e.brandName.toLowerCase() == 'versace') {
-        testData.datasets[0].data[4] += 1
+        brandData.datasets[0].data[4] += 1
       } else if (e.brandName.toLowerCase() == 'fendi') {
-        testData.datasets[0].data[5] += 1
+        brandData.datasets[0].data[5] += 1
       }
+
+      if (e.productClassification.toLowerCase() == 'bag') {
+        categoryData.datasets[0].data[0] += 1
+      } else if (e.productClassification.toLowerCase() == 'accesory') {
+        categoryData.datasets[0].data[1] += 1
+      } else if (e.productClassification.toLowerCase() == 'wallet') {
+        categoryData.datasets[0].data[2] += 1
+      } else if (e.productClassification.toLowerCase() == 'cloth') {
+        categoryData.datasets[0].data[3] += 1
+      } else if (e.productClassification.toLowerCase() == 'watch') {
+        categoryData.datasets[0].data[4] += 1
+      } 
     })
     
     // 필터 부분
@@ -610,7 +640,7 @@ export default {
       myWallet,
       copyToClickBoard,
       toast,
-      testData,
+      brandData,
       brandSelected,
       categorySelected,
       searchSelected,
@@ -639,6 +669,7 @@ export default {
       serialNumber,
       userRole,
       testt,
+      categoryData,
     }
   },
 }
@@ -752,10 +783,11 @@ html {
 }
 
 .card {
-	width: 300px;
+	// width: 300px;
 	margin: 10px;
 	background-color: white;
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+  
 
 	&:hover {
 		.card__caption {
@@ -782,6 +814,7 @@ html {
 		position: relative;
 		max-height: 400px;
 		overflow: hidden;
+    
 		
 		@include breakpoint(desktop) {
 			max-height: 500px;
@@ -811,7 +844,7 @@ html {
 		position: absolute;
 		top: 50%;
 		z-index: 1;
-		padding: 0 20px;
+    width:100%;
 		color: white;
 		transform: translateY(-50%);
 		text-align: center;
