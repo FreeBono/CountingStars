@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.ssafy.cstars.domain.repository.BrandAdminRepository;
 import com.ssafy.cstars.domain.repository.StoreAdminRepository;
 import com.ssafy.cstars.domain.repository.UserRepository;
-import com.ssafy.cstars.security.services.BrandAdminDetailsServiceImpl;
-import com.ssafy.cstars.security.services.StoreAdminDetailsServiceImpl;
-import com.ssafy.cstars.security.services.UserDetailsServiceImpl;
+import com.ssafy.cstars.service.implementation.BrandAdminDetailsServiceImpl;
+import com.ssafy.cstars.service.implementation.StoreAdminDetailsServiceImpl;
+import com.ssafy.cstars.service.implementation.UserDetailsServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
