@@ -1,5 +1,6 @@
 package com.ssafy.cstars.service.implementation;
 
+import com.ssafy.cstars.api.request.UserPostReq;
 import com.ssafy.cstars.api.request.UserPutReq;
 import com.ssafy.cstars.domain.entity.User;
 import com.ssafy.cstars.domain.repository.UserRepository;
@@ -20,6 +21,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getAddress(UserPostReq userInfo) {
+        return userRepository.findByEmail(userInfo.getEmail()).orElse(null);
+    }
+
+    @Override
     public int modifyUser(UserPutReq userInfo) {
 
         User user = getUser(userInfo.getUserId());
@@ -31,4 +37,5 @@ public class UserServiceImpl implements UserService {
 
         return 200;
     }
+
 }
