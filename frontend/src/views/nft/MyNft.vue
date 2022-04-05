@@ -102,7 +102,7 @@
                     <option value="Wallet">Wallet</option>
                   </select>
 
-                  <b-form-input class="mx-2" b-form-input style="width: 250px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
+                  <b-form-input class="mx-2" b-form-input style="width: 350px; height: 40px; font-size: 15px;" placeholder="검색할 nft 이름을 입력하세요." v-model="word" @keydown.enter="searchTitle()" autocomplete="off"></b-form-input>
                   <b-button class="searchBtn mr-1" @click="searchTitle()">검색</b-button>
                   <b-button class="resetSearchBtn" @click="searchInit()">초기화</b-button>
                 </div>

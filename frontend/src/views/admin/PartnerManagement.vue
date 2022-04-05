@@ -444,9 +444,9 @@ background-color: #727171 !important;
 /* 크기 작을 때 */
 .head_title {
   color: white;
-  display: flex;
-  margin-left: 300px;
-  margin-top: 30px;
+  position:absolute; 
+  margin-left:100px; 
+  margin-top: 50px;
 }
 
 #my-table:hover {

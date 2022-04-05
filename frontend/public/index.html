@@ -30,8 +30,6 @@
     <script src="https://kit.fontawesome.com/ec80ef2922.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 
-    <!-- ckeditor -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
     
     <!-- card폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -45,6 +43,19 @@
     <!-- <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css"> -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> -->
 
+    <!-- 카카오 챗봇 -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    
+    <meta charset="utf-8"/>
+    <title>Kakao JavaScript SDK</title>
+    <script src="https://cdn.jsdelivr.net/npm/ipfs-http-client/dist/index.min.js"></script>
+    <script>
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('JAVASCRIPT_KEY');
+
+        // SDK 초기화 여부를 판단합니다.
+        // console.log(Kakao.isInitialized());
+    </script>
 
   </head>
   <body>
@@ -58,7 +69,24 @@
     <!-- <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js"></script> -->
     <!-- <script src="https://example.com/example-framework.js" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/ipfs-http-client/dist/index.min.js"></script>
+
     
+    <!-- 챗봇 -->
+    <script>
+      window.kakaoAsyncInit = function() {
+        Kakao.Channel.createChatButton({
+          container: '#kakao-talk-channel-chat-button',
+        });
+      };
+    
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://developers.kakao.com/sdk/js/kakao.channel.min.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'kakao-js-sdk');
+    </script>
 
   </body>
 </html>
