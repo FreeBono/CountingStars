@@ -143,7 +143,7 @@
           </div>
         </div>
     
-
+ <button type="button" class="btn btn-primary" @click="sendAlarm()">transfer</button>
 
 
 <!-- Modal -->
@@ -203,7 +203,8 @@ import Graph from '@/components/Graph'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 
-
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client'
 
 export default {
   name: 'NftTransfer',
@@ -211,10 +212,16 @@ export default {
     Sidebar,
     Graph,
   },
+  data(){
+    return{
+      sender : "ROLE_STORE_ADMIN",
+      message : "",
+      recvList : [],
+      registerDate : ""
+    }
+  },
   setup() {
-    
-
-    const store = useStore()
+      const store = useStore()
     const router = useRouter()
     // const store = useStore()
     const nfts = ref([])
@@ -296,6 +303,53 @@ export default {
  
       receivePrivatekey
     }
+  },
+  created() {
+    if(this.sender == 'ROLE_STORE_ADMIN' ){// || ROLE_BRAND_ADMIN
+      this.connect() 
+    }
+  },
+  methods: {
+    sendAlarm (e) {
+      if(this.sender == 'ROLE_STORE_ADMIN'){
+        this.send()
+      }
+    },
+    send() {
+      console.log("Send message:" + this.message + this.sender);
+      if (this.stompClient && this.stompClient.connected) {
+        const msg = { 
+          storeAdmin : 'storeadminemail',//email써야함
+          storeBrand: 'thisisstorebrand',//store brand써야함
+          productName: 'productname',//이전할상품정보
+        };
+        this.stompClient.send("/pub/pubs", JSON.stringify(msg), {});
+      }
+    },
+    connect() {
+      const serverURL = "http://localhost:8080/alarm"
+      let socket = new SockJS(serverURL);
+      this.stompClient = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      this.stompClient.connect(
+        {},
+        frame => {
+          this.connected = true;
+          console.log('소켓 연결 성공', frame);
+
+          if(this.sender == 'ROLE_BRAND_ADMIN'){
+            this.stompClient.subscribe("/sub/channel/store", res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              this.recvList.push(JSON.parse(res.body))
+            });
+          }
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          this.connected = false;
+        }
+      ); 
+    }
   }
 }
 </script>
@@ -310,9 +364,6 @@ export default {
   position: relative;
   left: 100px;
 }
-
-
-
 
 
 $desktop: 1024px;
