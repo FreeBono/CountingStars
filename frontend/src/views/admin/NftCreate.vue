@@ -123,7 +123,7 @@ export default {
         image: store.state.ipfsData,
       }
 
-      const ipfs = create('/ip4/127.0.0.1/tcp/5001');
+      const ipfs = create();
       const response = await ipfs.add(JSON.stringify(data));
       const ipfsHash = response.path;
 
