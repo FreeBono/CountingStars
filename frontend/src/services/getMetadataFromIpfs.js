@@ -8,6 +8,6 @@ export default async function getMetadataFromIpfs(ipfsHash) {
     }
     const data = Buffer.concat(chunks).toString();
     const metaData = JSON.parse(data);
+    console.log(metaData);
     return metaData;
-    // console.log(metaData);
 }
