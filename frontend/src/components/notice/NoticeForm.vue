@@ -4,7 +4,7 @@
     <div class="main-content">
     <sidebar/>
       <div class="header">
-        <p class="head_title">공지사항 등록</p>
+        <p class="head_title">공지사항</p>
       </div>
       <div class="content_outside_box">
         <div class="content_box">
@@ -16,7 +16,6 @@
               id="textarea-rows"
               rows="8" 
               v-model="noticeInfo.content" 
-              @keyup.enter="createNotice"
               class="form-control" >
             </b-form-textarea>
           </div>
@@ -134,9 +133,10 @@ background-color: #fa8e8e !important;
 
 .head_title {
   color: white;
-  display: flex;
-  margin-left: 300px;
-  margin-top: 30px;
+  position:absolute; 
+  margin-left:100px; 
+  margin-top: 50px;
+  font-size: 2rem;
 }
 
 </style>

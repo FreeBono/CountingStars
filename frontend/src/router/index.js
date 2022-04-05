@@ -18,6 +18,8 @@ import NftWalletSearch from '@/views/nft/NftWalletSearch.vue'
 import NftNumberSearch from '@/views/nft/NftNumberSearch.vue'
 import NftTransfer from '@/views/nft/NftTransfer.vue'
 import PartnerCreate from '@/views/admin/PartnerCreate.vue'
+import KakaoChatbot from '@/components/KakaoChatbot.vue'
+
 
 
 import Pinata from "../components/Pinata.vue"
@@ -135,6 +137,11 @@ const routes = [
     path: '/partnercreate',
     name: 'PartnerCreate',
     component : PartnerCreate
+  },
+  {
+    path: '/testchatbot',
+    name: 'KakaoChatbot',
+    component : KakaoChatbot
   },
 ]
 
