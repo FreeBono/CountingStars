@@ -126,12 +126,15 @@
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:85%;" >
+                    <div class="card" style="padding:0px; " >
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
-                        <figcaption class="card__caption" style="left:15%;">
+                        <figcaption class="card__caption" >
                           <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
-                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <div class="card__snippet" >
+                            <div>{{nft.brandName.toUpperCase()}}</div>
+                            <div> {{parseInt(nft.productPrice).toLocaleString('ko-KR')}} WON</div>
+                          </div>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
                       </figure>
@@ -169,17 +172,18 @@
 
         <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:700px;">
           <!-- <div  class="container-fluid"> -->
-            <div class="searchBarTag mt-3">
+            <div class="searchBarTag mt-3" style="width:100%;">
               <!-- <div class="container justify-content-center"> -->
+                <div align="left" style="margin-left:10px; margin-top:10px;">NFT 이전 랭킹</div>
                 <div class="row" >
-                  <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
+                  
                   <!-- <hr style="margin-top:15px 0;"> -->
                   
-                    <div class="row-vh d-flex flex-row justify-content-around" style="margin-left:7%;" >
-                      <div class="row-vh d-flex flex-column" >
+                    <div class="row-vh d-flex flex-row  justify-content-around"   >
+                      <div class="row-vh d-flex flex-column" style="" >
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+1}}</div>
-                            <div style="padding-left:5px; text-align:left; width:75%;">
+                            <div style=" text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
                               <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
                               
@@ -187,7 +191,7 @@
             
                           </div>                       
                       </div>
-                      <div class="row-vh d-flex flex-column" style="margin-left:40px;" >
+                      <div class="row-vh d-flex flex-column" style="" >
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+4}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
@@ -198,7 +202,7 @@
                  
                           </div>                       
                       </div>
-                      <div class="row-vh d-flex flex-column" style="margin-left:40px;">
+                      <div class="row-vh d-flex flex-column" style="margin-right:15px">
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+7}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
@@ -708,7 +712,7 @@ html {
 }
 
 .card {
-	width: 300px;
+	// width: 300px;
 	margin: 10px;
 	background-color: white;
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
@@ -768,6 +772,7 @@ html {
 		top: 50%;
 		z-index: 1;
 		padding: 0 20px;
+    width:100%;
 		color: white;
 		transform: translateY(-50%);
 		text-align: center;
@@ -951,7 +956,7 @@ body {
   // width: 75%;
   min-height: 350px;
   background-color: white;
-  margin-left: 100px;
+  // margin-left: 100px;
   border: 1px;
   border-radius: 10px;
   box-shadow: 3px 3px 10px 1px #d8d7d7;

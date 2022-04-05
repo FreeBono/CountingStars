@@ -11,6 +11,6 @@ web3.eth.accounts.wallet.add(sender);
 
 
 let contract = new web3.eth.Contract( contractInfo.abi, contractInfo.address)
-const abc = await contract.methods.mintNFT("0xCFFC95508deb08A15a4c0E0aC3f94F0fB5D6Ed9A",publisher).send({from: "0xA4F883c083450f9D06B2bc5BaA31eEFB7d689D09",gas:600000, })
+const abc = await contract.methods.mintNFT("0x6D6b463FcB1eE999741A94BCa578b38965a24942",publisher).send({from: "0xA4F883c083450f9D06B2bc5BaA31eEFB7d689D09",gas:600000, })
 
 }

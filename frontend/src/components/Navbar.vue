@@ -7,7 +7,7 @@
                     
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
                     <a class="nav-link"  id="container3" >About</a> <a class="nav-link" href="#" id="container4">Services</a>
-                    <a class="nav-link" href="/mynft" id="container5">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
+                    <a class="nav-link" id="container5" @click="goNftpage">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.userInfo">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
                   
@@ -155,6 +155,20 @@ export default {
 
     }
 
+    const goNftpage = () => {
+      if (store.state.userInfo) {
+      router.push({name:'MyNft'})
+      }
+      else {
+        createToast(
+        { title: 'This service requires a login.',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'danger', showIcon:true, position:'bottom-right', }
+        )
+      }
+    }
+
+
     return {
       // divTag1,
       loggedIn,
@@ -163,6 +177,7 @@ export default {
       loginValue,
       getAccount,
       goScroll,
+      goNftpage,
     }
   }
 }
