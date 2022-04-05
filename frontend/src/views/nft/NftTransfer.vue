@@ -232,7 +232,7 @@
           </div>
         </div>
     
-
+ <button type="button" class="btn btn-primary" @click="sendAlarm()">transfer</button>
 
 
 <!-- Modal -->
@@ -292,7 +292,8 @@ import Graph from '@/components/Graph'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 
-
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client'
 
 
 export default {
@@ -301,9 +302,18 @@ export default {
     Sidebar,
     Graph,
   },
+  data(){
+    return{
+      role : this.userRole.role, //역할
+      sender : this.userRole.email, //해당이메일
+      receiver : 'ROLE_BRAND_ADMIN',
+      recvList : [],
+      registerDate : ""
+    }
+  },
   setup() {
-    
     const store = useStore()
+    const userRole = store.state.userInfo;
     const router = useRouter()
     // const store = useStore()
     const nfts = ref([])
@@ -597,7 +607,56 @@ export default {
       productColor,
       price,
       serialNumber,
-  
+
+      userRole
+    }
+  },
+  created() {
+      this.connect() 
+  },
+  methods: {
+    sendAlarm (e) {
+        this.send()
+    },
+    send() {
+      console.log("Send message:" + this.receiver + this.sender);
+      if (this.stompClient && this.stompClient.connected) {
+        const msg = { 
+          sender: this.sender,//보내는사람정보
+          receiver : this.receiver,//받는사람
+          productName: 'productname',//이전할상품정보
+        };
+        this.stompClient.send("/pub/pubs", JSON.stringify(msg), {});
+      }
+    },
+    connect() {
+      const serverURL = "http://localhost:8080/alarm"
+      let socket = new SockJS(serverURL);
+      this.stompClient = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      this.stompClient.connect(
+        {},
+        frame => {
+          this.connected = true;
+          console.log('소켓 연결 성공', frame);
+
+          if(this.role == 'ROLE_BRAND_ADMIN'){
+            this.stompClient.subscribe("/sub/channel/"+this.role, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              this.recvList.push(JSON.parse(res.body))
+            });
+          }else{
+            this.stompClient.subscribe("/sub/channel/"+this.sender, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              this.recvList.push(JSON.parse(res.body))
+            });
+          }
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          this.connected = false;
+        }
+      ); 
     }
   }
 }
@@ -675,9 +734,6 @@ export default {
   position: relative;
   left: 100px;
 }
-
-
-
 
 
 $desktop: 1024px;

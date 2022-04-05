@@ -50,6 +50,7 @@
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",
     "sass-loader": "^12.6.0",
+    "sockjs-client": "^1.6.0",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
@@ -69,6 +70,7 @@
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0",
     "web3": "^1.7.1",
+    "webstomp-client": "^1.2.6",
     "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },

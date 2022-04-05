@@ -24,7 +24,7 @@ public class BrandRes {
     @ApiModelProperty(name = "Brand endDate")
     Date endDate;
 
-    @ApiModelProperty(name = "Brand endDate")
+    @ApiModelProperty(name = "Brand imageUrl")
     String imageUrl;
 
     public static BrandRes of(Brand brand){
