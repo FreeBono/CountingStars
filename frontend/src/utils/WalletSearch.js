@@ -2,6 +2,8 @@
 import axios from 'axios'
 import store from '@/store';
 import contractInfo from '@/utils/contractInfo'
+import getMetadataFromIpfs from '@/services/getMetadataFromIpfs'
+
 
 export default async function searchNFTs(targetAccount) {
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
@@ -26,25 +28,21 @@ export default async function searchNFTs(targetAccount) {
   }
   
   await tokens.forEach( element => {
-     contract.methods.tokenURI(element).call().then(res => {
-      axios({
-        method : 'get',
-        url : 'https://gateway.pinata.cloud/ipfs/'+res.substring(7)
-        })
-        .then(res => {
-          const myData = res.data
-          myData['tokenId'] = element
-          objects.push(myData)
-          console.log(myData)
-    
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    contract.methods.tokenURI(element).call().then(res => {
+     getMetadataFromIpfs(res).then(
+       r => {
+         const myData = r
+         myData['tokenId'] = element
+         myData['stats'] = 0
+         objects.push(myData)
+         console.log(myData)
+       }
+     )
+     
 
-      
-    });
-  })
+     
+   });
+ })
 
   setTimeout(()=> {
     store.dispatch('searchWallet',objects)

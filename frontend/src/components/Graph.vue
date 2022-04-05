@@ -26,6 +26,13 @@ export default {
     
     // console.log(today.format('YYYY-MM-DD'));
     // const a = today.add(7, 'months')
+    api.get('/userTransaction',{params: {userId: store.state.auth.user.id}})
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
     
     const dates = []
     for (let i=11; i >= 0 ; i--) {
@@ -46,13 +53,7 @@ export default {
     
 
 
-    // api.get('/userTransaction',{params: {userId: store.state.auth.user.id}})
-    // .then(res => {
-    //   console.log(res)
-    // })
-    // .catch(err => {
-    //   console.log(err)
-    // })
+    
 
     
 

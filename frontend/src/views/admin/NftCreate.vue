@@ -86,14 +86,14 @@ export default {
   },
   setup() {
     const state = ref({
-      serialNumber: 'AAA11111',
-      productDate: '2022-03-16',
-      brandName: 'Chanel',
-      country: 'Italy',
-      category: 'Class Bag',
-      material: 'cowhide',
-      color: 'black',
-      price: '5700',
+      serialNumber: '',
+      productDate: '',
+      brandName: '',
+      country: '',
+      category: '',
+      material: '',
+      color: '',
+      price: '',
       nftImg: null,
       nftImgFile: null,
     })
