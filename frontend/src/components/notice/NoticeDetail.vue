@@ -1,5 +1,5 @@
 <template>
-  <h1>공지사항 상세보기</h1>
+  <!-- <h1>공지사항 상세보기</h1> -->
     <div class="wrapper">
     <!-- 내용 들어갈 곳 -->
     <div class="main-content">
@@ -49,6 +49,7 @@
               rows="8" 
               v-model="noticeContents.content" 
               class="form-control"
+              @keyup.enter="updateNotice"
               >
               </b-form-textarea>
               <p v-else class="content-tag mt-3 mx-3" style="white-space: wrap; text-align: left;">{{ noticeContents.content }}</p>

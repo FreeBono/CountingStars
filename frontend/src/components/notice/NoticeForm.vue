@@ -16,6 +16,7 @@
               id="textarea-rows"
               rows="8" 
               v-model="noticeInfo.content" 
+              @keyup.enter="createNotice"
               class="form-control" >
             </b-form-textarea>
           </div>
@@ -40,6 +41,9 @@ import Sidebar from '@/components/Sidebar.vue'
 import api from "@/services/api.js"
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
+
 
 export default {
   name: 'NoticeForm',
@@ -64,6 +68,11 @@ export default {
       api.post('/notice', noticeInfo.value)
       .then((res) => {
         console.log(res)
+        createToast(
+            { title: 'Notice is created',  },
+            // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+            { type:'success', showIcon:true, position:'bottom-right', }
+          )
         // 해당 번호의 디테일로 가기
         router.push({name: 'MainNotice'})
         // router.push({name: 'NoticeDetail'})

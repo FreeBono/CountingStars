@@ -9,18 +9,18 @@
     <div class="main-content">
 
       <div class="header">
-        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white;"> NFT Transfer</div>
+        <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;"> NFT Transfer</div>
         <div class="row-vh d-flex" style="margin-left:80px; width:90%; margin-top:100px;">
           <div class="card" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:25%; border-radius:10px;">
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div>TOTAL NFTS</div>
-                    <div align="left">{{nfts.length}}</div>
+                  <div class="media-body" style="float:left; margin-top:20px; text-align:left" >  
+                    <div >TOTAL NFTS</div>
+                    <div >{{nfts.length}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -30,12 +30,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden; ">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
-                    <div>TOTAL TRANSFER</div>
-                    <div align="left">{{nfts.length}}</div>
+                  <div class="media-body" style="float:left; margin-top:18px;">  
+                    <div style="text-align:left;">TOTAL TRANSFER</div>
+                    <div align="left">{{transferHistory}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"   ></i>
+                    <i class="fas fa-handshake fa-3x" style="color:#3773f6;"></i>
                   </div>    
                 </div>
               </div>
@@ -45,12 +45,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
+                  <div class="media-body" style="float:left; margin-top:18px; text-align:left;">  
                     <div>TOTAL WORTH</div>
                     <div align="left">{{worth.toLocaleString('ko-KR')}}$</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -60,12 +60,12 @@
             <div class="card-content">            
               <div class="card-body">
                 <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; margin-top:15px;">  
+                  <div class="media-body" style="float:left; margin-top:18px; text-align:left;">  
                     <div>HIGHEST PRICE</div>
                     <div align="left">{{highestPrice.toLocaleString('ko-KR')}}$</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-handshake fa-2x"></i>
+                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
                   </div>    
                 </div>
               </div>
@@ -96,7 +96,7 @@
         </div> -->
         
   
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
+        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:1000px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
@@ -105,7 +105,7 @@
                     <div class="card col-3" style="padding:0px; width:85%;" v-if="nft.status ===0">
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
-                        <figcaption class="card__caption" style="left:5%;">
+                        <figcaption class="card__caption" style="left:15%;">
                           <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
                           <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
@@ -128,7 +128,7 @@
           </div>
         </div>
 
-        <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px;">
+        <div class="content_box row-vh d-flex flex-row " style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px;">
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
@@ -140,6 +140,67 @@
                   </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:700px;">
+          <!-- <div  class="container-fluid"> -->
+            <div class="searchBarTag mt-3">
+              <!-- <div class="container justify-content-center"> -->
+                <div class="row" >
+                  <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
+                  <!-- <hr style="margin-top:15px 0;"> -->
+                  
+                    <div class="row-vh d-flex flex-row justify-content-around" style="margin-left:7%;" >
+                      <div class="row-vh d-flex flex-column" >
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                            <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+1}}</div>
+                            <div style="padding-left:5px; text-align:left; width:75%;">
+                              <div align="left" style="font-size:20px; ">{{item.email}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
+                              
+                            </div>
+            
+                          </div>                       
+                      </div>
+                      <div class="row-vh d-flex flex-column" style="margin-left:40px;" >
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                            <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+4}}</div>
+                            <div style="padding-left:15px; text-align:left; width:75%;">
+                              <div align="left" style="font-size:20px; ">{{item.email}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
+                              
+                            </div>
+                 
+                          </div>                       
+                      </div>
+                      <div class="row-vh d-flex flex-column" style="margin-left:40px;">
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                            <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+7}}</div>
+                            <div style="padding-left:15px; text-align:left; width:75%;">
+                              <div align="left" style="font-size:20px; ">{{item.email}}</div>
+                              <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
+                              
+                            </div>
+              
+                          </div>                       
+                      </div>
+                      
+                      
+                      
+          
+                    
+                    
+
+
+
+
+
+
+
+                  </div>
+              </div>
+            <!-- </div> -->
           </div>
         </div>
     
@@ -200,6 +261,8 @@ import {ref, computed } from 'vue'
 import {useStore} from 'vuex'
 import TransferToken from '@/utils/TransferNFT.js'
 import Graph from '@/components/Graph'
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css'
 
 
 
@@ -212,13 +275,14 @@ export default {
   },
   setup() {
     
-
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
     const nfts = ref([])
 		const receiveAccount = ref('')
     const receivePrivatekey = ref('')
+    const transferHistory = ref(0)
+    const rankData = ref([])
     nfts.value = []
     function sendNft() {
       // router.push({name: 'NftTransfer'})
@@ -242,7 +306,7 @@ export default {
 			tokenNum.value = e
 		}
 
-		const sendToken = () => {
+		async function sendToken() {
       //알람
       createToast(
           { title: 'Send Transaction',  },
@@ -251,8 +315,9 @@ export default {
           )
       
 			console.log(tokenNum.value)
-      
-			TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      testt(2)  
+			// await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      // nfts.value = store.state.nftValues
 
       
       // LookupNFTs()
@@ -271,6 +336,21 @@ export default {
     api.get('/userTransaction',{params: {userId: store.state.auth.user.id}})
     .then(res => {
       console.log(res)
+      transferHistory.value = res.data.length
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    // transfer ranking
+    api.get('/userTransaction/rank',)
+    .then(res => {
+      console.log(res.data)
+      rankData.value = res.data.content
+      // rankData.value = res.data.content.filter(e => {
+      //   return e.address != null
+      // })
+    
     })
     .catch(err => {
       console.log(err)
@@ -288,8 +368,12 @@ export default {
       worth,
       highestPrice,
       // getTransferInfo,
- 
-      receivePrivatekey
+      transferHistory,
+      rankData,
+      receivePrivatekey,
+
+
+  
     }
   }
 }
@@ -580,6 +664,16 @@ body {
 }
 
 .content_box::-webkit-scrollbar{ display:none; }
+
+.abc {
+  // width: 75%;
+  min-height: 350px;
+  background-color: white;
+  margin-left: 100px;
+  border: 1px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px 1px #d8d7d7;
+}
 
 
 </style>
