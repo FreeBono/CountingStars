@@ -93,7 +93,7 @@ export default {
       category: 'Class Bag',
       material: 'cowhide',
       color: 'black',
-      price: '5,700$',
+      price: '5700',
       nftImg: null,
       nftImgFile: null,
     })
@@ -125,8 +125,11 @@ export default {
         image: imageRef.value,
       }
 
-      const ipfs = create();
+      console.log(123)
+      const ipfs = create("/ip4/127.0.0.1/tcp/5001");
+      console.log(456)
       const response = await ipfs.add(JSON.stringify(data));
+      console.log(789)
       const ipfsHash = response.path;
 
       // const response = await pinata(state.value.nftImgFile);
@@ -136,7 +139,8 @@ export default {
       console.log(ipfsHash); // json ipfs 주소
       publishToken(ipfsHash)
 
-      getMetadataFromIpfs(ipfsHash);
+      // const hash = await getMetadataFromIpfs(ipfsHash)
+      // console.log(hash)
     }
 
     return {

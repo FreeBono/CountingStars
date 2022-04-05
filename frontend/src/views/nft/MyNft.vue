@@ -258,6 +258,7 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import { DoughnutChart, } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
+
 Chart.register(...registerables);
 
 
@@ -278,6 +279,7 @@ export default {
         )
     }
 
+   
 
     const word = ref("")
     const store = useStore()
