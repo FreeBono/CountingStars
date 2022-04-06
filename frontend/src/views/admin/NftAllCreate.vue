@@ -100,7 +100,6 @@
                         <th scope="col">소재</th>
                         <th scope="col">색상</th>
                         <th scope="col">가격</th>
-                        <th scope="col">이미지번호</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -115,7 +114,6 @@
                         <td><input class="form-control" type="text" v-model="metadata.brandName"/></td>
                         <td><input class="form-control" type="text" v-model="metadata.countryOfManufacture"/></td>
                         <td><input class="form-control" type="text" v-model="metadata.productClassification"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.detailProductClassification"/></td>
                         <td><input class="form-control" type="text" v-model="metadata.material"/></td>
                         <td><input class="form-control" type="text" v-model="metadata.productColor"/></td>
                         <td><input class="form-control" type="text" v-model="metadata.productPrice"/></td>
@@ -174,10 +172,9 @@ export default {
             workbook.Sheets[sheetName].C1.w = "brandName";
             workbook.Sheets[sheetName].D1.w = "countryOfManufacture";
             workbook.Sheets[sheetName].E1.w = "productClassification";
-            workbook.Sheets[sheetName].F1.w = "detailProductClassification";
-            workbook.Sheets[sheetName].G1.w = "material";
-            workbook.Sheets[sheetName].H1.w = "productColor";
-            workbook.Sheets[sheetName].I1.w = "productPrice";
+            workbook.Sheets[sheetName].F1.w = "material";
+            workbook.Sheets[sheetName].G1.w = "productColor";
+            workbook.Sheets[sheetName].H1.w = "productPrice";
 
             // console.log(workbook.Sheets[sheetName].A1);
             const roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
@@ -229,6 +226,7 @@ export default {
       // 위 속성 중 하나라도 빠져있으면 nft 발행 안함 
       // 발행 후 excelData.value에서 빼버리기 
       // 빼고 남은 것들은 데이터가 잘못 들어가 있어 등록이 안된 NFT들 정보 추가 및 수정 가능
+
       const ipfs = create();
       // const ipfs = create('/ip4/127.0.0.1/tcp/5001'); // 로컬에서 동작 안하면
 
@@ -242,7 +240,6 @@ export default {
           !element.brandName ||
           !element.countryOfManufacture ||
           !element.productClassification ||
-          !element.detailProductClassification ||
           !element.material ||
           !element.productColor ||
           !element.productPrice) continue;
@@ -255,12 +252,13 @@ export default {
           brandName: element.brandName,
           countryOfManufacture: element.countryOfManufacture,
           productClassification: element.productClassification,
-          detailProductClassification: element.detailProductClassification,
           material: element.material,
           productColor: element.productColor,
           productPrice: element.productPrice,
           image: element.image,
         }
+
+        console.log(metadata);
 
         // api/v0/add
         const response = await ipfs.add(JSON.stringify(metadata));
@@ -269,10 +267,10 @@ export default {
         excelData.value.splice(i, 1);
 
         await publishToken(ipfsHash);
-        const result = await getMetadataFromIpfs(ipfsHash);
 
-        console.log(result);
-
+        // NFT 정상적으로 발급되는지 확인하는 코드
+        // const result = await getMetadataFromIpfs(ipfsHash);
+        // console.log(result);
       }
     }
 
