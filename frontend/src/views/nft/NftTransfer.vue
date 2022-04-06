@@ -560,8 +560,10 @@ export default {
     const recvList = ref([])
     const connected = ref(true)
     const stompClient = ref('')
-    const receiver = 'store1@naver.com'//받을사람 receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
-    const sender = store.state.userInfo.email //지금 로그인 한 사람
+    const receiver = ''
+    const receiverWallet = ''// 이전 보내는 월렛 주소 => 수정해야함
+    const sender = store.state.userInfo.email //지금 로그인 한 사람 메일
+    const senderWallet = store.state.userInfo.address //로그인 한 사람 지갑
     const senderRole = store.state.userInfo.role //로그인 한 사람 역할
     const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
     const storeBrand = store.state.userInfo.store //스토어브랜드
@@ -575,14 +577,13 @@ export default {
         frame => {
           connected.value = true;
           console.log('소켓 연결 성공', frame);
-
-          if(senderRole == 'ROLE_BRAND_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
+          if(senderRole == 'ROLE_BRAND_ADMIN'){ //로그인 한 사람의 role 이 brand면 brand구독
             stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
             });
           }else{//일반 유저면 자기 email을 구독해야함
-            stompClient.value.subscribe("/sub/channel/" + sender, res => { 
+            stompClient.value.subscribe("/sub/channel/" + senderWallet, res => { 
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
             });
@@ -598,10 +599,8 @@ export default {
     connect()
 
     const send = () => {
-      console.log("Send message:" + receiver + sender + storeBrand + senderRole);
       if (stompClient.value && stompClient.value.connected) {
         if(senderRole == 'ROLE_STORE_ADMIN'){
-          console.error("여기들어온다");
           const msg = {
             sender: senderRole,//보내는사람정보
             receiver : 'ROLE_BRAND_ADMIN',//받는사람
@@ -610,10 +609,9 @@ export default {
           };
           stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
         }else{
-          console.error("여기들어온다아니다여기다");
           const msg = { 
             sender: sender,//보내는사람정보
-            receiver : receiver,//받는사람
+            receiver : receiverWallet,//받는사람
             productName: 'productname',//이전할상품정보
           };
           stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
