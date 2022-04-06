@@ -4,17 +4,16 @@
         <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8" style="font-size:30px;">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar-bar">
                 <div class="navbar-nav ms-auto" style="margin-top:15px;">
-                    
                     <a class="nav-link" aria-current="page" href="#" id="container2" style="font-size:30px;">Home</a>
                     <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative;">
                       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                       </svg>
-                      <div class="circle-num" >2</div>
+                      <div class="circle-num" >{{newReceivedAlarm}}</div>
                     </a> 
-                    <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">MetaMask</a>
+                    <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">Wallet</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!myInfo" style="font-size:30px;">Login</a>
-                    <a class="nav-link" href="#"  v-else @click="logOut" style="font-size:30px;">Logout</a>
+                    <a class="nav-link" href="#" v-else @click="logOut" style="font-size:30px;">Logout</a>
                   
                 </div>
                     
@@ -50,7 +49,7 @@
         <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body2">
         ...
       </div>
       <div class="modal-footer">
@@ -243,6 +242,7 @@ export default {
           sender: sender,//보내는사람정보
           receiver : receiver,//받는사람
           productName: 'productname',//이전할상품정보
+          brandNmae: 'chanel'
         };
         stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
       }
@@ -255,9 +255,17 @@ export default {
     
     //socket - 받은 알람모음
     const receivedAlarm = ref([])
-    api.get(`alarm/${receiver}`).then(res => receivedAlarm.value = res.data.content)
+    api.get(`alarm/${receiver}`).then(res => 
+    {
+      receivedAlarm.value = res.data.content
+      console.log(receivedAlarm.value)
+    })
 
-
+    const newReceivedAlarm = computed(() => {
+      return receivedAlarm.value.filter(e => {
+        return e.status == 0
+      })
+    })
 
     return {
       // divTag1,
@@ -281,6 +289,7 @@ export default {
       sendAlarm,
       send,
       receivedAlarm,
+      newReceivedAlarm,
     }
   }
 }
@@ -470,7 +479,7 @@ export default {
   font-size: 20px;
   font-weight: 500;
   text-align: center;
-  background: #ec2c54;
+  background: #ec2c54 !important;
   color: #fff;
   border: 2px solid #fff;
   border-radius: 50%;
