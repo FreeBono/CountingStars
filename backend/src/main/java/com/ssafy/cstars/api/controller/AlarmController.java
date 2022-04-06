@@ -37,6 +37,7 @@ public class AlarmController {
 
         if(alarm.getReceiver().equals("ROLE_BRAND_ADMIN")){
             System.out.println("여기다");
+            System.out.println("/sub/channel/"+alarm.getReceiver()+"/"+alarm.getBrand());
             simpMessageSendingOperations.convertAndSend("/sub/channel/"+alarm.getReceiver()+"/"+alarm.getBrand(), alarm);
         }else {
             System.out.println("아니다여기다");

@@ -563,7 +563,8 @@ export default {
     const receiver = 'store1@naver.com'//받을사람 receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
     const sender = store.state.userInfo.email //지금 로그인 한 사람
     const senderRole = store.state.userInfo.role //로그인 한 사람 역할
-    const senderBrand = store.state.userInfo.store //로그인 한 사람 브랜드
+    const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
+    const storeBrand = store.state.userInfo.store //스토어브랜드
     const connect = () => {
       const serverURL = "http://localhost:8080/alarm"
       let socket = new SockJS(serverURL);
@@ -576,7 +577,7 @@ export default {
           console.log('소켓 연결 성공', frame);
 
           if(senderRole == 'ROLE_BRAND_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
-            stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + senderBrand, res => {
+            stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
             });
@@ -597,14 +598,14 @@ export default {
     connect()
 
     const send = () => {
-      console.log("Send message:" + receiver + sender + senderBrand + senderRole);
+      console.log("Send message:" + receiver + sender + storeBrand + senderRole);
       if (stompClient.value && stompClient.value.connected) {
         if(senderRole == 'ROLE_STORE_ADMIN'){
           console.error("여기들어온다");
           const msg = {
-            sender: sender,//보내는사람정보
+            sender: senderRole,//보내는사람정보
             receiver : 'ROLE_BRAND_ADMIN',//받는사람
-            brand : senderBrand,
+            brand : storeBrand,
             productName: 'productname',//이전할상품정보
           };
           stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
