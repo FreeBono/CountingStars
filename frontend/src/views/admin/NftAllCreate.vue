@@ -97,10 +97,10 @@
                         <th scope="col">브랜드명</th>
                         <th scope="col">제조국가</th>
                         <th scope="col">상품분류</th>
-                        <th scope="col">상품상세분류</th>
                         <th scope="col">소재</th>
                         <th scope="col">색상</th>
                         <th scope="col">가격</th>
+                        <th scope="col">이미지번호</th>
                       </tr>
                     </thead>
                     <tbody>

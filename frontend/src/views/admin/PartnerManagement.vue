@@ -43,9 +43,9 @@
                         <b-card-text class="mt-4">
                           <div>
                             <div class="form-tag" style="width: 100%;">
-                              <b-form-input class="input_tag" type="text" v-model="brandInfo.name" :state="modalState.brandNameState" placeholder=" 브랜드명" style="text-transform: uppercase;" maxlength="30"></b-form-input>
-                              <b-form-input class="input_tag my-3" type="date" v-model="brandInfo.endDate" :state="modalState.endDateState" placeholder=" 계약 만료 일자" maxlength="30"></b-form-input>
-                              <b-form-input class="input_tag" type="text" v-model="brandInfo.address" :state="modalState.addressState" placeholder=" 지갑주소" maxlength="30"></b-form-input>
+                              <b-form-input class="input_tag" type="text" v-model="brandInfo.name" :state="modalState.brandNameState" placeholder=" 브랜드명" style="text-transform: uppercase;"></b-form-input>
+                              <b-form-input class="input_tag my-3" type="date" v-model="brandInfo.endDate" :state="modalState.endDateState" placeholder=" 계약 만료 일자"></b-form-input>
+                              <b-form-input class="input_tag" type="text" v-model="brandInfo.address" :state="modalState.addressState" placeholder=" 지갑주소"></b-form-input>
                             </div>
                           </div>
                         </b-card-text>
