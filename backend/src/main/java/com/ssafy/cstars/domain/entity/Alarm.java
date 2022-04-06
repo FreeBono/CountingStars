@@ -23,6 +23,7 @@ public class Alarm{
     private String receiver;
     private String sender;
     private String productName;
+    private String brand;
     private String registerDate;
     private boolean status;
     private String brand;
@@ -33,5 +34,12 @@ public class Alarm{
         this.registerDate = now.format(formatter);
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }
 

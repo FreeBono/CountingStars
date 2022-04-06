@@ -24,6 +24,12 @@ public class AlarmRes {
     @ApiModelProperty(name = "alarm sender")
     String sender;
 
+    @ApiModelProperty(name = "alarm status")
+    boolean status;
+
+    @ApiModelProperty(name = "alarm brandName")
+    String brand;
+
     public static AlarmRes of(Alarm alarm){
         AlarmRes res = new AlarmRes();
 
@@ -31,6 +37,8 @@ public class AlarmRes {
         res.setRegisterDate(alarm.getRegisterDate());
         res.setReceiver(alarm.getReceiver());
         res.setSender(alarm.getSender());
+        res.setStatus(alarm.isStatus());
+        res.setBrand(alarm.getBrand());
 
         return res;
     }
