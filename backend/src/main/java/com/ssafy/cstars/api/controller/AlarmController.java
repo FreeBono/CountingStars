@@ -32,16 +32,23 @@ public class AlarmController {
     @MessageMapping("/pubs")
     public void message(Alarm alarm){
         alarm.setRegisterDate();
-        alarmService.createAlarm(alarm);
-        simpMessageSendingOperations.convertAndSend("/sub/channel/"+alarm.getReceiver(), alarm);
 
+        alarmService.createAlarm(alarm);
+
+        if(alarm.getReceiver().equals("ROLE_BRAND_ADMIN")){
+            System.out.println("여기다");
+            simpMessageSendingOperations.convertAndSend("/sub/channel/"+alarm.getReceiver()+"/"+alarm.getBrand(), alarm);
+        }else {
+            System.out.println("아니다여기다");
+            simpMessageSendingOperations.convertAndSend("/sub/channel/" + alarm.getReceiver(), alarm);
+        }
     }
 
     @GetMapping("/{receiver}")
     public ResponseEntity<Page<AlarmRes>> getBrandList(@PathVariable(name = "receiver") String receiver, @PageableDefault(page = 0, size = 10) Pageable pageable){
-        System.out.println("!!!");
+
         Page<Alarm> alarms = alarmService.GetAlarmList(pageable, receiver);
-        System.out.println(alarms + "알람");
+
         if(alarms != null){
             return ResponseEntity.status(200).body(AlarmListRes.of(alarms));
         }else{
