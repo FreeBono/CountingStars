@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("AlarmService")
 public class AlarmServiceImpl implements AlarmService {
@@ -38,6 +39,13 @@ public class AlarmServiceImpl implements AlarmService {
 
 
         return alarms;
+    }
+
+    @Transactional
+    @Override
+    public Long modifyAlarmStatus(String receiver) {
+        Long execute = alarmRepositorySupport.modifyAlarmStatus(receiver);
+        return execute;
     }
 
 
