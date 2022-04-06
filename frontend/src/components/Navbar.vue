@@ -8,10 +8,10 @@
                     <a class="nav-link" aria-current="page" href="#" id="container2" style="font-size:30px;">Home</a>
                     <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative;">
                       <span style="font-size:30px;">Alarm</span>
-                      <div class="circle-num">2</div>
+                      <div class="circle-num" >2</div>
                     </a> 
                     <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">MetaMask</a>
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.userInfo" style="font-size:30px;">Login</a>
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!myInfo" style="font-size:30px;">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut" style="font-size:30px;">Logout</a>
                   
                 </div>
@@ -80,7 +80,7 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
-
+    const myInfo = ref(store.state.userInfo)
     //메타마스크 연결
     if (typeof window.ethereum !== 'undefined') {
       console.log('MetaMask is installed!');
@@ -145,10 +145,10 @@ export default {
     onMounted(() => {
         
     })
-    const loginValue = (val) => {
+    const loginValue = async (val) => {
       console.log(val)
       store.dispatch("auth/login", val)
-
+      await connect()
 
     }
 
@@ -193,7 +193,14 @@ export default {
     const connected = ref(true)
     const stompClient = ref('')
     const receiver = 'ROLE_STORE_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
-    const sender = store.state.userInfo.email
+    const sender = computed(() => {
+      if (myInfo.value.email) {
+        return myinfo.value.email
+      } else {
+        return null
+      }
+    })
+    
     const connect = () => {
       const serverURL = "http://localhost:8080/alarm"
       let socket = new SockJS(serverURL);
@@ -224,7 +231,7 @@ export default {
       ); 
     }
 
-    connect()
+    
 
     const send = () => {
       console.log("Send message:" + receiver + sender);
@@ -258,6 +265,7 @@ export default {
       getAccount,
       goScroll,
       goNftpage,
+      myInfo,
 
 
       //socket
@@ -453,15 +461,16 @@ export default {
 .circle-num {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 21px;
-  height: 21px;
-  font-size: 11px;
+  right: -10%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
   font-weight: 500;
   text-align: center;
   background: #ec2c54;
   color: #fff;
   border: 2px solid #fff;
   border-radius: 50%;
+  color:white;
 }
 </style>
