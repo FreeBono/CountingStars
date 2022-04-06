@@ -26,6 +26,7 @@ public class AlarmServiceImpl implements AlarmService {
                 .sender(alarmrst.getSender())
                 .productName(alarmrst.getProductName())
                 .registerDate(alarmrst.getRegisterDate())
+                .brand(alarmrst.getBrand())
                 .build();
 
         alarmRepository.save(alarm);
