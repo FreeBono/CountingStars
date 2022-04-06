@@ -1,15 +1,18 @@
 <template>
   <div class="container-fluid" id="container1">
     <nav class="navbar navbar-expand-lg navbar-light mb-5">
-        <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8" style="font-size:30px;">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar-bar">
                 <div class="navbar-nav ms-auto" style="margin-top:15px;">
                     
-                    <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
-                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2">Alarm({{recvList.length}})</a> 
-                    <a class="nav-link" id="container5" @click="goNftpage">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.userInfo">Login</a>
-                    <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
+                    <a class="nav-link" aria-current="page" href="#" id="container2" style="font-size:30px;">Home</a>
+                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative;">
+                      <span style="font-size:30px;">Alarm</span>
+                      <div class="circle-num">2</div>
+                    </a> 
+                    <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">MetaMask</a>
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.userInfo" style="font-size:30px;">Login</a>
+                    <a class="nav-link" href="#"  v-else @click="logOut" style="font-size:30px;">Logout</a>
                   
                 </div>
                     
@@ -111,10 +114,8 @@ export default {
       const divTag1 = document.getElementById("container1");
       const divTag2 = document.getElementById("container2");
       const divTag3 = document.getElementById("container3");
-      // const divTag4 = document.getElementById("container4");
       const divTag5 = document.getElementById("container5");
       const divTag6 = document.getElementById("container6");
-      // const divTag7 = document.getElementById("container7");
       const divTag8 = document.getElementById("container8");
       if(window.scrollY > window.innerHeight){
         
@@ -122,19 +123,15 @@ export default {
         divTag1.classList.add('test')
         divTag2.classList.add('test')
         divTag3.classList.add('test')
-        // divTag4.classList.add('test')
         divTag5.classList.add('test')
         divTag6.classList.add('test')
-        // divTag7.classList.add('test')
         divTag8.classList.add('test')
       } else{
         divTag1.classList.remove('test')
         divTag2.classList.remove('test')
         divTag3.classList.remove('test')
-        // divTag4.classList.remove('test')
         divTag5.classList.remove('test')
         divTag6.classList.remove('test')
-        // divTag7.classList.remove('test')
         divTag8.classList.remove('test')
 
       }
@@ -302,8 +299,10 @@ export default {
     /* padding: 10px 40px */
     position:fixed;
     width: 100vw;
-    padding-top: 20px;
+    padding-top: 35px;
     padding-right :5em;
+    height:110px;
+    /* font-size:30px; */
 }
 
 .container-fluid nav {
@@ -448,5 +447,21 @@ export default {
 
 .modal-content{
   border-radius: 4rem;
+}
+
+
+.circle-num {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 21px;
+  height: 21px;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  background: #ec2c54;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
 }
 </style>
