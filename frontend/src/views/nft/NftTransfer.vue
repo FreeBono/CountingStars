@@ -337,10 +337,10 @@ export default {
 		async function sendToken() {
       //알람
       createToast(
-          { title: 'Send Transaction',  },
-          // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
-          { type:'info', showIcon:true, position:'bottom-right', }
-          )
+        { title: 'Send Transaction',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'info', showIcon:true, position:'bottom-right', }
+        )
       
 			console.log(tokenNum.value)
    
@@ -573,7 +573,7 @@ export default {
           connected.value = true;
           console.log('소켓 연결 성공', frame);
 
-          if(receiver == 'ROLE_BRAND_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
+          if(receiver == 'ROLE_STORE_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
             stompClient.value.subscribe("/sub/channel/" + receiver, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))

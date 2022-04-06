@@ -6,7 +6,7 @@
                 <div class="navbar-nav ms-auto" style="margin-top:15px;">
                     
                     <a class="nav-link" aria-current="page" href="#" id="container2">Home</a>
-                    <a class="nav-link"  id="container3" >About</a> <a class="nav-link" href="#" id="container4">Services</a>
+                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2">Alarm({{recvList.length}})</a> 
                     <a class="nav-link" id="container5" @click="goNftpage">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount">MetaMask</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!store.state.userInfo">Login</a>
                     <a class="nav-link" href="#"  v-else @click="logOut">Logout</a>
@@ -20,22 +20,41 @@
   </div>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div> -->
-          <div class="modal-body">
-            <LoginModal @login-value="loginValue"/>
-          </div>
-          <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div> -->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div> -->
+        <div class="modal-body">
+          <LoginModal @login-value="loginValue"/>
         </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
       </div>
     </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -48,7 +67,7 @@ import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
-
+import api from '@/services/api'
 
 export default {
   name : "Navbar",
@@ -92,7 +111,7 @@ export default {
       const divTag1 = document.getElementById("container1");
       const divTag2 = document.getElementById("container2");
       const divTag3 = document.getElementById("container3");
-      const divTag4 = document.getElementById("container4");
+      // const divTag4 = document.getElementById("container4");
       const divTag5 = document.getElementById("container5");
       const divTag6 = document.getElementById("container6");
       // const divTag7 = document.getElementById("container7");
@@ -103,7 +122,7 @@ export default {
         divTag1.classList.add('test')
         divTag2.classList.add('test')
         divTag3.classList.add('test')
-        divTag4.classList.add('test')
+        // divTag4.classList.add('test')
         divTag5.classList.add('test')
         divTag6.classList.add('test')
         // divTag7.classList.add('test')
@@ -112,7 +131,7 @@ export default {
         divTag1.classList.remove('test')
         divTag2.classList.remove('test')
         divTag3.classList.remove('test')
-        divTag4.classList.remove('test')
+        // divTag4.classList.remove('test')
         divTag5.classList.remove('test')
         divTag6.classList.remove('test')
         // divTag7.classList.remove('test')
@@ -172,59 +191,66 @@ export default {
     }
 
     //socket test
+
+    const recvList = ref([])
+    const connected = ref(true)
+    const stompClient = ref('')
+    const receiver = 'ROLE_STORE_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
+    const sender = store.state.userInfo.email
+    const connect = () => {
+      const serverURL = "http://localhost:8080/alarm"
+      let socket = new SockJS(serverURL);
+      stompClient.value = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      stompClient.value.connect(
+        {},
+        frame => {
+          connected.value = true;
+          console.log('소켓 연결 성공', frame);
+
+          if(receiver == 'ROLE_STORE_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
+            stompClient.value.subscribe("/sub/channel/" + receiver, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }else{//일반 유저면 자기 email을 구독해야함
+            stompClient.value.subscribe("/sub/channel/" + sender, res => { 
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          connected.value = false;
+        }
+      ); 
+    }
+
+    connect()
+
+    const send = () => {
+      console.log("Send message:" + receiver + sender);
+      if (stompClient.value && stompClient.value.connected) {
+        const msg = { 
+          sender: sender,//보내는사람정보
+          receiver : receiver,//받는사람
+          productName: 'productname',//이전할상품정보
+        };
+        stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+      }
+    }
+
+    const sendAlarm = (e) => {
+      send()
+    }
+
     
-    // const recvList = ref([])
-    // const connected = ref(true)
-    // const stompClient = ref('')
-    // const receiver = 'ROLE_BRAND_ADMIN'
-    // const sender = store.state.userInfo.email
-    // const connect = () => {
-    //   const serverURL = "http://localhost:8080/alarm"
-    //   let socket = new SockJS(serverURL);
-    //   stompClient.value = Stomp.over(socket);
-    //   console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
-    //   stompClient.value.connect(
-    //     {},
-    //     frame => {
-    //       connected.value = true;
-    //       console.log('소켓 연결 성공', frame);
+    //socket - 받은 알람모음
+    const receivedAlarm = ref([])
+    api.get(`alarm/${receiver}`).then(res => receivedAlarm.value = res.data.content)
 
-    //       if(store.state.userInfo.role == 'ROLE_BRAND_ADMIN'){
-    //         stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.role, res => {
-    //           console.log('구독으로 받은 메시지 입니다.', res.body);
-    //           recvList.value.push(JSON.parse(res.body))
-    //         });
-    //       }else{
-    //         stompClient.value.subscribe("/sub/channel/"+store.state.userInfo.sender, res => {
-    //           console.log('구독으로 받은 메시지 입니다.', res.body);
-    //           recvList.value.push(JSON.parse(res.body))
-    //         });
-    //       }
-    //     },
-    //     error => {
-    //       console.log('소켓 연결 실패', error);
-    //       connected.value = false;
-    //     }
-    //   ); 
-    // }
 
-    // const send = () => {
-    //   console.log("Send message:" + receiver + sender);
-    //   if (stompClient.value && stompClient.value.connected) {
-    //     const msg = { 
-    //       sender: sender,//보내는사람정보
-    //       receiver : receiver,//받는사람
-    //       productName: 'productname',//이전할상품정보
-    //     };
-    //     stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
-    //   }
-    // }
-
-    // const sendAlarm = (e) => {
-    //   send()
-    // }
-
-    // connect()
 
     return {
       // divTag1,
@@ -235,13 +261,18 @@ export default {
       getAccount,
       goScroll,
       goNftpage,
-      // connect,
-      // recvList,
-      // connected,
-      // stompClient,
-      // receiver,
-      // sender,
-      // sendAlarm,
+
+
+      //socket
+      connect,
+      recvList,
+      connected,
+      stompClient,
+      receiver,
+      sender,
+      sendAlarm,
+      send,
+      receivedAlarm,
     }
   }
 }
