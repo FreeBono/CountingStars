@@ -55,7 +55,7 @@
             </a>
           </li>
           <li>
-            <a href="nftcreate">
+            <a href="nftallcreate" v-show="userRole.role === 'ROLE_SITE_ADMIN'">
               <i class="fa fas fa-cubes fa-2x" style="color: #ffd700;"></i>
               <!-- <i class="fa fas fa-cube fa-2x"></i> -->
               <span class="nav-text">
@@ -64,7 +64,7 @@
             </a>
           </li>
           <li>
-            <a href="/partner" v-show="userRole.role === 'ROLE_SITE_ADMIN'">
+            <a href="/partner" v-show="userRole.role !== 'ROLE_USER'">
               <i class="fa fa-handshake fa-2x" style="color: #6b6d72;" ></i>
               <span class="nav-text" >
                 거래처 관리
@@ -182,8 +182,8 @@ export default {
 .main-menu li {
   position: relative;
   display: flex !important;
-  width: 230px;
-  right: 20px;
+  width: 230px !important;
+  right: 20px !important;
   margin-top: 15px;
   /* justify-content: center; */
 }

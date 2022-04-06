@@ -1,62 +1,136 @@
 <template>
-  <div class="container">
-    <div>
-      <h3 class="mb-5">NFT 일괄 등록</h3>
+  <div class="wrapper">
+      <!-- 내용 들어갈 곳 -->
+    <div class="main-content">
+      <sidebar/>
+      <div class="header">
+        <p class="head_title" >NFT 발급</p>
 
-      <h5>1. 엑셀 파일을 먼저 등록해 주세요.</h5>
-      <div class="d-flex justify-content-center mb-5">
-        <label class="front__text-hover btn btn-success" for="input-excel-file" style="cursor: pointer;">엑셀 파일 업로드</label>
-        <input id="input-excel-file" type="file" @change="changeExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;">
+        <!-- 위에 카드부분 -->
+      <div class="row-vh d-flex" style="position: relative; left: 2.5rem; top: 30px; margin: 0 auto; justify-content: center; width: 85%; margin-top: 120px; justify-content: space-evenly">
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:23%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; text-align:left;" >  
+                    <div class="sub__title">1. 일괄 발급</div>
+                    <div class="sub__content mt-3">엑셀 파일을 업로드해 주세요</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <div class="d-flex justify-content-center mb-5">
+                      <label class="front__text-hover" for="input-excel-file" style="cursor: pointer;"><i class="fa fa-file-upload fa-3x" style="color: #198754;"></i></label>
+                      <input id="input-excel-file" type="file" @change="changeExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;">
+                    </div>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:23%; border-radius:10px; text-align:left;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden; ">
+                  <div class="media-body" style="float:left;">  
+                    <div class="sub__title" style="text-align:left;">2. 이미지 업로드</div>
+                    <div class="sub__content mt-2 mx-2" align="left" style="word-break:break-all;">명품 일련번호와 일치하는 이미지를 업로드해 주세요</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
+                    <div class="d-flex justify-content-center mb-5">
+                      <label class="front__text-hover" for="input-image-file" style="cursor: pointer; margin-left: 1rem;"><i class="fas fa-images fa-3x" style="color: #EB6312;"></i></label>
+                      <input @change="changeImageFile" type="file" id="input-image-file" style="display: none;" multiple>
+                    </div>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:23%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; text-align:left;">  
+                    <div class="sub__title">3. NFT 일괄 발급</div>
+                    <div class="sub__content mt-2" align="left">입력 후  NFT 발급 버튼을 눌러주세요</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float: right; margin-left: 1rem; margin-top: 22px;">
+                    <button @click="createNFT" class="btn btn-primary mb-5">NFT 발급<i class="fas fa-donate fa-2x mx-2" style="color:gold;"></i></button>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:120px; width:23%; border-radius:10px;">
+            <div class="card-content">            
+              <div class="card-body">
+                <div class="media" style="overflow:hidden;">
+                  <div class="media-body" style="float:left; text-align:left;">  
+                    <div class="sub__title">NFT 개별 발급</div>
+                    <div class="sub__content mt-2" align="left">개별 발급</div>
+                  </div>
+                  <div class="align-self-center" align="right" style="float:right; margin-top: 18px;" @click="goNftcreate">
+                    <i class="next__icon fas fa-arrow-circle-right fa-3x" style="color: #A8EB12;"></i>
+                  </div>    
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      <!-- 카드부분 끝 -->
       </div>
+      <!-- 헤더 끝 -->
 
-      <h5>2. 이미지 파일들을 전부 등록 해주세요. 이미지 파일명은 명품 일련번호와 같아야 합니다.</h5>
-      <div class="d-flex justify-content-center mb-5">
-        <label class="front__text-hover btn btn-info" for="input-image-file" style="cursor: pointer;">이미지 파일 업로드</label>
-        <input @change="changeImageFile" type="file" id="input-image-file" style="display: none;" multiple>
-      </div>
-
-      <h5>3. NFT 일괄 발행을 눌러주세요.</h5>
-      <!-- @click="createNFT" -->
-      <button @click="createNFT" class="btn btn-primary mb-5">NFT 일괄 발행</button>
-
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">이미지</th>
-            <th scope="col">일련번호</th>
-            <th scope="col">제조날짜</th>
-            <th scope="col">브랜드명</th>
-            <th scope="col">제조국가</th>
-            <th scope="col">상품분류</th>
-            <th scope="col">상품상세분류</th>
-            <th scope="col">소재</th>
-            <th scope="col">색상</th>
-            <th scope="col">가격</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(metadata, idx) in excelData" :key="idx" >
-            <th scope="row">{{idx + 1}}</th>
-            <!-- 기본 이미지로 바꾸기 -->
-            <td><img v-if='metadata.image != null' :src='metadata.image' style="width:50px; height:50px;">
-                <img v-else src='@/assets/uploadicon.jpg' style="width:50px; height:50px;">
-            </td>
-            <td><input class="form-control" type="text" v-model="metadata.serialNumber"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.dateOfManufacture"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.brandName"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.countryOfManufacture"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.productClassification"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.detailProductClassification"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.material"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.productColor"/></td>
-            <td><input class="form-control" type="text" v-model="metadata.productPrice"/></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="content_outside_box">
+        <div class="container-fluid mt-7">
+          <div class="col">
+            <div class="card shadow" style="height: 800px;">
+                <div class="card-header border-0 my-2">
+                  <h3 class="mb-0">NFT CREATE</h3>
+                </div>
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush table-hover">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">이미지</th>
+                        <th scope="col">일련번호</th>
+                        <th scope="col">제조날짜</th>
+                        <th scope="col">브랜드명</th>
+                        <th scope="col">제조국가</th>
+                        <th scope="col">상품분류</th>
+                        <th scope="col">소재</th>
+                        <th scope="col">색상</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">이미지번호</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(metadata, idx) in excelData" :key="idx" >
+                        <th scope="row">{{idx + 1}}</th>
+                        <!-- 기본 이미지로 바꾸기 -->
+                        <td><img v-if='metadata.image != null' :src='metadata.image' style="width:50px; height:50px;">
+                          <img v-else src="https://i.ibb.co/LvwqPbz/uploadicon.jpg" style="width:50px; height:50px;">
+                        </td>
+                        <td><input class="form-control" type="text" v-model="metadata.serialNumber"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.dateOfManufacture"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.brandName"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.countryOfManufacture"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.productClassification"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.detailProductClassification"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.material"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.productColor"/></td>
+                        <td><input class="form-control" type="text" v-model="metadata.productPrice"/></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+          </div>
+        </div>
     <!--------------------------- NFT Add All From Excel END --------------------------->
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -67,9 +141,15 @@ import { create } from "ipfs-http-client";
 import publishToken from '@/utils/PublishNFT'
 import encodeImageFileExcel from '@/services/encodeImageFileExcel'
 import getMetadataFromIpfs from '@/services/getMetadataFromIpfs'
+import Sidebar from '@/components/Sidebar.vue'
+import router from '@/router';
+import { useRouter } from 'vue-router';
 
 export default {
-  name : 'Pinata',
+  name : 'NftAllCreate',
+  components: {
+    Sidebar,
+  },
   setup() {
     const excelData = ref([]);
     excelData.value = []
@@ -192,7 +272,14 @@ export default {
         const result = await getMetadataFromIpfs(ipfsHash);
 
         console.log(result);
+
       }
+    }
+
+    const router = useRouter()
+    // nft 한 개 발급으로 
+    const goNftcreate = () => {
+      router.push({name: 'NftCreate'})
     }
 
     return {
@@ -200,7 +287,8 @@ export default {
       changeExcelFile,
       excelData,
       changeImageFile,
-      createNFT
+      createNFT,
+      goNftcreate,
     }
   },
   props: {
@@ -209,10 +297,92 @@ export default {
 }
 </script>
 
-<style>
-/* input {
-  width:50px;
-  height:20px;
-  font-size:5px;
-} */
+<style scoped>
+.content_outside_box {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #e9ecef;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: auto;
+  /* margin-top: 0.5rem!important; */
+  /* margin-top: -4.5rem!important; */
+  padding-left: 70px!important;
+  padding-right: 70px!important;
+  position: relative;
+  bottom: 150px;
+}
+
+.notice-title {
+  width: 50%; 
+  text-overflow: ellipsis; 
+  overflow: hidden; 
+  white-space: wrap;
+  position: relative;
+  text-align: left;
+  left: 20%;
+}
+
+.container-fluid {
+  position: relative;
+  right: 4px;
+}
+
+.head_title {
+  color: white;
+  position:absolute; 
+  margin-left:100px; 
+  margin-top: 50px;
+  font-size: 2rem;
+}
+
+.card-header {
+  margin-bottom: 0;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  background-color: #fff !important;
+  text-align: left;
+  font-size: 1.0625rem;
+}
+
+.card-header:first-child {
+  border-radius: calc(.375rem - 1px) calc(.375rem - 1px) 0 0;
+}
+
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+}
+
+h3,
+.h3 {
+  font-size: 1.0625rem;
+}
+
+h2,
+h3,
+.h2,
+.h3 {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: .5rem;
+  color: #32325d;
+}
+
+.sub__title {
+  font-size: 1rem;
+  /* font-family: 'ChosunSm'; */
+}
+
+.sub__content {
+  font-size: 0.8rem;
+}
+
+.next__icon:hover {
+  cursor: pointer;
+}
 </style>
