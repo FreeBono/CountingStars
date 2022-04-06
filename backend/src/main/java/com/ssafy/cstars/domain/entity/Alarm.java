@@ -24,6 +24,7 @@ public class Alarm{
     private String sender;
     private String productName;
     private String registerDate;
+    private boolean status;
 
     public void setRegisterDate(){
         LocalDate now = LocalDate.now();

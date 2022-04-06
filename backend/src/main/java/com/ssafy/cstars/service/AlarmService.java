@@ -10,4 +10,6 @@ public interface AlarmService {
 
     void createAlarm(Alarm alarm);
     Page<Alarm> GetAlarmList(Pageable pageable, String receiver);
+
+    Long modifyAlarmStatus(String receiver);
 }

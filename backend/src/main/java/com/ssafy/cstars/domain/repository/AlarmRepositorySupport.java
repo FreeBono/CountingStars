@@ -35,6 +35,17 @@ public class AlarmRepositorySupport {
 
     }
 
+    public long modifyAlarmStatus(String receiver){
+
+        long execute = jpaQueryFactory
+                .update(qAlarm)
+                .set(qAlarm.status, true)
+                .where(qAlarm.receiver.eq(receiver))
+                .execute();
+
+        return execute;
+    }
+
 
 
 
