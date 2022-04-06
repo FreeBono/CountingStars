@@ -37,7 +37,6 @@ public class AlarmServiceImpl implements AlarmService {
 
         Page<Alarm> alarms = alarmRepositorySupport.findByReceiver(pageable, receiver);
 
-
         return alarms;
     }
 
