@@ -349,13 +349,13 @@ export default {
       
 			console.log(tokenNum.value)
    
-			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
-      nfts.value = store.state.nftValues
+			// await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      // nfts.value = store.state.nftValues
       
       
-      send(info[0])
+      send(info[0],receiveAccount.value)
       
-      LookupNFTs()
+      // LookupNFTs()
 		}
     
 
@@ -605,7 +605,7 @@ export default {
 
     connect()
 
-    const send = (info) => {
+    const send = (info,wallet) => {
       if (stompClient.value && stompClient.value.connected) {
         if(senderRole == 'ROLE_STORE_ADMIN'){
           
@@ -621,7 +621,7 @@ export default {
         }else{
           const msg = { 
             sender: sender,//보내는사람정보
-            receiver : receiverWallet,//받는사람
+            receiver : wallet,//받는사람
             productName: 'productname',//이전할상품정보
           };
           stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});

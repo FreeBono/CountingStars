@@ -4,16 +4,18 @@
         <div class="container-fluid"><img src="@/assets/cslogo.png" alt="" style="height:60px; margin-right:20px;">  <a class="navbar-brand" href="#" id="container8" style="font-size:30px;">COUNTING STARS</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-bar" aria-controls="navbar-bar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar-bar">
                 <div class="navbar-nav ms-auto" style="margin-top:15px;">
+                  
                     <a class="nav-link" aria-current="page" href="#" id="container2" style="font-size:30px;">Home</a>
-                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative;" @click="refreshAlarm">
+                    
+                    <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">Wallet</a>
+                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative; margin-top:4px;" @click="refreshAlarm">
                       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                       </svg>
                       <div class="circle-num" >{{newReceivedAlarm.length}}</div>
                     </a> 
-                    <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">Wallet</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!myInfo" style="font-size:30px;">Login</a>
-                    <a class="nav-link" href="#" v-else @click="logOut" style="font-size:30px;">Logout</a>
+                    <a class="nav-link" href="#" v-else @click="logOut" style="font-size:30px; margin-left:20px;">Logout</a>
                   
                 </div>
                     
@@ -172,7 +174,7 @@ export default {
       console.log(val)
       store.dispatch("auth/login", val)
       console.log('엥')
-      await connect()
+      // await connect()
       console.log('엥')
 
     }
@@ -255,8 +257,10 @@ export default {
             stompClient.value.subscribe("/sub/channel/" + senderWallet.value, res => { 
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
-              api.get(`alarm/${sender}`).then(response => 
+              console.log(myInfo.value.address)
+              api.get(`alarm/${myInfo.value.address}`).then(response => 
               {
+                console.log(response)
                 receivedAlarm.value = response.data.content
                 console.log(receivedAlarm.value)
               })
@@ -278,29 +282,30 @@ export default {
 
     if (myInfo.value != null) {
       console.log(myInfo.value)
-      console.log('ㅅㅂ')
+      connect()
       sender.value = store.state.userInfo.email //지금 로그인 한 사람 메일
       senderWallet.value = store.state.userInfo.address //로그인 한 사람 지갑
       senderRole.value = store.state.userInfo.role //로그인 한 사람 역할
       receiverBrand.value = store.state.userInfo.username //로그인 한 사람 브랜드
       storeBrand.value = store.state.userInfo.store //스토어브랜드
 
-    if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
-          api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(res => 
-        {
-          console.log(res)
-          receivedAlarm.value = res.data.content
-          console.log(receivedAlarm.value)
-        })} else if (myInfo.value.role === "ROLE_USER") {
-          console.log(sender)
-        api.get(`alarm/${sender}`).then(res => 
-        {
-          receivedAlarm.value = res.data.content
-          console.log(receivedAlarm.value)
-        })
-        }
+      if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
+            api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(res => 
+          {
+            console.log(res)
+            receivedAlarm.value = res.data.content
+            console.log(receivedAlarm.value)
+          })} else if (myInfo.value.role === "ROLE_USER") {
+           
+            console.log(myInfo.value.address)
+          api.get(`alarm/${myInfo.value.address}`).then(res => 
+          {
+            receivedAlarm.value = res.data.content
+            console.log(receivedAlarm.value)
+          })
+          }
 
-      connect()
+      // connect()
     }
 
 
@@ -358,8 +363,8 @@ export default {
         })
       })
       } else if (myInfo.value.role === "ROLE_USER") {
-      console.log(sender)
-      api.put(`alarm/${sender}`,{check : 0}).then(res => 
+      // console.log(sender)
+      api.put(`alarm/${myInfo.value.address}`,{check : 0}).then(res => 
       {
         console.log(res)
         receivedAlarm.value.map(e => {

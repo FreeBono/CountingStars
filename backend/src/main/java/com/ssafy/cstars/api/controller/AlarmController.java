@@ -45,7 +45,7 @@ public class AlarmController {
 
     @GetMapping("/{receiver}")
     public ResponseEntity<Page<AlarmRes>> GetAlarmList(@PathVariable(name = "receiver") String receiver, @PageableDefault(page = 0, size = 10) Pageable pageable){
-
+        System.out.println(receiver);
         Page<Alarm> alarms = alarmService.GetAlarmList(pageable, receiver);
 
         if(alarms != null){
