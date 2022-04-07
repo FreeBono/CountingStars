@@ -20,7 +20,7 @@
                     <div >{{nfts.length}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
+                    <img src="@/assets/nftcoin.png"/>
                   </div>    
                 </div>
               </div>
