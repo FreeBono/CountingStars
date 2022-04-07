@@ -23,8 +23,10 @@ public class Alarm{
     private String receiver;
     private String sender;
     private String productName;
+    private String brand;
     private String registerDate;
     private boolean status;
+
 
     public void setRegisterDate(){
         LocalDate now = LocalDate.now();

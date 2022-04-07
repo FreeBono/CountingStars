@@ -167,10 +167,12 @@ export default {
     const loginValue = async (val) => {
       console.log(val)
       store.dispatch("auth/login", val)
+      console.log('엥')
       await connect()
+      console.log('엥')
 
     }
-
+    
     const logOut = () => {
       console.log('로그아웃')
       console.log(23)
@@ -212,15 +214,13 @@ export default {
     const recvList = ref([])
     const connected = ref(true)
     const stompClient = ref('')
-    const receiver = 'ROLE_STORE_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
-    const sender = computed(() => {
-      if (myInfo.value) {
-        return myinfo.value.email
-      } else {
-        return null
-      }
-    })
-    
+    const receiver = ''
+    const receiverWallet = ''// 이전 보내는 월렛 주소 => 수정해야함
+    const sender = store.state.userInfo.email //지금 로그인 한 사람 메일
+    const senderWallet = store.state.userInfo.address //로그인 한 사람 지갑
+    const senderRole = store.state.userInfo.role //로그인 한 사람 역할
+    const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
+    const storeBrand = store.state.userInfo.store //스토어브랜드
     const connect = () => {
       const serverURL = "http://localhost:8080/alarm"
       let socket = new SockJS(serverURL);
@@ -231,14 +231,13 @@ export default {
         frame => {
           connected.value = true;
           console.log('소켓 연결 성공', frame);
-
-          if(receiver == 'ROLE_STORE_ADMIN'){//로그인 한 사람의 role 이 brand면 brand구독
-            stompClient.value.subscribe("/sub/channel/" + receiver, res => {
+          if(senderRole == 'ROLE_BRAND_ADMIN'){ //로그인 한 사람의 role 이 brand면 brand구독
+            stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
             });
           }else{//일반 유저면 자기 email을 구독해야함
-            stompClient.value.subscribe("/sub/channel/" + sender, res => { 
+            stompClient.value.subscribe("/sub/channel/" + senderWallet, res => { 
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
             });
@@ -284,7 +283,7 @@ export default {
         return e.status == 0
       })
     })
-
+    connect()
     return {
       // divTag1,
       loggedIn,
