@@ -12,7 +12,7 @@
                   <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div> -->
               </div>
               <div class="my-3" style="margin: 0 auto;"> <span class="btn btn-primary" style="" @click="login()">Login</span> </div>
-              <div class="mb-3"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
+              <div class="mb-3" style="margin: 0 auto;"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">or connect with</span> </div>
           <div class="text-center py-3 connections"> 

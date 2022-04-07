@@ -210,6 +210,7 @@ export default {
   position:relative;
   display:table-cell !important;
   vertical-align:middle;
+  text-align: center;
   width: 190px;
 }
 

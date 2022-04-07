@@ -61,17 +61,17 @@
           <!-- 수정 버튼 누르기 전 -->
           <div v-show="editBtn === false && userRole.role === 'ROLE_SITE_ADMIN'">
             <div class="createBtn_position2">
-              <button type="button" class="btn createBtn " @click="editNotice" style="width: 60px">수정</button>
-              <button type="button" class="btn deleteBtn" @click="deleteNotice" style="width: 60px">삭제</button>
-              <button type="button" class="btn backBtn " @click="goNoticeMain" style="width: 60px">목록</button>
+              <button type="button" class="btn createBtn " @click="editNotice" >수정</button>
+              <button type="button" class="btn deleteBtn" @click="deleteNotice" >삭제</button>
+              <button type="button" class="btn backBtn " @click="goNoticeMain" >목록</button>
             </div>
           </div>
           <!-- 수정 버튼 누른 후 (저장) -->
           <div v-show="editBtn === true && userRole.role === 'ROLE_SITE_ADMIN'">
             <div class="createBtn_position2">
-              <button v-if="editBtn === true" type="button" class="btn createBtn " @click="updateNotice" style="width: 60px">수정</button>
-              <button type="button" class="btn deleteBtn" @click="editCancel" style="width: 60px">취소</button>
-              <button type="button" class="btn backBtn " @click="goNoticeMain" style="width: 60px">목록</button>
+              <button v-if="editBtn === true" type="button" class="btn createBtn " @click="updateNotice" >수정</button>
+              <button type="button" class="btn deleteBtn" @click="editCancel" >취소</button>
+              <button type="button" class="btn backBtn " @click="goNoticeMain" >목록</button>
             </div>
           </div>
         </div>

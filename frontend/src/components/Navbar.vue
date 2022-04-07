@@ -227,7 +227,7 @@ export default {
     const receiver = ''
 
     const connect = () => {
-      const serverURL = "https://j6e204.p.ssafy.io:8443/api/v1/alarm"
+      const serverURL = "https://j6e204.p.ssafy.io:8443/alarm"
       let socket = new SockJS(serverURL);
       stompClient.value = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
