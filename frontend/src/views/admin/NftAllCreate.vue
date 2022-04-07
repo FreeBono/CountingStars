@@ -85,38 +85,61 @@
             <div class="card shadow" style="height: 800px;">
                 <div class="card-header border-0 my-2">
                   <h3 class="mb-0">NFT CREATE</h3>
+
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    보여질 속성
+                  </button>
+
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush table-hover">
                     <thead class="thead-light">
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">이미지</th>
-                        <th scope="col">일련번호</th>
-                        <th scope="col">제조날짜</th>
-                        <th scope="col">브랜드명</th>
-                        <th scope="col">제조국가</th>
-                        <th scope="col">상품분류</th>
-                        <th scope="col">소재</th>
-                        <th scope="col">색상</th>
-                        <th scope="col">가격</th>
+                        <th scope="col" v-if="checkref.order"><input id="label-order" type="checkbox" v-model="checkref.order"></th>
+                        <th scope="col" v-if="checkref.image"><input id="label-image" type="checkbox" v-model="checkref.image"></th>
+                        <th scope="col" v-if="checkref.serialNumber"><input id="label-serialNumber" type="checkbox" v-model="checkref.serialNumber"></th>
+                        <th scope="col" v-if="checkref.nftName"><input id="label-nftName" type="checkbox" v-model="checkref.nftName"></th>
+                        <th scope="col" v-if="checkref.description"><input id="label-description" type="checkbox" v-model="checkref.description"></th>
+                        <th scope="col" v-if="checkref.dateOfManufacture"><input id="label-dateOfManufacture" type="checkbox" v-model="checkref.dateOfManufacture"></th>
+                        <th scope="col" v-if="checkref.brandName"><input id="label-brandName" type="checkbox" v-model="checkref.brandName"></th>
+                        <th scope="col" v-if="checkref.countryOfManufacture"><input id="label-countryOfManufacture" type="checkbox" v-model="checkref.countryOfManufacture"></th>
+                        <th scope="col" v-if="checkref.productClassification"><input id="label-productClassification" type="checkbox" v-model="checkref.productClassification"></th>
+                        <th scope="col" v-if="checkref.material"><input id="label-material" type="checkbox" v-model="checkref.material"></th>
+                        <th scope="col" v-if="checkref.productColor"><input id="label-productColor" type="checkbox" v-model="checkref.productColor"></th>
+                        <th scope="col" v-if="checkref.productPrice"><input id="label-productPrice" type="checkbox" v-model="checkref.productPrice"></th>
+                      </tr>
+                      <tr>
+                        <th scope="col" v-if="checkref.order"><label class="front__text-hover" for="label-order" style="cursor: pointer; margin-left: 1rem;">#</label></th>
+                        <th scope="col" v-if="checkref.image"><label class="front__text-hover" for="label-image" style="cursor: pointer; margin-left: 1rem;">이미지</label></th>
+                        <th scope="col" v-if="checkref.serialNumber"><label class="front__text-hover" for="label-serialNumber" style="cursor: pointer; margin-left: 1rem;">일련번호</label></th>
+                        <th scope="col" v-if="checkref.nftName"><label class="front__text-hover" for="label-nftName" style="cursor: pointer; margin-left: 1rem;">명품이름</label></th>
+                        <th scope="col" v-if="checkref.description"><label class="front__text-hover" for="label-description" style="cursor: pointer; margin-left: 1rem;">명품설명</label></th>
+                        <th scope="col" v-if="checkref.dateOfManufacture"><label class="front__text-hover" for="label-dateOfManufacture" style="cursor: pointer; margin-left: 1rem;">제조날짜</label></th>
+                        <th scope="col" v-if="checkref.brandName"><label class="front__text-hover" for="label-brandName" style="cursor: pointer; margin-left: 1rem;">브랜드명</label></th>
+                        <th scope="col" v-if="checkref.countryOfManufacture"><label class="front__text-hover" for="label-countryOfManufacture" style="cursor: pointer; margin-left: 1rem;">제조국가</label></th>
+                        <th scope="col" v-if="checkref.productClassification"><label class="front__text-hover" for="label-productClassification" style="cursor: pointer; margin-left: 1rem;">상품분류</label></th>
+                        <th scope="col" v-if="checkref.material"><label class="front__text-hover" for="label-material" style="cursor: pointer; margin-left: 1rem;">소재</label></th>
+                        <th scope="col" v-if="checkref.productColor"><label class="front__text-hover" for="label-productColor" style="cursor: pointer; margin-left: 1rem;">색상</label></th>
+                        <th scope="col" v-if="checkref.productPrice"><label class="front__text-hover" for="label-productPrice" style="cursor: pointer; margin-left: 1rem;">가격</label></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(metadata, idx) in excelData" :key="idx" >
-                        <th scope="row">{{idx + 1}}</th>
+                        <th scope="row" v-if="checkref.order">{{idx + 1}}</th>
                         <!-- 기본 이미지로 바꾸기 -->
-                        <td><img v-if='metadata.image != null' :src='metadata.image' style="width:50px; height:50px;">
+                        <td v-if="checkref.image"><img v-if='metadata.image != null' :src='metadata.image' style="width:50px; height:50px;">
                           <img v-else src="https://i.ibb.co/LvwqPbz/uploadicon.jpg" style="width:50px; height:50px;">
                         </td>
-                        <td><input class="form-control" type="text" v-model="metadata.serialNumber"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.dateOfManufacture"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.brandName"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.countryOfManufacture"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.productClassification"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.material"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.productColor"/></td>
-                        <td><input class="form-control" type="text" v-model="metadata.productPrice"/></td>
+                        <td v-if="checkref.serialNumber"><input class="form-control" type="text" v-model="metadata.serialNumber"/></td>
+                        <td v-if="checkref.nftName"><input class="form-control" type="text" v-model="metadata.nftName"/></td>
+                        <td v-if="checkref.description"><input class="form-control" type="text" v-model="metadata.description"/></td>
+                        <td v-if="checkref.dateOfManufacture"><input class="form-control" type="text" v-model="metadata.dateOfManufacture"/></td>
+                        <td v-if="checkref.brandName"><input class="form-control" type="text"  v-model="metadata.brandName"/></td>
+                        <td v-if="checkref.countryOfManufacture"><input class="form-control" type="text" v-model="metadata.countryOfManufacture"/></td>
+                        <td v-if="checkref.productClassification"><input class="form-control" type="text" v-model="metadata.productClassification"/></td>
+                        <td v-if="checkref.material"><input class="form-control" type="text"  v-model="metadata.material"/></td>
+                        <td v-if="checkref.productColor"><input class="form-control" type="text" v-model="metadata.productColor"/></td>
+                        <td v-if="checkref.productPrice"><input class="form-control" type="text" v-model="metadata.productPrice"/></td>
                       </tr>
                     </tbody>
                   </table>
@@ -125,6 +148,73 @@
           </div>
         </div>
     <!--------------------------- NFT Add All From Excel END --------------------------->
+
+    <!----------------------------- MODAL---------------------------------------------->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">표시할 항목을 선택하세요</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <div class="row">
+                    <div class="row">
+                      <div class="col p-3 border bg-light"><input id="modal-label-order" type="checkbox" v-model="checkref.order">
+                        <label class="front__text-hover" for="modal-label-order" style="cursor: pointer; margin-left: 1rem;">번호</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-image" type="checkbox" v-model="checkref.image">
+                        <label class="front__text-hover" for="modal-label-image" style="cursor: pointer; margin-left: 1rem;">이미지</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-serialNumber" type="checkbox" v-model="checkref.serialNumber">
+                        <label class="front__text-hover" for="modal-label-serialNumber" style="cursor: pointer; margin-left: 1rem;">일련번호</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col p-3 border bg-light"><input id="modal-label-nftName" type="checkbox" v-model="checkref.nftName">
+                        <label class="front__text-hover" for="modal-label-nftName" style="cursor: pointer; margin-left: 1rem;">명품이름</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-description" type="checkbox" v-model="checkref.description">
+                        <label class="front__text-hover" for="modal-label-description" style="cursor: pointer; margin-left: 1rem;">명품설명</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-dateOfManufacture" type="checkbox" v-model="checkref.dateOfManufacture">
+                        <label class="front__text-hover" for="modal-label-dateOfManufacture" style="cursor: pointer; margin-left: 1rem;">제조날짜</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col p-3 border bg-light"><input id="modal-label-brandName" type="checkbox" v-model="checkref.brandName">
+                        <label class="front__text-hover" for="modal-label-brandName" style="cursor: pointer; margin-left: 1rem;">브랜드명</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-countryOfManufacture" type="checkbox" v-model="checkref.countryOfManufacture">
+                        <label class="front__text-hover" for="modal-label-countryOfManufacture" style="cursor: pointer; margin-left: 1rem;">제조국가</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-productClassification" type="checkbox" v-model="checkref.productClassification">
+                        <label class="front__text-hover" for="modal-label-productClassification" style="cursor: pointer; margin-left: 1rem;">상품분류</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col p-3 border bg-light"><input id="modal-label-material" type="checkbox" v-model="checkref.material">
+                        <label class="front__text-hover" for="modal-label-material" style="cursor: pointer; margin-left: 1rem;">소재</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-productColor" type="checkbox" v-model="checkref.productColor">
+                        <label class="front__text-hover" for="modal-label-productColor" style="cursor: pointer; margin-left: 1rem;">색상</label>
+                      </div>
+                      <div class="col p-3 border bg-light"><input id="modal-label-productPrice" type="checkbox" v-model="checkref.productPrice">
+                        <label class="front__text-hover" for="modal-label-productPrice" style="cursor: pointer; margin-left: 1rem;">가격</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!----------------------------- MODAL END------------------------------------------->
+
       </div>
     </div>
   </div>
@@ -149,6 +239,21 @@ export default {
     Sidebar,
   },
   setup() {
+    const checkref = ref({
+      order: true,
+      image: true,
+      serialNumber: true,
+      nftName: true,
+      description: true,
+      dateOfManufacture: true,
+      brandName: true,
+      countryOfManufacture: true,
+      productClassification: true,
+      material: true,
+      productColor: true,
+      productPrice: true,
+    });
+
     const excelData = ref([]);
     excelData.value = []
 
@@ -168,13 +273,15 @@ export default {
           let workbook = XLSX.read(data, {type: 'binary'});
           workbook.SheetNames.forEach(sheetName => {
             workbook.Sheets[sheetName].A1.w = "serialNumber";
-            workbook.Sheets[sheetName].B1.w = "dateOfManufacture";
-            workbook.Sheets[sheetName].C1.w = "brandName";
-            workbook.Sheets[sheetName].D1.w = "countryOfManufacture";
-            workbook.Sheets[sheetName].E1.w = "productClassification";
-            workbook.Sheets[sheetName].F1.w = "material";
-            workbook.Sheets[sheetName].G1.w = "productColor";
-            workbook.Sheets[sheetName].H1.w = "productPrice";
+            workbook.Sheets[sheetName].B1.w = "nftName";
+            workbook.Sheets[sheetName].C1.w = "description";
+            workbook.Sheets[sheetName].D1.w = "dateOfManufacture";
+            workbook.Sheets[sheetName].E1.w = "brandName";
+            workbook.Sheets[sheetName].F1.w = "countryOfManufacture";
+            workbook.Sheets[sheetName].G1.w = "productClassification";
+            workbook.Sheets[sheetName].H1.w = "material";
+            workbook.Sheets[sheetName].I1.w = "productColor";
+            workbook.Sheets[sheetName].J1.w = "productPrice";
 
             // console.log(workbook.Sheets[sheetName].A1);
             const roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
@@ -236,6 +343,8 @@ export default {
         // 분기문에서 null, undefined, '', 0 은 false로 변환
         if( !element.image ||
           !element.serialNumber ||
+          !element.nftName ||
+          !element.description ||
           !element.dateOfManufacture ||
           !element.brandName ||
           !element.countryOfManufacture ||
@@ -245,9 +354,9 @@ export default {
           !element.productPrice) continue;
 
         const metadata = {
-          name: "Luxury",
-          description: "It contains a warranty for luxury goods.",
           serialNumber: element.serialNumber,
+          nftName: element.nftName,
+          description: element.description,
           dateOfManufacture: element.dateOfManufacture,
           brandName: element.brandName,
           countryOfManufacture: element.countryOfManufacture,
@@ -282,6 +391,7 @@ export default {
 
     return {
       onMounted,
+      checkref,
       changeExcelFile,
       excelData,
       changeImageFile,

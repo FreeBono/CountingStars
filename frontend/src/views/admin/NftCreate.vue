@@ -95,14 +95,14 @@ export default {
   },
   setup() {
     const state = ref({
-      serialNumber: 'AAA11111',
+      serialNumber: 'X76M25TF475B4',
       productDate: '2022-03-16',
       brandName: 'Chanel',
       country: 'Italy',
-      category: 'Class Bag',
-      material: 'cowhide',
-      color: 'black',
-      price: '5,700$',
+      category: 'BAG',
+      material: 'COWHIDE',
+      color: 'BLACK',
+      price: '5700000',
       description: '설명 칸',
       nftName: 'nft 이름',
       nftImg: null,
@@ -120,8 +120,6 @@ export default {
 
     const transferJSON = async function() {
       const data = {
-        name: "Luxury",
-        description: "It contains a warranty for luxury goods.",
         serialNumber: state.value.serialNumber,
         dateOfManufacture: state.value.productDate,
         brandName: state.value.brandName,
@@ -151,7 +149,7 @@ export default {
         { type:'success', showIcon:true, position:'bottom-right', }
         )
 
-      // getMetadataFromIpfs(ipfsHash);
+      getMetadataFromIpfs(ipfsHash);
     }
 
     return {
