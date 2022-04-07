@@ -148,17 +148,15 @@
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
                                       <p style="float: right; margin: 0; font-size: 0.8rem;">가격 : {{ price.toLocaleString('ko-KR') }}</p>
                                     </div>
-                                    <div>
+                                    <di style="margin-top: 10px;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
-                                      <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
+                                      <p style="float: left; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
                                     </div>
                                   </b-card-text>
                                 </b-card-body>
                                 <!-- <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " > -->
                                 <!-- <hr> -->
                                   <!-- <div style="width: 20rem;"> -->
-                                    <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
-                                    <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
                                   <!-- </div> -->
                                 <!-- </b-card-footer> -->
                               </div>
