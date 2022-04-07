@@ -23,9 +23,9 @@ public class AlarmRepositorySupport {
                 .select(qAlarm)
                 .from(qAlarm)
                 .where(qAlarm.receiver.eq(receiver))
-                .orderBy(qAlarm.registerDate.desc())
-                .limit(pageable.getPageSize())
-                .offset(pageable.getOffset())
+//                .orderBy(qAlarm.registerDate.desc())
+//                .limit(pageable.getPageSize())
+//                .offset(pageable.getOffset())
                 .fetchResults();
 
 

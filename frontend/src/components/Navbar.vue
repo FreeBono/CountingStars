@@ -288,6 +288,7 @@ export default {
     if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
           api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(res => 
         {
+          console.log(res)
           receivedAlarm.value = res.data.content
           console.log(receivedAlarm.value)
         })} else if (myInfo.value.role === "ROLE_USER") {
