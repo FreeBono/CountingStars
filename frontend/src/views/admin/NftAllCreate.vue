@@ -157,7 +157,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">표시할 항목을 선택하세요</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" style="margin-left: 30px">
                 <div>
                   <div class="row">
                     <div class="row">
