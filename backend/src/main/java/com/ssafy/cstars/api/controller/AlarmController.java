@@ -36,17 +36,15 @@ public class AlarmController {
         alarmService.createAlarm(alarm);
 
         if(alarm.getReceiver().equals("ROLE_BRAND_ADMIN")){
-            System.out.println("여기다");
             System.out.println("/sub/channel/"+alarm.getReceiver()+"/"+alarm.getBrand());
             simpMessageSendingOperations.convertAndSend("/sub/channel/"+alarm.getReceiver()+"/"+alarm.getBrand(), alarm);
         }else {
-            System.out.println("아니다여기다");
             simpMessageSendingOperations.convertAndSend("/sub/channel/" + alarm.getReceiver(), alarm);
         }
     }
 
     @GetMapping("/{receiver}")
-    public ResponseEntity<Page<AlarmRes>> getBrandList(@PathVariable(name = "receiver") String receiver, @PageableDefault(page = 0, size = 10) Pageable pageable){
+    public ResponseEntity<Page<AlarmRes>> GetAlarmList(@PathVariable(name = "receiver") String receiver, @PageableDefault(page = 0, size = 10) Pageable pageable){
 
         Page<Alarm> alarms = alarmService.GetAlarmList(pageable, receiver);
 
@@ -57,6 +55,23 @@ public class AlarmController {
         }
 
     }
+
+
+    @GetMapping("/{receiver}/{brand}")
+    public ResponseEntity<Page<AlarmRes>> GetBrandAlarmList(@PathVariable(name = "receiver") String receiver,
+                                                            @PathVariable(name = "brand") String brand,
+                                                            @PageableDefault(page = 0, size = 10) Pageable pageable){
+
+        Page<Alarm> alarms = alarmService.GetBrandAlarmList(pageable, receiver, brand);
+
+        if(alarms != null){
+            return ResponseEntity.status(200).body(AlarmListRes.of(alarms));
+        }else{
+            return ResponseEntity.status(500).body(null);
+        }
+
+    }
+
 
     @PutMapping("/{receiver}")
     @ApiOperation(value = "알람 상태 수정 (alarm status)", notes = "<strong>알람 상태</strong>을 수정한다.")

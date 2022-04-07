@@ -26,7 +26,6 @@ public class Alarm{
     private String brand;
     private String registerDate;
     private boolean status;
-    private String brand;
 
     public void setRegisterDate(){
         LocalDate now = LocalDate.now();
