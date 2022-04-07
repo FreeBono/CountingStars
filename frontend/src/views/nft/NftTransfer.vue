@@ -201,7 +201,7 @@
                           </div>                       
                       </div>
                       <div class="row-vh d-flex flex-column" style="" >
-                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(3,6)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+4}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
@@ -212,7 +212,7 @@
                           </div>                       
                       </div>
                       <div class="row-vh d-flex flex-column" style="margin-right:15px">
-                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(6,9)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+7}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>

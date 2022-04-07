@@ -137,8 +137,8 @@
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
                                   <b-card-text>
-                                    <p style=" font-size: 1.5rem;" >Product name: {{ nftName }}</p>
-                                    <p style=" font-size: 1.5rem;">Description</p>
+                                    <p style=" font-size: 1.2rem;" >Product name: {{ nftName }}</p>
+                                    <p style=" font-size: 1.2rem;">Description</p>
                                     <p>{{ description }}</p> 
                                     <div  style="width: 20rem;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
