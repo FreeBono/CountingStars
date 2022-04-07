@@ -98,7 +98,7 @@
                         <th scope="col" v-if="checkref.order"><input id="label-order" type="checkbox" v-model="checkref.order"></th>
                         <th scope="col" v-if="checkref.image"><input id="label-image" type="checkbox" v-model="checkref.image"></th>
                         <th scope="col" v-if="checkref.serialNumber"><input id="label-serialNumber" type="checkbox" v-model="checkref.serialNumber"></th>
-                        <th scope="col" v-if="checkref.nftName"><input id="label-nftName" type="checkbox" v-model="checkref.nftName"></th>
+                        <th scope="col" v-if="checkref.name"><input id="label-name" type="checkbox" v-model="checkref.name"></th>
                         <th scope="col" v-if="checkref.description"><input id="label-description" type="checkbox" v-model="checkref.description"></th>
                         <th scope="col" v-if="checkref.dateOfManufacture"><input id="label-dateOfManufacture" type="checkbox" v-model="checkref.dateOfManufacture"></th>
                         <th scope="col" v-if="checkref.brandName"><input id="label-brandName" type="checkbox" v-model="checkref.brandName"></th>
@@ -112,7 +112,7 @@
                         <th scope="col" v-if="checkref.order"><label class="front__text-hover" for="label-order" style="cursor: pointer; margin-left: 1rem;">#</label></th>
                         <th scope="col" v-if="checkref.image"><label class="front__text-hover" for="label-image" style="cursor: pointer; margin-left: 1rem;">이미지</label></th>
                         <th scope="col" v-if="checkref.serialNumber"><label class="front__text-hover" for="label-serialNumber" style="cursor: pointer; margin-left: 1rem;">일련번호</label></th>
-                        <th scope="col" v-if="checkref.nftName"><label class="front__text-hover" for="label-nftName" style="cursor: pointer; margin-left: 1rem;">명품이름</label></th>
+                        <th scope="col" v-if="checkref.name"><label class="front__text-hover" for="label-name" style="cursor: pointer; margin-left: 1rem;">명품이름</label></th>
                         <th scope="col" v-if="checkref.description"><label class="front__text-hover" for="label-description" style="cursor: pointer; margin-left: 1rem;">명품설명</label></th>
                         <th scope="col" v-if="checkref.dateOfManufacture"><label class="front__text-hover" for="label-dateOfManufacture" style="cursor: pointer; margin-left: 1rem;">제조날짜</label></th>
                         <th scope="col" v-if="checkref.brandName"><label class="front__text-hover" for="label-brandName" style="cursor: pointer; margin-left: 1rem;">브랜드명</label></th>
@@ -131,7 +131,7 @@
                           <img v-else src="https://i.ibb.co/LvwqPbz/uploadicon.jpg" style="width:50px; height:50px;">
                         </td>
                         <td v-if="checkref.serialNumber"><input class="form-control" type="text" v-model="metadata.serialNumber"/></td>
-                        <td v-if="checkref.nftName"><input class="form-control" type="text" v-model="metadata.nftName"/></td>
+                        <td v-if="checkref.name"><input class="form-control" type="text" v-model="metadata.name"/></td>
                         <td v-if="checkref.description"><input class="form-control" type="text" v-model="metadata.description"/></td>
                         <td v-if="checkref.dateOfManufacture"><input class="form-control" type="text" v-model="metadata.dateOfManufacture"/></td>
                         <td v-if="checkref.brandName"><input class="form-control" type="text"  v-model="metadata.brandName"/></td>
@@ -172,8 +172,8 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col p-3 border bg-light"><input id="modal-label-nftName" type="checkbox" v-model="checkref.nftName">
-                        <label class="front__text-hover" for="modal-label-nftName" style="cursor: pointer; margin-left: 1rem;">명품이름</label>
+                      <div class="col p-3 border bg-light"><input id="modal-label-name" type="checkbox" v-model="checkref.name">
+                        <label class="front__text-hover" for="modal-label-name" style="cursor: pointer; margin-left: 1rem;">명품이름</label>
                       </div>
                       <div class="col p-3 border bg-light"><input id="modal-label-description" type="checkbox" v-model="checkref.description">
                         <label class="front__text-hover" for="modal-label-description" style="cursor: pointer; margin-left: 1rem;">명품설명</label>
@@ -243,7 +243,7 @@ export default {
       order: true,
       image: true,
       serialNumber: true,
-      nftName: true,
+      name: true,
       description: true,
       dateOfManufacture: true,
       brandName: true,
@@ -273,7 +273,7 @@ export default {
           let workbook = XLSX.read(data, {type: 'binary'});
           workbook.SheetNames.forEach(sheetName => {
             workbook.Sheets[sheetName].A1.w = "serialNumber";
-            workbook.Sheets[sheetName].B1.w = "nftName";
+            workbook.Sheets[sheetName].B1.w = "name";
             workbook.Sheets[sheetName].C1.w = "description";
             workbook.Sheets[sheetName].D1.w = "dateOfManufacture";
             workbook.Sheets[sheetName].E1.w = "brandName";
@@ -343,7 +343,7 @@ export default {
         // 분기문에서 null, undefined, '', 0 은 false로 변환
         if( !element.image ||
           !element.serialNumber ||
-          !element.nftName ||
+          !element.name ||
           !element.description ||
           !element.dateOfManufacture ||
           !element.brandName ||
@@ -355,7 +355,7 @@ export default {
 
         const metadata = {
           serialNumber: element.serialNumber,
-          nftName: element.nftName,
+          name: element.name,
           description: element.description,
           dateOfManufacture: element.dateOfManufacture,
           brandName: element.brandName,
