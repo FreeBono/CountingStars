@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="d-flex" style="width: 20rem; justify-content: space-between;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
-                                      <p style="float: right; margin: 0; font-size: 0.8rem;">가격 : {{ price.toLocaleString('ko-KR') }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">가격 : {{ parseInt(price).toLocaleString('ko-KR') }}</p>
                                     </div>
                                     <div style="margin-top: 10px;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
