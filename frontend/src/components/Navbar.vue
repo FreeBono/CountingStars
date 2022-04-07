@@ -349,16 +349,22 @@ export default {
     
 
     const refreshAlarm = () => {
+      
       if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
         api.put(`alarm/${myInfo.value.username}`,{check : 1}).then(res =>{
-        console.log(res)
+          console.log(res)
+        receivedAlarm.value.map(e => {
+          e.status = 1
+        })
       })
       } else if (myInfo.value.role === "ROLE_USER") {
       console.log(sender)
       api.put(`alarm/${sender}`,{check : 0}).then(res => 
       {
-        receivedAlarm.value = res.data.content
-        console.log(receivedAlarm.value)
+        console.log(res)
+        receivedAlarm.value.map(e => {
+          e.status = 1
+        })
       })
     }
 
