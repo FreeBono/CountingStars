@@ -1,5 +1,6 @@
 <template>
   <!-- <h2>My NFT 상세보기</h2> -->
+  <div>
   <sidebar/>
   
   <!-- <div class="test"> -->
@@ -136,7 +137,7 @@
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
                                   <b-card-text>
-                                    <p style=" font-size: 0.9rem;" >nft name: {{ nftName }}</p>
+                                    <p style=" font-size: 0.9rem;" >Product name: {{ nftName }}</p>
                                     <p >description : {{ description }}</p>
                                     <div  style="width: 20rem;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
@@ -246,6 +247,7 @@
     <!-- 내용 들어갈 곳 끝 -->
   </div>
   <!-- </div> -->
+  </div>
 </template>
 
 <script>
@@ -409,7 +411,7 @@ export default {
       datasets: [
         {
           data: [0, 0, 0, 0, 0],
-          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+          backgroundColor: ['#6ED746', '#82EB5A', '#80E12A', '#A0FA78', '#70F170'],
         },
       ],
     };
@@ -861,7 +863,7 @@ html {
 		max-height: 85px;
     overflow: hidden;
 		font-family: 'Playfair Display', serif;
-		font-size: 23px;
+		font-size: 14px;
 		line-height: 28px;
 		text-shadow: 0px 1px 5px black;
 		text-overflow: ellipsis;

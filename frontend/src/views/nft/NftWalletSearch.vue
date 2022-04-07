@@ -375,7 +375,7 @@ export default {
     const historiesUnique = []
     if (histories != [] && histories != null) {
       histories.forEach(e => {
-      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <5) {
+      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length < 4) {
         console.log(e.searchHistory)
         historiesUnique.push(e.searchHistory)
     }})
@@ -735,7 +735,7 @@ html {
 		max-height: 85px;
     overflow: hidden;
 		font-family: 'Playfair Display', serif;
-		font-size: 23px;
+		font-size: 14px;
 		line-height: 28px;
 		text-shadow: 0px 1px 5px black;
 		text-overflow: ellipsis;

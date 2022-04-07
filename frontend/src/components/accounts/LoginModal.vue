@@ -34,18 +34,18 @@
               <div class="mb-2" v-if="!passwordValidFlag" align="left">Your password is not allowed</div>
               <div class="d-flex align-items-center input-field mb-3"> <img src="https://i.ibb.co/gjVKMfj/lock-icon.png" style="width: 30px;"> <input type="password" placeholder="PasswordConfirmation" required class="form-control" v-model="signupData.passwordConfirmation" @blur="passwordCheck"><img src="https://i.ibb.co/hZ9Kt4j/eye-icon.png" style="width: 30px;" alt=""></div>
               <div class="mb-2" align="left" v-if="!passwordFlag" >Check your password</div>
-              <div class="d-flex align-items-center input-field mb-4"> <img src="https://i.ibb.co/gjVKMfj/lock-icon.png" style="width: 30px;"> <input type="text" placeholder="Admin Code" required class="form-control" v-model="signupData.roles"><img src="https://i.ibb.co/hZ9Kt4j/eye-icon.png" style="width: 30px;" alt=""></div>
+              <div class="d-flex align-items-center input-field mb-4"> <input type="text" placeholder="Admin Code" required class="form-control" v-model="signupData.roles"></div>
               <!-- <div class="d-sm-flex align-items-sm-center justify-content-sm-between" style="padding-left:0px">
                 <div class="d-flex align-items-center input-field mb-4 w-75" style="margin-right:10px;" > <span class="fas fa-lock p-2"></span> <input type="text" placeholder="phone" required class="form-control" > <button class="btn" onclick="showPassword()"> <span class="fas fa-eye-slash"></span> </button> </div>
                 <button class="w-25" style="height:50px;margin-bottom:25px; padding-left:0px;">인증</button>
               
               </div> -->
               <!-- <input type="text" v-model="signupData.roles"> -->
-              <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
-              <div class="mb-3"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
+              <div class="my-3" style="margin:0 auto;"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
+              <div class="mb-3" style="margin:0 auto;"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
               
           </form>
-          <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
+          <div class="position-relative border-bottom my-3 line" style="margin-left: 7%;"> <span class="connect">Easy Sign up</span> </div>
           <!-- <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div> -->
       </div>
   </div>
@@ -273,7 +273,7 @@ export default {
      backdrop-filter: blur(10px);
      border: 1px solid rgba(255, 255, 255, 0.5);
      border-radius: 15px;
-     cursor: pointer;
+     /* cursor: pointer; */
      padding: 0.8rem
  }
 

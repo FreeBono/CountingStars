@@ -248,13 +248,13 @@
 				<div>
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
-						<label for="name" class="form__label">Account</label>
+						<label for="name" class="form__label">Account (상대방 지갑주소)</label>
 					</div>
 				</div>
         <div>
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="Name" name="name2" v-model="receivePrivatekey" required />
-						<label for="name" class="form__label">Privatekey</label>
+						<label for="name" class="form__label">Privatekey (내 개인키)</label>
 					</div>
 				</div>
 				<!-- <div>로 이전합니다.</div> -->
@@ -881,7 +881,7 @@ html {
 		max-height: 85px;
     overflow: hidden;
 		font-family: 'Playfair Display', serif;
-		font-size: 23px;
+		font-size: 14px;
 		line-height: 28px;
 		text-shadow: 0px 1px 5px black;
 		text-overflow: ellipsis;
