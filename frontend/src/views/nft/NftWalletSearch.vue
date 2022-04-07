@@ -11,9 +11,10 @@
           <div class="container d-flex justify-content-center" >
             <div class="card mt-7 p-4" style="width:500px;" id="search-card">
               <div class="input-group" style=""> 
-                <select style="border-color: #ced4da; width:5.5rem; height: 40px; font-size: 1rem;">
-                  <option>지갑주소</option>
-                  <option>아이디</option>
+                <select style="border-color: #ced4da; width:5.5rem; height: 40px; font-size: 1rem;" v-model="searchStatus">
+                  <option value="" selected>조회 선택</option>
+                  <option value="0" >지갑주소</option>
+                  <option value="1">아이디</option>
                 </select>
                 <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress" style="height: 40px;">
                 <div class="input-group-append btn_position">
@@ -312,8 +313,14 @@ export default {
     //지갑 조회 실행
     const searchWallet = () => {
       nfts.value = []
-
+      console.log('일단실행')
+      // if (walletAddress.value.length >= 40) {
+      //   searchStatus.value = "0"
+      // } else {
+      //   searchStatus.value = "1"
+      // }
       if (searchStatus.value === "1") {
+        console.log('아이디 검색')
         api.post('/user',{email:walletAddress.value})
         .then(res => {
           walletAddress.value = res.data.address
@@ -330,7 +337,8 @@ export default {
          },2000)
         })
       } else if (searchStatus.value === "0") {
-      console(walletAddress.value)
+      console.log('지갑검색')
+      console.log(walletAddress.value)
       searchNFTs(walletAddress.value)
       addEntry()
       SearchToken(walletAddress.value).then(res => {
@@ -386,7 +394,7 @@ export default {
       }
       walletAddress.value = historiesUnique[x]
       searchWallet()
-    } 
+    }
 
     // 필터 부분
     const brandSelected = ref(null)
