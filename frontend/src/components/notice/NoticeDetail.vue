@@ -137,7 +137,7 @@ export default {
       }
       axios({
         method: 'delete',
-        url: 'http://localhost:8080/api/v1/notice',
+        url: 'https://j6e204.p.ssafy.io:8443/api/v1/notice',
         data: {noticeId: noticeInfo.noticeId, adminId: noticeInfo.adminId}
       })
       .then(() => {
@@ -167,7 +167,7 @@ export default {
       }
       axios({
         method: 'put',
-        url: 'http://localhost:8080/api/v1/notice',
+        url: 'https://j6e204.p.ssafy.io:8443/api/v1/notice',
         data: {
               noticeId: updateInfo.noticeId, 
               adminId: updateInfo.adminId, 

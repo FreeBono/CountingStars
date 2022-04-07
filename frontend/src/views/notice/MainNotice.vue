@@ -154,7 +154,7 @@ export default {
       console.log(currentPage.value, 'currentPage 바뀌는지 확인')
       axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/notice?page=${currentPage.value}&size=10`
+        url: `https://j6e204.p.ssafy.io:8443/api/v1/notice?page=${currentPage.value}&size=10`
       })
       .then((res) => {
         console.log(res,'ffff페이지확인')
@@ -179,7 +179,7 @@ export default {
       store.dispatch("getNoticeNo", noticeIdx);
       axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/notice/${noticeIdx}`
+        url: `https://j6e204.p.ssafy.io:8443/api/v1/notice/${noticeIdx}`
       })
       .then((res) => {
         console.log(res,'디테일로 가는지 확인')

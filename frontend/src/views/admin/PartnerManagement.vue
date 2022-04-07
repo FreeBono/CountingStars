@@ -280,7 +280,7 @@ export default {
       console.log(currentPage.value, 'currentPage 바뀌는지 확인')
       axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/brand?page=${currentPage.value}&size=10`
+        url: `https://j6e204.p.ssafy.io:8443/api/v1/brand?page=${currentPage.value}&size=10`
       })
       .then((res) => {
         console.log(res,'👍페이지확인')
@@ -296,7 +296,7 @@ export default {
       console.log(brandInfo.brandId, '번호 확인')
       axios({
         method: 'delete',
-        url: 'http://localhost:8080/api/v1/brand',
+        url: 'https://j6e204.p.ssafy.io:8443/api/v1/brand',
         data: {brandId: brandInfo.brandId}
       })
       .then(() => {
