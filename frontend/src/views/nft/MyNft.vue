@@ -148,7 +148,7 @@
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
                                       <p style="float: right; margin: 0; font-size: 0.8rem;">가격 : {{ price.toLocaleString('ko-KR') }}</p>
                                     </div>
-                                    <di style="margin-top: 10px;">
+                                    <div style="margin-top: 10px;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
                                     </div>
