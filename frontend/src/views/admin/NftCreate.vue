@@ -25,7 +25,7 @@
               </div>
               <div class="telephone">
                 <label for="name"></label>
-                <input type="text" placeholder="상품명" name="telephone" id="telephone_input" v-model="state.nftName" required>
+                <input type="text" placeholder="상품명" name="telephone" id="telephone_input" v-model="state.name" required>
               </div>
               <div class="telephone">
                 <label for="name"></label>
@@ -104,7 +104,7 @@ export default {
       color: 'BLACK',
       price: '5700000',
       description: '설명 칸',
-      nftName: 'nft 이름',
+      name: 'nft 이름',
       nftImg: null,
       nftImgFile: null,
     })
@@ -130,7 +130,7 @@ export default {
         productPrice: state.value.price,
         image: store.state.ipfsData,
         description: state.value.description,
-        nftName: state.value.nftName,
+        name: state.value.name,
       }
 
       const ipfs = create();
