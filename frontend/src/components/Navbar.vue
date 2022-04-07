@@ -214,18 +214,16 @@ export default {
     }
 
     //socket test
-
+    const sender = ref('')
+    const senderWallet = ref('')
+    const senderRole = ref('')
+    const receiverBrand = ref('')
+    const storeBrand = ref('')
     const recvList = ref([])
     const connected = ref(true)
     const stompClient = ref('')
     const receiver = ''
 
-    const receiverWallet = ''// 이전 보내는 월렛 주소 => 수정해야함
-    const sender = store.state.userInfo.email //지금 로그인 한 사람 메일
-    const senderWallet = store.state.userInfo.address //로그인 한 사람 지갑
-    const senderRole = store.state.userInfo.role //로그인 한 사람 역할
-    const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
-    const storeBrand = store.state.userInfo.store //스토어브랜드
     const connect = () => {
       const serverURL = "http://localhost:8080/alarm"
       let socket = new SockJS(serverURL);
@@ -236,14 +234,15 @@ export default {
         frame => {
           connected.value = true;
           console.log('소켓 연결 성공', frame);
-          if(senderRole == 'ROLE_BRAND_ADMIN'){ //로그인 한 사람의 role 이 brand면 brand구독
-            stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
+          if(senderRole.value == 'ROLE_BRAND_ADMIN'){ //로그인 한 사람의 role 이 brand면 brand구독
+            stompClient.value.subscribe("/sub/channel/" + senderRole.value + "/" + receiverBrand.value, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
-              api.get(`alarm/${receiver}/${myInfo.value.username}`).then(response => 
+              api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(response => 
               {
                 receivedAlarm.value = response.data.content
                 console.log(receivedAlarm.value)
+                console.log('d')
               })
               createToast(
                 { title: 'Check your new alarm',  },
@@ -253,14 +252,15 @@ export default {
               
             });
           }else{//일반 유저면 자기 email을 구독해야함
-            stompClient.value.subscribe("/sub/channel/" + senderWallet, res => { 
+            stompClient.value.subscribe("/sub/channel/" + senderWallet.value, res => { 
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
-              api.get(`alarm/${receiver}/${myInfo.value.username}`).then(response => 
+              api.get(`alarm/${sender}`).then(response => 
               {
                 receivedAlarm.value = response.data.content
                 console.log(receivedAlarm.value)
               })
+              console.log('d')
               createToast(
                 { title: 'Check your new alarm',  },
                 // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
@@ -275,6 +275,35 @@ export default {
         }
       ); 
     }
+
+    if (myInfo.value != null) {
+      console.log(myInfo.value)
+      console.log('ㅅㅂ')
+      sender.value = store.state.userInfo.email //지금 로그인 한 사람 메일
+      senderWallet.value = store.state.userInfo.address //로그인 한 사람 지갑
+      senderRole.value = store.state.userInfo.role //로그인 한 사람 역할
+      receiverBrand.value = store.state.userInfo.username //로그인 한 사람 브랜드
+      storeBrand.value = store.state.userInfo.store //스토어브랜드
+
+    if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
+          api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(res => 
+        {
+          receivedAlarm.value = res.data.content
+          console.log(receivedAlarm.value)
+        })} else if (myInfo.value.role === "ROLE_USER") {
+          console.log(sender)
+        api.get(`alarm/${sender}`).then(res => 
+        {
+          receivedAlarm.value = res.data.content
+          console.log(receivedAlarm.value)
+        })
+        }
+
+      connect()
+    }
+
+
+    
 
     
 
@@ -299,43 +328,40 @@ export default {
     //socket - 받은 알람모음
     const receivedAlarm = ref([])
 
-    if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
-      api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(res => 
-    {
-      receivedAlarm.value = res.data.content
-      console.log(receivedAlarm.value)
-    })} else if (myInfo.value.role === "ROLE_USER") {
-      console.log(sender)
-    api.get(`alarm/${sender}`).then(res => 
-    {
-      receivedAlarm.value = res.data.content
-      console.log(receivedAlarm.value)
-    })
-    }
+    
+
+
+
+
+
+    
+    
+
+    
 
     const newReceivedAlarm = computed(() => {
       return receivedAlarm.value.filter(e => {
         return e.status == 0
       })
     })
-    connect()
-
+    
+    
 
     const refreshAlarm = () => {
       if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
-        api.put(`alam/${myInfo.value.username}`,{check : 0}).then(res =>{
+        api.put(`alarm/${myInfo.value.username}`,{check : 1}).then(res =>{
         console.log(res)
       })
       } else if (myInfo.value.role === "ROLE_USER") {
       console.log(sender)
-      api.put(`alarm/${sender}`,{check : 1}).then(res => 
+      api.put(`alarm/${sender}`,{check : 0}).then(res => 
       {
         receivedAlarm.value = res.data.content
         console.log(receivedAlarm.value)
       })
     }
 
-
+    
 
 
       // console.log(myInfo.value.username)
@@ -367,6 +393,7 @@ export default {
       receivedAlarm,
       newReceivedAlarm,
       refreshAlarm,
+      receiverBrand,
     }
   }
 }
