@@ -12,5 +12,5 @@ import lombok.Setter;
 public class AlarmPutReq {
 
     @ApiModelProperty(name = "check")
-    int check;
+    String check;
 }
