@@ -51,8 +51,9 @@
         <h5 class="modal-title" id="exampleModalLabel2">Alarms</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body2" style="max-height :500px; overflow:hidden; overflow-y: scroll;">
-        <div class="row-vh d-flex flex-row align-items-stretch" v-for="(item,idx) in receivedAlarm" :key="idx" style="height:100px;">
+      <div class="modal-body2" style="max-height :500px; overflow:hidden; overflow-y: scroll; min-height :300px;">
+        <div v-if="receivedAlarm.length === 0" style="margin-top:140px;"> 현재 알림이 없습니다.</div>
+        <div class="row-vh d-flex flex-row align-items-stretch" v-for="(item,idx) in receivedAlarm" :key="idx" style="height:100px;" v-else>
           <div style="margin-top:15px; width:20%; margin-left: 20px;">
             <img src="https://i.ibb.co/w64P7gS/Cartier.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'cartier'">
             <img src="https://i.ibb.co/TMvkQws/Fendi-logo.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'fendi'">

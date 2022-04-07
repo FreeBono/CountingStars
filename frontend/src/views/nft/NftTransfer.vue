@@ -101,6 +101,7 @@
             <div class="searchBarTag mt-3">
 
               <!-- 필터링 부분 -->
+              <div align="left" style="margin-bottom: 15px;">NFT 목록</div>
                 <div class="searchbarr mb-4">
                   <select class="brandSel-tag" v-model="brandSelected" @change="brandSel()" >
                     <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">

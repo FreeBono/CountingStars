@@ -137,25 +137,30 @@
                                 <b-card-body style="max-width: 20rem;">
                                   <b-card-title style="margin-bottom: 20px;">{{ selectedBrandName }}</b-card-title>
                                   <b-card-text>
-                                    <p style=" font-size: 0.9rem;" >Product name: {{ nftName }}</p>
-                                    <p >description : {{ description }}</p>
+                                    <p style=" font-size: 1.5rem;" >Product name: {{ nftName }}</p>
+                                    <p style=" font-size: 1.5rem;">Description</p>
+                                    <p>{{ description }}</p> 
                                     <div  style="width: 20rem;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">카테고리 : {{ productType }}</p>
-                                      <p style="float: right; margin: 0; font-size: 0.8rem;">{{ madeCountry }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">제조국가 : {{ madeCountry }}</p>
                                     </div>
                                     <div class="d-flex" style="width: 20rem; justify-content: space-between;">
                                       <p style="float: left; margin: 0; font-size: 0.8rem;">소재 : {{ material }}</p>
-                                      <p style="float: right; margin: 0; font-size: 0.8rem;">{{ price }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">가격 : {{ price.toLocaleString('ko-KR') }}</p>
+                                    </div>
+                                    <div>
+                                      <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
+                                      <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
                                     </div>
                                   </b-card-text>
                                 </b-card-body>
-                                <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " >
+                                <!-- <b-card-footer class="footerr-tag text-muted" style="max-width: 20rem; " > -->
                                 <!-- <hr> -->
-                                  <div style="width: 20rem;">
+                                  <!-- <div style="width: 20rem;"> -->
                                     <p style="float: left; margin: 0; font-size: 0.8rem;">Serial Number: {{ serialNumber }}</p>
                                     <p style="float: right; margin: 0; font-size: 0.8rem;">제조일자 : {{ madeDate }}</p>
-                                  </div>
-                                </b-card-footer>
+                                  <!-- </div> -->
+                                <!-- </b-card-footer> -->
                               </div>
                               <div class="modal-footer">
                                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
@@ -222,7 +227,7 @@
           <div  class="container-fluid">
             <div class="searchBarTag mt-3">
               <!-- <div class="container justify-content-center"> -->
-                <div align="left" >메인 지갑 설정</div>
+                <div align="left" >My NFT 분석</div>
                 <div class="row" style="" >
                   <!-- <hr style="margin:15px 0;"> -->
                   <!-- <div>현재 지갑 주소 </div> -->
@@ -411,7 +416,7 @@ export default {
       datasets: [
         {
           data: [0, 0, 0, 0, 0],
-          backgroundColor: ['#6ED746', '#82EB5A', '#80E12A', '#A0FA78', '#70F170'],
+          backgroundColor: ['#006400', '#5D8A5D', '#56B37F', '#78EFAD', '#4BAF4B'],
         },
       ],
     };
