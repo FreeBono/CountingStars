@@ -148,14 +148,14 @@ export default {
    
         divTag1.classList.add('test')
         divTag2.classList.add('test')
-        divTag3.classList.add('test')
+        // divTag3.classList.add('test')
         divTag5.classList.add('test')
         divTag6.classList.add('test')
         divTag8.classList.add('test')
       } else{
         divTag1.classList.remove('test')
         divTag2.classList.remove('test')
-        divTag3.classList.remove('test')
+        // divTag3.classList.remove('test')
         divTag5.classList.remove('test')
         divTag6.classList.remove('test')
         divTag8.classList.remove('test')
