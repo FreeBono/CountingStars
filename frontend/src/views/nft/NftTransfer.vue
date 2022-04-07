@@ -349,13 +349,13 @@ export default {
       
 			console.log(tokenNum.value)
    
-			// await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
-      // nfts.value = store.state.nftValues
+			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      nfts.value = store.state.nftValues
       
       
       send(info[0],receiveAccount.value)
       
-      // LookupNFTs()
+      LookupNFTs()
 		}
     
 
