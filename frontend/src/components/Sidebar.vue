@@ -47,15 +47,7 @@
             </a>
           </li>
           <li>
-            <a href="/admin">
-              <i class="fa fa-font fa-2x" style="color: #11cdef;"></i>
-              <span class="nav-text">
-                ADMIN
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="nftcreate">
+            <a href="nftallcreate" v-show="userRole.role !== 'ROLE_USER'">
               <i class="fa fas fa-cubes fa-2x" style="color: #ffd700;"></i>
               <!-- <i class="fa fas fa-cube fa-2x"></i> -->
               <span class="nav-text">
@@ -182,8 +174,8 @@ export default {
 .main-menu li {
   position: relative;
   display: flex !important;
-  width: 230px;
-  right: 20px;
+  width: 230px !important;
+  right: 20px !important;
   margin-top: 15px;
   /* justify-content: center; */
 }
