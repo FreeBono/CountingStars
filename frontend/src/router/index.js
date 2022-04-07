@@ -9,7 +9,6 @@ import Mainpage from "../views/Mainpage.vue"
 import MainNotice from '@/views/notice/MainNotice.vue'
 import NoticeForm from '@/components/notice/NoticeForm.vue'
 import NoticeDetail from '@/components/notice/NoticeDetail.vue'
-import AdminPage from '@/views/admin/AdminPage.vue'
 import PartnerManagement from '@/views/admin/PartnerManagement.vue'
 import NftCreate from '@/views/admin/NftCreate.vue'
 import MyNftDetail from '@/views/nft/MyNftDetail.vue'
@@ -90,11 +89,6 @@ const routes = [
     component: NoticeDetail
   },
   {
-    path: '/admin',
-    name: 'AdminPage',
-    component: AdminPage
-  },
-  {
     path: '/partner',
     name: 'PartnerManagement',
     component: PartnerManagement
@@ -105,7 +99,7 @@ const routes = [
     component: NftCreate
   },
   {
-    path: '/NftAllCreate',
+    path: '/nftallcreate',
     name: 'NftAllCreate',
     component: NftAllCreate
   },

@@ -575,7 +575,7 @@ export default {
     const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
     const storeBrand = store.state.userInfo.store //스토어브랜드
     const connect = () => {
-      const serverURL = "http://localhost:8080/alarm"
+      const serverURL = "/api/v1/alarm"
       let socket = new SockJS(serverURL);
       stompClient.value = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)

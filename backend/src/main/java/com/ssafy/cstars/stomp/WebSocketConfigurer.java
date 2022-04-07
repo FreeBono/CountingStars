@@ -21,7 +21,7 @@ public class WebSocketConfigurer implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
-                .addEndpoint("/alarm")
+                .addEndpoint("/api/v1/alarm")
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
