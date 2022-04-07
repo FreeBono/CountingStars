@@ -4,7 +4,7 @@
   <div class="wrapper">
 
     <div class="main-content">
-      <div class="header">
+      <div class="header" >
         <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;">NFT 조회</div>
         <div class="head_title" style="font-size: 2rem;">
 
@@ -157,11 +157,11 @@
             <div class="searchBarTag mt-3" style="width:100%;">
               <!-- <div class="container justify-content-center"> -->
                 <div class="row"  >
-                  <div align="left" style="margin-left:10px; margin-top:10px; ">월별 NFT이전</div>
+                  <div align="left" style="margin-left:10px; margin-top:10px; ">주소 이전 내역</div>
                   <!-- <hr style="margin-top:15px 0;"> -->
                   <div align="center" style=" margin-top:10px; " >
                     <div class="d-flex" style="padding-top:10px; height:40px; border:2px solid #e7eaf3; background-color: #f8fafd;  color: #6c757e;">
-                      <div style="width:20%; text-align:left; margin-left:20px;">Txn Hash</div><div style="width:20%; text-align:left;">Block</div><div style="width:25%; text-align:left;">From</div><div style="width:25%; text-align:left; margin-left:10px;">To</div><div style="width:10%; text-align:left;">Token ID</div>
+                      <div style="width:20%; text-align:left; margin-left:20px;">Txn Hash</div><div style="width:20%; text-align:left;">Block</div><div style="width:25%; text-align:left;">From</div><div style="width:25%; text-align:left; margin-left:10px;">To</div><div style="width:13%; text-align:left;">Token ID</div>
                     </div>
                     <div v-for="(item,idx) in transactions" :key="idx" align="left" style="margin-top:10px; margin-left:10px;">
                       <div class="d-flex">
@@ -375,7 +375,7 @@ export default {
     const historiesUnique = []
     if (histories != [] && histories != null) {
       histories.forEach(e => {
-      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <7) {
+      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <5) {
         console.log(e.searchHistory)
         historiesUnique.push(e.searchHistory)
     }})
@@ -609,6 +609,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.wrapper {
+  width:100%;
+  min-width: 1600px;
+}
+
 
 .nft_img {
   display: flex;
