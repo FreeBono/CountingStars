@@ -1,5 +1,6 @@
 package com.ssafy.cstars.api.controller;
 
+import com.ssafy.cstars.api.request.AlarmPutReq;
 import com.ssafy.cstars.api.response.AlarmListRes;
 import com.ssafy.cstars.api.response.AlarmRes;
 import com.ssafy.cstars.api.response.BaseResponseBody;
@@ -72,7 +73,7 @@ public class AlarmController {
     }
 
 
-    @PutMapping("/{receiver}/{check}")
+    @PutMapping("/{receiver}")
     @ApiOperation(value = "알람 상태 수정 (alarm status)", notes = "<strong>알람 상태</strong>을 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "SUCCESS", response = BaseResponseBody.class),
@@ -80,15 +81,16 @@ public class AlarmController {
             @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
     })
     public ResponseEntity<BaseResponseBody> modifyAlarmStatus(@PathVariable(name = "receiver") String receiver,
-                                                              @PathVariable(name = "check") int check){
+                                                              @RequestBody AlarmPutReq alarmPutReq){
 
         Long execute = null;
 
-        if(check == 0 ) {
+        if(alarmPutReq.getCheck() == 0 ) {
             execute = alarmService.modifyAlarmStatus(receiver);
-        }else if(check == 1){
+        }else if(alarmPutReq.getCheck() == 1){
             execute = alarmService.modifyBrandAlarmStatus(receiver);
         }
+
         int statusCode;
 
         if(execute != 0){
