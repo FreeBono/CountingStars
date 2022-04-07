@@ -6,73 +6,7 @@
       <sidebar/>
       <div class="header">
         <p class="head_title" >공지사항</p>
-
-        <!-- 위에 카드부분 -->
-      <!-- <div class="row-vh d-flex" style="margin-left: 90px; justify-content: center; width:100%; margin-top: 120px; justify-content: space-evenly;">
-          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px;">
-            <div class="card-content">            
-              <div class="card-body">
-                <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; text-align:left; margin: auto 0;" >  
-                    <div >공지사항</div>
-                    <div >아무거나</div>
-                  </div>
-                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
-                  </div>    
-                </div>
-              </div>
-            </div> 
-          </div>
-          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px; text-align:left;">
-            <div class="card-content">            
-              <div class="card-body">
-                <div class="media" style="overflow:hidden; ">
-                  <div class="media-body" style="float:left; margin: auto 0; ">  
-                    <div style="text-align:left;">FAQ</div>
-                    <div align="left" style="word-break:break-all;" @click="copyToClickBoard" >자주 하는 질문</div>
-                  </div>
-                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fas fa-question-circle fa-3x" style="color: rgb(253 59 78);"></i>
-                  </div>    
-                </div>
-              </div>
-            </div> 
-          </div>
-          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px;">
-            <div class="card-content">            
-              <div class="card-body">
-                <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; text-align:left; margin: auto 0;">  
-                    <div>TOTAL WORTH</div>
-                    <div align="left">아무거나</div>
-                  </div>
-                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
-                  </div>    
-                </div>
-              </div>
-            </div> 
-          </div>
-          <div class="card col-4" style="box-shadow:none; background-color:white; margin-right:20px; height:110px; width:20%; border-radius:10px;">
-            <div class="card-content">            
-              <div class="card-body">
-                <div class="media" style="overflow:hidden;">
-                  <div class="media-body" style="float:left; text-align:left;  margin: auto 0;">  
-                    <div>HIGHEST PRICE</div>
-                    <div align="left">아무거나</div>
-                  </div>
-                  <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fa fa-won-sign fa-3x" style="color:gold;"></i>
-                  </div>    
-                </div>
-              </div>
-            </div> 
-          </div>
-        </div> -->
-      <!-- 카드부분 끝 -->
       </div>
-
 
       <div class="content_outside_box ">
         <!-- <div class="content_box"> -->
@@ -94,7 +28,6 @@
                         <th style="width: 15%;">제목</th>
                         <th style="width: 10%;">Admin</th>
                         <th style="width: 5%;">작성일</th>
-                        <th style="width: 5%;">조회수</th>
                         <!-- <th style="width: 10%;">    </th> -->
                       </tr>
                     </thead>
@@ -111,9 +44,6 @@
                         <th scope="row">
                           <div class="media align-items-center">
                             <div class="media-body" style="text-align: center;">
-                              <!-- <span class="badge badge-dot mr-4">
-                                <i style="background-color: #3adacf;"></i>
-                              </span> -->
                               <span class="mb-0 text-sm">{{noticeitem.noticeId }}</span>
                             </div>
                           </div>
@@ -145,11 +75,6 @@
                         <td>
                           <div>
                             <span class="mr-2">{{ makeDate(noticeitem.date) }}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            <span class="mr-2">조회수</span>
                           </div>
                         </td>
                       </tr>
@@ -334,6 +259,7 @@ export default {
   position:absolute; 
   margin-left:100px; 
   margin-top: 50px;
+  font-size: 2rem;
 }
 
 #my-table:hover {

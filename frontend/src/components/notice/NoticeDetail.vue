@@ -59,7 +59,7 @@
 
           <!-- 관리자만 버튼 보이게 -->
           <!-- 수정 버튼 누르기 전 -->
-          <div v-show="editBtn === false">
+          <div v-show="editBtn === false && userRole.role === 'ROLE_SITE_ADMIN'">
             <div class="createBtn_position2">
               <button type="button" class="btn createBtn " @click="editNotice" style="width: 60px">수정</button>
               <button type="button" class="btn deleteBtn" @click="deleteNotice" style="width: 60px">삭제</button>
@@ -67,7 +67,7 @@
             </div>
           </div>
           <!-- 수정 버튼 누른 후 (저장) -->
-          <div v-show="editBtn === true">
+          <div v-show="editBtn === true && userRole.role === 'ROLE_SITE_ADMIN'">
             <div class="createBtn_position2">
               <button v-if="editBtn === true" type="button" class="btn createBtn " @click="updateNotice" style="width: 60px">수정</button>
               <button type="button" class="btn deleteBtn" @click="editCancel" style="width: 60px">취소</button>
@@ -126,7 +126,6 @@ export default {
         noticeContents.value.content = res.data.content
         noticeContents.value.title = res.data.title
         noticeContents.value.date = res.data.date
-        console.log(noticeContents.value.noticeId, '번호 계속 뜨는지 확인')
       })
     }
 
@@ -150,7 +149,6 @@ export default {
     // 수정 버튼 눌렀을 때 변경
     const editNotice = () => {
       editBtn.value = true
-      console.log(editBtn.value, '수정 버튼 변화')
     }
 
     // 수정 취소
@@ -180,9 +178,11 @@ export default {
       .then(() => {
         console.log(updateInfo.content, '수정 확인', updateInfo.title)
         editBtn.value = false
-        console.log(editBtn.value, '수정 저장 버튼')
       })
     }
+
+    // 유저 정보 가져오기
+    const userRole = store.state.userInfo
 
     onMounted(() => {
       getNotice()
@@ -198,6 +198,7 @@ export default {
       editNotice,
       editCancel,
       getNotice,
+      userRole,
     }
   },
 }

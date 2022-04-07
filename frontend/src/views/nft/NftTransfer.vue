@@ -232,7 +232,7 @@
           </div>
         </div>
     
-
+ <!-- <button type="button" class="btn btn-primary" @click="send()">transfer</button> -->
 
 
 <!-- Modal -->
@@ -291,8 +291,8 @@ import TransferToken from '@/utils/TransferNFT.js'
 import Graph from '@/components/Graph'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
-
-
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client'
 
 
 export default {
@@ -301,8 +301,8 @@ export default {
     Sidebar,
     Graph,
   },
+ 
   setup() {
-    
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -335,18 +335,25 @@ export default {
 		}
 
 		async function sendToken() {
+      let info = nfts.value.filter(e => {
+        return parseInt(e.tokenId) ===parseInt(tokenNum.value)
+      })
+      console.log(info[0])
+      
       //알람
       createToast(
-          { title: 'Send Transaction',  },
-          // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
-          { type:'info', showIcon:true, position:'bottom-right', }
-          )
+        { title: 'Send Transaction',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'info', showIcon:true, position:'bottom-right', }
+        )
       
 			console.log(tokenNum.value)
    
 			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
       nfts.value = store.state.nftValues
-
+      
+      
+      send(info[0],receiveAccount.value)
       
       LookupNFTs()
 		}
@@ -555,6 +562,80 @@ export default {
     const serialNumber = ref(null)
 
 
+    //socket test
+
+    const recvList = ref([])
+    const connected = ref(true)
+    const stompClient = ref('')
+    const receiver = ''
+    const receiverWallet = ''// 이전 보내는 월렛 주소 => 수정해야함
+    const sender = store.state.userInfo.email //지금 로그인 한 사람 메일
+    const senderWallet = store.state.userInfo.address //로그인 한 사람 지갑
+    const senderRole = store.state.userInfo.role //로그인 한 사람 역할
+    const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
+    const storeBrand = store.state.userInfo.store //스토어브랜드
+    const connect = () => {
+      const serverURL = "/api/v1/alarm"
+      let socket = new SockJS(serverURL);
+      stompClient.value = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      stompClient.value.connect(
+        {},
+        frame => {
+          connected.value = true;
+          console.log('소켓 연결 성공', frame);
+          if(senderRole == 'ROLE_BRAND_ADMIN'){ //로그인 한 사람의 role 이 brand면 brand구독
+            stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }else{//일반 유저면 자기 email을 구독해야함
+            stompClient.value.subscribe("/sub/channel/" + senderWallet, res => { 
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          connected.value = false;
+        }
+      ); 
+    }
+
+    connect()
+
+    const send = (info,wallet) => {
+      if (stompClient.value && stompClient.value.connected) {
+        if(senderRole == 'ROLE_STORE_ADMIN'){
+          
+          const msg = {
+            sender: senderRole,//보내는사람정보
+            receiver : 'ROLE_BRAND_ADMIN',//받는사람
+            brand : storeBrand,
+            productName: info.name,//이전할상품정보
+  
+          };
+          console.log(msg)
+          stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+        }else{
+          const msg = { 
+            sender: sender,//보내는사람정보
+            receiver : wallet,//받는사람
+            productName: 'productname',//이전할상품정보
+          };
+          stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+
+        }
+      }
+    }
+
+    // const sendAlarm = (e) => {
+    //   send()
+    // }
+    
+
+
     return {
       goMyNftDetail,
       sendNft,
@@ -597,9 +678,23 @@ export default {
       productColor,
       price,
       serialNumber,
-  
+      
+      //socket
+      connect,
+      recvList,
+      connected,
+      stompClient,
+      receiver,
+      sender,
+      // sendAlarm,
+      send,
+      
+
+     
     }
-  }
+  },
+  
+  
 }
 </script>
 
@@ -675,9 +770,6 @@ export default {
   position: relative;
   left: 100px;
 }
-
-
-
 
 
 $desktop: 1024px;
