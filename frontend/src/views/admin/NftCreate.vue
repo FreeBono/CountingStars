@@ -25,7 +25,15 @@
               </div>
               <div class="telephone">
                 <label for="name"></label>
+                <input type="text" placeholder="상품명" name="telephone" id="telephone_input" v-model="state.nftName" required>
+              </div>
+              <div class="telephone">
+                <label for="name"></label>
                 <input type="text" placeholder="가격" name="telephone" id="telephone_input" v-model="state.price" required>
+              </div>
+              <div class="telephone">
+                <label for="name"></label>
+                <input type="text" placeholder="설명칸" name="telephone" id="telephone_input" v-model="state.description" required >
               </div>
               <div class="name">
                 <label for="name"></label>
@@ -95,6 +103,8 @@ export default {
       material: 'cowhide',
       color: 'black',
       price: '5,700$',
+      description: '설명 칸',
+      nftName: 'nft 이름',
       nftImg: null,
       nftImgFile: null,
     })
@@ -121,6 +131,8 @@ export default {
         productColor: state.value.color,
         productPrice: state.value.price,
         image: store.state.ipfsData,
+        description: state.value.description,
+        nftName: state.value.nftName,
       }
 
       const ipfs = create();
