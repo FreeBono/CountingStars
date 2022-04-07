@@ -59,5 +59,10 @@ public class AlarmServiceImpl implements AlarmService {
         return execute;
     }
 
-
+    @Transactional
+    @Override
+    public Long modifyBrandAlarmStatus(String receiver) {
+        Long execute = alarmRepositorySupport.modifyBlandAlarmStatus(receiver);
+        return execute;
+    }
 }

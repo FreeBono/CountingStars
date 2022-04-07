@@ -5,7 +5,6 @@ import com.ssafy.cstars.api.response.AlarmRes;
 import com.ssafy.cstars.api.response.BaseResponseBody;
 import com.ssafy.cstars.domain.entity.Alarm;
 import com.ssafy.cstars.service.AlarmService;
-import com.ssafy.cstars.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -73,17 +72,25 @@ public class AlarmController {
     }
 
 
-    @PutMapping("/{receiver}")
+    @PutMapping("/{receiver}/{check}")
     @ApiOperation(value = "알람 상태 수정 (alarm status)", notes = "<strong>알람 상태</strong>을 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "SUCCESS", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "ACCESS DENIED", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "FAIL", response = BaseResponseBody.class)
     })
-    public ResponseEntity<BaseResponseBody> modifyAlarmStatus(@PathVariable(name = "receiver") String receiver){
+    public ResponseEntity<BaseResponseBody> modifyAlarmStatus(@PathVariable(name = "receiver") String receiver,
+                                                              @PathVariable(name = "check") int check){
 
-        Long execute = alarmService.modifyAlarmStatus(receiver);
+        Long execute = null;
+
+        if(check == 0 ) {
+            execute = alarmService.modifyAlarmStatus(receiver);
+        }else if(check == 1){
+            execute = alarmService.modifyBrandAlarmStatus(receiver);
+        }
         int statusCode;
+
         if(execute != 0){
             statusCode = 200;
         }else {

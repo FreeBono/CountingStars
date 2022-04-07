@@ -13,4 +13,6 @@ public interface AlarmService {
     Page<Alarm> GetBrandAlarmList(Pageable pageable, String receiver, String brand);
 
     Long modifyAlarmStatus(String receiver);
+
+    Long modifyBrandAlarmStatus(String receiver);
 }
