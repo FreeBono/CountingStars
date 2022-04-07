@@ -85,9 +85,9 @@ public class AlarmController {
 
         Long execute = null;
 
-        if(alarmPutReq.getCheck() == 0 ) {
+        if(alarmPutReq.getCheck().equals("0") ) {
             execute = alarmService.modifyAlarmStatus(receiver);
-        }else if(alarmPutReq.getCheck() == 1){
+        }else if(alarmPutReq.getCheck().equals("1")){
             execute = alarmService.modifyBrandAlarmStatus(receiver);
         }
 
