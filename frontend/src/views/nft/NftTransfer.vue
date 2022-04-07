@@ -171,6 +171,14 @@
           </div>
         </div>
 
+        <!-- 로고 -->
+        <div style="position:absolute; top : 900px; width:30%; height :200px; margin-left:12%; margin-top:70px;">
+          <img src="@/assets/cslogo.png" alt="" style="width:50%; height:100%;">
+          <div>
+            <div style="font-size:50px; width:100%;">COUNTING STARS</div>
+          </div>
+        </div>
+
         <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:700px;">
           <!-- <div  class="container-fluid"> -->
             <div class="searchBarTag mt-3" style="width:100%;">
