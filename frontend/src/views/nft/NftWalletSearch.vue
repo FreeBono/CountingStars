@@ -1,5 +1,5 @@
 <template>
-  
+  <div>
   <sidebar style=""/>
   <div class="wrapper">
 
@@ -243,7 +243,7 @@
 
   </div>
 
-
+</div>
 
 
 
@@ -330,11 +330,14 @@ export default {
          },2000)
         })
       } else if (searchStatus.value === "0") {
+      console(walletAddress.value)
       searchNFTs(walletAddress.value)
       addEntry()
-      SearchToken(walletAddress.value).then(res => transactions.value = res.sort(function(a,b) {
+      SearchToken(walletAddress.value).then(res => {
+        console.log(res)
+        transactions.value = res.sort(function(a,b) {
         return b.blockNumber - a.blockNumber
-      }))
+      })})
       // walletAddress.value = ''
       setTimeout(()=> {
       
