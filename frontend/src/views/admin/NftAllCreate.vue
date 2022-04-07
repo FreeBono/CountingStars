@@ -85,11 +85,11 @@
             <div class="card shadow" style="height: 800px;">
                 <div class="card-header border-0 my-2">
                   <h3 class="mb-0">NFT CREATE</h3>
-
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    보여질 속성
-                  </button>
-
+                  <div class="chooseBtnPosition">
+                    <button  type="button" class="btn btn-primary chooseShowBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      보여질 속성
+                    </button>
+                  </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush table-hover">
@@ -150,7 +150,7 @@
     <!--------------------------- NFT Add All From Excel END --------------------------->
 
     <!----------------------------- MODAL---------------------------------------------->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #333333;">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -208,7 +208,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #2dce89; border: none;">Close</button>
               </div>
             </div>
           </div>
@@ -492,5 +492,25 @@ h3,
 
 .next__icon:hover {
   cursor: pointer;
+}
+
+.chooseBtnPosition {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chooseShowBtn {
+  background-color: #fff !important;
+  height: 40px;
+  color: #333333 !important;
+  border-color: transparent;
+  border: 1px solid transparent !important;
+  box-shadow: 1px 1px 2px 2px #ececf0;
+  /* background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%); */
+}
+
+.chooseShowBtn:hover {
+  background-color: #32CCBC !important;
+  color: white;
 }
 </style>
