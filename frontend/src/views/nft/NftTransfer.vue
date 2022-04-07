@@ -232,7 +232,7 @@
           </div>
         </div>
     
- <button type="button" class="btn btn-primary" @click="sendAlarm()">transfer</button>
+ <!-- <button type="button" class="btn btn-primary" @click="send()">transfer</button> -->
 
 
 <!-- Modal -->
@@ -335,6 +335,11 @@ export default {
 		}
 
 		async function sendToken() {
+      let info = nfts.value.filter(e => {
+        return parseInt(e.tokenId) ===parseInt(tokenNum.value)
+      })
+      console.log(info[0])
+      
       //알람
       createToast(
         { title: 'Send Transaction',  },
@@ -344,9 +349,11 @@ export default {
       
 			console.log(tokenNum.value)
    
-			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
-      nfts.value = store.state.nftValues
-
+			// await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
+      // nfts.value = store.state.nftValues
+      
+      
+      send(info[0])
       
       LookupNFTs()
 		}
@@ -560,7 +567,7 @@ export default {
     const recvList = ref([])
     const connected = ref(true)
     const stompClient = ref('')
-    const receiver = 'ROLE_STORE_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
+    const receiver = 'ROLE_BRAND_ADMIN'//receiver가 개인대 개인 거래면 receiver 값이 받는 사람 email로 바뀌어야 하고, store->brand면 ROLE_BRAND_ADMIN으로 저장해야함 
     const sender = store.state.userInfo.email
     const connect = () => {
       const serverURL = "http://localhost:8080/alarm"
@@ -594,21 +601,23 @@ export default {
 
     connect()
 
-    const send = () => {
+    const send = (info) => {
+      console.log(info)
       console.log("Send message:" + receiver + sender);
       if (stompClient.value && stompClient.value.connected) {
         const msg = { 
           sender: sender,//보내는사람정보
           receiver : receiver,//받는사람
-          productName: 'productname',//이전할상품정보
+          productName: info.name,//이전할상품정보
+          brandName : info.brandName
         };
         stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
       }
     }
 
-    const sendAlarm = (e) => {
-      send()
-    }
+    // const sendAlarm = (e) => {
+    //   send()
+    // }
     
 
 
@@ -662,7 +671,7 @@ export default {
       stompClient,
       receiver,
       sender,
-      sendAlarm,
+      // sendAlarm,
       send,
       
 

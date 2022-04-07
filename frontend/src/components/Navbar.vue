@@ -9,7 +9,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                       </svg>
-                      <div class="circle-num" >{{newReceivedAlarm}}</div>
+                      <div class="circle-num" >{{newReceivedAlarm.length}}</div>
                     </a> 
                     <a class="nav-link" id="container5" @click="goNftpage" style="font-size:30px;">NFT</a> <a class="nav-link" href="#" id="container6" @click="getAccount" style="font-size:30px;">Wallet</a>
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="!myInfo" style="font-size:30px;">Login</a>
@@ -25,7 +25,7 @@
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" >
         <!-- <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -44,13 +44,31 @@
   <!-- Modal -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" style="border-radius:1rem">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body2">
-        ...
+      <div class="modal-body2" style="max-height :500px; overflow:hidden; overflow-y: scroll;">
+        <div class="row-vh d-flex flex-row align-items-stretch" v-for="(item,idx) in receivedAlarm" :key="idx">
+          <div style="margin-top:15px; width:20%; margin-left: 20px;">
+            <img src="@/assets/Cartier.png" alt="" style="width:100%; height:100%;">
+          </div>
+          <div style="width:40%; margin-top:15px; margin-left: 20px;" align="left">
+            <div >
+            브랜드 이름
+            </div>
+            <div>
+            브랜드 네임
+            </div>
+          </div>
+          <div style="width:40%; margin-top:25px;">
+            created time
+          </div>
+          
+        </div>
+        
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -484,5 +502,15 @@ export default {
   border: 2px solid #fff;
   border-radius: 50%;
   color:white;
+}
+
+
+/* 스크롤바 숨기기 */
+.modal-body2 {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.modal-body2::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 </style>
