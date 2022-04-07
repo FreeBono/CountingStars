@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse" id="navbar-bar">
                 <div class="navbar-nav ms-auto" style="margin-top:15px;">
                     <a class="nav-link" aria-current="page" href="#" id="container2" style="font-size:30px;">Home</a>
-                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative;">
+                    <a class="nav-link"  id="container3" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="position:relative;" @click="refreshAlarm">
                       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                       </svg>
@@ -46,24 +46,29 @@
   <div class="modal-dialog">
     <div class="modal-content" style="border-radius:1rem">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel2">Alarms</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body2" style="max-height :500px; overflow:hidden; overflow-y: scroll;">
-        <div class="row-vh d-flex flex-row align-items-stretch" v-for="(item,idx) in receivedAlarm" :key="idx">
+        <div class="row-vh d-flex flex-row align-items-stretch" v-for="(item,idx) in receivedAlarm" :key="idx" style="height:100px;">
           <div style="margin-top:15px; width:20%; margin-left: 20px;">
-            <img src="@/assets/Cartier.png" alt="" style="width:100%; height:100%;">
+            <img src="https://i.ibb.co/w64P7gS/Cartier.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'cartier'">
+            <img src="https://i.ibb.co/TMvkQws/Fendi-logo.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'fendi'">
+            <img src="https://i.ibb.co/TYhcqQS/versace.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'versace'">
+            <img src="https://i.ibb.co/0J6dYWz/Louis-Vuitton.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'louis vuitton'">
+            <img src="https://i.ibb.co/tPfwcDV/Prada.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'prada'">
+            <img src="@/assets/Cartier.png" alt="" style="width:100%; height:100%;" v-if="item.brand === 'chanel'">
           </div>
-          <div style="width:40%; margin-top:15px; margin-left: 20px;" align="left">
+          <div style="width:40%; margin-top:32px; margin-left: 20px;" align="left">
             <div >
-            브랜드 이름
+              {{item.productName}}
             </div>
             <div>
-            브랜드 네임
+              {{item.brand}}
             </div>
           </div>
-          <div style="width:40%; margin-top:25px;">
-            created time
+          <div style="width:40%; margin-top:39px;">
+            {{item.registerDate}}
           </div>
           
         </div>
@@ -71,8 +76,7 @@
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
       </div>
     </div>
   </div>
@@ -215,6 +219,7 @@ export default {
     const connected = ref(true)
     const stompClient = ref('')
     const receiver = ''
+
     const receiverWallet = ''// 이전 보내는 월렛 주소 => 수정해야함
     const sender = store.state.userInfo.email //지금 로그인 한 사람 메일
     const senderWallet = store.state.userInfo.address //로그인 한 사람 지갑
@@ -235,11 +240,32 @@ export default {
             stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
+              api.get(`alarm/${receiver}/${myInfo.value.username}`).then(response => 
+              {
+                receivedAlarm.value = response.data.content
+                console.log(receivedAlarm.value)
+              })
+              createToast(
+                { title: 'Check your new alarm',  },
+                // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+                { type:'info', showIcon:true, position:'bottom-right', }
+              )
+              
             });
           }else{//일반 유저면 자기 email을 구독해야함
             stompClient.value.subscribe("/sub/channel/" + senderWallet, res => { 
               console.log('구독으로 받은 메시지 입니다.', res.body);
               recvList.value.push(JSON.parse(res.body))
+              api.get(`alarm/${receiver}/${myInfo.value.username}`).then(response => 
+              {
+                receivedAlarm.value = response.data.content
+                console.log(receivedAlarm.value)
+              })
+              createToast(
+                { title: 'Check your new alarm',  },
+                // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+                { type:'info', showIcon:true, position:'bottom-right', }
+              )
             });
           }
         },
@@ -272,11 +298,20 @@ export default {
     
     //socket - 받은 알람모음
     const receivedAlarm = ref([])
-    api.get(`alarm/${receiver}`).then(res => 
+
+    if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
+      api.get(`alarm/ROLE_BRAND_ADMIN/${myInfo.value.username}`).then(res => 
+    {
+      receivedAlarm.value = res.data.content
+      console.log(receivedAlarm.value)
+    })} else if (myInfo.value.role === "ROLE_USER") {
+      console.log(sender)
+    api.get(`alarm/${sender}`).then(res => 
     {
       receivedAlarm.value = res.data.content
       console.log(receivedAlarm.value)
     })
+    }
 
     const newReceivedAlarm = computed(() => {
       return receivedAlarm.value.filter(e => {
@@ -284,6 +319,30 @@ export default {
       })
     })
     connect()
+
+
+    const refreshAlarm = () => {
+      if (myInfo.value.role === "ROLE_BRAND_ADMIN") {
+        api.put(`alam/${myInfo.value.username}`,{check : 0}).then(res =>{
+        console.log(res)
+      })
+      } else if (myInfo.value.role === "ROLE_USER") {
+      console.log(sender)
+      api.put(`alarm/${sender}`,{check : 1}).then(res => 
+      {
+        receivedAlarm.value = res.data.content
+        console.log(receivedAlarm.value)
+      })
+    }
+
+
+
+
+      // console.log(myInfo.value.username)
+      // api.put(`alam/${myInfo.value.username}`).then(res =>{
+      //   console.log(res)
+      // })
+    }
     return {
       // divTag1,
       loggedIn,
@@ -307,6 +366,7 @@ export default {
       send,
       receivedAlarm,
       newReceivedAlarm,
+      refreshAlarm,
     }
   }
 }

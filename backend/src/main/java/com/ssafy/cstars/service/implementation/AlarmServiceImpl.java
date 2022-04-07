@@ -41,6 +41,17 @@ public class AlarmServiceImpl implements AlarmService {
         return alarms;
     }
 
+
+    @Override
+    public Page<Alarm> GetBrandAlarmList(Pageable pageable, String receiver, String brand) {
+
+        Page<Alarm> alarms = alarmRepositorySupport.findByReceiver(pageable, receiver, brand);
+
+        return alarms;
+    }
+
+
+
     @Transactional
     @Override
     public Long modifyAlarmStatus(String receiver) {

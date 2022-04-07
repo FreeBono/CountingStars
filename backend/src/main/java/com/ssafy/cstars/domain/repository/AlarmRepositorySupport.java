@@ -35,6 +35,25 @@ public class AlarmRepositorySupport {
 
     }
 
+    public Page<Alarm> findByReceiver(Pageable pageable, String receiver, String brand){
+        QueryResults<Alarm> alarms = jpaQueryFactory
+                .select(qAlarm)
+                .from(qAlarm)
+                .where(qAlarm.receiver.eq(receiver)
+                .and(qAlarm.brand.eq(brand)))
+                .orderBy(qAlarm.registerDate.desc())
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetchResults();
+
+
+        if(alarms == null) return Page.empty();
+
+        return new PageImpl<Alarm>(alarms.getResults(), pageable, alarms.getTotal());
+
+    }
+
+
     public long modifyAlarmStatus(String receiver){
 
         long execute = jpaQueryFactory
