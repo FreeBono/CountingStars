@@ -111,10 +111,10 @@
                   </select>
                   <select class="categorySel-tag" v-model="categorySelected" @change="headerSel()" >
                     <option value="null" selected>카테고리</option>
-                    <option value="Class Bag">Bag</option>
-                    <option value="accessory">Accessory</option>
+                    <option value="Bag">Bag</option>
+                    <option value="Accessory">Accessory</option>
                     <option value="Clothes">Clothes</option>
-                    <option value="Shoes">Shoes</option>
+                    <option value="Cloth">Cloth</option>
                     <option value="Wallet">Wallet</option>
                   </select>
 
