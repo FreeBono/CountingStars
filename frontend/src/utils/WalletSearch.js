@@ -34,7 +34,7 @@ export default async function searchNFTs(targetAccount) {
       getMetadataFromIpfs(res).then(
         r => {
           const myData = r
-         myData['tokenId'] = element
+         myData['tokenId'] = token
          myData['stats'] = 0
          objects.push(myData)
          console.log(myData)
