@@ -27,43 +27,26 @@ export default async function searchNFTs(targetAccount) {
       tokens.push(await contract.methods.tokenOfOwnerByIndex(targetAccount, i).call());
   }
   
-  console.log(tokens)
-  for await (const token of tokens) {
-    console.log(token)
-    contract.methods.tokenURI(token).call().then(res => {
-      getMetadataFromIpfs(res).then(
-        r => {
-          const myData = r
-         myData['tokenId'] = token
+  await tokens.forEach( element => {
+    contract.methods.tokenURI(element).call().then(res => {
+     getMetadataFromIpfs(res).then(
+       r => {
+         const myData = r
+         myData['tokenId'] = element
          myData['stats'] = 0
          objects.push(myData)
          console.log(myData)
-        }
-      )
-    })
-  }
-//   await tokens.forEach( element => {
-//     console.log(element)
-//     contract.methods.tokenURI(element).call().then(res => {
-//      getMetadataFromIpfs(res).then(
-//        r => {
-//          const myData = r
-//          myData['tokenId'] = element
-//          myData['stats'] = 0
-//          objects.push(myData)
-//          console.log(myData)
-//        }
-//      )
+       }
+     )
      
 
      
-//    });
-//  })
-  // await console.log('마지막')
+   });
+ })
+
   setTimeout(()=> {
     store.dispatch('searchWallet',objects)
-    // console.log('마지막')
-  },2000)
+  },1000)
     
 
 }
