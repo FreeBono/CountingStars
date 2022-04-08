@@ -4,15 +4,15 @@
       <div class="card" v-if="check">
           <form action="#" class="d-flex flex-column">
               <div class="h3 text-center text-white">Login</div>
-              <div class="d-flex align-items-center input-field mt-3 mb-1" > <span class="far fa-user p-2"></span> <input type="text" placeholder="Email" required class="form-control" v-model="loginData.email" @blur="emailValidation"> </div>
+              <div class="d-flex align-items-center input-field mt-3 mb-1" > <img src="https://i.ibb.co/944cbhT/user-icon.png" alt="" style="width: 30px; background-color: #;"><input type="text" placeholder="Email" required class="form-control" v-model="loginData.email" @blur="emailValidation"> </div>
               <div v-if="!loginData.emailValidationFlag" align="left" style="color:red;">유효하지 않은 이메일이요</div>
-              <div class="d-flex align-items-center input-field my-4"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" id="pwd" v-model="loginData.password" ><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field my-4"> <img src="https://i.ibb.co/gjVKMfj/lock-icon.png" style="width: 30px;"> <input type="password" placeholder="Password" required class="form-control" id="pwd" v-model="loginData.password" > <img src="https://i.ibb.co/hZ9Kt4j/eye-icon.png" style="width: 30px;" alt=""></div>
               <div class="d-sm-flex align-items-sm-center justify-content-sm-between">
                   <!-- <div class="d-flex align-items-center"> <label class="option"> <span class="text-light-white">Remember Me</span> <input type="checkbox" checked> <span class="checkmark"></span> </label> </div>
                   <div class="mt-sm-0 mt-3"><a href="#">Forgot password?</a></div> -->
               </div>
-              <div class="my-3"> <span class="btn btn-primary" @click="login()">Login</span> </div>
-              <div class="mb-3"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
+              <div class="my-3" style="margin: 0 auto;"> <span class="btn btn-primary" style="" @click="login()">Login</span> </div>
+              <div class="mb-3" style="margin: 0 auto;"> <span class="text-light-white">Don't have an account?</span> <a @click="goSignup">Sign Up</a> </div>
           </form>
           <div class="position-relative border-bottom my-3 line"> <span class="connect">or connect with</span> </div>
           <div class="text-center py-3 connections"> 
@@ -27,25 +27,25 @@
       <div class="card" v-else>
           <form action="#" class="d-flex flex-column">
               <div class="h3 text-center text-white">Sign up</div>
-              <div class="d-flex align-items-center input-field mt-3 mb-1" > <span class="far fa-user p-2"></span> <input type="text" placeholder="Email" required class="form-control" v-model="signupData.email" @blur="SignupEmailValidation"> </div>
+              <div class="d-flex align-items-center input-field mt-3 mb-1" > <img src="https://i.ibb.co/944cbhT/user-icon.png" alt="" style="width: 30px; background-color: #;"> <input type="text" placeholder="Email" required class="form-control" v-model="signupData.email" @blur="SignupEmailValidation"> </div>
               <div v-if="!signupData.emailValidationFlag" align="left" style="color:red;" >유효하지 않은 이메일이요</div>
-              <div class="d-flex align-items-center input-field my-3 mb-4" > <span class="far fa-user p-2"></span> <input type="text" placeholder="username" required class="form-control" v-model="signupData.username"> </div>
-              <div class="d-flex align-items-center input-field mb-3"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Password" required class="form-control" v-model="signupData.password" @blur="passwordValidation"><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field my-3 mb-4" > <img src="https://i.ibb.co/944cbhT/user-icon.png" alt="" style="width: 30px; background-color: #;"> <input type="text" placeholder="username" required class="form-control" v-model="signupData.username"> </div>
+              <div class="d-flex align-items-center input-field mb-3"> <img src="https://i.ibb.co/gjVKMfj/lock-icon.png" style="width: 30px;"> <input type="password" placeholder="Password" required class="form-control" v-model="signupData.password" @blur="passwordValidation"><img src="https://i.ibb.co/hZ9Kt4j/eye-icon.png" style="width: 30px;" alt=""></div>
               <div class="mb-2" v-if="!passwordValidFlag" align="left">Your password is not allowed</div>
-              <div class="d-flex align-items-center input-field mb-3"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="PasswordConfirmation" required class="form-control" v-model="signupData.passwordConfirmation" @blur="passwordCheck"><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field mb-3"> <img src="https://i.ibb.co/gjVKMfj/lock-icon.png" style="width: 30px;"> <input type="password" placeholder="PasswordConfirmation" required class="form-control" v-model="signupData.passwordConfirmation" @blur="passwordCheck"><img src="https://i.ibb.co/hZ9Kt4j/eye-icon.png" style="width: 30px;" alt=""></div>
               <div class="mb-2" align="left" v-if="!passwordFlag" >Check your password</div>
-              <div class="d-flex align-items-center input-field mb-4"> <span class="fas fa-lock p-2"></span> <input type="text" placeholder="Admin Code" required class="form-control" v-model="signupData.roles"><span class="fas fa-eye-slash"></span></div>
+              <div class="d-flex align-items-center input-field mb-4"> <input type="text" placeholder="Admin Code" required class="form-control" v-model="signupData.roles"></div>
               <!-- <div class="d-sm-flex align-items-sm-center justify-content-sm-between" style="padding-left:0px">
                 <div class="d-flex align-items-center input-field mb-4 w-75" style="margin-right:10px;" > <span class="fas fa-lock p-2"></span> <input type="text" placeholder="phone" required class="form-control" > <button class="btn" onclick="showPassword()"> <span class="fas fa-eye-slash"></span> </button> </div>
                 <button class="w-25" style="height:50px;margin-bottom:25px; padding-left:0px;">인증</button>
               
               </div> -->
               <!-- <input type="text" v-model="signupData.roles"> -->
-              <div class="my-3"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
-              <div class="mb-3"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
+              <div class="my-3" style="margin:0 auto;"> <button class="btn btn-primary" @click="signup">Sign up</button> </div>
+              <div class="mb-3" style="margin:0 auto;"> <span class="text-light-white">Are you an admin?</span> <span @click="goSignup">Login</span> </div>
               
           </form>
-          <div class="position-relative border-bottom my-3 line"> <span class="connect">Easy Sign up</span> </div>
+          <div class="position-relative border-bottom my-3 line" style="margin-left: 7%;"> <span class="connect">Easy Sign up</span> </div>
           <!-- <div class="text-center py-3 connections"> <a href="https://wwww.facebook.com" target="_blank" class="px-2"> <img src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""> </a> <a href="https://www.google.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt=""> </a> <a href="https://www.github.com" target="_blank" class="px-2"> <img src="https://www.freepnglogos.com/uploads/512x512-logo-png/512x512-logo-github-icon-35.png" alt=""> </a> </div> -->
       </div>
   </div>
@@ -126,9 +126,27 @@ export default {
     const signup = () => {
         if (signupData.value.roles === '') {
             signupData.value.roles = ["ROLE_USER"]
-        } else if (signupData.value.roles === 'store') {
+        } else if (signupData.value.roles === 'store1') {
+            signupData.value['store'] = 'cartier' 
             signupData.value.roles = ["ROLE_STORE_ADMIN"]
-        } else if (signupData.value.roles === 'brand1') {
+        } else if (signupData.value.roles === 'store2') {
+            signupData.value['store'] = 'gucci' 
+            signupData.value.roles = ["ROLE_STORE_ADMIN"]
+        } else if (signupData.value.roles === 'store3') {
+            signupData.value['store'] = 'versace' 
+            signupData.value.roles = ["ROLE_STORE_ADMIN"]
+        } else if (signupData.value.roles === 'store4') {
+            signupData.value['store'] = 'louis vuitton' 
+            signupData.value.roles = ["ROLE_STORE_ADMIN"]
+        } else if (signupData.value.roles === 'store5') {
+            signupData.value['store'] = 'prada' 
+            signupData.value.roles = ["ROLE_STORE_ADMIN"]
+        } else if (signupData.value.roles === 'store6') {
+            signupData.value['store'] = 'fendi' 
+            signupData.value.roles = ["ROLE_STORE_ADMIN"]
+        }
+        
+        else if (signupData.value.roles === 'brand1') {
             signupData.value.name = 'cartier'
             signupData.value.roles = ["ROLE_BRAND_ADMIN"]
         } else if (signupData.value.roles === 'brand2') {
@@ -255,7 +273,7 @@ export default {
      backdrop-filter: blur(10px);
      border: 1px solid rgba(255, 255, 255, 0.5);
      border-radius: 15px;
-     cursor: pointer;
+     /* cursor: pointer; */
      padding: 0.8rem
  }
 
