@@ -50,7 +50,7 @@
 - Jira
 - MatterMost
 - GitLap
-- [Notion](https://changeable-terrier-de5.notion.site/2d6fe15f81c34256ac29676609e2db78)
+- [Notion](https://changeable-terrier-de5.notion.site/Counting-Stars-55f7ceb8beff49e289f94fd65f1c0670)
 
 <br/><br/>
 
@@ -94,7 +94,7 @@
 <br/>
 
 ## 회원가입
-![메타마스크](./image/signup.PNG)
+![회원가입](./image/signup.PNG)
 1. 회원가입 폼에 맞게 내용을 입력해준다.
    
 2. admin code를 입력하지 않으면 자동으로 일반 유저로 가입이된다.
@@ -104,7 +104,7 @@
 <br/>
 
 ## 로그인
-![메타마스크](./image/login.PNG)
+![로그인](./image/login.PNG)
 1. 가입한 아이디를 로그인 폼에 맞게 입력하고 로그인을 할 수 있다.
    
 2. 카카오톡 간편로그인도 가능하도록 구현 돼 있다.
@@ -204,7 +204,7 @@
 <br/>
 
 ## 공지사항
-![NFT발급](./image/notice.gif)
+![공지사항](./image/notice.gif)
 1. 일반 유저들은 공지사항을 확인할 수 있다.
    
 2. admin 계정은 공지사항을 등록, 수정, 삭제가 가능하다.
@@ -212,7 +212,7 @@
 <br/><br/>
 
 ## 거래처관리 페이지
-![NFT발급](./image/partner.gif)
+![거래처관리](./image/partner.gif)
 1. admin 계정은 거래처를 등록하고 삭제할 수 있다.
    
 2. 등록된 거래처 목록은 NFT를 조회할 때 브랜드에 자동으로 담긴다.
