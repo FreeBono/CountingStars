@@ -12,13 +12,10 @@ export default async function TransferToken(receiveAccount,receiveKey, tokenId) 
   const sendAccount = accounts[0]
   var sender = web3.eth.accounts.privateKeyToAccount('0x'+receiveKey)
   web3.eth.accounts.wallet.add(sender);
-  
-  console.log(web3.eth.accounts.wallet);
+
   let contract = new web3.eth.Contract( contractInfo.abi , contractInfo.address)
   try {
-    console.log('엥')
     await contract.methods.safeTransferFrom(sendAccount,receiveAccount,parseInt(tokenId)).send({from: sendAccount,gas:600000, }).then(res =>console.log(res)).catch(err => console.log(err))
-    console.log('음')
     store.dispatch('sendToken',tokenId)
     
     //거래 내역 저장

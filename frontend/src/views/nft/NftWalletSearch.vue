@@ -1,23 +1,24 @@
 <template>
-  
+  <div>
   <sidebar style=""/>
   <div class="wrapper">
 
     <div class="main-content">
-      <div class="header">
+      <div class="header" >
         <div style="position:absolute; margin-left:100px; margin-top: 50px; color:white; font-size: 2rem;">NFT 조회</div>
-        <div class="head_title" style="font-size:16px;">
+        <div class="head_title" style="font-size: 2rem;">
 
           <div class="container d-flex justify-content-center" >
             <div class="card mt-7 p-4" style="width:500px;" id="search-card">
-              <div class="input-group"> 
-                <select style="border-color: #ced4da; width:5.5rem;">
-                  <option>지갑주소</option>
-                  <option>아이디</option>
+              <div class="input-group" style=""> 
+                <select style="border-color: #ced4da; width:5.5rem; height: 40px; font-size: 1rem;" v-model="searchStatus">
+                  <option value="" selected>조회 선택</option>
+                  <option value="0" >지갑주소</option>
+                  <option value="1">아이디</option>
                 </select>
-                <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress">
-                <div class="input-group-append">
-                  <button class="btn " style="background-color: #2dce89;" @click="searchWallet"><i class="fas fa-search" style="color: white;" ></i></button>
+                <input type="text" class="form-control" placeholder="Search products...." v-model="walletAddress" style="height: 40px;">
+                <div class="input-group-append btn_position">
+                  <button class="btn " style="background-color: #2dce89; height: 40px;" @click="searchWallet"><i class="fas fa-search" style="color: white;" ></i></button>
                 </div>
               </div>
             </div>
@@ -41,11 +42,22 @@
       
       <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; min-width:590px; overflow-y:scroll; max-height:600px;">
         <div  class="container-fluid">
+
+          
           <div class="row">
             <div class="searchBarTag mt-3">
-
+              <div align="left" >NFT 목록</div>
               <!-- 필터링 부분 -->
-                <div class="searchbarr mb-4">
+
+              <div v-for="(item,idx) in historiesUnique" :key="idx" style="margin-top:20px;">
+                <span class="tag tag-ionic tag-lg" style="margin:0px 10px; white-space: nowrap;" >
+                
+                  <span @click="historySearch(idx)"><i class="fa fa-search" style="margin-right:10px;"></i>{{convertedHistories(item)}}</span>
+                </span>
+              </div>
+              <br>
+
+                <div class="searchbarr mb-4" style="margin-top:20px;">
                   <select class="brandSel-tag" v-model="brandSelected" @change="brandSel()" >
                     <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
                       {{ brandoption.text }}
@@ -53,11 +65,11 @@
 
                   </select>
                   <select class="categorySel-tag" v-model="categorySelected" @change="headerSel()" >
-                    <option value="null" selected >카테고리</option>
-                    <option value="Class Bag">Bag</option>
-                    <option value="accessory">Accessory</option>
+                    <option value="null" selected>카테고리</option>
+                    <option value="Bag">Bag</option>
+                    <option value="Accessory">Accessory</option>
                     <option value="Clothes">Clothes</option>
-                    <option value="Shoes">Shoes</option>
+                    <option value="Cloth">Cloth</option>
                     <option value="Wallet">Wallet</option>
                   </select>
 
@@ -67,12 +79,7 @@
                 </div>
                 <!-- 필터링 부분 끝 -->
 
-              <div v-for="(item,idx) in historiesUnique" :key="idx"  >
-                <span class="tag tag-ionic tag-lg" style="margin:0px 10px; white-space: nowrap;" >
-                
-                  <span @click="historySearch(idx)"><i class="fa fa-search" style="margin-right:10px;"></i>{{convertedHistories(item)}}</span>
-                </span>
-              </div>
+              
           </div>
 
           
@@ -80,12 +87,15 @@
             <!-- <div class="container justify-content-center"> -->
               <div class="row" >
                 <div class="col-3" v-for="(nft,idx) in nfts" :key="idx" >
-                    <div class="card col-3" style="padding:0px; width:85%;" >
-                      <figure class="card__thumb" style="margin:0px; height:250px;">
+                    <div class="card" style="padding:0px; " >
+                      <figure class="card__thumb" style="margin:0px; height:250px; " >
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%;">
-                        <figcaption class="card__caption" style="left:5%;">
-                          <h2 class="card__title" style="color:white;" v-if="nft.name">{{nft.name}}</h2>
-                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                        <figcaption class="card__caption" style="text-align:center;">
+                          <h2 class="card__title" style="color:white; " v-if="nft.name">{{nft.name}}</h2>
+                          <div class="card__snippet" >
+                            <div>{{nft.brandName.toUpperCase()}}</div>
+                            <div> {{parseInt(nft.productPrice).toLocaleString('ko-KR')}} WON</div>
+                          </div>
                       
                           <div>
                             <span class="card__button " data-bs-toggle="modal" data-bs-target="#detail-modal" style="cursor:pointer;" @click="goDetailModal(nft, idx)">Detail</span>
@@ -143,19 +153,19 @@
         </div>
       </div>
       <div class="content_box row-vh d-flex flex-row" style="position:absolute; top : 280px; left:47%; width : 41%;min-width:650px; overflow-y:scroll; max-height:600px;">
-          <div  class="container-fluid">
-            <div class="searchBarTag mt-3">
+          <!-- <div  class="container-fluid"> -->
+            <div class="searchBarTag mt-3" style="width:100%;">
               <!-- <div class="container justify-content-center"> -->
-                <div class="row" >
-                  <div align="left" style="margin-left:10px; margin-top:10px; ">월별 NFT이전</div>
+                <div class="row"  >
+                  <div align="left" style="margin-left:10px; margin-top:10px; ">주소 이전 내역</div>
                   <!-- <hr style="margin-top:15px 0;"> -->
                   <div align="center" style=" margin-top:10px; " >
                     <div class="d-flex" style="padding-top:10px; height:40px; border:2px solid #e7eaf3; background-color: #f8fafd;  color: #6c757e;">
-                      <div style="width:20%; text-align:left;">Txn Hash</div><div style="width:20%; text-align:left;">Block</div><div style="width:25%; text-align:left;">From</div><div style="width:25%; text-align:left; margin-left:10px;">To</div><div style="width:10%; text-align:left;">Token ID</div>
+                      <div style="width:20%; text-align:left; margin-left:20px;">Txn Hash</div><div style="width:20%; text-align:left;">Block</div><div style="width:25%; text-align:left;">From</div><div style="width:25%; text-align:left; margin-left:10px;">To</div><div style="width:13%; text-align:left;">Token ID</div>
                     </div>
-                    <div v-for="(item,idx) in transactions" :key="idx" align="left" style="margin-top:10px;">
+                    <div v-for="(item,idx) in transactions" :key="idx" align="left" style="margin-top:10px; margin-left:10px;">
                       <div class="d-flex">
-                      <div class="testt" style="width:20%;" @click="goTxDetail(item.transactionHash)" data-bs-toggle="modal" :data-bs-target="'#exampleModal'+idx">
+                      <div class="testt" style="width:20%; color:blue;" @click="goTxDetail(item.transactionHash)" data-bs-toggle="modal" :data-bs-target="'#exampleModal'+idx">
                         {{item.transactionHash.substring(0,10)}}...
                       </div>
                       <!-- Modal -->
@@ -177,7 +187,7 @@
                                   <div class="TxDetail" style="font-weight:bold;">Gas Price</div>
                               
                                 </div>
-                                <div style="width:75%; font-size:14px">
+                                <div style="width:75%; font-size:14px; margin-left:20px; padding-left:20px;">
                                   <div class="TxDetail">{{TxData.hash}}</div><div class="TxDetail"><span class="status">&nbsp;&nbsp;<i class="fa fa-check-circle"></i>&nbsp;Success&nbsp;&nbsp;</span></div><div class="TxDetail">{{TxData.blockHash}}</div><div class="TxDetail">{{TxData.blockNumber}}</div>
                                   <hr>
                                   <div class="TxDetail" id="copytext" >{{TxData.from}}<i class="far fa-copy" style="margin-left:10px; cursor:pointer;" @click="copyToClickBoard(TxData.from)"></i></div><div class="TxDetail" @click="copyToClickBoard(TxData.to)">{{TxData.to}}<i class="far fa-copy" style="margin-left:10px; cursor:pointer;"></i></div>
@@ -211,7 +221,7 @@
                       <div class="testt" style="width:25%; margin-left:10px;">
                         {{item.returnValues.to.substring(0,10)}}...
                       </div>
-                      <div class="testt" style="width:10%; text-align:center;">
+                      <div class="testt" style="width:10%; text-align:left;">
                         {{item.returnValues.tokenId}}
                       </div>
                       </div>
@@ -222,7 +232,7 @@
                   </div>
               </div>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
 
 
@@ -234,7 +244,7 @@
 
   </div>
 
-
+</div>
 
 
 
@@ -290,24 +300,65 @@ export default {
     }
     
     
+    //검색 상태
+    const searchStatus = ref('')
 
-    //지갑조회실행
+    
+    // 서치바 초기화
+    const searchAddressInit = () => {
+
+      walletAddress.value = ''
+    }
+
+    //지갑 조회 실행
     const searchWallet = () => {
       nfts.value = []
-      console.log('실행')
-      // localStorage.setItem(  , JSON.stringify({a: 1, b: 2}))
+      console.log('일단실행')
+      // if (walletAddress.value.length >= 40) {
+      //   searchStatus.value = "0"
+      // } else {
+      //   searchStatus.value = "1"
+      // }
+      if (searchStatus.value === "1") {
+        console.log('아이디 검색')
+        api.post('/user',{email:walletAddress.value})
+        .then(res => {
+          walletAddress.value = res.data.address
+          searchNFTs(res.data.address)
+          SearchToken(res.data.address).then(res => transactions.value = res.sort(function(a,b) {
+            return b.blockNumber - a.blockNumber
+          }))
+          // walletAddress.value = ''
+          setTimeout(()=> {
+          
+          nfts.value.push(...store.state.searchednft)
+          store.state.searchednft = []
+    
+         },2000)
+        })
+      } else if (searchStatus.value === "0") {
+      console.log('지갑검색')
+      console.log(walletAddress.value)
       searchNFTs(walletAddress.value)
       addEntry()
-      SearchToken(walletAddress.value).then(res => transactions.value = res.sort(function(a,b) {
+      SearchToken(walletAddress.value).then(res => {
+        console.log(res)
+        transactions.value = res.sort(function(a,b) {
         return b.blockNumber - a.blockNumber
-      }))
+      })})
+      // walletAddress.value = ''
       setTimeout(()=> {
+      
       nfts.value.push(...store.state.searchednft)
       store.state.searchednft = []
-      },2000)
-      
+    
+      },2000)  
+      }
+      // walletAddress.value = ''
     }
-  
+
+    
+
     // 지갑 검색 기록
     function addEntry() {
       var existingEntries = JSON.parse(localStorage.getItem(store.state.auth.user.email));
@@ -324,7 +375,7 @@ export default {
     const historiesUnique = []
     if (histories != [] && histories != null) {
       histories.forEach(e => {
-      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length <7) {
+      if (!(historiesUnique.includes(e.searchHistory)) && historiesUnique.length < 4) {
         console.log(e.searchHistory)
         historiesUnique.push(e.searchHistory)
     }})
@@ -336,9 +387,14 @@ export default {
     }
 
     const historySearch = (x) => {
-      walletAddress.value = histories[x].searchHistory
+      if (historiesUnique[x] >= 40) {
+        searchStatus.value = "0"
+      } else {
+        searchStatus.value = "1"
+      }
+      walletAddress.value = historiesUnique[x]
       searchWallet()
-    } 
+    }
 
     // 필터 부분
     const brandSelected = ref(null)
@@ -525,7 +581,6 @@ export default {
       searchInit,
       searchOpt,
       word,
-      searchInit,
       searchPaging,
       headerSel,
       brandSel,
@@ -545,6 +600,8 @@ export default {
       serialNumber,
 
       copyToClickBoard,
+      searchStatus,
+      searchAddressInit,
     }
   },
 
@@ -552,6 +609,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.wrapper {
+  width:100%;
+  min-width: 1600px;
+}
+
 
 .nft_img {
   display: flex;
@@ -595,7 +658,7 @@ html {
 }
 
 .card {
-	width: 300px;
+	// width: 300px;
 	margin: 10px;
 	background-color: white;
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
@@ -655,6 +718,7 @@ html {
 		top: 50%;
 		z-index: 1;
 		padding: 0 20px;
+    width:100%;
 		color: white;
 		transform: translateY(-50%);
 		text-align: center;
@@ -671,7 +735,7 @@ html {
 		max-height: 85px;
     overflow: hidden;
 		font-family: 'Playfair Display', serif;
-		font-size: 23px;
+		font-size: 14px;
 		line-height: 28px;
 		text-shadow: 0px 1px 5px black;
 		text-overflow: ellipsis;
@@ -1003,5 +1067,13 @@ body {
 #search-card {
   box-shadow: 1px 2px 5px 2px #d8d7d7;
   // box-shadow: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.btn_position {
+  position: relative;
+  bottom: 10px;
 }
 </style>

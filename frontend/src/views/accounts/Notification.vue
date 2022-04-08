@@ -71,7 +71,7 @@ export default {
       console.log(notificationData.value)
       axios({
         method : 'post',
-        url : "http://localhost:8080/api/v1/auth/signup/phone",
+        url : "https://j6e204.p.ssafy.io:8443/api/v1/auth/signup/phone",
         data : notificationData.value
       })
       .then( res => {

@@ -20,7 +20,7 @@
                     <div >{{nfts.length}}</div>
                   </div>
                   <div class="align-self-center" align="right" style="float:right; margin-top:22px;">
-                    <i class="fab fa-bitcoin fa-3x" style="color:gold;"></i>
+                    <img src="@/assets/nftcoin.png"/>
                   </div>    
                 </div>
               </div>
@@ -101,6 +101,7 @@
             <div class="searchBarTag mt-3">
 
               <!-- 필터링 부분 -->
+              <div align="left" style="margin-bottom: 15px;">NFT 목록</div>
                 <div class="searchbarr mb-4">
                   <select class="brandSel-tag" v-model="brandSelected" @change="brandSel()" >
                     <option v-for="(brandoption, idx) in brandOpt" :key="idx" :value="brandoption.value">
@@ -110,10 +111,10 @@
                   </select>
                   <select class="categorySel-tag" v-model="categorySelected" @change="headerSel()" >
                     <option value="null" selected>카테고리</option>
-                    <option value="Class Bag">Bag</option>
-                    <option value="accessory">Accessory</option>
+                    <option value="Bag">Bag</option>
+                    <option value="Accessory">Accessory</option>
                     <option value="Clothes">Clothes</option>
-                    <option value="Shoes">Shoes</option>
+                    <option value="Cloth">Cloth</option>
                     <option value="Wallet">Wallet</option>
                   </select>
 
@@ -126,12 +127,15 @@
               <!-- <div class="container justify-content-center"> -->
                 <div class="row" >
                   <div class="col-3" v-for="(nft,idx) in nfts" :key="idx">
-                    <div class="card col-3" style="padding:0px; width:85%;" >
+                    <div class="card" style="padding:0px; " >
                       <figure class="card__thumb" style="margin:0px; height:250px;">
                         <img :src="nft.image" alt="Picture by Kyle Cottrell" class="card__image" style="width:100%; height:100%; ">
-                        <figcaption class="card__caption" style="left:15%;">
+                        <figcaption class="card__caption" >
                           <h2 class="card__title" v-if="nft.name" style="color:white;">{{nft.name}}</h2>
-                          <p class="card__snippet">{{nft.brandName}} , {{nft.productPrice}}</p>
+                          <div class="card__snippet" >
+                            <div>{{nft.brandName.toUpperCase()}}</div>
+                            <div> {{parseInt(nft.productPrice).toLocaleString('ko-KR')}} WON</div>
+                          </div>
                           <span class="card__button " data-bs-toggle="modal" data-bs-target="#exampleModal" @click="tokenChangeNum(nft.tokenId)" style="cursor:pointer;">transfer</span>
                         </figcaption>
                       </figure>
@@ -167,19 +171,28 @@
           </div>
         </div>
 
+        <!-- 로고 -->
+        <div style="position:absolute; top : 900px; width:30%; height :200px; margin-left:12%; margin-top:70px;">
+          <img src="@/assets/cslogo.png" alt="" style="width:50%; height:100%;">
+          <div>
+            <div style="font-size:50px; width:100%;">COUNTING STARS</div>
+          </div>
+        </div>
+
         <div class="abc content_box row-vh d-flex flex-row " style="position:absolute; top : 950px; left: 47%; width : 41%;min-width:700px;">
           <!-- <div  class="container-fluid"> -->
-            <div class="searchBarTag mt-3">
+            <div class="searchBarTag mt-3" style="width:100%;">
               <!-- <div class="container justify-content-center"> -->
+                <div align="left" style="margin-left:10px; margin-top:10px;">NFT 이전 랭킹</div>
                 <div class="row" >
-                  <div align="left" style="margin-left:10px; margin-top:10px;">월별 NFT이전</div>
+                  
                   <!-- <hr style="margin-top:15px 0;"> -->
                   
-                    <div class="row-vh d-flex flex-row justify-content-around" style="margin-left:7%;" >
-                      <div class="row-vh d-flex flex-column" >
+                    <div class="row-vh d-flex flex-row  justify-content-around"   >
+                      <div class="row-vh d-flex flex-column" style="" >
                           <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+1}}</div>
-                            <div style="padding-left:5px; text-align:left; width:75%;">
+                            <div style=" text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
                               <div style="font-size:14px;">{{item.address.substring(0,18)}}</div>
                               
@@ -187,8 +200,8 @@
             
                           </div>                       
                       </div>
-                      <div class="row-vh d-flex flex-column" style="margin-left:40px;" >
-                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                      <div class="row-vh d-flex flex-column" style="" >
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(3,6)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+4}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
@@ -198,8 +211,8 @@
                  
                           </div>                       
                       </div>
-                      <div class="row-vh d-flex flex-column" style="margin-left:40px;">
-                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(0,3)" :key="idx" style="margin-top:40px;">
+                      <div class="row-vh d-flex flex-column" style="margin-right:15px">
+                          <div class="row-vh d-flex flex-row justify-content-around" v-for="(item,idx) in rankData.slice(6,9)" :key="idx" style="margin-top:40px;">
                             <div style="margin-top:5px;  font-size : 25px;  width:15%;">{{idx+7}}</div>
                             <div style="padding-left:15px; text-align:left; width:75%;">
                               <div align="left" style="font-size:20px; ">{{item.email}}</div>
@@ -228,7 +241,7 @@
           </div>
         </div>
     
-
+ <!-- <button type="button" class="btn btn-primary" @click="send()">transfer</button> -->
 
 
 <!-- Modal -->
@@ -244,13 +257,13 @@
 				<div>
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="Name" name="name" id='name' v-model="receiveAccount" required />
-						<label for="name" class="form__label">Account</label>
+						<label for="name" class="form__label">Account (상대방 지갑주소)</label>
 					</div>
 				</div>
         <div>
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="Name" name="name2" v-model="receivePrivatekey" required />
-						<label for="name" class="form__label">Privatekey</label>
+						<label for="name" class="form__label">Privatekey (내 개인키)</label>
 					</div>
 				</div>
 				<!-- <div>로 이전합니다.</div> -->
@@ -287,8 +300,8 @@ import TransferToken from '@/utils/TransferNFT.js'
 import Graph from '@/components/Graph'
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css'
-
-
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client'
 
 
 export default {
@@ -297,8 +310,8 @@ export default {
     Sidebar,
     Graph,
   },
+ 
   setup() {
-    
     const store = useStore()
     const router = useRouter()
     // const store = useStore()
@@ -331,18 +344,25 @@ export default {
 		}
 
 		async function sendToken() {
+      let info = nfts.value.filter(e => {
+        return parseInt(e.tokenId) ===parseInt(tokenNum.value)
+      })
+      console.log(info[0])
+      
       //알람
       createToast(
-          { title: 'Send Transaction',  },
-          // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
-          { type:'info', showIcon:true, position:'bottom-right', }
-          )
+        { title: 'Send Transaction',  },
+        // {position:'bottom-right',showIcon:true,toastBackgroundColor:'#44ec3e'}
+        { type:'info', showIcon:true, position:'bottom-right', }
+        )
       
 			console.log(tokenNum.value)
    
 			await TransferToken(receiveAccount.value ,receivePrivatekey.value, tokenNum.value)
       nfts.value = store.state.nftValues
-
+      
+      
+      send(info[0],receiveAccount.value)
       
       LookupNFTs()
 		}
@@ -551,6 +571,80 @@ export default {
     const serialNumber = ref(null)
 
 
+    //socket test
+
+    const recvList = ref([])
+    const connected = ref(true)
+    const stompClient = ref('')
+    const receiver = ''
+    const receiverWallet = ''// 이전 보내는 월렛 주소 => 수정해야함
+    const sender = store.state.userInfo.email //지금 로그인 한 사람 메일
+    const senderWallet = store.state.userInfo.address //로그인 한 사람 지갑
+    const senderRole = store.state.userInfo.role //로그인 한 사람 역할
+    const receiverBrand = store.state.userInfo.username //로그인 한 사람 브랜드
+    const storeBrand = store.state.userInfo.store //스토어브랜드
+    const connect = () => {
+      const serverURL = "/api/v1/alarm"
+      let socket = new SockJS(serverURL);
+      stompClient.value = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+      stompClient.value.connect(
+        {},
+        frame => {
+          connected.value = true;
+          console.log('소켓 연결 성공', frame);
+          if(senderRole == 'ROLE_BRAND_ADMIN'){ //로그인 한 사람의 role 이 brand면 brand구독
+            stompClient.value.subscribe("/sub/channel/" + senderRole + "/" + receiverBrand, res => {
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }else{//일반 유저면 자기 email을 구독해야함
+            stompClient.value.subscribe("/sub/channel/" + senderWallet, res => { 
+              console.log('구독으로 받은 메시지 입니다.', res.body);
+              recvList.value.push(JSON.parse(res.body))
+            });
+          }
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          connected.value = false;
+        }
+      ); 
+    }
+
+    connect()
+
+    const send = (info,wallet) => {
+      if (stompClient.value && stompClient.value.connected) {
+        if(senderRole == 'ROLE_STORE_ADMIN'){
+          
+          const msg = {
+            sender: senderRole,//보내는사람정보
+            receiver : 'ROLE_BRAND_ADMIN',//받는사람
+            brand : storeBrand,
+            productName: info.name,//이전할상품정보
+  
+          };
+          console.log(msg)
+          stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+        }else{
+          const msg = { 
+            sender: sender,//보내는사람정보
+            receiver : wallet,//받는사람
+            productName: 'productname',//이전할상품정보
+          };
+          stompClient.value.send("/pub/pubs", JSON.stringify(msg), {});
+
+        }
+      }
+    }
+
+    // const sendAlarm = (e) => {
+    //   send()
+    // }
+    
+
+
     return {
       goMyNftDetail,
       sendNft,
@@ -593,9 +687,23 @@ export default {
       productColor,
       price,
       serialNumber,
-  
+      
+      //socket
+      connect,
+      recvList,
+      connected,
+      stompClient,
+      receiver,
+      sender,
+      // sendAlarm,
+      send,
+      
+
+     
     }
-  }
+  },
+  
+  
 }
 </script>
 
@@ -673,9 +781,6 @@ export default {
 }
 
 
-
-
-
 $desktop: 1024px;
 
 @mixin breakpoint($point) {
@@ -708,7 +813,7 @@ html {
 }
 
 .card {
-	width: 300px;
+	// width: 300px;
 	margin: 10px;
 	background-color: white;
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
@@ -768,6 +873,7 @@ html {
 		top: 50%;
 		z-index: 1;
 		padding: 0 20px;
+    width:100%;
 		color: white;
 		transform: translateY(-50%);
 		text-align: center;
@@ -784,7 +890,7 @@ html {
 		max-height: 85px;
     overflow: hidden;
 		font-family: 'Playfair Display', serif;
-		font-size: 23px;
+		font-size: 14px;
 		line-height: 28px;
 		text-shadow: 0px 1px 5px black;
 		text-overflow: ellipsis;
@@ -951,7 +1057,7 @@ body {
   // width: 75%;
   min-height: 350px;
   background-color: white;
-  margin-left: 100px;
+  // margin-left: 100px;
   border: 1px;
   border-radius: 10px;
   box-shadow: 3px 3px 10px 1px #d8d7d7;
