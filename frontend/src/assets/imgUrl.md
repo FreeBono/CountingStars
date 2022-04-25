@@ -63,3 +63,12 @@
 
 <!-- ico phone -->
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/HnTgL2w/ico-phone.png" alt="ico-phone" border="0"></a>
+
+<!-- 로그인 유저 아이콘 -->
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/944cbhT/user-icon.png" alt="user-icon" border="0"></a>
+
+<!-- 로그인 비밀번호 아이콘 -->
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/gjVKMfj/lock-icon.png" alt="lock-icon" border="0"></a>
+
+<!-- 로그인 눈 모양 아이콘 -->
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/hZ9Kt4j/eye-icon.png" alt="eye-icon" border="0"></a>

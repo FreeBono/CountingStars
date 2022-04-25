@@ -43,9 +43,9 @@
                         <b-card-text class="mt-4">
                           <div>
                             <div class="form-tag" style="width: 100%;">
-                              <b-form-input class="input_tag" type="text" v-model="brandInfo.name" :state="modalState.brandNameState" placeholder=" 브랜드명" maxlength="30"></b-form-input>
-                              <b-form-input class="input_tag my-3" type="text" v-model="brandInfo.endDate" :state="modalState.endDateState" placeholder=" 계약 만료 일자" maxlength="30"></b-form-input>
-                              <b-form-input class="input_tag" type="text" v-model="brandInfo.address" :state="modalState.addressState" placeholder=" 지갑주소" maxlength="30"></b-form-input>
+                              <b-form-input class="input_tag" type="text" v-model="brandInfo.name" :state="modalState.brandNameState" placeholder=" 브랜드명" style="text-transform: uppercase;"></b-form-input>
+                              <b-form-input class="input_tag my-3" type="date" v-model="brandInfo.endDate" :state="modalState.endDateState" placeholder=" 계약 만료 일자"></b-form-input>
+                              <b-form-input class="input_tag" type="text" v-model="brandInfo.address" :state="modalState.addressState" placeholder=" 지갑주소"></b-form-input>
                             </div>
                           </div>
                         </b-card-text>
@@ -228,9 +228,6 @@ export default {
         perPage.value = res.data.pageable['pageSize']
         console.log(perPage.value, 'perP 확인')
 
-        res.data.content.forEach(element => {
-        brandImg.value.push(element.imageUrl)
-        });
       })
     }
 
@@ -283,7 +280,7 @@ export default {
       console.log(currentPage.value, 'currentPage 바뀌는지 확인')
       axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/brand?page=${currentPage.value}&size=10`
+        url: `${도메인}/api/v1/brand?page=${currentPage.value}&size=10`
       })
       .then((res) => {
         console.log(res,'👍페이지확인')
@@ -299,7 +296,7 @@ export default {
       console.log(brandInfo.brandId, '번호 확인')
       axios({
         method: 'delete',
-        url: 'http://localhost:8080/api/v1/brand',
+        url: `${도메인}/api/v1/brand`,
         data: {brandId: brandInfo.brandId}
       })
       .then(() => {

@@ -71,7 +71,7 @@ export default {
       console.log(notificationData.value)
       axios({
         method : 'post',
-        url : "http://localhost:8080/api/v1/auth/signup/phone",
+        url : `${도메인}/api/v1/auth/signup/phone`,
         data : notificationData.value
       })
       .then( res => {

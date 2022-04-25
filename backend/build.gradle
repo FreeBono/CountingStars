@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation("com.google.guava:guava:29.0-jre")
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     annotationProcessor("com.google.guava:guava:29.0-jre")
 
     implementation('commons-io:commons-io:2.6')

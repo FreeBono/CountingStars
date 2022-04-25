@@ -25,7 +25,15 @@
               </div>
               <div class="telephone">
                 <label for="name"></label>
+                <input type="text" placeholder="상품명" name="telephone" id="telephone_input" v-model="state.name" required>
+              </div>
+              <div class="telephone">
+                <label for="name"></label>
                 <input type="text" placeholder="가격" name="telephone" id="telephone_input" v-model="state.price" required>
+              </div>
+              <div class="telephone">
+                <label for="name"></label>
+                <input type="text" placeholder="설명칸" name="telephone" id="telephone_input" v-model="state.description" required >
               </div>
               <div class="name">
                 <label for="name"></label>
@@ -87,14 +95,16 @@ export default {
   },
   setup() {
     const state = ref({
-      serialNumber: 'AAA11111',
+      serialNumber: 'X76M25TF475B4',
       productDate: '2022-03-16',
       brandName: 'Chanel',
       country: 'Italy',
-      category: 'Class Bag',
-      material: 'cowhide',
-      color: 'black',
-      price: '5,700$',
+      category: 'BAG',
+      material: 'COWHIDE',
+      color: 'BLACK',
+      price: '5700000',
+      description: '설명 칸',
+      name: 'nft 이름',
       nftImg: null,
       nftImgFile: null,
     })
@@ -110,8 +120,6 @@ export default {
 
     const transferJSON = async function() {
       const data = {
-        name: "Luxury",
-        description: "It contains a warranty for luxury goods.",
         serialNumber: state.value.serialNumber,
         dateOfManufacture: state.value.productDate,
         brandName: state.value.brandName,
@@ -121,9 +129,11 @@ export default {
         productColor: state.value.color,
         productPrice: state.value.price,
         image: store.state.ipfsData,
+        description: state.value.description,
+        name: state.value.name,
       }
 
-      const ipfs = create('/ip4/127.0.0.1/tcp/5001');
+      const ipfs = create();
       const response = await ipfs.add(JSON.stringify(data));
       const ipfsHash = response.path;
 
@@ -139,7 +149,7 @@ export default {
         { type:'success', showIcon:true, position:'bottom-right', }
         )
 
-      // getMetadataFromIpfs(ipfsHash);
+      getMetadataFromIpfs(ipfsHash);
     }
 
     return {
