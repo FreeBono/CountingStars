@@ -59,9 +59,9 @@ springfox:
             use-model-v3: false
 
 sms:
-    serviceId: ncp:sms:kr:281954218605:cstars
-    accessKey: xghjE6ZT97P2xCmJqkwX
-    secretKey: 75622b8c6cb3421887d3b6a1fa779773
+    serviceId: {sms_serviceId}
+    accessKey: {sms_accessKey}
+    secretKey: {sms_secretKey}
 
 # App Properties
 bezkoder:
