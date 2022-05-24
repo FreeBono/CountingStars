@@ -49,7 +49,7 @@
 ## 주요 협업 툴
 - Jira
 - MatterMost
-- GitLap
+- GitLab
 - [Notion](https://changeable-terrier-de5.notion.site/Counting-Stars-55f7ceb8beff49e289f94fd65f1c0670)
 
 <br/><br/>
@@ -74,7 +74,7 @@
    
 3. NFT가 이전되어 계정으로 들어오면 종모양에 알림이 표시가 된다.
    
-4. 로그인 / 로그아웃 버튼을 눌러 로그인 및 회원 가입, 그리고 로그아 웃이 가능하다.
+4. 로그인 / 로그아웃 버튼을 눌러 로그인 및 회원 가입, 그리고 로그아웃이 가능하다.
 
 <br/>
 
